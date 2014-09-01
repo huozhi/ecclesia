@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SimpleWebRTC Demo</title>
+        <style>
+            .videoContainer {
+                position: relative;
+                width: 200px;
+                height: 150px;
+            }
+            .videoContainer video {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            .volumeBar {
+                position: absolute;
+                width: 5px;
+                height: 0px;
+                right: 0px;
+                bottom: 0px;
+                background-color: #12acef;
+            }
+            .connectionstate {
+                position: absolute;
+                top: 0px;
+                width: 100%;
+                text-align: center;
+                color: #fff
+            }
+            #localScreenContainer {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="title">Start a room</h1>
+        <form id="createRoom">
+            <input id="sessionInput"/>
+            <button disabled type="submit">Create it!</button>
+        </form>
+        <p id="subTitle"></p>
+        <div>
+          <button id="screenShareButton"></button>
+          (https required for screensharing to work)
+        </div>
+        <hr>
+        <div class="videoContainer">
+            <video id="localVideo" style="height: 150px;" oncontextmenu="return false;"></video>
+            <div id="localVolume" class="volumeBar"></div>
+        </div>
+        <div id="localScreenContainer" class="videoContainer">
+        </div>
+        <div id="remotes"></div>
+        <hr>
+        <div>
+          <h3>A note on connectivity issues</h3>
+          If you see black videos from peers or the connection state displayed ontop of those videos 
+          either hangs in <i>Connecting to peer...</i> or changes to <i>Connection failed</i>, a direct peer-to-peer connection could not be established.
+          <br>
+          This typically means that a TURN server is required. This <a href="http://www.html5rocks.com/en/tutorials/webrtc/infrastructure/#after-signaling-using-ice-to-cope-with-nats-and-firewalls">tutorial</a> explains the problem.
+          You can check if those peers can connect each other on <a href="https://talky.io">talky.io</a> which runs a TURN server.
+        </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="latest.js"></script>
+        <script>
+            // grab the room from the URL
+            var room = location.search && location.search.split('?')[1];
+
+            // create our webrtc connection
+            var webrtc = new SimpleWebRTC({
+                // the id/element dom element that will hold "our" video
+                localVideoEl: 'localVideo',
+                // the id/element dom element that will hold remote videos
+                remoteVideosEl: '',
+                // immediately ask for camera access
+                autoRequestMedia: true,
+                debug: false,
+                detectSpeakingEvents: true,
+                autoAdjustMic: false
+            });
+
+            // when it's ready, join if we got a room from the URL
+            webrtc.on('readyToCall', function () {
+                // you can name it anything
+                if (room) webrtc.joinRoom(room);
+            });
+
+            function showVolume(el, volume) {
+                if (!el) return;
+                if (volume < -45) { // vary between -45 and -20
+                    el.style.height = '0px';
+                } else if (volume > -20) {
+                    el.style.height = '100%';
+                } else {
+                    el.style.height = '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%';
+                }
+            }
+            webrtc.on('channelMessage', function (peer, label, data) {
+                if (data.type == 'volume') {
+                    showVolume(document.getElementById('volume_' + peer.id), data.volume);
+                }
+            });
+
+            // we got access to the camera
+            webrtc.on('localStream', function (stream) {
+                $('form>button').attr('disabled', null);
+            });
+            // we did not get access to the camera
+            webrtc.on('localMediaError', function (err) {
+            });
+
+            // local screen obtained
+            webrtc.on('localScreenAdded', function (video) {
+                video.onclick = function () {
+                    video.style.width = video.videoWidth + 'px';
+                    video.style.height = video.videoHeight + 'px';
+                };
+                document.getElementById('localScreenContainer').appendChild(video);
+                $('#localScreenContainer').show();
+            });
+            // local screen removed
+            webrtc.on('localScreenRemoved', function (video) {
+                document.getElementById('localScreenContainer').removeChild(video);
+                $('#localScreenContainer').hide();
+            });
+
+            // a peer video has been added
+            webrtc.on('videoAdded', function (video, peer) {
+                console.log('video added', peer);
+                var remotes = document.getElementById('remotes');
+                if (remotes) {
+                    var container = document.createElement('div');
+                    container.className = 'videoContainer';
+                    container.id = 'container_' + webrtc.getDomId(peer);
+                    container.appendChild(video);
+
+                    // suppress contextmenu
+                    video.oncontextmenu = function () { return false; };
+
+                    // show the remote volume
+                    var vol = document.createElement('div');
+                    vol.id = 'volume_' + peer.id;
+                    vol.className = 'volumeBar';
+                    video.onclick = function () {
+                        video.style.width = video.videoWidth + 'px';
+                        video.style.height = video.videoHeight + 'px';
+                    };
+                    container.appendChild(vol);
+                    
+                    // show the ice connection state
+                    if (peer && peer.pc) {
+                        var connstate = document.createElement('div');
+                        connstate.className = 'connectionstate';
+                        container.appendChild(connstate);
+                        peer.pc.on('iceConnectionStateChange', function (event) {
+                            switch (peer.pc.iceConnectionState) {
+                            case 'checking': 
+                                $(connstate).text('Connecting to peer...');
+                                break;
+                            case 'connected':
+                            case 'completed': // on caller side
+                                $(connstate).text('Connection established.');
+                                break;
+                            case 'disconnected':
+                                $(connstate).text('Disconnected.');
+                                break;
+                            case 'failed':
+                                $(connstate).text('Connection failed.');
+                                break;
+                            case 'closed':
+                                $(connstate).text('Connection closed.');
+                                break;
+                            }
+                        });
+                    }
+                    remotes.appendChild(container);
+                }
+            });
+            // a peer was removed
+            webrtc.on('videoRemoved', function (video, peer) {
+                console.log('video removed ', peer);
+                var remotes = document.getElementById('remotes');
+                var el = document.getElementById(peer ? 'container_' + webrtc.getDomId(peer) : 'localScreenContainer');
+                if (remotes && el) {
+                    remotes.removeChild(el);
+                }
+            });
+
+            // local volume has changed
+            webrtc.on('volumeChange', function (volume, treshold) {
+                showVolume(document.getElementById('localVolume'), volume);
+            });
+
+            // Since we use this twice we put it here
+            function setRoom(name) {
+                $('form').remove();
+                $('h1').text(name);
+                $('#subTitle').text('Link to join: ' + location.href);
+                $('body').addClass('active');
+            }
+
+            if (room) {
+                setRoom(room);
+            } else {
+                $('form').submit(function () {
+                    var val = $('#sessionInput').val().toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_\-]/g, '');
+                    webrtc.createRoom(val, function (err, name) {
+                        console.log(' create room cb', arguments);
+                    
+                        var newUrl = location.pathname + '?' + name;
+                        if (!err) {
+                            history.replaceState({foo: 'bar'}, null, newUrl);
+                            setRoom(name);
+                        } else {
+                            console.log(err);
+                        }
+                    });
+                    return false;          
+                });
+            }
+
+            var button = $('#screenShareButton'),
+                setButton = function (bool) {
+                    button.text(bool ? 'share screen' : 'stop sharing');
+                };
+            if (!webrtc.capabilities.screenSharing) {
+                button.attr('disabled', 'disabled');
+            }
+            webrtc.on('localScreenRemoved', function () {
+                setButton(true);
+            });
+
+            setButton(true);
+
+            button.click(function () {
+                if (webrtc.getLocalScreen()) {
+                    webrtc.stopScreenShare();
+                    setButton(true);
+                } else {
+                    webrtc.shareScreen(function (err) {
+                        if (err) {
+                            setButton(true);
+                        } else {
+                            setButton(false);
+                        }
+                    });
+                    
+                }
+            });
+        </script>
+    </body>
+</html>
