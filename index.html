@@ -34,14 +34,14 @@ html {
 }
 .charts {
   position: relative;
-  border: black solid 1px;
-  border-radius: 5px;
   left: 50%;
   margin-left: -400px;
-  width: 800px;
   top: 10px;
-  /*margin-top: 10px;*/
+  width: 800px;
   height: 200px;
+  border: black solid 1px;
+  border-radius: 5px;
+  /*margin-top: 10px;*/
   /*margin: 20px;*/
 }
 .impress {
@@ -86,7 +86,7 @@ html {
             }
             ```
         </script>
-    </section>
+      </section>
       <section>
         <h1>wtf</h1>
       </section>
@@ -105,8 +105,8 @@ html {
 Reveal.initialize({
   width: 800,
   height: 400,
-  margin: 0.1,
-  minScale: 0.2,
+  margin: 0.5,
+  minScale: 1.0,
   maxScale: 1.0,
 
 
@@ -129,7 +129,7 @@ Reveal.initialize({
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
   // $(function() {
-    $('#sketch').clear();
+    // $('#sketch').clear();
   // });
 });
 
@@ -139,6 +139,8 @@ $(document).ready(function() {
   //   "width": "800",
   //   "height": "200"
   // });
+  $('slides').attr('zoom','1.0')
+
   $(function() {
     $('#sketch').sketch();
   });
