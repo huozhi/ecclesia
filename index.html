@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>test</title>
+<link rel="stylesheet" href="reveal.css"></style>
+<link rel="stylesheet" href="bootstrap.min.css"></style>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/js/head.min.js"></script>
+<script type="text/javascript" src="reveal.js"></script>
+<script type="text/javascript" src="sketch.min.js"></script>
+<script type="text/javascript" src="Chart.min.js"></script>
+</script>
+<style type="text/css">
+
+.board {
+  position: relative;
+  top:7px;
+  left: 50%;
+  margin-left: -400px; 
+  width: 800px;
+  height: 400px;
+  border: red solid 1px;
+  border-radius: 5px;
+}
+.sketch {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255,255,255,0.5);
+}
+.charts {
+  position: relative;
+  top: 10px;
+  left: 50%;
+  margin-left: -400px;
+  width: 800px;
+  height: 200px;
+  border: black solid 3px;
+  border-radius: 5px;  
+}
+.reveal {
+  position: relative;
+  top: -405px;
+  width: 800px;
+  height: 400px;
+  z-index: 1;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 5px;
+}
+
+.slides {
+  border: blue dashed 2px;
+  width: 800px;
+  height: 400px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="board">
+  <canvas id="sketch" class="sketch" width="800" height="400"></canvas>
+  <div id="reveal" class="reveal">
+    <div class="slides">
+      <section data-markdown="example.md"  
+         data-separator="^\n\n\n"  
+         data-vertical="^\n\n"  
+         data-notes="^Note:"  
+         data-charset="iso-8859-15">
+      </section>
+      <section data-markdown>
+        <script type="text/template">
+            ```php
+            public function foo()
+            {
+                $foo = array(
+                    'bar' => 'bar'
+                )
+            }
+            ```
+        </script>
+    </section>
+      <section>
+        <h1>wtf</h1>
+      </section>
+      <section>
+        <h1>hell</h1>
+      </section>
+    </div>
+  </div>
+</div>
+<div id="charts" class=" charts">
+  
+</div>
+</div>
+<script type="text/javascript">
+
+Reveal.initialize({
+  width: 800,
+  height: 400,
+  margin: 0.1,
+  minScale: 0.2,
+  maxScale: 1.0,
+
+
+  center: true,
+  transition: 'linear',
+  transitionSpeed: 'slow',
+  backgroundTransition: 'slide',
+
+  dependencies: [
+    { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: './plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: './plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: './plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: './plugin/math/math.js', async: true }
+    ]  
+});
+
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  $(function() {
+    $('#sketch').clear();
+  });
+});
+
+$(document).ready(function() {
+  // $('.slides').width = 800;
+  // $('.slides').css({
+  //   "width": "800",
+  //   "height": "200"
+  // });
+  $(function() {
+    $('#sketch').sketch();
+  });
+  $('#ac').click(function() {
+    $('#charts').append('<canvas id="myChart" width="800" height="400"></canvas>');
+    var ctx = $('#myChart').get(0).getContext('2d');
+    var data = {
+      labels : ["January","February","March","April","May","June","July"],
+      datasets : [
+        {
+          fillColor : "rgba(220,220,220,0.5)",
+          strokeColor : "rgba(220,220,220,1)",
+          pointColor : "rgba(220,220,220,1)",
+          pointStrokeColor : "#fff",
+          data : [65,59,90,81,56,55,40]
+        },
+        {
+          fillColor : "rgba(151,187,205,0.5)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          data : [28,48,40,19,96,27,100]
+        }
+      ]
+    }
+    new Chart(ctx).Line(data);
+  });
+});
+
+</script>
+</body>
+</html>
