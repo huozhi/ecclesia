@@ -1066,9 +1066,13 @@ var Reveal = (function(){
 			// Prefer applying scale via zoom since Chrome blurs scaled content
 			// with nested transforms
 			if( typeof dom.slides.style.zoom !== 'undefined' && !navigator.userAgent.match( /(iphone|ipod|ipad|android)/gi ) ) {
+<<<<<<< HEAD
 				// dom.slides.style.zoom = scale;
 				dom.slides.style.zoom = 1;
 
+=======
+				dom.slides.style.zoom = scale;
+>>>>>>> e6e971764b216c94b87775bfe9c8e8de2286ff53
 			}
 			// Apply scale transform as a fallback
 			else {
@@ -1093,8 +1097,12 @@ var Reveal = (function(){
 						slide.style.top = 0;
 					}
 					else {
+<<<<<<< HEAD
 						/*slide.style.top = Math.max( - ( getAbsoluteHeight( slide ) / 2 ) - slidePadding, -slideHeight / 2 ) + 'px';*/
 						slide.style.top =  slideHeight/2 - getAbsoluteHeight( slide )/2  + 'px';
+=======
+						slide.style.top = Math.max( - ( getAbsoluteHeight( slide ) / 2 ) - slidePadding, -slideHeight / 2 ) + 'px';
+>>>>>>> e6e971764b216c94b87775bfe9c8e8de2286ff53
 					}
 				}
 				else {
