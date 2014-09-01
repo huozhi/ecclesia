@@ -14,59 +14,60 @@
 </script>
 <style type="text/css">
 html {
-  overflow-y: scroll;
-}
-.sketch {
-  position: relative;
-  border: black solid 1px;
-  border-radius: 5px;
-  left: 50%;
-  margin: 0px 0px 0px -400px;
-  
-  width: 800px;
-  height: 400px;
-  /*margin-bottom: 10px;*/
+  overflow: auto;
 }
 .board {
   position: relative;
+  left: 50%;
+  margin-left: -400px;
+  width: 800px;
+  height: 400px;
+  border: black solid 1px;
+  border-radius: 5px;  
+}
+.sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0px;
+  border: black solid 0px;
+  border-radius: 5px;
   z-index: 2;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255,255,255,0);
 }
 .charts {
   position: relative;
   left: 50%;
   margin-left: -400px;
-  top: 10px;
+  margin-top: 10px;
   width: 800px;
   height: 200px;
   border: black solid 1px;
   border-radius: 5px;
-  /*margin-top: 10px;*/
-  /*margin: 20px;*/
+
 }
 .impress {
-  position: relative;
+  position: absolute;
   margin: 0px;
-  padding: 0px;
   border: black solid 1px;
   border-radius: 5px;
   width: 800px;
   height: 400px;
   z-index: 1;
-  top: -400px;
+  
   zoom: 1;
 }
 
-.reveal .slides {
-  zoom: 1.0;
+/*section.present {
+  height: 400px;
 }
+*/
 </style>
 </head>
 <body>
 
 <div class="container">
-<div class="sketch">
-  <canvas id="sketch" class="board" width="800" height="400"></canvas>
+<div class="board">
   <div id="reveal" class="reveal impress">
     <div class="slides">
       <section data-markdown="example.md"  
@@ -127,23 +128,51 @@ Reveal.initialize({
     ]  
 });
 
-Reveal.addEventListener( 'slidechanged', function( event ) {
-  // $(function() {
-    // $('#sketch').clear();
-  // });
+Reveal.addEventListener( 'ready', function( event ) {
+  var present = $('.slides > section.present');
+  if (present.has('.sketch-present').length != 0) {
+    console.log('has canvas')
+    var curCanvas = $('.present > .sketch-present');
+    if (curCanvas.hasClass('sketch-present') == false) {
+      console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    console.log('ready no canvas')
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+  $(function() {
+    $('.sketch-present').sketch();
+  });
 });
 
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  $('.sketch-present').removeClass('sketch-present');
+  var present = $('.slides > section.present');
+  if (present.has('.sketch-present').length != 0) {
+    console.log('has canvas')
+    var curCanvas = $('.present > .sketch-present');
+    if (curCanvas.hasClass('sketch-present') == false) {
+      console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    console.log('slideChange no canvas')
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+  $(function() {
+    $('.sketch-present').sketch();
+  });
+});
+
+
+
 $(document).ready(function() {
-  // $('.slides').width = 800;
-  // $('.slides').css({
-  //   "width": "800",
-  //   "height": "200"
-  // });
+  
   $('slides').attr('zoom','1.0')
 
-  $(function() {
-    $('#sketch').sketch();
-  });
   $('#ac').click(function() {
     $('#charts').append('<canvas id="myChart" width="800" height="400"></canvas>');
     var ctx = $('#myChart').get(0).getContext('2d');
