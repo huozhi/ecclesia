@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <title>test</title>
 <link rel="stylesheet" href="reveal.css"></style>
 <link rel="stylesheet" href="bootstrap.min.css"></style>
@@ -13,61 +15,57 @@
 <script type="text/javascript" src="Chart.min.js"></script>
 </script>
 <style type="text/css">
-html {
-  overflow-y: scroll;
-}
-.sketch {
+.board {
   position: relative;
-  border: black solid 1px;
-  border-radius: 5px;
+  top:7px;
   left: 50%;
-  margin: 0px 0px 0px -400px;
-  
+  margin-left: -400px; 
   width: 800px;
   height: 400px;
-  /*margin-bottom: 10px;*/
+  border: red solid 1px;
+  border-radius: 5px;
 }
-.board {
+.sketch {
   position: relative;
   z-index: 2;
   background-color: rgba(255,255,255,0.5);
 }
 .charts {
   position: relative;
-  border: black solid 1px;
-  border-radius: 5px;
+  top: 10px;
   left: 50%;
   margin-left: -400px;
   width: 800px;
-  top: 10px;
-  /*margin-top: 10px;*/
   height: 200px;
-  /*margin: 20px;*/
+  border: black solid 3px;
+  border-radius: 5px;  
 }
-.impress {
+.reveal {
   position: relative;
-  margin: 0px;
-  padding: 0px;
-  border: black solid 1px;
-  border-radius: 5px;
+  top: -405px;
   width: 800px;
   height: 400px;
   z-index: 1;
-  top: -400px;
-  zoom: 1;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 5px;
 }
-
-.reveal .slides {
-  zoom: 1.0;
+.slides {
+  border: blue dashed 2px;
+  width: 800px;
+  height: 400px;
+}
+.btn{
+  position: relative;
+  left: 50%;
 }
 </style>
 </head>
 <body>
-
-<div class="container">
-<div class="sketch">
-  <canvas id="sketch" class="board" width="800" height="400"></canvas>
-  <div id="reveal" class="reveal impress">
+<button class="btn">change</button>
+<div class="board">
+  <canvas id="sketch" class="sketch" width="800" height="400"></canvas>
+  <div id="reveal" class="reveal">
     <div class="slides">
       <section data-markdown="example.md"  
          data-separator="^\n\n\n"  
@@ -96,6 +94,7 @@ html {
     </div>
   </div>
 </div>
+
 <div id="charts" class=" charts">
   
 </div>
@@ -120,7 +119,7 @@ Reveal.initialize({
     { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
     { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
     { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-    { src: './plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: './plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
     // { src: './plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
     // { src: './plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
     { src: './plugin/math/math.js', async: true }
@@ -128,9 +127,10 @@ Reveal.initialize({
 });
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
-  // $(function() {
-   //$('#sketch').clear();
-  // });
+
+  $(function() {
+    $('#sketch').clear();
+  });
 });
 
 $(document).ready(function() {
