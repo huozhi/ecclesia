@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 <title>test</title>
 <link rel="stylesheet" href="reveal.css"></style>
 <link rel="stylesheet" href="bootstrap.min.css"></style>
-<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-<script type="text/javascript" src="bootstrap.min.js"></script>
-<script type="text/javascript" src="lib/js/head.min.js"></script>
-<script type="text/javascript" src="reveal.js"></script>
-<script type="text/javascript" src="sketch.min.js"></script>
-<script type="text/javascript" src="Chart.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="js/reveal.js"></script>
+<script type="text/javascript" src="js/sketch.min.js"></script>
+<script type="text/javascript" src="js/Chart.min.js"></script>
 </script>
 <style type="text/css">
 html {
@@ -32,11 +34,13 @@ html {
   padding: 0px;
   border: black solid 0px;
   border-radius: 5px;
+
   z-index: 2;
   background-color: rgba(255,255,255,0);
 }
 .charts {
   position: relative;
+
   left: 50%;
   margin-left: -400px;
   margin-top: 10px;
@@ -50,7 +54,11 @@ html {
   position: absolute;
   margin: 0px;
   border: black solid 1px;
+
   border-radius: 5px;
+}
+.slides {
+  border: blue dashed 2px;
   width: 800px;
   height: 400px;
   z-index: 1;
@@ -60,10 +68,7 @@ html {
 .navbar {
   margin-bottom: 5px;
 }
-/*section.present {
-  height: 400px;
-}
-*/
+
 </style>
 </head>
 <body>
@@ -154,6 +159,7 @@ html {
 <div class="container">
 <div class="board">
   <div id="reveal" class="reveal impress">
+
     <div class="slides">
       <section data-markdown="example.md"  
          data-separator="^\n\n\n"  
@@ -182,6 +188,7 @@ html {
     </div>
   </div>
 </div>
+
 <div id="charts" class=" charts">
   
 </div>
@@ -202,14 +209,14 @@ Reveal.initialize({
   backgroundTransition: 'slide',
 
   dependencies: [
-    { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
-    { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-    { src: './plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: './plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: './plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
-    { src: './plugin/math/math.js', async: true }
+    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'js/plugin/math/math.js', async: true }
     ]  
 });
 
@@ -229,6 +236,7 @@ Reveal.addEventListener( 'ready', function( event ) {
   }
   $(function() {
     $('.sketch-present').sketch();
+
   });
 });
 
