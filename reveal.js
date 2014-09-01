@@ -1093,7 +1093,8 @@ var Reveal = (function(){
 					}
 					else {
 						// slide.style.top = Math.max( - ( getAbsoluteHeight( slide ) / 2 ) - slidePadding, -slideHeight / 2 ) + 'px';
-						slide.style.top = Math.max( slideHeight / 2 - getAbsoluteHeight( slide ) / 2 ) + 'px';
+						// slide.style.top = Math.max( slideHeight / 2 - getAbsoluteHeight( slide ) / 2 ) + 'px';
+						slide.style.top = 0;
 					}
 				}
 				else {

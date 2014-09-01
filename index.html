@@ -57,7 +57,9 @@ html {
   
   zoom: 1;
 }
-
+.navbar {
+  margin-bottom: 5px;
+}
 /*section.present {
   height: 400px;
 }
@@ -65,6 +67,89 @@ html {
 </style>
 </head>
 <body>
+<nav class="navbar navbar-default " role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Tool Box</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="#" data-toggle="modal" data-target="#myModal1">
+            <span class="glyphicon glyphicon-stats"></span> Add Chart</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#myModal2">
+            <span class="glyphicon glyphicon-file"></span> Add Impress</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- navigator models -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+        <h4 class="modal-title" id="myModalLabel">Choose Chart</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-5 col-md-3 col-lg-2 ">
+              <div class="thumbnail">
+                <a href="http://codeguide.bootcss.com" title="" target="_blank"><img class="lazy" src="/img/chart-type-1.png" width="300" height="150" data-src="/img/chart-type-2.png" alt="Headroom.js"></a>
+                <div class="caption">
+                  <h4> 
+                    <a href="http://codeguide.bootcss.com" title="" target="_blank"><small>曲线图</small><br></a>
+                  </h4>
+                 
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-5 col-md-3 col-lg-2 ">
+              <div class="thumbnail">
+                <a href="/p/headroom.js/" title="" target="_blank"><img class="lazy" src="/img/chart-type-2.png" width="300" height="150" data-src="/img/chart-type-1.png" alt="Headroom.js"></a>
+                <div class="caption">
+                  <h3> 
+                    <a href="/p/headroom.js/" title="" target="_blank"><small>柱状图</small></a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-5 col-md-3 col-lg-2 ">
+              <div class="thumbnail">
+                <a href="/p/headroom.js/" title="" target="_blank"><img class="lazy" src="/img/chart-type-2.png" width="300" height="150" data-src="/img/chart-type-3.png" alt="Headroom.js"></a>
+                <div class="caption">
+                  <h3> 
+                    <a href="/p/headroom.js/" title="" target="_blank"><small>雷达图或蛛网图</small></a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
 <div class="board">
@@ -129,11 +214,11 @@ Reveal.initialize({
 });
 
 Reveal.addEventListener( 'ready', function( event ) {
-  var present = $('.slides > section.present');
-  if (present.has('.sketch-present').length != 0) {
+  var present = $('section.present');
+  if (present.children('canvas').length != 0) {
     console.log('has canvas')
-    var curCanvas = $('.present > .sketch-present');
-    if (curCanvas.hasClass('sketch-present') == false) {
+    var curCanvas = $('.present > canvas');
+    if (!curCanvas.hasClass('sketch-present')) {
       console.log('no active class')
       curCanvas.addClass('sketch-present');
     }
@@ -150,9 +235,9 @@ Reveal.addEventListener( 'ready', function( event ) {
 Reveal.addEventListener( 'slidechanged', function( event ) {
   $('.sketch-present').removeClass('sketch-present');
   var present = $('.slides > section.present');
-  if (present.has('.sketch-present').length != 0) {
+  if (present.children('canvas').length != 0) {
     console.log('has canvas')
-    var curCanvas = $('.present > .sketch-present');
+    var curCanvas = $('.present > canvas');
     if (curCanvas.hasClass('sketch-present') == false) {
       console.log('no active class')
       curCanvas.addClass('sketch-present');
