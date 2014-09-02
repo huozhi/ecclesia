@@ -74,7 +74,7 @@ html {
   height: 100px;
 }
 .chart-label {
-  width: 15%;
+  width: 188px;
 }
 </style>
 </head>
@@ -117,7 +117,7 @@ html {
       <div class="modal-body">
         <div class="container">
           <div class="row">
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-1.png" ></a>
                 <div class="caption">
@@ -127,7 +127,7 @@ html {
               </div>
             </div>
 
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-2.png" ></a>
                 <div class="caption">
@@ -136,7 +136,7 @@ html {
               </div>
             </div>
 
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-3.png" ></a>
                 <div class="caption">
@@ -147,7 +147,7 @@ html {
 
           </div>
           <div class="row">
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
                 <div class="caption">
@@ -157,7 +157,7 @@ html {
               </div>
             </div>
 
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-5.png" ></a>
                 <div class="caption">
@@ -166,7 +166,7 @@ html {
               </div>
             </div>
 
-            <div class="chart-label">
+            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
               <div class="thumbnail">
                 <a href="#" title=""><img class="lazy" src="/img/chart-type-6.png" ></a>
                 <div class="caption">
@@ -220,7 +220,7 @@ html {
 </div>
 
 <div id="charts" class=" charts">
-  
+  <canvas width="200" height="200" id=""></canvas>
 </div>
 </div>
 <script type="text/javascript">
@@ -256,12 +256,12 @@ Reveal.addEventListener( 'ready', function( event ) {
     console.log('has canvas')
     var curCanvas = $('.present > canvas');
     if (!curCanvas.hasClass('sketch-present')) {
-      console.log('no active class')
+      // console.log('no active class')
       curCanvas.addClass('sketch-present');
     }
   }
   else {
-    console.log('ready no canvas')
+    // console.log('ready no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
   $(function() {
@@ -274,10 +274,10 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
   $('.sketch-present').removeClass('sketch-present');
   var present = $('.slides > section.present');
   if (present.children('canvas').length != 0) {
-    console.log('has canvas')
+    // console.log('has canvas')
     var curCanvas = $('.present > canvas');
     if (curCanvas.hasClass('sketch-present') == false) {
-      console.log('no active class')
+      // console.log('no active class')
       curCanvas.addClass('sketch-present');
     }
   }
