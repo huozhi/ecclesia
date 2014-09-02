@@ -101,14 +101,22 @@ div.single-chart > button {
   top: 5px;
 }
 
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}
+
 </style>
 </head>
 <body>
 <nav class="navbar navbar-default " role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7">
-        <span class="sr-only">Toggle navigation</span>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
+        <span class="sr-only">navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -116,10 +124,10 @@ div.single-chart > button {
       <a class="navbar-brand" href="#">Tool Box</a>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
+    <div class="collapse navbar-collapse" id="tool-bar">
       <ul class="nav navbar-nav">
         <li class="active">
-          <a href="#" data-toggle="modal" data-target="#myModal1">
+          <a href="#" data-toggle="modal" data-target="#add-chart-modal">
             <span class="glyphicon glyphicon-stats"></span> Add Chart</a>
         </li>
         <li>
@@ -136,7 +144,7 @@ div.single-chart > button {
   </div>
 </nav>
 <!-- navigator models -->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="chart-modal-label" aria-hidden="true">
+<div class="modal fade" id="add-chart-modal" tabindex="-1" role="dialog" aria-labelledby="chart-modal-label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -144,68 +152,146 @@ div.single-chart > button {
         <h4 class="modal-title" id="chart-modal-label">Choose Chart</h4>
       </div>
       <div class="modal-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-1.png" ></a>
-                <div class="caption">
-                  
-                 
+
+        <div id="chart-insert-carousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+          <!-- <ol class="carousel-indicators">
+            <li data-target="#chart-insert-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#chart-insert-carousel" data-slide-to="1"></li>
+            <li data-target="#chart-insert-carousel" data-slide-to="2"></li>
+          </ol> -->
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-1.png" ></a>
+                      <div class="caption">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-2.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-3.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
+                      <div class="caption">
+                        
+                       
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-5.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-6.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!--end container-->
+        
+            </div>
+            <div class="item">
+              <!-- <form role="form">
+                <div class="form-group col-md-4">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                </div>
+                <br>
+                <div class="form-group col-md-4">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <br>
+                <div class="form-group col-md-4">
+                  <button id="chart-data-add" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  <button id="chart-data-submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-ok"></span>
+                  </button>
+                </div>
+              </form>
+ -->
+
+
+              <div class="chart-insert chart-insert-form center" role="form">
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <span class="input-group-addon">@</span>
+                  <input type="text" class="form-control " placeholder="X-axis">
+                </div>
+                <br>
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <span class="input-group-addon">@</span>
+                  <input type="text" class="form-control " placeholder="data-one">
+                </div>
+                <br>
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <span class="input-group-addon">@</span>
+                  <input type="text" class="form-control " placeholder="data-two">
+                </div>
+                <br>
+                <div class="input-group input-group-md col-md-8 ">
+                  <button id="chart-data-add" class="btn btn-primary col-md-offset-6">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  <button id="chart-data-submit" class="btn btn-primary col-md-offset-2">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </button>
                 </div>
               </div>
             </div>
-
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-2.png" ></a>
-                <div class="caption">
-                  
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-3.png" ></a>
-                <div class="caption">
-                  
-                </div>
-              </div>
-            </div>
-
+            
           </div>
-          <div class="row">
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
-                <div class="caption">
-                  
-                 
-                </div>
-              </div>
-            </div>
 
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-5.png" ></a>
-                <div class="caption">
-                  
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
-              <div class="thumbnail">
-                <a href="#" title=""><img class="lazy" src="/img/chart-type-6.png" ></a>
-                <div class="caption">
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-
+  <!-- Controls -->
+         <!--  <a class="left carousel-control" href="#chart-insert-carousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#chart-insert-carousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+          </a> -->
         </div>
+
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -311,7 +397,7 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     }
   }
   else {
-    console.log('slideChange no canvas')
+    // console.log('slideChange no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
   $(function() {
@@ -386,6 +472,19 @@ $(document).ready(function() {
     });
   });
 
+  $('.carousel').carousel({
+    interval: false
+  })
+
+
+  $('.add-opt').click(function() {
+    $('#chart-insert-carousel').carousel('next');
+  });
+
+  $('#chart-data-submit').click(function() {
+    $('#chart-insert-carousel').carousel('prev');
+
+  });
   
 });
 
