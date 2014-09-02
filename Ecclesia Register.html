@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>Ecclesia Register</title>
+<script src="./jquery.min.js"></script>
+<script>
+function DoCheck()
+{
+	var reg=/^[\u0391-\uFFE5a-zA-Z0-9]+$/;
+	if(usernametext.value=="")
+	{
+		alert("用户名不能为空！");
+		return false;
+	}
+	else if(!reg.test(usernametext.value))
+	{
+		alert("用户名只能由字母和数字组成！");
+		return false;
+	}
+	else if(passwordtext.value=="")
+	{
+		alert("密码不能为空！");
+		return false;
+	}
+	else if(!reg.test(passwordtext.value))
+	{
+		alert("密码只能由字母和数字组成！");
+		return false;
+	}
+	else if(passwordtext.value!=repeattext.value)
+	{
+		alert("密码不一致！");
+		return false;
+	}
+	return true;
+}
+</script>
+<style>
+.pos_abs
+{
+	position:absolute;
+	left:45%;
+	top:10%;
+}
+.pos_text
+{
+	position:absolute;
+	left:40%;
+	top:20%;
+}
+</style>
+
+<div class="pos_abs">
+	<h1>Register</h1>
+</div>
+<div class="pos_text">
+	<p>Username:<input type="text" class="text" name="usernametext" id="usernametext"/></p>
+	<p>Password:<input type="password" name="passwordtext" id="passwordtext"></p>
+	<p>Password Repeat:<input type="password" name="repeattext" id="repeattext"></p>
+	<button onclick="DoCheck()">Register</button>
+</div>
+
+
+</html>
