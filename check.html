@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-
+<html>
+<head>
+<meta http-equiv= "content-type" content= "text/html" charset="utf-8"/>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <style>
 	#pop-background {
 		position:absolute;
@@ -27,6 +30,8 @@
 	}
 </style>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 	var micReady = false,
 		camReady = false;
@@ -35,9 +40,9 @@
 			if(!micReady && !camReady){
 				$('#btn-enter').attr('disabled','disabled');
 			}
-			$('#pop-window').css('display','block');
-			$('#pop-background').css('display','block');
-
+			// $('#pop-window').css('display','block');
+			// $('#pop-background').css('display','block');
+			$("#myModal").modal('show');
 			setTimeout(showImg, 3000);//替换为检查设备
 		});
 
@@ -46,40 +51,67 @@
 		});
 
 		$('#btn-enter').click(function(){
-			$('#mic').removeClass('glyphicon glyphicon-ok');
-			$('#cam').removeClass('glyphicon glyphicon-ok');
-			$('#pop-window').css('display','none');
-			$('#pop-background').css('display','none');
+			 $('#mic').removeClass('glyphicon glyphicon-ok');
+			 $('#cam').removeClass('glyphicon glyphicon-ok');
+			// $('#pop-window').css('display','none');
+			// $('#pop-background').css('display','none');
+			$("#myModal").modal('hide');
 		});
 
 		function showImg(){
 			micReady = true;
 			camReady = true;
 
-			if(micReady) $('#mic').addClass('glyphicon glyphicon-ok');
-			if(camReady) $('#cam').addClass('glyphicon glyphicon-ok');
+			if(micReady) {
+				$('#mic').addClass('glyphicon glyphicon-ok');
+				$('#mic-opt').text("mircrophone is ok");
+			}
+			if(camReady) {
+				$('#cam').addClass('glyphicon glyphicon-ok');
+				$('#cam-opt').text("camera is ok");
+			}
 			if(micReady && camReady){
 				$('#btn-enter').removeAttr('disabled');
 			}
 		}
+
 	});
 </script>
-<button id='btn-pop' >pop out</button>
-<div id="pop-background" ></div>
-<div id="pop-window">
-	<h2> Checking Device</h2>
+</head>
+<body>
 
-	<div >
-		<div class="iten-div">
+
+<!-- Button trigger modal -->
+<button id='btn-pop' class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="iten-div">
 			<ol>
-				<li>checking microphone</li><span id="mic"></span>
-				<li>checking camera</li><span id="cam"></span>
+				<li id="mic-opt">checking microphone</li><span id="mic"></span>
+				<li id="cam-opt">checking camera</li><span id="cam"></span>
 			</ol>
 		</div>
-		<div class="btn-div">
-			<button id = 'btn-leave'class="btn-leave">Leave Room</button>
 
-			<button id = 'btn-enter'class="btn-enter">Enter Room</button>
-		</div>
-	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id = 'btn-leave' class="btn btn-default" data-dismiss="modal">Leave Room</button>
+        <button type="button" id = 'btn-enter' class="btn btn-primary" disabled='disabled' >Enter Room</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+</body>
+</html>
