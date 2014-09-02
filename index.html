@@ -50,6 +50,11 @@ html {
   border-radius: 5px;
 
 }
+
+.chart {
+  margin: 10px;
+}
+
 .impress {
   position: absolute;
   margin: 0px;
@@ -76,6 +81,25 @@ html {
 .chart-label {
   width: 188px;
 }
+
+.oper-frame {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+}
+
+.single-chart {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 5px;
+}
+div.single-chart > button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -100,6 +124,10 @@ html {
         <li>
           <a href="#" data-toggle="modal" data-target="#myModal2">
             <span class="glyphicon glyphicon-file"></span> Add Impress</a>
+        </li>
+        <li>
+          <a id="test-add-chart" href="#" data-toggle="modal" data-target="#myModal2">
+            <span class="glyphicon glyphicon-file"></span> Add Pie</a>
         </li>
         
       </ul>
@@ -220,7 +248,7 @@ html {
 </div>
 
 <div id="charts" class=" charts">
-  <canvas width="200" height="200" id=""></canvas>
+  
 </div>
 </div>
 <script type="text/javascript">
@@ -296,29 +324,59 @@ $(document).ready(function() {
   
   $('slides').attr('zoom','1.0')
 
-  $('#ac').click(function() {
-    $('#charts').append('<canvas id="myChart" width="800" height="400"></canvas>');
+  $('#test-add-chart').click(function() {
+    var addContent =
+    '<div class="single-chart">' +
+      '<canvas class="chart" id="myChart" width="180" height="180"></canvas>' +
+        '<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button>' +
+      '</div>';
+    $('#charts').append(addContent);
     var ctx = $('#myChart').get(0).getContext('2d');
-    var data = {
-      labels : ["January","February","March","April","May","June","July"],
-      datasets : [
-        {
-          fillColor : "rgba(220,220,220,0.5)",
-          strokeColor : "rgba(220,220,220,1)",
-          pointColor : "rgba(220,220,220,1)",
-          pointStrokeColor : "#fff",
-          data : [65,59,90,81,56,55,40]
-        },
-        {
-          fillColor : "rgba(151,187,205,0.5)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          data : [28,48,40,19,96,27,100]
-        }
-      ]
-    }
-    new Chart(ctx).Line(data);
+    var pieData = [
+      {
+        value : 20,
+        color : "#F38630",
+        label : 'Sleep',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      {
+        value : 30,
+        color : "#E38231",
+        label : 'Wocao',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      {
+        value : 50,
+        color : "#FFF630",
+        label : 'Heihei',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      
+    ];
+    // var data = {
+    //   labels : ["January","February","March","April","May","June","July"],
+    //   datasets : [
+    //     {
+    //       fillColor : "rgba(220,220,220,0.5)",
+    //       strokeColor : "rgba(220,220,220,1)",
+    //       pointColor : "rgba(220,220,220,1)",
+    //       pointStrokeColor : "#fff",
+    //       data : [65,59,90,81,56,55,40]
+    //     },
+    //     {
+    //       fillColor : "rgba(151,187,205,0.5)",
+    //       strokeColor : "rgba(151,187,205,1)",
+    //       pointColor : "rgba(151,187,205,1)",
+    //       pointStrokeColor : "#fff",
+    //       data : [28,48,40,19,96,27,100]
+    //     }
+    //   ]
+    // }
+    new Chart(ctx).Pie(pieData);
+
   });
 });
 
