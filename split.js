@@ -1,9 +1,14 @@
 var fs = require('fs');
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/nodetest1');
 
 var fileString = fs.readFileSync('./example.md', 'utf-8');
 var impresses = fileString.split(/\+{6,}/);
 
-if(!fs.exists('impresses')){
+console.log(fs.existsSync('impresses'));
+if(!fs.existsSync('impresses')){
+	console.log('mkdir');
 	fs.mkdirSync('impresses');
 }
 
