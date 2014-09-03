@@ -7,24 +7,25 @@
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css"></style>
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+<link rel="stylesheet" type="text/css" href="css/style5.css" />
 </head>
 <style>
 thead{
 	background-color: #eeeeee;
 }
-.btn-home {
-	position: relative;
+body {
+	background-image: url(img/pattern.png), url(img/bd-1.jpg);
 	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	overflow: hidden;
 }
-.container {
+/*.container {
 	position: absolute;
 	left: 50%;
 	top: 250px;
 	margin-left: -90px; 
 	width: 180px;
-}
+}*/
 .history-block {
 	position: absolute;
 	top: 15%;
@@ -71,14 +72,39 @@ thead{
 #add-user {
 	margin-left: 20px;
 }
+.menu-block {
+	top: 50px;
+}
 </style>
 
-<body id="body">
-<div class="container">
+<body>
+	<div class="container">
+	    <div class="header" style="left:-115px;width:1370px;">
+	        <span class="right">
+	            <a href="###">
+	                <strong>Log out</strong>
+	            </a>
+	        </span>
+	        <div class="clr"></div>
+	    </div>
+	    <h1 style="margin-left:-110px;">Ecclesia Home <span>welcome use Ecclesia</span></h1>
+	    <div class="content menu-block">
+	        <ul class="bmenu">
+	            <li><a href="###" data-toggle="modal" data-target="#createModal" style="text-decoration: none;line-height:1.2em;">Create Room</a></li>
+	            <li><a href="###" data-toggle="modal" data-target="#joinModal" style="text-decoration: none;line-height:1.2em;">Join Room</a></li>
+	            <li><a href="###" onclick="javascript:window.open('file:///D:/test/query-history.html','_top')" style="text-decoration: none;line-height:1.2em;">Query History</a></li>
+	            <li><a href="###" style="text-decoration: none;line-height:1.2em;">About</a></li>
+	            <li><a href="###" style="text-decoration: none;line-height:1.2em;">Description</a></li>
+	        </ul>
+	    </div>
+	</div>
+
+<!-- <div class="container">
 	<button type="button" class="btn btn-primary btn-home" onclick="javascript:window.open('file:///D:/test/query-history.html','_top')">Query History</button>
 	<button class="btn btn-primary btn-home" id="createRoom" data-toggle="modal" data-target="#createModal">Create A Room</button>
 	<button class="btn btn-primary btn-home" id="joinRoom" data-toggle="modal" data-target="#joinModal">Join Room</button> 
-</div>
+</div> -->
+
 <!--===================== join room ==========================-->
 <div class="modal fade" id="joinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -190,10 +216,10 @@ $(document).ready(function(){
 		var username = $("#user-input").val();
 		var str = "<li class='list-group-item'>" + username + "<span class='glyphicon glyphicon-remove' id='" + username + "' style='float:right;'></span></li>"
 		$(".list-group").append(str);
+		$("#user-input").val("");
 		$("#"+ username).click(function(){
 			var obj = $("#" + username).parent();
 			obj.remove();
-			alert("test");
 		});
 	});
 });
