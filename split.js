@@ -12,6 +12,9 @@ if(!fs.existsSync('impresses')){
 	fs.mkdirSync('impresses');
 }
 
+var impressCollection = db.get('usercollection');
+impressCollection.drop();
+
 
 for (i = 0; i < impresses.length; i++){
 	fs.openSync('impresses/imp'+i+'.md', 'w');
@@ -20,5 +23,20 @@ for (i = 0; i < impresses.length; i++){
 		if(err) console.log(err.message);
 
 		else console.log('done');
+	});
+
+	var impName = 'imp'+i;
+	console.log(impName);
+	var doc = {};
+	doc[impName] = impresses[i];
+	//var doc = ({impName: impresses[i]});
+
+
+	impressCollection.insert(doc, function(err, doc){
+		if(err) throw err;
+	});
+
+	impressCollection.find({}, function(err, docs){
+		console.log(docs);
 	});
 }
