@@ -218,14 +218,13 @@ div.single-chart > button {
         
             </div>
             <div class="item">
-
               <div class="chart-insert chart-insert-form center" role="form">
                 <div class="input-group input-group-md col-md-8 col-md-offset-2">
-                  <input type="text" class="form-control " placeholder="X-axis">
+                  <input type="text" class="form-control chart-data-input chart-data-axis" placeholder="X-axis">
                 </div>
                 <br>
                 <div class="input-group input-group-md col-md-8 col-md-offset-2">
-                  <input type="text" class="form-control" placeholder="data">
+                  <input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">
                 </div>                
                 <br>
                 <div class="chart-btn input-group input-group-md col-md-8 ">
@@ -235,6 +234,9 @@ div.single-chart > button {
                   <button id="chart-data-submit" class="btn btn-primary col-md-offset-2">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                   </button>
+                </div>
+                <div class="carousel-cpation input-group input-group-md col-md-8 container">
+                  <canvas id="chart-preview" width="300" height="300"></canvas>
                 </div>
               </div>
             </div>
@@ -361,7 +363,7 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
 $(document).ready(function() {
   
   $('slides').attr('zoom','1.0')
-  
+   
 
 
   $('#test-add-chart').click(function() {
@@ -396,25 +398,7 @@ $(document).ready(function() {
       },
       
     ];
-    // var data = {
-    //   labels : ["January","February","March","April","May","June","July"],
-    //   datasets : [
-    //     {
-    //       fillColor : "rgba(220,220,220,0.5)",
-    //       strokeColor : "rgba(220,220,220,1)",
-    //       pointColor : "rgba(220,220,220,1)",
-    //       pointStrokeColor : "#fff",
-    //       data : [65,59,90,81,56,55,40]
-    //     },
-    //     {
-    //       fillColor : "rgba(151,187,205,0.5)",
-    //       strokeColor : "rgba(151,187,205,1)",
-    //       pointColor : "rgba(151,187,205,1)",
-    //       pointStrokeColor : "#fff",
-    //       data : [28,48,40,19,96,27,100]
-    //     }
-    //   ]
-    // }
+    
     new Chart(ctx).Pie(pieData);
     $('.rm-chart').click(function() {
       // console.log('rm corresponding chart');
@@ -424,7 +408,7 @@ $(document).ready(function() {
 
   $('.carousel').carousel({
     interval: false
-  })
+  });
 
 
   $('.add-opt').click(function() {
@@ -441,7 +425,7 @@ $(document).ready(function() {
     if (len > 2 && len < 5) {
       var nums = ['axis','one','two','three'];
       var inputForm = '<div class="input-group input-group-md col-md-8 col-md-offset-2">' +
-        '<input type="text" class="form-control" placeholder="data">';
+        '<input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">';
       var rmBtn = '<span class="input-group-btn"><button class="btn btn-primary rm-input-btn">' + 
                     '<span class="glyphicon glyphicon-remove"></span></button></span></div><br>'
       $(inputForm + rmBtn).insertBefore('.chart-btn');
@@ -452,7 +436,49 @@ $(document).ready(function() {
     });
   });
   
-  
+  // preview chart to insert
+
+    // January February March April May June July
+    // 28 48 40 19 96 27 100
+  $('.chart-data-input').dblclick(function() {
+    var xAxis = $('.chart-data-axis').val().split(' ');
+    if (xAxis.length < 2) return;
+    // console.log(xAxis)
+    var datas = [];
+    var colors = [
+      {
+        fillColor: 'rgba(220,220,220,0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+      },
+      {
+        fillColor: 'rgba(151,187,205,0.5)',
+        strokeColor: 'rgba(151,187,205,1)',
+        pointColor: 'rgba(151,187,205,1)',
+      }
+    ];
+    $('.chart-data-val').each(function(index,element) {
+      var columnData = element.value.split(' ').map(Number);
+      if (columnData.length != xAxis.length) return;
+      // console.log(columnData);
+      datas.push(
+        {
+          fillColor : colors[index].fillColor,
+          strokeColor: colors[index].strokeColor,
+          pointColor: colors[index].pointColor,
+          pointStrokeColor : "#fff",
+          data: columnData
+        }
+      );
+    });
+    // console.log(datas);
+    var lineData = {
+      labels: xAxis,
+      datasets: datas
+    };
+    var previewCtx = $('#chart-preview').get(0).getContext('2d');
+    new Chart(previewCtx).Line(lineData);
+  });
 });
 
 </script>
