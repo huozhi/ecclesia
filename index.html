@@ -154,13 +154,6 @@ div.single-chart > button {
       <div class="modal-body">
 
         <div id="chart-insert-carousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-          <!-- <ol class="carousel-indicators">
-            <li data-target="#chart-insert-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#chart-insert-carousel" data-slide-to="1"></li>
-            <li data-target="#chart-insert-carousel" data-slide-to="2"></li>
-          </ol> -->
-
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
@@ -198,7 +191,6 @@ div.single-chart > button {
                     <div class="thumbnail">
                       <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
                       <div class="caption">
-                        
                        
                       </div>
                     </div>
@@ -226,46 +218,17 @@ div.single-chart > button {
         
             </div>
             <div class="item">
-              <!-- <form role="form">
-                <div class="form-group col-md-4">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                </div>
-                <br>
-                <div class="form-group col-md-4">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <br>
-                <div class="form-group col-md-4">
-                  <button id="chart-data-add" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus"></span>
-                  </button>
-                  <button id="chart-data-submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-ok"></span>
-                  </button>
-                </div>
-              </form>
- -->
-
 
               <div class="chart-insert chart-insert-form center" role="form">
                 <div class="input-group input-group-md col-md-8 col-md-offset-2">
-                  <span class="input-group-addon">@</span>
                   <input type="text" class="form-control " placeholder="X-axis">
                 </div>
                 <br>
                 <div class="input-group input-group-md col-md-8 col-md-offset-2">
-                  <span class="input-group-addon">@</span>
-                  <input type="text" class="form-control " placeholder="data-one">
-                </div>
+                  <input type="text" class="form-control" placeholder="data">
+                </div>                
                 <br>
-                <div class="input-group input-group-md col-md-8 col-md-offset-2">
-                  <span class="input-group-addon">@</span>
-                  <input type="text" class="form-control " placeholder="data-two">
-                </div>
-                <br>
-                <div class="input-group input-group-md col-md-8 ">
+                <div class="chart-btn input-group input-group-md col-md-8 ">
                   <button id="chart-data-add" class="btn btn-primary col-md-offset-6">
                     <span class="glyphicon glyphicon-plus"></span>
                   </button>
@@ -278,19 +241,7 @@ div.single-chart > button {
             
           </div>
 
-  <!-- Controls -->
-         <!--  <a class="left carousel-control" href="#chart-insert-carousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#chart-insert-carousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-          </a> -->
         </div>
-
-
-
 
       </div>
       <div class="modal-footer">
@@ -417,7 +368,7 @@ $(document).ready(function() {
     var addContent =
     '<div class="single-chart">' +
       '<canvas class="chart" width="180" height="180"></canvas>' +
-      '<button id="budapeisi" class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+      '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
     '</div>';
     $('#charts').append(addContent);
     var ctx = $('canvas.chart').last().get(0).getContext('2d');
@@ -465,9 +416,8 @@ $(document).ready(function() {
     //   ]
     // }
     new Chart(ctx).Pie(pieData);
-
     $('.rm-chart').click(function() {
-      console.log('rm corresponding chart');
+      // console.log('rm corresponding chart');
       $(this).parent().remove();
     });
   });
@@ -485,6 +435,23 @@ $(document).ready(function() {
     $('#chart-insert-carousel').carousel('prev');
 
   });
+
+  $('#chart-data-add').click(function() {
+    var len = $('.chart-insert').children('div').length;
+    if (len > 2 && len < 5) {
+      var nums = ['axis','one','two','three'];
+      var inputForm = '<div class="input-group input-group-md col-md-8 col-md-offset-2">' +
+        '<input type="text" class="form-control" placeholder="data">';
+      var rmBtn = '<span class="input-group-btn"><button class="btn btn-primary rm-input-btn">' + 
+                    '<span class="glyphicon glyphicon-remove"></span></button></span></div><br>'
+      $(inputForm + rmBtn).insertBefore('.chart-btn');
+    }
+    $('.rm-input-btn').click(function() {
+      var $parentDiv = $(this).parent().parent();
+      $parentDiv.next().remove(); $parentDiv.remove();
+    });
+  });
+  
   
 });
 
