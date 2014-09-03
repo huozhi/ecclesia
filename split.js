@@ -13,10 +13,10 @@ if(!fs.existsSync('impresses')){
 }
 
 var impressCollection = db.get('usercollection');
-impressCollection.drop();
+impressCollection.remove({});
 
-
-for (i = 0; i < impresses.length; i++){
+var id = new Number(711);
+for (i = 0; i < impresses.length; i++,id++){
 	fs.openSync('impresses/imp'+i+'.md', 'w');
 
 	fs.writeFile('impresses/imp'+i+'.md', impresses[i], function(err){
@@ -26,17 +26,15 @@ for (i = 0; i < impresses.length; i++){
 	});
 
 	var impName = 'imp'+i;
-	console.log(impName);
+	var userName = 'user'+id.toString();
 	var doc = {};
 	doc[impName] = impresses[i];
-	//var doc = ({impName: impresses[i]});
-
-
+	doc['userName'] = userName;
 	impressCollection.insert(doc, function(err, doc){
 		if(err) throw err;
 	});
 
 	impressCollection.find({}, function(err, docs){
-		console.log(docs);
+		//console.log(docs);
 	});
 }
