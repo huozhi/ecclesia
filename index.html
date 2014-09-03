@@ -235,6 +235,7 @@ div.single-chart > button {
                     <span class="glyphicon glyphicon-chevron-left"></span>
                   </button>
                 </div>
+                <br>
                 <div class="carousel-cpation input-group input-group-md col-md-8 container">
                   <canvas id="chart-preview" width="300" height="300"></canvas>
                 </div>
@@ -434,12 +435,16 @@ $(document).ready(function() {
       var $parentDiv = $(this).parent().parent();
       $parentDiv.next().remove(); $parentDiv.remove();
     });
+
+    listenChartDataInput();
   });
   
-  // preview chart to insert
+  listenChartDataInput();
+});
 
-    // January February March April May June July
-    // 28 48 40 19 96 27 100
+
+function listenChartDataInput() {
+// preview chart to insert
   $('.chart-data-input').dblclick(function() {
     var xAxis = $('.chart-data-axis').val().split(' ');
     if (xAxis.length < 2) return;
@@ -457,8 +462,8 @@ $(document).ready(function() {
         pointColor: 'rgba(151,187,205,1)',
       }
     ];
-    $('.chart-data-val').each(function(index,element) {
-      var columnData = element.value.split(' ').map(Number);
+    $('.chart-data-val').each(function(index, element) {
+      var columnData = $(this).val().split(' ').map(Number);
       if (columnData.length != xAxis.length) return;
       // console.log(columnData);
       datas.push(
@@ -479,8 +484,7 @@ $(document).ready(function() {
     var previewCtx = $('#chart-preview').get(0).getContext('2d');
     new Chart(previewCtx).Line(lineData);
   });
-});
-
+}
 </script>
 </body>
 </html>
