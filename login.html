@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			text-align: center;
+
+		}
+		/*.nav-bar{
+			margin:0 auto;
+			width: 900px;
+		}*/
+		.login-form{
+			margin: 0 auto;
+			margin-top: 100px;
+			width: 300px;
+			height: 300px;
+			border: 1px solid #000;
+		}
+		.form-header{
+			float: left;
+		}
+		.form-body{
+			float: left;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">Ecclesia</a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <form class="navbar-form navbar-left" role="form">
+	            <div class="form-group">
+	              <input type="text" placeholder="Email" class="form-control">
+	            </div>
+	            <button type="submit" class="btn btn-success">Search</button>
+	          </form>
+	          <div class="navbar-right"><button type="submit" class="btn btn-success">Sign up</button></div>
+	        </div><!--/.navbar-collapse -->
+	      </div>
+    </div>
+
+		<div class="form-wrapper">
+			<div class="message-block">
+			</div>
+
+			<div class="login-form">
+				<form>
+					<div class = "form-header"><h2>Sign in</h2></div>
+					<div class = "form-body">
+						<div>
+							<label>Username</label>
+							<input type=text  id="username" name="username"/>
+						</div>
+						<div>
+							<label>Password</label>
+							<input type=password id="password" name="password"/>
+						</div>
+						<div>
+							<input type=submit class="btn-submit"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html> 
