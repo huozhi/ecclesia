@@ -1,6 +1,7 @@
 {
 	"dependencies":{
 		"mongodb":"*",
-		"monk":"*"
+		"monk":"*",
+		"mongoose":"*"
 	}
 }

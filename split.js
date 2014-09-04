@@ -1,7 +1,10 @@
 var fs = require('fs');
 var mongo = require('mongodb');
 var monk = require('monk');
+//var mongoose = require('mongoose');
+
 var db = monk('localhost:27017/nodetest1');
+//var db2 = mongoose.connect("mongod://localhost/nodetest2");
 
 var fileString = fs.readFileSync('./example.md', 'utf-8');
 var impresses = fileString.split(/\+{6,}/);
