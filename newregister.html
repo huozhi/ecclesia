@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<head>
+	<title>Register Page</title>
+	<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+   <script src="scripts/jquery.min.js"></script>
+   <script src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+.head-container{
+	background-color: #a1a3a6;
+	height:50px;
+}
+.sign-up-container{
+	background-color:#281f1d;
+	height:500px;
+}
+.text-container{
+	background-color:#f2eada ;
+	height:430px;
+}
+
+</style>
+
+<body style="width:100%">
+	<div class="head-container"
+	<nav class="navbar navbar-default" role="navigation" >
+		<div class="navbar-header" >
+			<a class="navbar-brand" href="#">Ecclesia</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#">Sign up</a></li>
+				<li><a href="#">Sign in</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+<div class="sign-up-container">
+	<div style="row">
+		<div class="col-md-8" style="padding:170px">
+			<p><font face="Mistral" size="7">Welcome to join us !</font></p>
+		</div>
+		<div class="col-md-4" style="padding:100px 70px 100px">
+			<div>
+				<input id="usernametext" type="text" class="form-control" placeholder="Pick a username">
+			</div>
+			<br>
+
+			<div>
+				<input id="passwordtext" type="password" class="form-control" placeholder="Create a password">
+			</div>
+			<br>
+
+			<div>
+				<input id="repeattext" type="password" class="form-control" placeholder="Repeat your password">
+			</div>
+			<br>
+			<div class="text-muted">
+				<p>Use letters, umerals and characters as your username or password</p>
+			</div>
+			<br>
+
+			<button type="button" id="sign-up-button" class="btn btn-primary btn-lg btn-block"  onclick="DoCheck()">
+				Sign up for Ecclesia
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="text-container">
+	<div id="myCarousel" class="carousel slide" style="padding:30px 140px 100px" data-ride="carousel">
+		<!-- 轮播（Carousel）指标 -->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+		</ol>   
+		<!-- 轮播（Carousel）项目 -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="./image/1.jpg" alt="First slide"></img>
+			</div>
+			<div class="item">
+				<img src="./image/2.jpg" alt="Second slide"></img>
+			</div>
+			<div class="item">
+				<img src="./image/3.jpg" alt="Third slide"></img>
+			</div>
+		</div>
+		<!-- 轮播（Carousel）导航 -->
+		<a class="carousel-control left" href="#myCarousel" 
+		data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" href="#myCarousel" 
+		data-slide="next">&rsaquo;</a>
+	</div> 
+</div>
+
+
+
+<script>
+function DoCheck()
+{
+	var reg=/^[\u0391-\uFFE5a-zA-Z0-9]+$/;
+	if(usernametext.value=="")
+	{
+		alert("用户名不能为空！");
+		return false;
+	}
+	else if(!reg.test(usernametext.value))
+	{
+		alert("用户名只能由字母、数字和汉字组成！");
+		return false;
+	}
+	else if(passwordtext.value=="")
+	{
+		alert("密码不能为空！");
+		return false;
+	}
+	else if(!reg.test(passwordtext.value))
+	{
+		alert("密码只能由字母、数字和汉字组成！");
+		return false;
+	}
+	else if(passwordtext.value!=repeattext.value)
+	{
+		alert("密码不一致！");
+		return false;
+	}
+	else
+	{
+		alert("注册成功！");
+		return true;
+	}
+	return true;
+}
+</script>
+
+<!--模态框-->
+<div class="modal fade" id="sign-up-result" tabindex="-1" role="dialog" 
+aria-labelledby="sign-up-result-Label" aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+			</button>
+			<h4 class="modal-title" id="myModalLabel">Sign up result</h4>
+		</div>
+		<div class="modal-body">Sign up result: success or failure</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" data-dismiss="modal">close</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>        
