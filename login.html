@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			/*text-align: center;*/
+
+		}
+		/*.nav-bar{
+			margin:0 auto;
+			width: 900px;
+		}*/
+
+		.login-form{
+			margin: 0 auto;
+			margin-top: 180px;
+			/*text-align: center;*/
+			width: 500px;
+			height: 280px;
+			border: 1px solid #ccc;
+		}
+		/*.form-horizontal{
+			margin: 0 auto;
+		}*/
+
+		.form-header{
+			margin: 0 auto;
+			text-align: center;
+			margin-top: 20px;
+			margin-bottom: 20px;
+
+		}
+
+		.center_div{
+			margin: 0 auto;
+    		width:40% 
+		}
+		
+		.button-group{
+			margin-top: 50px;
+		}
+	</style>
+	<script src="./js/jquery-1.10.2.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#btn-signup").click(function(){
+				window.location.href = "./register.html";
+			});
+			$("#btn-cancel").click(function(){
+				//alert('a');
+				window.location.href = "./register.html";
+			});
+			$("#btn-signin").click(function(){
+				//sign in action
+			})
+		});
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">Ecclesia</a>
+	        </div>
+
+	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+	          <ul class="nav navbar-nav">
+	            <li class="active">
+	            	<form class="navbar-form navbar-left" role="form">
+	              		<input type="text" placeholder="" class="form-control">
+	            		
+	          		</form>
+	            </li>
+	            <li><button type="button" class="btn btn-info navbar-btn">Search</button> </li>
+
+	          </ul>
+	           <div class="navbar-right">
+	             	<button type="button" class="btn btn-primary navbar-btn" id="btn-signup">Sign up</button>
+	             </div>
+        	</div><!-- /.navbar-collapse -->
+	      
+	      </div>
+    	</div>
+    	<div class="container center_div">
+
+		<div class="form-wrapper">
+			<div class="message-block">
+
+			</div>
+			<div class="login-form">
+				<form class="form-horizontal" role="form">
+					<h2 class="form-header">Sign in</h2>
+				  <div class="form-group">
+				    <!-- <label for="inputEmail3" class="col-sm-2 control-label">Email</label> -->
+				    <div class=" col-sm-offset-2 col-sm-8">
+				      <input type="email" class="form-control" id="inputEmail3" placeholder="Username">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <!-- <label for="inputPassword3" class="col-sm-2 control-label">Password</label> -->
+				    <div class="col-sm-offset-2 col-sm-8">
+				      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+				    </div>
+				  </div>
+				  <div class="form-group button-group">
+				    <div class="col-sm-offset-3 col-sm-4">
+				      <button type="button" class="btn btn-info" id="btn-signin">Sign in</button>
+				    </div>
+				    <div class="col-sm-offset-3 ">
+				      <button type="button" class="btn btn-default" id="btn-cancel">Cancel</button>
+				    </div>
+				  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html> 
