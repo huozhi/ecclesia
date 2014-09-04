@@ -10,7 +10,16 @@
 </head>
 <style>
 body {
-	background-color: #888888;
+	background-image: url(img/pattern.png), url(img/bd.jpg);
+	background-color: transparent;
+    background-repeat: repeat, no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: auto, cover;
+    -moz-background-size: auto, cover;
+    -o-background-size: auto, cover;
+    background-size: auto, cover;
+	font-family: 'Josefin Slab', Arial, sans-serif;
 }
 img {
 	float: left;
@@ -28,9 +37,7 @@ img {
 	margin-left: -490px;
 	margin-bottom: 50px;
 	width: 980px;
-	box-shadow: 1px 1px 30px #000000;
-	background-color: #ffffff;
-	border-radius: 0.5em;
+	color: #fff;
 }
 #queryLable {
 	float: left;
@@ -55,11 +62,11 @@ img {
 </style>
 <body>
 	<div class="back-container">
-		<h4 class="modal-title" id="queryLable">Query history</h4>
+		<h1 style="margin-left:-110px;">Query history </h1>
+		<!-- <h4 class="modal-title" id="queryLable">Query history</h4> -->
 		<button type="button" class="btn btn-primary btn-back" onclick="javascript:window.open('file:///D:/test/home.html','_top')">Home</button>
 		<button type="button" class="btn btn-default btn-back btnfade">Back</button>
-		<br/><br/>
-		<hr/>
+		<br/><br/><br/>
 		<div class="indexs">
 			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
 			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
