@@ -1,4 +1,4 @@
-var mongodb = require('mongodb');
+var mongodb = require('./db');
 
 function User(user){
   this.username = user.username;
@@ -8,31 +8,45 @@ function User(user){
   }
 }
 
-module.exports = User;
 
-User.register = function register(callback){
+
+User.prototype.register = function register(callback){
   var newUser = {
-    username : this.username;
-    userPwd : this.userPwd;
+    username : this.username,
+    userPwd : this.userPwd,
   };
 
   mongodb.open(function(err, db){
     if(err){
+      mongodb.close();
+      console.log('open failed');
       return callback(err);
     }
 
-    db.collection('Users',{strict : true},  function(err, collecion){
+    db.createCollection('Users', function(err, collecion){
         if(err){
           mongodb.close();
+          console.log('create failed');
           return callback(err);
         }
+      });
+    db.collection('Users', function(err, collection){
 
-        collecton.ensureIndex('username', {unique : true});
-        collection.insert(newUser, {safe : true}, function(err, newUser){
+        collection.ensureIndex("username", {unique : true}, function(err){
+          if(err)
+            {
+              mongodb.close();
+              return callback(err);
+            }
+        });
+
+        collection.insert(newUser, {safe : true}, function(err, newer){
           mongodb.close();
-          callback(err, newUser);
+          //console.log(typeof(newer));
+          return callback(err, newer);
         });
     });
+        
   });
 };
 
@@ -84,3 +98,5 @@ User.archive = function archive(conference, callback){
     });
   });
 };
+
+module.exports = User;
