@@ -3,8 +3,10 @@ var mongodb = require('./db');
 function User(user){
   this.username = user.username;
   this.userPwd = user.password;
-  if(user.conferences.length){
-   this.conferences = user.conferences;
+  if(user.conferences == 'undefined'){
+   this.conferences = [];
+  }else{
+    this.conferences = user.conferences;
   }
 }
 
@@ -53,8 +55,17 @@ User.prototype.register = function register(callback){
 User.get = function get(username, callback){
     mongodb.open(function(err, db){
       if(err){
+        mongodb.close();
         return callback(err);
       }
+
+      db.createCollection('Users', function(err, collecion){
+        if(err){
+          mongodb.close();
+          console.log('no creation');
+          return callback(err);
+        }
+      });
 
       db.collection('Users', {strict : true}, function(err, collection){
         if(err){
@@ -67,18 +78,20 @@ User.get = function get(username, callback){
 
           if(doc){
             var user = new User(doc);
-            callback(err, user);
+            return callback(err, user);
           }else{
-            callback(err, null);
+            mongodb.close();
+            return callback(err, null);
           }
         });
       });
     });
 };
 
-User.archive = function archive(conference, callback){
+User.archive = function archive(username, conference, callback){
   mongodb.open(function(err, db){
     if(err){
+      mongodb.close();
       return callback(err);
     }
     db.collection('Users', function(err, collection){
@@ -86,9 +99,13 @@ User.archive = function archive(conference, callback){
         mongodb.close();
         return callback(err);
       }
-      var username = this.username;
-      var conferenceName = conference.name;
-      collection.update( {username : name}, {$push : {"conferences" : conferenceName} }, function(err, doc){
+
+      //console.log(username+' '+conference.name);
+      collection.update( {username : username}, {$push : {"conferences" : conference} }, function(err, doc){
+        if(err){
+          mongodb.close();
+          return callback(err);
+        }
         mongodb.close();
         if(doc){
           console.log("update a conference");
