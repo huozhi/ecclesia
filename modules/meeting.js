@@ -78,3 +78,28 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
     }
   });
 }
+
+Meeting.saveMD = function saveMD(rooname, host, markdowns,callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();
+      return callback(err);
+    }else{
+      db.collection('Meetings',function(err,collecton){
+        if(err){
+          mongodb.close();
+          return callback(err);
+        }else{
+          collection.update({roomName:rooname,host:host},{"markdowns": markdowns}, function(err,doc){
+            if(err){
+              mongodb.close();
+              return callback(err);
+            }else{
+              console.log(doc);
+            }
+          })
+        }
+      });
+    }
+  });
+}
