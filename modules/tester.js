@@ -66,16 +66,35 @@ var newMeeting = {
   roomName : "weekly discuss",
   date : new Date(),
   host : "P.M. Lippman",
-  userList : ['Charpman', 'Node', 'Snoden'],
+  userList : [],
   ImpressList : [],
 }
 
-console.log(newMeeting.date);
+// console.log(newMeeting.date);
 
-Meeting.createRoom(newMeeting, function(err, meeting){
-  if(err){
-    console.log(err.message);
-  }else{
-    console.log(meeting);
-  }
-});
+// Meeting.createRoom(newMeeting, function(err, meeting){
+//   if(err){
+//     console.log(err.message);
+//   }else{
+//     console.log(meeting);
+
+//     Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
+//       if(err){
+//         console.log(err.message);
+//       }else{
+//         console.log('add participant.');
+//       }
+//     });
+//   }
+// });
+
+// add new participant test
+// Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Pony",function(err, result){
+//       if(err){
+//         console.log(err.message);
+//       }else{
+//         console.log('add participant.');
+//       }
+//     });
+
+// 

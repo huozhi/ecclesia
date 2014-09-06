@@ -49,3 +49,32 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
     });   
   });
 }
+
+Meeting.addParticipant = function(roomname, host, participant, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();
+      return callback(err);
+    }else{
+      db.collection('Meetings', {strict:true}, function(err, collection){
+        if(err){
+          mongodb.close();
+          return callback(err);
+        }else{
+          collection.update({roomName: roomname,host:host}, {$push:{"userList": participant}}, function(err, doc){
+            if(err){
+              mongodb.close();
+              return callback(err);
+            }else{
+              mongodb.close();
+              if(doc){
+                console.log(doc);
+                return callback(err, doc);
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+}
