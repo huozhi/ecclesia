@@ -1,4 +1,5 @@
 var User = require('./user');
+var Meeting = require('./meeting');
 
 var newUser1 = new User({
   username : 'tomas',
@@ -12,6 +13,7 @@ var newUser2 = new User({
   conferences : [],
 });
 
+/************************************user module test case******************************/
     //register tester
 // newUser1.register(function(err, newuser){
 //   if(err){
@@ -53,3 +55,27 @@ var newUser2 = new User({
 //     console.log(result);
 //   }
 // });
+
+/********************************************************************************/
+
+/*************************meeting module test case*******************************/
+
+// create a new room (meeting)
+
+var newMeeting = {
+  roomName : "weekly discuss",
+  date : new Date(),
+  host : "P.M. Lippman",
+  userList : ['Charpman', 'Node', 'Snoden'],
+  ImpressList : [],
+}
+
+console.log(newMeeting.date);
+
+Meeting.createRoom(newMeeting, function(err, meeting){
+  if(err){
+    console.log(err.message);
+  }else{
+    console.log(meeting);
+  }
+});
