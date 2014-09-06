@@ -1,6 +1,7 @@
 var User = require('./user');
 var Meeting = require('./meeting');
 
+var spliter = require('./split');
 var newUser1 = new User({
   username : 'tomas',
   password : 'itispwd',
@@ -97,4 +98,13 @@ var newMeeting = {
 //       }
 //     });
 
-// 
+
+//save markdowns test
+
+var file = "../example.md";
+
+spliter(file);
+
+/************************************************************************/
+
+/*************************/
