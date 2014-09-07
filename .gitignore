@@ -1,2 +1,3 @@
-node_modules/
-impresses/
+*.sublime-project
+*.sublime-workspace
+node_modules/*
