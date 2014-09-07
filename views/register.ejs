@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
+<head>
+<title>register [ecclesia]</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<style type="text/css">
+.sign-in-btn {
+	margin-right: 10px;
+}
+.bg-img {
+	position: absolute;
+	width: 100%;
+	z-index: 0;
+}
+.sign-up-container {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	z-index: 1;
+	height: 400px;
+	background-color: #000;	
+}
+</style>
+</head>
+
+<body>
+<!-- <div class="head-container"> -->
+	<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#toggle-opts">
+          <span class="sr-only">Tool Box</span>
+
+        </button>
+        <a class="navbar-brand" href="#">Navigator</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="toggle-opts">
+	      <div class="navbar-right">
+		      <a type="button" href="/login" class="btn btn-default navbar-btn sign-in-btn">Sign In</a>	      
+	      </div>
+      </div>
+    </div>
+  </nav>
+<!-- </div> -->
+
+<div class="sign-up-container ">
+	<div style="row">
+		<div class="col-md-8" style="padding:170px">
+			<p><font face="Mistral" size="7">Welcome to join us !</font></p>
+		</div>
+		<div class="col-md-4" style="padding:100px 70px 100px">
+			<div>
+				<input id="usernametext" type="text" class="form-control" placeholder="Pick a username">
+			</div>
+			<br>
+			<div>
+				<input id="passwordtext" type="password" class="form-control" placeholder="Create a password">
+			</div>
+			<br>
+			<div>
+				<input id="repeattext" type="password" class="form-control" placeholder="Repeat your password">
+			</div>
+			<br>
+			<div class="text-muted">
+				<p>Use letters, numerals and characters as your username or password</p>
+			</div>
+			<br>
+
+			<button type="button" id="sign-up-button" class="btn btn-primary btn-lg btn-block">
+				Sign up for Ecclesia
+			</button>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+
+</body>
+</html>        
