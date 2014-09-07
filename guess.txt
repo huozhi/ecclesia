@@ -1,0 +1,14 @@
+
+{ 
+	"ImpressList":
+	[
+		{"p1" : "markdown string"},
+		{"p2" : "chart base64 data"},
+		{"p3" : "...."},
+	],
+
+	"roomName" : "room temp",
+
+
+}
+?? 需要一个临时存储上传好的markdown 的集合
