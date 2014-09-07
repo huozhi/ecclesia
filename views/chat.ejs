@@ -12,11 +12,28 @@
 <script type="text/javascript" src="/js/reveal.js"></script>
 <script type="text/javascript" src="/js/sketch.min.js"></script>
 <script type="text/javascript" src="/js/Chart.min.js"></script>
-
+<script type="text/javascript" src="/rtc/socket.io.js"></script>
+<script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
 <style type="text/css">
 html {
   overflow-x: hidden;
 }
+
+.affix-left-bar {
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 220px;
+  height: 600px;
+}
+
+.main {
+  position: relative;
+  display: inline-block;
+  width: 900px;
+  height: 600px;
+}
+
 .board {
   position: relative;
   left: 50%;
@@ -51,7 +68,9 @@ html {
 }
 
 .chart {
+  position: relative;
   margin: 10px;
+  display: inline;
 }
 
 .impress {
@@ -62,7 +81,7 @@ html {
   border-radius: 5px;
 }
 .slides {
-  border: blue dashed 2px;
+  border: black solid 1px;
   width: 800px;
   height: 400px;
   z-index: 1;
@@ -108,6 +127,33 @@ div.single-chart > button {
     display:inline-block;
 }
 
+.sidebar {
+  position: relative;
+  float: left;
+  border: black solid 1px;
+  border-radius: 5px;
+  width: 220px;
+  margin-left: 10px;
+  height: 610px;
+}
+
+.video-frame {
+  margin: 20px 20px 0px 20px;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: black solid 1px;
+  border-radius: 5px;
+}
+
+.video-frame > video {
+  margin: 10px 10px 10px 10px;
+  position: relative;
+  width: 160px; height: 160px;
+  border: black solid 1px;
+  border-radius: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -127,14 +173,17 @@ div.single-chart > button {
             <span class="glyphicon glyphicon-stats"></span> Add Chart</a>
         </li>
         <li>
-          <a href="#" data-toggle="modal" data-target="#myModal2">
+          <a href="#" data-toggle="modal" data-target="">
             <span class="glyphicon glyphicon-file"></span> Add Impress</a>
         </li>
         <li>
-          <a id="test-add-chart" href="#" data-toggle="modal" data-target="#myModal2">
+          <a id="test-add-chart" href="#" data-toggle="modal" data-target="">
             <span class="glyphicon glyphicon-file"></span> Add Pie</a>
         </li>
-        
+        <li>
+          <a id="create-room-btn" data-toggle="modal" data-target="">
+            <span class="glyphicon glyphicon-file"></span> Create Room</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -256,45 +305,54 @@ div.single-chart > button {
   </div>
 </div>
 
-<div class="container">
-<div class="board">
-  <div id="reveal" class="reveal impress">
-
-    <div class="slides">
-      <section data-markdown>
-        <script type="text/template">
-            ```cpp
-            #include <iostream>
-            using namespace std;
-            int main() { cout << "hello world" << endl; return 0; }
-            ```
-        </script>
-      </section>
-      <section data-markdown>
-        <script type="text/template">
-            ```php
-            public function foo()
-            {
-                $foo = array(
-                    'bar' => 'bar'
-                )
-            }
-            ```
-        </script>
-      </section>
-      <section>
-        <h1>wtf</h1>
-      </section>
-      <section>
-        <h1>hell</h1>
-      </section>
+<div class="container-fluid">
+  <div class="affix-left-bar">
+    <div id="all-videos" class="sidebar">
+      <div id="local-video" class="video-frame"></div>
     </div>
   </div>
-</div>
 
-<div id="charts" class=" charts">
-  
-</div>
+  <div class="main">
+    <!-- sidebar of remote client videos -->
+    <!-- main board and charts blank -->
+    <div class="board">
+      <div id="reveal" class="reveal impress">
+
+        <div class="slides">
+          <section data-markdown>
+            <script type="text/template">
+                ```cpp
+                #include <iostream>
+                using namespace std;
+                int main() { cout << "hello world" << endl; return 0; }
+                ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+                ```php
+                public function foo()
+                {
+                    $foo = array(
+                        'bar' => 'bar'
+                    )
+                }
+                ```
+            </script>
+          </section>
+          <section>
+            <h1>wtf</h1>
+          </section>
+          <section>
+            <h1>hell</h1>
+          </section>
+        </div>
+      </div>
+    </div>
+    
+    <div id="charts" class="charts"></div>
+  </div><!-- end main -->
+
 </div>
 <script type="text/javascript">
 
@@ -368,8 +426,6 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
 $(document).ready(function() {
   
   $('slides').attr('zoom','1.0')
-
-
 
   $('#test-add-chart').click(function() {
     var addContent =
@@ -492,6 +548,50 @@ function listenChartDataInput() {
     new Chart(previewCtx).Line(lineData);
   });
 }
+</script>
+
+<!-- rtc part -->
+<script type="text/javascript">
+var room = location.search && location.search.split('?')[1];
+
+var webtrc = new SimpleWebRTC({
+  url: "http://localhost:8888",
+  localVideoEl: 'local-video',
+  remoteVideoEl: 'all-videos',
+  autoRequestMedia: true,
+  debug: false,
+  detectSpeakingEvents: true,
+  autoAdjustMic: false
+});
+
+
+
+webtrc.on('readyToCall', function() {
+  if (room) webtrc.joinRoom(room);
+});
+
+webtrc.on('videoAdded', function (video, peer) {
+  var remotes = $('.sidebar');
+  var rPeer = $(document.createElement('div'));
+  rPeer.addClass('video-frame');
+  rPeer.append(video);
+  remotes.append(rPeer);
+});
+
+if (!room) {
+  $('#create-room-btn').click(function () {
+    // use uuid to create room, pass null to first arg
+    webtrc.createRoom(null, function (err, name) {
+      var roomUrl = location.pathname + '?' + name;
+      if (!err) {
+        history.replaceState(null, null, roomUrl);
+      }
+    })
+  })
+} else {
+  console.log('already in a room');
+}
+
 </script>
 </body>
 </html>
