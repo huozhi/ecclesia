@@ -13,6 +13,7 @@
     "serve-favicon": "~2.0.1",
     "debug": "~1.0.4",
     "ejs": "~0.8.5",
-    "less-middleware": "1.0.x"
+    "less-middleware": "1.0.x",
+    "mongodb":"*"
   }
 }

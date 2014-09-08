@@ -1,0 +1,25 @@
+
+{ 
+	"ImpressList":
+	[
+		{"p1" : "markdown string"},
+		{"p2" : "chart base64 data"},
+		{"p3" : "...."},
+	],
+
+	"roomName" : "room temp",
+
+
+}
+
+//MdTemp:
+{
+	"roomName": " ",
+	"host":" ",
+	"markdowns":
+	[
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},	
+	],
+}
