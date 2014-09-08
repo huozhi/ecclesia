@@ -1,617 +1,179 @@
-
-/* Copyright (C) 2013 Justin Windle, http://soulwire.co.uk */
-
-(function ( root, factory ) {
-    
-    if ( typeof exports === 'object' ) {
-
-        // CommonJS like
-        module.exports = factory(root, root.document);
-
-    } else if ( typeof define === 'function' && define.amd ) {
-
-        // AMD
-        define( function() { return factory( root, root.document ); });
-
+var __slice = Array.prototype.slice;
+(function($) {
+  var Sketch;
+  $.fn.sketch = function() {
+    var args, key, sketch;
+    key = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    if (this.length > 1) {
+      $.error('Sketch.js can only be called on one element at a time.');
+    }
+    sketch = this.data('sketch');
+    if (typeof key === 'string' && sketch) {
+      if (sketch[key]) {
+        if (typeof sketch[key] === 'function') {
+          return sketch[key].apply(sketch, args);
+        } else if (args.length === 0) {
+          return sketch[key];
+        } else if (args.length === 1) {
+          return sketch[key] = args[0];
+        }
+      } else {
+        return $.error('Sketch.js did not recognize the given command.');
+      }
+    } else if (sketch) {
+      return sketch;
     } else {
-
-        // Browser global
-        root.Sketch = factory( root, root.document );
+      this.data('sketch', new Sketch(this.get(0), key));
+      return this;
     }
-
-}( this, function ( window, document ) {
-
-    "use strict";
-
-    /*
-    ----------------------------------------------------------------------
-
-        Config
-
-    ----------------------------------------------------------------------
-    */
-
-    var MATH_PROPS = 'E LN10 LN2 LOG2E LOG10E PI SQRT1_2 SQRT2 abs acos asin atan ceil cos exp floor log round sin sqrt tan atan2 pow max min'.split( ' ' );
-    var HAS_SKETCH = '__hasSketch';
-    var M = Math;
-
-    var CANVAS = 'canvas';
-    var WEBGL = 'webgl';
-    var DOM = 'dom';
-
-    var doc = document;
-    var win = window;
-
-    var instances = [];
-
-    var defaults = {
-
-        fullscreen: true,
-        autostart: true,
-        autoclear: true,
-        autopause: true,
-        container: doc.body,
-        interval: 1,
-        globals: true,
-        retina: false,
-        type: CANVAS
-    };
-
-    var keyMap = {
-
-         8: 'BACKSPACE',
-         9: 'TAB',
-        13: 'ENTER',
-        16: 'SHIFT',
-        27: 'ESCAPE',
-        32: 'SPACE',
-        37: 'LEFT',
-        38: 'UP',
-        39: 'RIGHT',
-        40: 'DOWN'
-    };
-
-    /*
-    ----------------------------------------------------------------------
-
-        Utilities
-
-    ----------------------------------------------------------------------
-    */
-
-    function isArray( object ) {
-
-        return Object.prototype.toString.call( object ) == '[object Array]';
-    }
-
-    function isFunction( object ) {
-
-        return typeof object == 'function';
-    }
-
-    function isNumber( object ) {
-
-        return typeof object == 'number';
-    }
-
-    function isString( object ) {
-
-        return typeof object == 'string';
-    }
-
-    function keyName( code ) {
-
-        return keyMap[ code ] || String.fromCharCode( code );
-    }
-
-    function extend( target, source, overwrite ) {
-
-        for ( var key in source )
-
-            if ( overwrite || !( key in target ) )
-
-                target[ key ] = source[ key ];
-
-        return target;
-    }
-
-    function proxy( method, context ) {
-
-        return function() {
-
-            method.apply( context, arguments );
-        };
-    }
-
-    function clone( target ) {
-
-        var object = {};
-
-        for ( var key in target ) {
-
-            if ( isFunction( target[ key ] ) )
-
-                object[ key ] = proxy( target[ key ], target );
-
-            else
-
-                object[ key ] = target[ key ];
-        }
-
-        return object;
-    }
-
-    /*
-    ----------------------------------------------------------------------
-
-        Constructor
-
-    ----------------------------------------------------------------------
-    */
-
-    function constructor( context ) {
-
-        var request, handler, target, parent, bounds, index, suffix, clock, node, copy, type, key, val, min, max, w, h;
-
-        var counter = 0;
-        var touches = [];
-        var resized = false;
-        var setup = false;
-        var ratio = win.devicePixelRatio || 1;
-        var isDiv = context.type == DOM;
-        var is2D = context.type == CANVAS;
-
-        var mouse = {
-            x:  0.0, y:  0.0,
-            ox: 0.0, oy: 0.0,
-            dx: 0.0, dy: 0.0
-        };
-
-        var eventMap = [
-
-            context.element,
-
-                pointer, 'mousedown', 'touchstart',
-                pointer, 'mousemove', 'touchmove',
-                pointer, 'mouseup', 'touchend',
-                pointer, 'click',
-                pointer, 'mouseout',
-                pointer, 'mouseover',
-
-            doc,
-
-                keypress, 'keydown', 'keyup',
-
-            win,
-
-                active, 'focus', 'blur',
-                resize, 'resize'
-        ];
-
-        var keys = {}; for ( key in keyMap ) keys[ keyMap[ key ] ] = false;
-
-        function trigger( method ) {
-
-            if ( isFunction( method ) )
-
-                method.apply( context, [].splice.call( arguments, 1 ) );
-        }
-
-        function bind( on ) {
-
-            for ( index = 0; index < eventMap.length; index++ ) {
-
-                node = eventMap[ index ];
-
-                if ( isString( node ) )
-
-                    target[ ( on ? 'add' : 'remove' ) + 'EventListener' ].call( target, node, handler, false );
-
-                else if ( isFunction( node ) )
-
-                    handler = node;
-
-                else target = node;
+  };
+  Sketch = (function() {
+    function Sketch(el, opts) {
+      this.el = el;
+      this.canvas = $(el);
+      this.context = el.getContext('2d');
+      this.options = $.extend({
+        toolLinks: true,
+        defaultTool: 'marker',
+        defaultColor: '#000000',
+        defaultSize: 5
+      }, opts);
+      this.painting = false;
+      this.color = this.options.defaultColor;
+      this.size = this.options.defaultSize;
+      this.tool = this.options.defaultTool;
+      this.actions = [];
+      this.action = [];
+      this.canvas.bind('click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', this.onEvent);
+      if (this.options.toolLinks) {
+        $('body').delegate("a[href=\"#" + (this.canvas.attr('id')) + "\"]", 'click', function(e) {
+          var $canvas, $this, key, sketch, _i, _len, _ref;
+          $this = $(this);
+          $canvas = $($this.attr('href'));
+          sketch = $canvas.data('sketch');
+          _ref = ['color', 'size', 'tool'];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            key = _ref[_i];
+            if ($this.attr("data-" + key)) {
+              sketch.set(key, $(this).attr("data-" + key));
             }
-        }
-
-        function update() {
-
-            cAF( request );
-            request = rAF( update );
-
-            if ( !setup ) {
-
-                trigger( context.setup );
-                setup = isFunction( context.setup );
-            }
-
-            if ( !resized ) {
-                trigger( context.resize );
-                resized = isFunction( context.resize );
-            }
-
-            if ( context.running && !counter ) {
-
-                context.dt = ( clock = +new Date() ) - context.now;
-                context.millis += context.dt;
-                context.now = clock;
-
-                trigger( context.update );
-
-                // Pre draw
-
-                if ( is2D ) {
-
-                    if ( context.autoclear )
-
-                        context.clear();
-
-                    context.save();
-                    context.scale( ratio, ratio );
-                }
-
-                // Draw
-
-                trigger( context.draw );
-                
-                // Post draw
-
-                if ( is2D )
-
-                    context.restore();
-            }
-
-            counter = ++counter % context.interval;
-        }
-
-        function resize() {
-
-            target = isDiv ? context.style : context.canvas;
-            suffix = isDiv ? 'px' : '';
-
-            w = context.width;
-            h = context.height;
-
-            if ( context.fullscreen ) {
-
-                h = context.height = win.innerHeight;
-                w = context.width = win.innerWidth;
-            }
-
-            if ( context.retina && is2D && ratio ) {
-
-                target.style.height = h + 'px';
-                target.style.width = w + 'px';
-
-                w *= ratio;
-                h *= ratio;
-            }
-
-            if ( target.height !== h )
-
-                target.height = h + suffix;
-
-            if ( target.width !== w )
-
-                target.width = w + suffix;
-
-            if ( setup ) trigger( context.resize );
-        }
-
-        function align( touch, target ) {
-
-            bounds = target.getBoundingClientRect();
-
-            touch.x = touch.pageX - bounds.left - (win.scrollX || win.pageXOffset);
-            touch.y = touch.pageY - bounds.top - (win.scrollY || win.pageYOffset);
-
-            return touch;
-        }
-
-        function augment( touch, target ) {
-
-            align( touch, context.element );
-
-            target = target || {};
-
-            target.ox = target.x || touch.x;
-            target.oy = target.y || touch.y;
-
-            target.x = touch.x;
-            target.y = touch.y;
-
-            target.dx = target.x - target.ox;
-            target.dy = target.y - target.oy;
-
-            return target;
-        }
-
-        function process( event ) {
-
-            event.preventDefault();
-
-            copy = clone( event );
-            copy.originalEvent = event;
-
-            if ( copy.touches ) {
-
-                touches.length = copy.touches.length;
-
-                for ( index = 0; index < copy.touches.length; index++ )
-
-                    touches[ index ] = augment( copy.touches[ index ], touches[ index ] );
-
-            } else {
-
-                touches.length = 0;
-                touches[0] = augment( copy, mouse );
-            }
-
-            extend( mouse, touches[0], true );
-
-            return copy;
-        }
-
-        function pointer( event ) {
-
-            event = process( event );
-
-            min = ( max = eventMap.indexOf( type = event.type ) ) - 1;
-
-            context.dragging =
-
-                /down|start/.test( type ) ? true :
-
-                /up|end/.test( type ) ? false :
-
-                context.dragging;
-
-            while( min )
-
-                isString( eventMap[ min ] ) ?
-
-                    trigger( context[ eventMap[ min-- ] ], event ) :
-
-                isString( eventMap[ max ] ) ?
-
-                    trigger( context[ eventMap[ max++ ] ], event ) :
-
-                min = 0;
-        }
-
-        function keypress( event ) {
-
-            key = event.keyCode;
-            val = event.type == 'keyup';
-            keys[ key ] = keys[ keyName( key ) ] = !val;
-
-            trigger( context[ event.type ], event );
-        }
-
-        function active( event ) {
-
-            if ( context.autopause )
-
-                ( event.type == 'blur' ? stop : start )();
-
-            trigger( context[ event.type ], event );
-        }
-
-        // Public API
-
-        function start() {
-
-            context.now = +new Date();
-            context.running = true;
-        }
-
-        function stop() {
-
-            context.running = false;
-        }
-
-        function toggle() {
-
-            ( context.running ? stop : start )();
-        }
-
-        function clear() {
-
-            if ( is2D )
-
-                context.clearRect( 0, 0, context.width, context.height );
-        }
-
-        function destroy() {
-
-            parent = context.element.parentNode;
-            index = instances.indexOf( context );
-
-            if ( parent ) parent.removeChild( context.element );
-            if ( ~index ) instances.splice( index, 1 );
-
-            bind( false );
-            stop();
-        }
-
-        extend( context, {
-
-            touches: touches,
-            mouse: mouse,
-            keys: keys,
-
-            dragging: false,
-            running: false,
-            millis: 0,
-            now: NaN,
-            dt: NaN,
-
-            destroy: destroy,
-            toggle: toggle,
-            clear: clear,
-            start: start,
-            stop: stop
+          }
+          if ($(this).attr('data-download')) {
+            sketch.download($(this).attr('data-download'));
+          }
+          return false;
         });
-
-        instances.push( context );
-
-        return ( context.autostart && start(), bind( true ), resize(), update(), context );
+      }
     }
-
-    /*
-    ----------------------------------------------------------------------
-
-        Global API
-
-    ----------------------------------------------------------------------
-    */
-
-    var element, context, Sketch = {
-
-        CANVAS: CANVAS,
-        WEB_GL: WEBGL,
-        WEBGL: WEBGL,
-        DOM: DOM,
-
-        instances: instances,
-
-        install: function( context ) {
-
-            if ( !context[ HAS_SKETCH ] ) {
-
-                for ( var i = 0; i < MATH_PROPS.length; i++ )
-
-                    context[ MATH_PROPS[i] ] = M[ MATH_PROPS[i] ];
-
-                extend( context, {
-
-                    TWO_PI: M.PI * 2,
-                    HALF_PI: M.PI / 2,
-                    QUATER_PI: M.PI / 4,
-
-                    random: function( min, max ) {
-
-                        if ( isArray( min ) )
-
-                            return min[ ~~( M.random() * min.length ) ];
-
-                        if ( !isNumber( max ) )
-
-                            max = min || 1, min = 0;
-
-                        return min + M.random() * ( max - min );
-                    },
-
-                    lerp: function( min, max, amount ) {
-
-                        return min + amount * ( max - min );
-                    },
-
-                    map: function( num, minA, maxA, minB, maxB ) {
-
-                        return ( num - minA ) / ( maxA - minA ) * ( maxB - minB ) + minB;
-                    }
-                });
-
-                context[ HAS_SKETCH ] = true;
-            }
-        },
-
-        create: function( options ) {
-
-            options = extend( options || {}, defaults );
-
-            if ( options.globals ) Sketch.install( self );
-
-            element = options.element = options.element || doc.createElement( options.type === DOM ? 'div' : 'canvas' );
-
-            context = options.context = options.context || (function() {
-
-                switch( options.type ) {
-
-                    case CANVAS:
-
-                        return element.getContext( '2d', options );
-
-                    case WEBGL:
-
-                        return element.getContext( 'webgl', options ) || element.getContext( 'experimental-webgl', options );
-
-                    case DOM:
-
-                        return element.canvas = element;
-                }
-
-            })();
-
-            ( options.container || doc.body ).appendChild( element );
-
-            return Sketch.augment( context, options );
-        },
-
-        augment: function( context, options ) {
-
-            options = extend( options || {}, defaults );
-
-            options.element = context.canvas || context;
-            options.element.className += ' sketch';
-
-            extend( context, options, true );
-
-            return constructor( context );
+    Sketch.prototype.download = function(format) {
+      var mime;
+      format || (format = "png");
+      if (format === "jpg") {
+        format = "jpeg";
+      }
+      mime = "image/" + format;
+      return window.open(this.el.toDataURL(mime));
+    };
+    Sketch.prototype.set = function(key, value) {
+      this[key] = value;
+      return this.canvas.trigger("sketch.change" + key, value);
+    };
+    Sketch.prototype.startPainting = function() {
+      this.painting = true;
+      return this.action = {
+        tool: this.tool,
+        color: this.color,
+        size: parseFloat(this.size),
+        events: []
+      };
+    };
+    Sketch.prototype.stopPainting = function() {
+      if (this.action) {
+        this.actions.push(this.action);
+      }
+      this.painting = false;
+      this.action = null;
+      return this.redraw();
+    };
+    Sketch.prototype.onEvent = function(e) {
+      if (e.originalEvent && e.originalEvent.targetTouches) {
+        e.pageX = e.originalEvent.targetTouches[0].pageX;
+        e.pageY = e.originalEvent.targetTouches[0].pageY;
+      }
+      $.sketch.tools[$(this).data('sketch').tool].onEvent.call($(this).data('sketch'), e);
+      e.preventDefault();
+      return false;
+    };
+    Sketch.prototype.redraw = function() {
+      var sketch;
+      this.el.width = this.canvas.width();
+      this.context = this.el.getContext('2d');
+      sketch = this;
+      $.each(this.actions, function() {
+        if (this.tool) {
+          return $.sketch.tools[this.tool].draw.call(sketch, this);
         }
+      });
+      if (this.painting && this.action) {
+        return $.sketch.tools[this.action.tool].draw.call(sketch, this.action);
+      }
     };
-
-    /*
-    ----------------------------------------------------------------------
-
-        Shims
-
-    ----------------------------------------------------------------------
-    */
-
-    var vendors = [ 'ms', 'moz', 'webkit', 'o' ];
-    var scope = self;
-    var then = 0;
-
-    var a = 'AnimationFrame';
-    var b = 'request' + a;
-    var c = 'cancel' + a;
-
-    var rAF = scope[ b ];
-    var cAF = scope[ c ];
-
-    for ( var i = 0; i < vendors.length && !rAF; i++ ) {
-
-        rAF = scope[ vendors[ i ] + 'Request' + a ];
-        cAF = scope[ vendors[ i ] + 'Cancel' + a ];
-    }
-
-    scope[ b ] = rAF = rAF || function( callback ) {
-
-        var now = +new Date();
-        var dt = M.max( 0, 16 - ( now - then ) );
-        var id = setTimeout( function() {
-            callback( now + dt );
-        }, dt );
-
-        then = now + dt;
-        return id;
-    };
-
-    scope[ c ] = cAF = cAF || function( id ) {
-        clearTimeout( id );
-    };
-
-    /*
-    ----------------------------------------------------------------------
-
-        Output
-
-    ----------------------------------------------------------------------
-    */
-
     return Sketch;
-
-}));
+  })();
+  $.sketch = {
+    tools: {}
+  };
+  $.sketch.tools.marker = {
+    onEvent: function(e) {
+      switch (e.type) {
+        case 'mousedown':
+        case 'touchstart':
+          this.startPainting();
+          break;
+        case 'mouseup':
+        case 'mouseout':
+        case 'mouseleave':
+        case 'touchend':
+        case 'touchcancel':
+          this.stopPainting();
+      }
+      if (this.painting) {
+        this.action.events.push({
+          x: e.pageX - this.canvas.offset().left,
+          y: e.pageY - this.canvas.offset().top,
+          event: e.type
+        });
+        return this.redraw();
+      }
+    },
+    draw: function(action) {
+      var event, previous, _i, _len, _ref;
+      this.context.lineJoin = "round";
+      this.context.lineCap = "round";
+      this.context.beginPath();
+      this.context.moveTo(action.events[0].x, action.events[0].y);
+      _ref = action.events;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        event = _ref[_i];
+        this.context.lineTo(event.x, event.y);
+        previous = event;
+      }
+      this.context.strokeStyle = action.color;
+      this.context.lineWidth = action.size;
+      return this.context.stroke();
+    }
+  };
+  return $.sketch.tools.eraser = {
+    onEvent: function(e) {
+      return $.sketch.tools.marker.onEvent.call(this, e);
+    },
+    draw: function(action) {
+      var oldcomposite;
+      oldcomposite = this.context.globalCompositeOperation;
+      this.context.globalCompositeOperation = "copy";
+      action.color = "rgba(0,0,0,0)";
+      $.sketch.tools.marker.draw.call(this, action);
+      return this.context.globalCompositeOperation = oldcomposite;
+    }
+  };
+})(jQuery);

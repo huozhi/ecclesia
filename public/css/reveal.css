@@ -704,7 +704,7 @@ body {
 
 .reveal.cube .slides section {
 	padding: 30px;
-	min-height: 700px;
+	/*min-height: 700px;*/
 
 	-webkit-backface-visibility: hidden;
 	   -moz-backface-visibility: hidden;
@@ -747,8 +747,8 @@ body {
 		z-index: 1;
 
 		border-radius: 4px;
-		box-shadow: 0px 95px 25px rgba(0,0,0,0.2);
-
+		/*box-shadow: 0px 95px 25px rgba(0,0,0,0.2);*/
+		/*huozhi fix shadow*/
 		-webkit-transform: translateZ(-90px) rotateX( 65deg );
 		   -moz-transform: translateZ(-90px) rotateX( 65deg );
 		    -ms-transform: translateZ(-90px) rotateX( 65deg );
@@ -828,8 +828,8 @@ body {
 
 .reveal.page .slides section {
 	padding: 30px;
-	min-height: 700px;
-
+	/*min-height: 700px;*/
+	/*huozhi fix min-height here*/
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	        box-sizing: border-box;
@@ -865,8 +865,8 @@ body {
 		z-index: 1;
 
 		border-radius: 4px;
-		box-shadow: 0px 95px 25px rgba(0,0,0,0.2);
-
+		/*box-shadow: 0px 95px 25px rgba(0,0,0,0.2);*/
+		/*huozhi fix shadow here*/
 		-webkit-transform: translateZ(-90px) rotateX( 65deg );
 	}
 
@@ -986,7 +986,8 @@ body {
 }
 
 .reveal.overview .slides section {
-	height: 700px;
+	/*height: 700px;*/
+	/*huozhi fix height*/
 	overflow: hidden;
 	opacity: 1 !important;
 	visibility: visible !important;

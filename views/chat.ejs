@@ -10,7 +10,8 @@
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/lib/js/head.min.js"></script>
 <script type="text/javascript" src="/js/reveal.js"></script>
-<script type="text/javascript" src="/js/sketch.min.js"></script>
+<!-- <script type="text/javascript" src="/js/sketch.min.js"></script> -->
+<script type="text/javascript" src="/js/eStroke.js"></script>
 <script type="text/javascript" src="/js/Chart.min.js"></script>
 <script type="text/javascript" src="/rtc/socket.io.js"></script>
 <script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
@@ -37,8 +38,8 @@ html {
 .board {
   position: relative;
   left: 50%;
-  margin-left: -405px;
-  width: 810px;
+  margin-left: -400px;
+  width: 800px;
   height: 400px;
   border: black solid 1px;
   border-radius: 5px;  
@@ -58,9 +59,9 @@ html {
   position: relative;
 
   left: 50%;
-  margin-left: -405px;
+  margin-left: -400px;
   margin-top: 10px;
-  width: 810px;
+  width: 800px;
   height: 200px;
   border: black solid 1px;
   border-radius: 5px;
@@ -85,9 +86,12 @@ html {
   width: 800px;
   height: 400px;
   z-index: 1;
-  
   zoom: 1;
 }
+section {
+  height: 400px;
+}
+
 .navbar {
   margin-bottom: 5px;
 }
@@ -365,8 +369,8 @@ Reveal.initialize({
 
 
   center: true,
-  transition: 'linear',
-  transitionSpeed: 'slow',
+  transition: 'cube',
+  transitionSpeed: 'fast',
   backgroundTransition: 'slide',
 
   dependencies: [
@@ -395,10 +399,6 @@ Reveal.addEventListener( 'ready', function( event ) {
     // console.log('ready no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
-  $(function() {
-    $('.sketch-present').sketch();
-
-  });
 });
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
@@ -502,6 +502,11 @@ $(document).ready(function() {
   });
 
   listenChartDataInput();
+
+
+  $('.sketch-present').Stroke(function (point) {
+    // 
+  });
 
 });
 
