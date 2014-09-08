@@ -79,27 +79,42 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
   });
 }
 
-Meeting.saveMD = function saveMD(rooname, host, markdowns,callback){
+Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
       return callback(err);
     }else{
-      db.collection('Meetings',function(err,collecton){
+
+      db.createCollection('MdTemp', function(err, collection){
+
         if(err){
           mongodb.close();
           return callback(err);
         }else{
-          collection.update({roomName:rooname,host:host},{"markdowns": markdowns}, function(err,doc){
+            db.collection('MdTemp',function(err,collection){
             if(err){
               mongodb.close();
               return callback(err);
             }else{
-              console.log(doc);
+                collection.update(
+                  {'roomName':rooname,'host':host, "markdowns.author":author},
+                  {$push : {"markdowns.$.upload":{$each:markdowns}}},
+                  {upsert: true}, 
+                  function(err,doc){
+                  if(err){
+                    mongodb.close();
+                    return callback(err);
+                  }else{
+                    mongodb.close();
+                    console.log(doc);
+                  }
+              });
             }
-          })
+          });
         }
       });
+      
     }
   });
 }

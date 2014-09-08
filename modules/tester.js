@@ -1,7 +1,6 @@
 var User = require('./user');
 var Meeting = require('./meeting');
 
-var spliter = require('./split');
 var newUser1 = new User({
   username : 'tomas',
   password : 'itispwd',
@@ -100,10 +99,19 @@ var newMeeting = {
 
 
 //save markdowns test
+var spliter = require('./split');
 
-var file = "../example.md";
+var file = "./README.md";
 
-spliter(file);
+var markdowns = spliter(file);
+
+Meeting.saveMdTemp('9-8', 'dh', 'ruby',markdowns, function(err, re){
+  if(err){
+    console.log(err);
+  }else{
+    //do sth.
+  }
+});
 
 /************************************************************************/
 

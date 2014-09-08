@@ -11,4 +11,15 @@
 
 
 }
-?? 需要一个临时存储上传好的markdown 的集合
+
+//MdTemp:
+{
+	"roomName": " ",
+	"host":" ",
+	"markdowns":
+	[
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},	
+	],
+}
