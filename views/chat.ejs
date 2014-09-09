@@ -15,6 +15,8 @@
 <script type="text/javascript" src="/js/Chart.min.js"></script>
 <script type="text/javascript" src="/rtc/socket.io.js"></script>
 <script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
+<script src="/js/idangerous.swiper-1.9.1.min.js"></script>
+<script src="/js/idangerous.swiper.scrollbar-1.2.js"></script>
 <style type="text/css">
 html {
   overflow-x: hidden;
@@ -67,7 +69,30 @@ html {
   border-radius: 5px;
 
 }
-
+.swiper-container {
+  width: 800px;
+  height: 200px;
+  text-align: center;
+  overflow: hidden;
+  border: black solid 1px;
+}
+.swiper-slide {
+  min-width: 1800px;
+}
+.swiper-scrollbar {
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  z-index: 1;
+}
+.swiper-slide img{
+  width: 200px;
+  height: 200px;
+  float: left;
+  border: red solid 1px;
+}
 .chart {
   position: relative;
   margin: 10px;
@@ -354,7 +379,31 @@ div.single-chart > button {
       </div>
     </div>
     
-    <div id="charts" class="charts"></div>
+    <div class="charts">
+      <div class="swiper-container">
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" id="charts">
+              <img src="./img/chart-type-5.png" />
+              <img src="./img/chart-type-2.png" />
+              <img src="./img/chart-type-3.png" />
+              <img src="./img/chart-type-4.png" />
+              <img src="./img/chart-type-5.png" />
+              <img src="./img/chart-type-2.png" />
+              <img src="./img/chart-type-3.png" />
+              <img src="./img/chart-type-4.png" />
+          </div>
+        </div>
+      </div>
+    </div><!-- end charts -->
+    <script type="text/javascript">
+      var mySwiper = new Swiper('.swiper-container',{
+        scrollContainer: true,
+        scrollbar: {
+          container: '.swiper-scrollbar'
+        }
+      })
+  </script>
   </div><!-- end main -->
 
 </div>
