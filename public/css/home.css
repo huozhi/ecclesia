@@ -1,14 +1,10 @@
-@import url('reset.css');
-/* General Demo Style */
 body{
 	background-color: transparent;
-    background-repeat: repeat, no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    -webkit-background-size: auto, cover;
-    -moz-background-size: auto, cover;
-    -o-background-size: auto, cover;
-    background-size: auto, cover;
+  background-repeat: repeat, no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: auto, cover;
+  background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
 	font-size: 13px;
 }
@@ -24,8 +20,8 @@ a{
 }
 .content{
 	position:relative;
-    width:580px;
-    margin: 0 auto;
+  width:580px;
+  margin: 0 auto;
 }
 h1{
 	margin:0px;
@@ -34,7 +30,7 @@ h1{
 	color:#fff;
 	text-align:left;
 	font-weight:400;
-    text-align:left;
+  text-align:left;
 }
 h1 span{
 	font-size:22px;
@@ -51,7 +47,6 @@ h1 span{
 	text-transform: uppercase;
 	z-index: 9999;
 	position: relative;
-	-moz-box-shadow: 1px 0px 2px #000;
 	-webkit-box-shadow: 1px 0px 2px #000;
 	box-shadow: 1px 0px 2px #000;
 }
@@ -98,7 +93,6 @@ h1 span{
 	color:#555;
 	background:#f7f7f7;
 	padding:3px 6px;
-	-moz-box-shadow:1px 1px 2px rgba(0,0,0,0.6);
 	-webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.6);
 	box-shadow:1px 1px 2px rgba(0,0,0,0.6);
 }
@@ -106,4 +100,35 @@ h1 span{
 	background:#000;
 	color:#fff;
 	text-shadow:none;
+}
+
+.bmenu{
+    padding: 0px;
+    margin: 0 0 10px 0;
+    position: relative;
+    color:#fff;
+}
+.bmenu li{
+    font-size: 50px;
+    display: block;
+}
+.bmenu li a{
+	color: transparent;
+	display: block;
+	text-transform: uppercase;
+	text-shadow: 0px 0px 4px #fff;
+	letter-spacing: 1px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.bmenu:hover li a{
+	text-shadow: 0px 0px 6px #fff;
+}
+.bmenu li a:hover{
+	color: #fff;
+	text-shadow: 0px 0px 1px #fff;
+	padding-left: 10px;
 }
