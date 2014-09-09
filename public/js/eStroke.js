@@ -1,6 +1,7 @@
 ;(function($) {
   $.fn.Stroke = function(cb, color) {
-    this.on('mousedown mouseleave mouseup mouseout mousemove', function (event) {
+    $(this).on('mousedown mouseleave mouseup mouseout mousemove', function (event) {
+      
       var keyDown, point, ctx;
       keyDown = $(this).data('keyDown');
       if (keyDown == undefined) {
@@ -44,10 +45,12 @@
           ctx.stroke();
           ctx.closePath();
       }
+      // if (typeof cb == 'function')
       return cb(point);
     });
   }
   $.fn.syncStroke = function(point, color) {
+    console.log('got sync signal');
     var ctx = $(this).get(0).getContext('2d');
     ctx.lineJoin  = 'round';
     ctx.lineCap   = 'round';
@@ -73,6 +76,6 @@
           ctx.closePath();
           break;
     }
-    return this;
+    return $(this);
   }
 })(jQuery);

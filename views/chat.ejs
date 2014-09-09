@@ -369,7 +369,7 @@ Reveal.initialize({
 
 
   center: true,
-  transition: 'cube',
+  transition: 'liner',
   transitionSpeed: 'fast',
   backgroundTransition: 'slide',
 
@@ -399,6 +399,15 @@ Reveal.addEventListener( 'ready', function( event ) {
     // console.log('ready no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
+  // $(function() {
+    $('.sketch-present').Stroke(function (point) {
+      webtrc.sendSketchPointData(point);
+    });
+    // webtrc.on('syncStroke', function (point) {
+    //   console.log('sync remote sketching');
+    //   $('.sketch-present').syncStroke(point);
+    // });
+  // });
 });
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
@@ -416,9 +425,18 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     // console.log('slideChange no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
-  $(function() {
-    $('.sketch-present').sketch();
-  });
+  // $(function() {
+  //   $('.sketch-present').sketch();
+  // });
+  // $(function() {
+    $('.sketch-present').Stroke(function (point) {
+      webtrc.sendSketchPointData(point);
+    });
+    // webtrc.on('syncStroke', function (point) {
+    //   console.log('sync remote sketching');
+    //   $('.sketch-present').syncStroke(point);
+    // })
+  // });
 });
 
 
@@ -503,10 +521,16 @@ $(document).ready(function() {
 
   listenChartDataInput();
 
+  // $(function () {
+  //   $('.sketch-present').Stroke(function (point) {
+  //     console.log('sketching...');
+  //     alert(point);
+  //     webtrc.sendSketchPointData(point);
+  //   });
 
-  $('.sketch-present').Stroke(function (point) {
-    // 
-  });
+  // });
+
+
 
 });
 
@@ -560,7 +584,7 @@ function listenChartDataInput() {
 var room = location.search && location.search.split('?')[1];
 
 var webtrc = new SimpleWebRTC({
-  url: "http://localhost:8888",
+  // url: "http://localhost:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
   autoRequestMedia: true,
@@ -569,18 +593,30 @@ var webtrc = new SimpleWebRTC({
   autoAdjustMic: false
 });
 
-
-
 webtrc.on('readyToCall', function() {
   if (room) webtrc.joinRoom(room);
 });
 
 webtrc.on('videoAdded', function (video, peer) {
   var remotes = $('.sidebar');
-  var rPeer = $(document.createElement('div'));
-  rPeer.addClass('video-frame');
-  rPeer.append(video);
-  remotes.append(rPeer);
+  var addPeer = $(document.createElement('div'));
+  addPeer.addClass('video-frame');
+  addPeer.attr('id', 'video_' + webtrc.getDomId(peer));
+  addPeer.append(video);
+  remotes.append(addPeer);
+});
+
+webtrc.on('videoRemoved', function (video, pper) {
+  var remotes = $('.sidebar');
+  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+  if (remotes && leavePeer) {
+    leavePeer.remove();
+  }
+})
+
+webtrc.on('syncStroke', function (point) {
+  console.log('syncStroke event');
+  $('.sketch-present').syncStroke(point);
 });
 
 if (!room) {
