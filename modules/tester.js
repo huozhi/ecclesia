@@ -32,13 +32,22 @@ var newUser2 = new User({
 // });
 
 //get user tester
-// User.get(newUser2.username,function(err,newUser3){
+// User.get(newUser1.username,function(err,newUser3){
 //   if(err){
 //     console.log(err.message);
 //   }else{
 //     console.log(newUser3.username);
 //   }
 // });
+
+
+//login check test
+
+var name = 'tomas',
+    pwd = 'itispwd';
+
+var re = User.loginCheck(name, pwd);
+console.log(re);
 
 
 //archive tester
@@ -104,6 +113,20 @@ var newMeeting = {
  //   }
  // });
 
+// find conference test
+
+// Meeting.queryConference("9-8", "dh", function(err,result){
+//   if(!err){
+//     console.log('found!');
+//     //console.log(result[0].MarkdownList);
+//     mdList = result[0].MarkdownList;
+//     for(var i in mdList){
+//       console.log(mdList[i]);
+//     }
+//   }
+// })
+
+
 // add new participant test
 // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Pony",function(err, result){
 //       if(err){
@@ -134,24 +157,24 @@ var newMeeting = {
 // } );
 
 //save wrapped md test
-var spliter = require('./split');
+// var spliter = require('./split');
 
-var file = "./example.md";
+// var file = "./example.md";
 
-var markdowns = spliter(file);
+// var markdowns = spliter(file);
 
-var wrappedmd = {
-  range : "p1",
-  data : markdowns[0]
-};
+// var wrappedmd = {
+//   range : "p1",
+//   data : markdowns[0]
+// };
 
-Meeting.saveMarkdown('9-8', 'dh', wrappedmd, function(err, re){
-  if(err){
-    console.log(err);
-  }else{
-    //do sth.
-  }
-});
+// Meeting.saveMarkdown('9-8', 'dh', wrappedmd, function(err, re){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     //do sth.
+//   }
+// });
 
 //save md temp test
 // var spliter = require('./split');

@@ -58,6 +58,29 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
   });
 }
 
+Meeting.queryConference = function(roomname, host, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+      db.collection("Meetings",function(err, collection){
+        if(err){
+          mongodb.close();return callback(err);
+        }else{
+          collection.find({roomName:roomname, host:host}).toArray(function(err, result){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            mongodb.close();
+            //console.log(result);
+            return callback(err, result);
+          });
+        }
+      });
+    }
+  })
+}
+
 Meeting.addParticipant = function(roomname, host, participant, callback){
   
   mongodb.open(function(err, db){

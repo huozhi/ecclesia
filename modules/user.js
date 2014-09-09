@@ -52,6 +52,21 @@ User.prototype.register = function register(callback){
   });
 };
 
+
+User.loginCheck = function(name, pwd){
+  User.get(name, function(err, user){
+    if(!err){
+      console.log(user);
+      if( pwd === user.userPwd){
+        return true;
+      }
+      return false;
+    }
+    console.log('err');
+  });
+}
+
+
 User.get = function get(username, callback){
     mongodb.open(function(err, db){
       if(err){
@@ -64,27 +79,30 @@ User.get = function get(username, callback){
           mongodb.close();
           console.log('no creation');
           return callback(err);
+        }else{
+            db.collection('Users', {strict : true}, function(err, collection){
+              if(err){
+                mongodb.close();
+                return callback(err);
+              }
+
+              collection.findOne({username : username}, function(err, doc) {
+                mongodb.close();
+
+                if(doc){
+                  var user = new User(doc);
+                  console.log(user);
+                  return callback(err, user);
+                }else{
+                  mongodb.close();
+                  return callback(err, null);
+                }
+              });
+          });
         }
       });
 
-      db.collection('Users', {strict : true}, function(err, collection){
-        if(err){
-          mongodb.close();
-          return callback(err);
-        }
 
-        collection.findOne({username : username}, function(err, doc) {
-          mongodb.close();
-
-          if(doc){
-            var user = new User(doc);
-            return callback(err, user);
-          }else{
-            mongodb.close();
-            return callback(err, null);
-          }
-        });
-      });
     });
 };
 
