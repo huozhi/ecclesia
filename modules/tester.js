@@ -63,9 +63,9 @@ var newUser2 = new User({
 // create a new room (meeting)
 
 var newMeeting = {
-  roomName : "weekly discuss",
+  roomName : "9-8",
   date : new Date(),
-  host : "P.M. Lippman",
+  host : "dh",
   userList : [],
   ImpressList : [],
 }
@@ -78,11 +78,25 @@ var newMeeting = {
 //   }else{
 //     console.log(meeting);
 
-//     Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
+//     // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
+//     //   if(err){
+//     //     console.log(err.message);
+//     //   }else{
+//     //     console.log('add participant.');
+//     //   }
+//     // });
+
+//     var spliter = require('./split');
+
+//     var file = "./README.md";
+
+//     var markdowns = spliter(file);
+
+//     Meeting.saveMdTemp('9-8', 'dh', 'binladen',markdowns, function(err, re){
 //       if(err){
-//         console.log(err.message);
+//         console.log(err);
 //       }else{
-//         console.log('add participant.');
+//         //do sth.
 //       }
 //     });
 //   }
@@ -101,11 +115,11 @@ var newMeeting = {
 //save markdowns test
 var spliter = require('./split');
 
-var file = "./README.md";
+var file = "./example.md";
 
 var markdowns = spliter(file);
 
-Meeting.saveMdTemp('9-8', 'dh', 'ruby',markdowns, function(err, re){
+Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
   if(err){
     console.log(err);
   }else{
