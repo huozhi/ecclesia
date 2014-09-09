@@ -1,5 +1,4 @@
 var User = require('./user');
-var Meeting = require('./meeting');
 
 var newUser1 = new User({
   username : 'tomas',
@@ -61,13 +60,16 @@ var newUser2 = new User({
 /*************************meeting module test case*******************************/
 
 // create a new room (meeting)
+var Meeting = require('./meeting');
 
 var newMeeting = {
   roomName : "9-8",
   date : new Date(),
   host : "dh",
   userList : [],
-  ImpressList : [],
+  ChartList:[],
+  MarkdownList:[],
+  SketchList:[]
 }
 
 // console.log(newMeeting.date);
@@ -78,13 +80,13 @@ var newMeeting = {
 //   }else{
 //     console.log(meeting);
 
-//     // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
-//     //   if(err){
-//     //     console.log(err.message);
-//     //   }else{
-//     //     console.log('add participant.');
-//     //   }
-//     // });
+//     Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
+//       if(err){
+//         console.log(err.message);
+//       }else{
+//         console.log('add participant.');
+//       }
+//     });
 
 //     var spliter = require('./split');
 
@@ -99,8 +101,8 @@ var newMeeting = {
 //         //do sth.
 //       }
 //     });
-//   }
-// });
+ //   }
+ // });
 
 // add new participant test
 // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Pony",function(err, result){
@@ -112,20 +114,59 @@ var newMeeting = {
 //     });
 
 
-//save markdowns test
+// save base64 data
+
+// var fs = require('fs');
+
+// fs.readFile('14.jpg', 'base64', function(err, data){
+//   if(!err){
+//     //console.log(data);
+    
+//     var chart = {
+//       range : "c1",
+//       data : data
+//     };
+//     Meeting.saveChart('9-8', 'dh', chart, function(err){
+//       if(!err)
+//         console.log('save chart!');
+//     });
+//   }
+// } );
+
+//save wrapped md test
 var spliter = require('./split');
 
 var file = "./example.md";
 
 var markdowns = spliter(file);
 
-Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
+var wrappedmd = {
+  range : "p1",
+  data : markdowns[0]
+};
+
+Meeting.saveMarkdown('9-8', 'dh', wrappedmd, function(err, re){
   if(err){
     console.log(err);
   }else{
     //do sth.
   }
 });
+
+//save md temp test
+// var spliter = require('./split');
+
+// var file = "./example.md";
+
+// var markdowns = spliter(file);
+
+// Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     //do sth.
+//   }
+// });
 
 /************************************************************************/
 
