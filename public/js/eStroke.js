@@ -58,7 +58,7 @@
     ctx.strokeStyle = color || 'black';
     switch (point.type) {
       case 'mousedown':
-          if (point.key == false) {
+          if (point.key == true) {
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
           }

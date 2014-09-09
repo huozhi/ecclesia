@@ -11,8 +11,9 @@ function SimpleWebRTC(opts) {
     var options = opts || {};
     var config = this.config = {
             // url: 'http://signaling.simplewebrtc.com:8888',
-            url: 'http://223.3.78.120:8888',
-            socketio: { 'force new connection':true},
+            // url: 'http://223.3.78.120:8888',
+            url: 'http://localhost:8888',
+            socketio: { 'force new connection':true },
             debug: false,
             localVideoEl: '',
             remoteVideosEl: '',
@@ -100,11 +101,9 @@ function SimpleWebRTC(opts) {
         }
     });
 
-    connection.on('syncStroke', function (point, sync) {
-        // emit the web page
-        if (typeof sync === 'function') {
-            sync(point);
-        }
+    connection.on('syncStroke', function (point) {
+        // console.log('emit rtcSycnStroke event');
+        self.emit('rtcSyncStroke', point);
     });
 
     // instantiate our main WebRTC helper
