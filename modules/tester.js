@@ -2,13 +2,13 @@ var User = require('./user');
 
 var newUser1 = new User({
   username : 'tomas',
-  password : 'itispwd',
+  userPwd : 'itispwd',
   conferences : [],
 });
 
 var newUser2 = new User({
   username : 'heale',
-  password : 'itispwd',
+  userPwd : 'itispwd',
   conferences : [],
 });
 
@@ -43,11 +43,14 @@ var newUser2 = new User({
 
 //login check test
 
-var name = 'tomas',
+var name = 'tomasa',
     pwd = 'itispwd';
 
-var re = User.loginCheck(name, pwd);
-console.log(re);
+var re = User.loginCheck(name, pwd, function(err, message){
+  if(!err){
+    console.log(message);
+  }
+});
 
 
 //archive tester

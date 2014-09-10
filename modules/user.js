@@ -2,7 +2,7 @@ var mongodb = require('./db');
 
 function User(user){
   this.username = user.username;
-  this.userPwd = user.password;
+  this.userPwd = user.userPwd;
   if(user.conferences == 'undefined'){
    this.conferences = [];
   }else{
@@ -53,16 +53,20 @@ User.prototype.register = function register(callback){
 };
 
 
-User.loginCheck = function(name, pwd){
+User.loginCheck = function(name, pwd, callback){
+  var message = null;
   User.get(name, function(err, user){
     if(!err){
-      console.log(user);
-      if( pwd === user.userPwd){
-        return true;
+      //console.log(user);
+      var dbPwd = (user == null)? '' : user.userPwd;
+      if( pwd === dbPwd){
+        message = true;
+        return callback(err, message);
       }
-      return false;
+      message = false;
+      return callback(err, message);
     }
-    console.log('err');
+    return callback(err, null);
   });
 }
 
@@ -91,7 +95,6 @@ User.get = function get(username, callback){
 
                 if(doc){
                   var user = new User(doc);
-                  console.log(user);
                   return callback(err, user);
                 }else{
                   mongodb.close();
