@@ -369,7 +369,7 @@ Reveal.initialize({
 
 
   center: true,
-  transition: 'cube',
+  transition: 'liner',
   transitionSpeed: 'fast',
   backgroundTransition: 'slide',
 
@@ -396,9 +396,13 @@ Reveal.addEventListener( 'ready', function( event ) {
     }
   }
   else {
-    // console.log('ready no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
+
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+
 });
 
 Reveal.addEventListener( 'slidechanged', function( event ) {
@@ -416,9 +420,18 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     // console.log('slideChange no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
-  $(function() {
-    $('.sketch-present').sketch();
-  });
+  // $(function() {
+  //   $('.sketch-present').sketch();
+  // });
+  // $(function() {
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+    // webrtc.on('syncStroke', function (point) {
+    //   console.log('sync remote sketching');
+    //   $('.sketch-present').syncStroke(point);
+    // })
+  // });
 });
 
 
@@ -503,10 +516,16 @@ $(document).ready(function() {
 
   listenChartDataInput();
 
+  // $(function () {
+  //   $('.sketch-present').Stroke(function (point) {
+  //     console.log('sketching...');
+  //     alert(point);
+  //     webrtc.sendSketchPointData(point);
+  //   });
 
-  $('.sketch-present').Stroke(function (point) {
-    // 
-  });
+  // });
+
+
 
 });
 
@@ -559,8 +578,8 @@ function listenChartDataInput() {
 <script type="text/javascript">
 var room = location.search && location.search.split('?')[1];
 
-var webtrc = new SimpleWebRTC({
-  url: "http://localhost:8888",
+var webrtc = new SimpleWebRTC({
+  // url: "http://localhost:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
   autoRequestMedia: true,
@@ -569,24 +588,36 @@ var webtrc = new SimpleWebRTC({
   autoAdjustMic: false
 });
 
-
-
-webtrc.on('readyToCall', function() {
-  if (room) webtrc.joinRoom(room);
+webrtc.on('readyToCall', function() {
+  if (room) webrtc.joinRoom(room);
 });
 
-webtrc.on('videoAdded', function (video, peer) {
+webrtc.on('videoAdded', function (video, peer) {
   var remotes = $('.sidebar');
-  var rPeer = $(document.createElement('div'));
-  rPeer.addClass('video-frame');
-  rPeer.append(video);
-  remotes.append(rPeer);
+  var addPeer = $(document.createElement('div'));
+  addPeer.addClass('video-frame');
+  addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
+  addPeer.append(video);
+  remotes.append(addPeer);
+});
+
+webrtc.on('videoRemoved', function (video, pper) {
+  var remotes = $('.sidebar');
+  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+  if (remotes && leavePeer) {
+    leavePeer.remove();
+  }
+})
+
+webrtc.on('rtcSyncStroke', function (point) {
+  // console.log('syncStroke event');
+  $('.sketch-present').syncStroke(point);
 });
 
 if (!room) {
   $('#create-room-btn').click(function () {
     // use uuid to create room, pass null to first arg
-    webtrc.createRoom(null, function (err, name) {
+    webrtc.createRoom(null, function (err, name) {
       var roomUrl = location.pathname + '?' + name;
       if (!err) {
         history.replaceState(null, null, roomUrl);
