@@ -6,17 +6,14 @@ body{
   -webkit-background-size: auto, cover;
   background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
-	font-size: 13px;
+	background-image: url(img/pattern.png), url(img/bd-1.jpg);
+	width: 100%;
+	overflow: hidden;
 }
-.container{
-	position:relative;
-}
+
 a{
 	color: #fff;
 	text-decoration: none;
-}
-.clr{
-	clear: both;
 }
 .content{
 	position:relative;
@@ -41,6 +38,7 @@ h1 span{
 .header{
 	font-family:'Arial Narrow', Arial, sans-serif;
 	line-height: 24px;
+	height: 23px;
 	font-size: 11px;
 	background: #000;
 	opacity: 0.9;
@@ -51,6 +49,8 @@ h1 span{
 	box-shadow: 1px 0px 2px #000;
 }
 .header a{
+	position: relative;
+	left: 90%;
 	padding: 0px 10px;
 	letter-spacing: 1px;
 	color: #ddd;
@@ -60,14 +60,6 @@ h1 span{
 .header a:hover{
 	color: #fff;
 }
-.header span.right{
-	float: right;
-}
-.header span.right a{
-	float: none;
-	display: inline;
-}
-
 .more ul{
 	text-transform:uppercase;
 	font-size:11px;
@@ -131,4 +123,53 @@ h1 span{
 	color: #fff;
 	text-shadow: 0px 0px 1px #fff;
 	padding-left: 10px;
+}
+.history-block {
+	position: absolute;
+	top: 15%;
+	left: 50%;
+	margin-left: -350px;
+	border: #e3e3e3 solid 1px;
+	border-radius: 0.5em;
+}
+.history-frame {
+	position: relative;
+	width: 700px;
+	height: 400px;
+	background-color: #ffffff;
+}
+.create-room-block {
+	position: relative;
+	left: 50%;
+	margin-left: -350px;
+	width: 700px;
+	height: 250px;
+}
+.user-list {
+	float: left;
+	width: 160px;
+	height: 250px;
+	border: #e3e3e3 solid 1px;
+	border-radius: 0.5em;
+	background-color: #eeeeee;
+}
+.user-list-right {
+	float: left;
+	width: 540px;
+	height: 250px;
+}
+.invite-input {
+	float: left;
+	width: 450px;
+}
+.create-room-input {
+	padding-bottom: 33px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+#add-user {
+	margin-left: 20px;
+}
+.menu-block {
+	top: 50px;
 }

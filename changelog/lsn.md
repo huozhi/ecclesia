@@ -8,3 +8,11 @@
         reveal.css 244、280、290行
 * home界面
   合并home.css
+
+#9-10
+
+* 历史记录界面
+  大改：history.ejs
+* home界面
+  修改home.css部分内容
+  修改home.ejs部分细节
