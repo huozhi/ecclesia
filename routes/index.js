@@ -18,6 +18,10 @@ router.get('/history', function(req, res) {
   res.render('history');
 })
 
+router.get('/home', function(req, res) {
+  res.render('home');
+})
+
 // router.get('/test', function(req, res) {
 //   console.log('filter')
 //   res.send('hehe')

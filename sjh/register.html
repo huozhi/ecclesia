@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<head>
+	<title>Register test</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+	<script src="scripts/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="js/modernizr.custom.63321.js"></script>
+
+</head>
+
+<style>
+.head-container{
+	background-color: #f2eada;
+	height:50px;
+}
+.sign-up-container{
+	background-color:#74787c;
+	height:500px;
+}
+
+</style>
+
+<body style="width:100%">
+
+	<div class="head-container"
+		<nav class="navbar navbar-default" role="navigation" >
+		<div class="navbar-header" >
+			<a class="navbar-brand" href="#">Ecclesia</a>
+		</div>
+		<div>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#">Sign up</a></li>
+				<li><a href="#">Sign in</a></li>
+			</ul>
+		</div>
+		</nav>
+	</div>
+
+<div class="sign-up-container">
+	<div style="row">
+		<div class="col-md-8" style="padding:170px">
+			<p><font face="Mistral" size="7">Welcome to join us !</font></p>
+		</div>
+		<div class="col-md-4" style="padding:100px 70px 100px">
+			<div>
+				<input id="usernametext" type="text" class="form-control" placeholder="Pick a username">
+			</div>
+			<br>
+
+			<div>
+				<input id="passwordtext" type="password" class="form-control" placeholder="Create a password">
+			</div>
+			<br>
+
+			<div>
+				<input id="repeattext" type="password" class="form-control" placeholder="Repeat your password">
+			</div>
+			<br>
+			<div class="text-muted">
+				<p><font color="black">Use letters, umerals and characters as your username or password</p>
+			</div>
+			<br>
+
+			<button type="button" id="sign-up-button" class="btn btn-primary btn-lg btn-block"  onclick="DoCheck()">
+				Sign up for Ecclesia
+			</button>
+		</div>
+	</div>
+</div>
+
+
+<div class="container">	
+			<br>
+			<br>
+			<br>
+			
+			<section class="main">
+
+				<ul class="timeline">
+
+					<li class="event">
+						<input type="radio" name="tl-group" checked/>
+						<label></label>
+						<div class="thumb user-1"><span>19 Nov</span></div>
+						<div class="content-perspective">
+							<div class="content">
+								<div class="content-inner">
+									<h3>About Ecclesia</h3>
+									<p>Ecclesia is an application which simulates a real-time meeting online. We approve at most 6 participants to attend the meeting at the same time. Several functions are provided to help you hold the meeting. It's high time for you joining us and enjoying the convenience brought by Ecclesia.</p>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="event">
+						<input type="radio" name="tl-group"/>
+						<label></label>
+						<div class="thumb user-2"><span>16 Nov</span></div>
+						<div class="content-perspective">
+							<div class="content">
+								<div class="content-inner">
+									<h3>Online Voice And Online Video</h3>
+									<p>When you are in a online meeting, it's quite inconvenient to communicate by typing. Accordingly, we support online voice and online video, making the online meeting feel like face-to-face. You will never be botherd by typing any more.</p>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="event">
+						<input type="radio" name="tl-group"/>
+						<label></label>
+						<div class="thumb user-3"><span>15 Nov</span></div>
+						<div class="content-perspective">
+							<div class="content">
+								<div class="content-inner">
+									<h3>Drawing</h3>
+									<p>When we have a discussion in reality, we usually use pen to draw on paper to help us present ourselves more clearly. Therefore, we make it possible to draw in the screen using your mouse. You draw something by the mouse in the screen, and Ecclesia will synchronize this to the others.</p>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="event">
+						<input type="radio" name="tl-group"/>
+						<label></label>
+						<div class="thumb user-4"><span>18 Nov</span></div>
+						<div class="content-perspective">
+							<div class="content">
+								<div class="content-inner">
+									<h3>Add Chart</h3>
+									<p>This is a function which can generate a chart by the data you put in. You can choose one template from several templates we provide, than put in the data you want to show to the other members in the form of this chart. After that, the final chart will be delivered to everyone in the meeting.</p>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="event">
+						<input type="radio" name="tl-group"/>
+						<label></label>
+						<div class="thumb user-5"><span>17 Nov</span></div>
+						<div class="content-perspective">
+							<div class="content">
+								<div class="content-inner">
+									<h3>Add Presentations</h3>
+									<p>This function can help you demonstrate presentations from the local. You can choose your local PPT and Ecclesia will import it into the real-time meeting. By this, the demonstration will make your opinion much easier to understand.</p>
+								</div>
+							</div>
+						</div>
+					</li>
+					
+				</ul>
+			</section>
+
+</div>
+
+
+<script>
+function DoCheck()
+{
+	var reg=/^[\u0391-\uFFE5a-zA-Z0-9]+$/;
+	if(usernametext.value=="")
+	{
+		alert("用户名不能为空！");
+		return false;
+	}
+	else if(!reg.test(usernametext.value))
+	{
+		alert("用户名只能由字母、数字和汉字组成！");
+		return false;
+	}
+	else if(passwordtext.value=="")
+	{
+		alert("密码不能为空！");
+		return false;
+	}
+	else if(!reg.test(passwordtext.value))
+	{
+		alert("密码只能由字母、数字和汉字组成！");
+		return false;
+	}
+	else if(passwordtext.value!=repeattext.value)
+	{
+		alert("密码不一致！");
+		return false;
+	}
+	else
+	{
+		alert("注册成功！");
+		return true;
+	}
+	return true;
+}
+</script>
+
+</body>
+</html>        
