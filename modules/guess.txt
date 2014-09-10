@@ -1,0 +1,33 @@
+
+{ 
+	"ChartList":
+	[
+		{range:"c1" ,data: "chart base64 data"},
+		{range:"c2" ,data: "chart base64 data"},
+	],
+	"MarkdownList":
+	[
+		{range:"p1" ,data: "chart base64 data"},
+		{range:"p2" ,data: "chart base64 data"},
+	],
+	"sketchList":
+	[
+		{range:"p1" ,data: "chart base64 data?"},
+		{range:"p2" ,data: "chart base64 data"},
+	],
+	"roomName" : "room temp",
+
+
+}
+
+//MdTemp:
+{
+	"roomName": " ",
+	"host":" ",
+	markdowns:
+	{	//the same author can be repeated
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},
+		{"author":"" , "upload":[]},
+	}			
+}

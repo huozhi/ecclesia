@@ -1,2 +1,6 @@
-node_modules/
-impresses/
+*.sublime-project
+*.sublime-workspace
+node_modules/*
+modules/example.md
+*.md
+public/rtc/node_modules

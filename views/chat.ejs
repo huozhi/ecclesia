@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
+
+<title>chat [ecclesia]</title>
+<link rel="stylesheet" href="/css/reveal.css"></style>
+<link rel="stylesheet" href="/css/bootstrap.min.css"></style>
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="/js/reveal.js"></script>
+<!-- <script type="text/javascript" src="/js/sketch.min.js"></script> -->
+<script type="text/javascript" src="/js/eStroke.js"></script>
+<script type="text/javascript" src="/js/Chart.min.js"></script>
+<script type="text/javascript" src="/rtc/socket.io.js"></script>
+<script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
+<style type="text/css">
+html {
+  overflow-x: hidden;
+}
+
+.affix-left-bar {
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 220px;
+  height: 600px;
+}
+
+.main {
+  position: relative;
+  display: inline-block;
+  width: 900px;
+  height: 600px;
+}
+
+.board {
+  position: relative;
+  left: 50%;
+  margin-left: -400px;
+  width: 800px;
+  height: 400px;
+  border: black solid 1px;
+  border-radius: 5px;  
+}
+.sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0px;
+  border: black solid 0px;
+  border-radius: 5px;
+
+  z-index: 2;
+  background-color: rgba(255,255,255,0);
+}
+.charts {
+  position: relative;
+
+  left: 50%;
+  margin-left: -400px;
+  margin-top: 10px;
+  width: 800px;
+  height: 200px;
+  border: black solid 1px;
+  border-radius: 5px;
+
+}
+
+.chart {
+  position: relative;
+  margin: 10px;
+  display: inline;
+}
+
+.impress {
+  position: absolute;
+  margin: 0px;
+  border: black solid 1px;
+
+  border-radius: 5px;
+}
+.slides {
+  border: black solid 1px;
+  width: 800px;
+  height: 400px;
+  z-index: 1;
+  zoom: 1;
+}
+section {
+  height: 400px;
+}
+
+.navbar {
+  margin-bottom: 5px;
+}
+
+.lazy {
+  width: 100px;
+  height: 100px;
+}
+.chart-label {
+  width: 188px;
+}
+
+.oper-frame {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+}
+
+.single-chart {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 5px;
+  display: inline-block;
+}
+div.single-chart > button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}
+
+.sidebar {
+  position: relative;
+  float: left;
+  border: black solid 1px;
+  border-radius: 5px;
+  width: 220px;
+  margin-left: 10px;
+  height: 610px;
+}
+
+.video-frame {
+  margin: 20px 20px 0px 20px;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: black solid 1px;
+  border-radius: 5px;
+}
+
+.video-frame > video {
+  margin: 10px 10px 10px 10px;
+  position: relative;
+  width: 160px; height: 160px;
+  border: black solid 1px;
+  border-radius: 5px;
+}
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default " role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
+        <span class="sr-only">navigation</span>
+      </button>
+      <a class="navbar-brand" href="#">Tool Box</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="tool-bar">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="#" data-toggle="modal" data-target="#add-chart-modal">
+            <span class="glyphicon glyphicon-stats"></span> Add Chart</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="">
+            <span class="glyphicon glyphicon-file"></span> Add Impress</a>
+        </li>
+        <li>
+          <a id="test-add-chart" href="#" data-toggle="modal" data-target="">
+            <span class="glyphicon glyphicon-file"></span> Add Pie</a>
+        </li>
+        <li>
+          <a id="create-room-btn" data-toggle="modal" data-target="">
+            <span class="glyphicon glyphicon-file"></span> Create Room</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- navigator models -->
+<div class="modal fade" id="add-chart-modal" tabindex="-1" role="dialog" aria-labelledby="chart-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+        <h4 class="modal-title" id="chart-modal-label">Choose Chart</h4>
+      </div>
+      <div class="modal-body">
+
+        <div id="chart-insert-carousel" class="carousel slide" data-ride="carousel">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-1.png" ></a>
+                      <div class="caption">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-2.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-3.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
+                      <div class="caption">
+                       
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-5.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+
+                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-6.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!--end container-->
+        
+            </div>
+
+            <div class="item">
+              <div class="chart-insert chart-insert-form center" role="form">
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <input type="text" class="form-control chart-data-input chart-data-axis" placeholder="X-axis">
+                </div>
+                <br>
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">
+                </div>                
+                <br>
+                <div class="chart-btn input-group input-group-md col-md-8 ">
+
+                  <button id="chart-data-add" class="btn btn-primary col-md-offset-6">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  <button id="chart-data-submit" class="btn btn-primary col-md-offset-2">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </button>
+                </div>
+                <br>
+                <div class="carousel-cpation input-group input-group-md col-md-8 container">
+                  <canvas id="chart-preview" width="300" height="300"></canvas>
+
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="affix-left-bar">
+    <div id="all-videos" class="sidebar">
+      <div id="local-video" class="video-frame"></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- sidebar of remote client videos -->
+    <!-- main board and charts blank -->
+    <div class="board">
+      <div id="reveal" class="reveal impress">
+
+        <div class="slides">
+          <section data-markdown>
+            <script type="text/template">
+                ```cpp
+                #include <iostream>
+                using namespace std;
+                int main() { cout << "hello world" << endl; return 0; }
+                ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+                ```php
+                public function foo()
+                {
+                    $foo = array(
+                        'bar' => 'bar'
+                    )
+                }
+                ```
+            </script>
+          </section>
+          <section>
+            <h1>wtf</h1>
+          </section>
+          <section>
+            <h1>hell</h1>
+          </section>
+        </div>
+      </div>
+    </div>
+    
+    <div id="charts" class="charts"></div>
+  </div><!-- end main -->
+
+</div>
+<script type="text/javascript">
+
+Reveal.initialize({
+  width: 800,
+  height: 400,
+  margin: 0.5,
+  minScale: 1.0,
+  maxScale: 1.0,
+
+
+  center: true,
+  transition: 'liner',
+  transitionSpeed: 'fast',
+  backgroundTransition: 'slide',
+
+  dependencies: [
+    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'js/plugin/math/math.js', async: true }
+    ]  
+});
+
+Reveal.addEventListener( 'ready', function( event ) {
+  var present = $('section.present');
+  if (present.children('canvas').length != 0) {
+    console.log('has canvas')
+    var curCanvas = $('.present > canvas');
+    if (!curCanvas.hasClass('sketch-present')) {
+      // console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+
+});
+
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  $('.sketch-present').removeClass('sketch-present');
+  var present = $('.slides > section.present');
+  if (present.children('canvas').length != 0) {
+    // console.log('has canvas')
+    var curCanvas = $('.present > canvas');
+    if (curCanvas.hasClass('sketch-present') == false) {
+      // console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    // console.log('slideChange no canvas')
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+  // $(function() {
+  //   $('.sketch-present').sketch();
+  // });
+  // $(function() {
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+    // webrtc.on('syncStroke', function (point) {
+    //   console.log('sync remote sketching');
+    //   $('.sketch-present').syncStroke(point);
+    // })
+  // });
+});
+
+
+
+$(document).ready(function() {
+  
+  $('slides').attr('zoom','1.0')
+
+  $('#test-add-chart').click(function() {
+    var addContent =
+    '<div class="single-chart">' +
+      '<canvas class="chart" width="180" height="180"></canvas>' +
+      '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+    '</div>';
+    $('#charts').append(addContent);
+    var ctx = $('canvas.chart').last().get(0).getContext('2d');
+    var pieData = [
+      {
+        value : 20,
+        color : "#F38630",
+        label : 'Sleep',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      {
+        value : 30,
+        color : "#E38231",
+        label : 'Wocao',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      {
+        value : 50,
+        color : "#FFF630",
+        label : 'Heihei',
+        labelColor : 'white',
+        labelFontSize : '24'
+      },
+      
+    ];
+    
+    new Chart(ctx).Pie(pieData);
+    $('.rm-chart').click(function() {
+      // console.log('rm corresponding chart');
+
+      $(this).parent().remove();
+    });
+  });
+
+  $('.carousel').carousel({
+    interval: false
+  });
+
+
+
+  $('.add-opt').click(function() {
+    $('#chart-insert-carousel').carousel('next');
+  });
+
+  $('#chart-data-submit').click(function() {
+    $('#chart-insert-carousel').carousel('prev');
+
+  });
+
+  $('#chart-data-add').click(function() {
+    var len = $('.chart-insert').children('div').length;
+    if (len > 2 && len < 5) {
+      var nums = ['axis','one','two','three'];
+      var inputForm = '<div class="input-group input-group-md col-md-8 col-md-offset-2">' +
+        '<input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">';
+      var rmBtn = '<span class="input-group-btn"><button class="btn btn-primary rm-input-btn">' + 
+                    '<span class="glyphicon glyphicon-remove"></span></button></span></div><br>'
+      $(inputForm + rmBtn).insertBefore('.chart-btn');
+    }
+    $('.rm-input-btn').click(function() {
+      var $parentDiv = $(this).parent().parent();
+      $parentDiv.next().remove(); $parentDiv.remove();
+    });
+
+    listenChartDataInput();
+  });
+
+  listenChartDataInput();
+
+  // $(function () {
+  //   $('.sketch-present').Stroke(function (point) {
+  //     console.log('sketching...');
+  //     alert(point);
+  //     webrtc.sendSketchPointData(point);
+  //   });
+
+  // });
+
+
+
+});
+
+
+function listenChartDataInput() {
+// preview chart to insert
+  $('.chart-data-input').dblclick(function() {
+    var xAxis = $('.chart-data-axis').val().split(' ');
+    if (xAxis.length < 2) return;
+    // console.log(xAxis)
+    var datas = [];
+    var colors = [
+      {
+        fillColor: 'rgba(220,220,220,0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+      },
+      {
+        fillColor: 'rgba(151,187,205,0.5)',
+        strokeColor: 'rgba(151,187,205,1)',
+        pointColor: 'rgba(151,187,205,1)',
+      }
+    ];
+    $('.chart-data-val').each(function(index, element) {
+      var columnData = $(this).val().split(' ').map(Number);
+      if (columnData.length != xAxis.length) return;
+      // console.log(columnData);
+      datas.push(
+        {
+          fillColor : colors[index].fillColor,
+          strokeColor: colors[index].strokeColor,
+          pointColor: colors[index].pointColor,
+          pointStrokeColor : "#fff",
+          data: columnData
+        }
+      );
+    });
+    // console.log(datas);
+    var lineData = {
+      labels: xAxis,
+      datasets: datas
+    };
+    var previewCtx = $('#chart-preview').get(0).getContext('2d');
+    new Chart(previewCtx).Line(lineData);
+  });
+}
+</script>
+
+<!-- rtc part -->
+<script type="text/javascript">
+var room = location.search && location.search.split('?')[1];
+
+var webrtc = new SimpleWebRTC({
+  // url: "http://localhost:8888",
+  localVideoEl: 'local-video',
+  remoteVideoEl: 'all-videos',
+  autoRequestMedia: true,
+  debug: false,
+  detectSpeakingEvents: true,
+  autoAdjustMic: false
+});
+
+webrtc.on('readyToCall', function() {
+  if (room) webrtc.joinRoom(room);
+});
+
+webrtc.on('videoAdded', function (video, peer) {
+  var remotes = $('.sidebar');
+  var addPeer = $(document.createElement('div'));
+  addPeer.addClass('video-frame');
+  addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
+  addPeer.append(video);
+  remotes.append(addPeer);
+});
+
+webrtc.on('videoRemoved', function (video, pper) {
+  var remotes = $('.sidebar');
+  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+  if (remotes && leavePeer) {
+    leavePeer.remove();
+  }
+})
+
+webrtc.on('rtcSyncStroke', function (point) {
+  // console.log('syncStroke event');
+  $('.sketch-present').syncStroke(point);
+});
+
+if (!room) {
+  $('#create-room-btn').click(function () {
+    // use uuid to create room, pass null to first arg
+    webrtc.createRoom(null, function (err, name) {
+      var roomUrl = location.pathname + '?' + name;
+      if (!err) {
+        history.replaceState(null, null, roomUrl);
+      }
+    })
+  })
+} else {
+  console.log('already in a room');
+}
+
+</script>
+</body>
+</html>
