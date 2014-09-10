@@ -33,6 +33,7 @@
           break;
         case 'mousemove':
           if (keyDown == true) {
+            point.key = true;
             ctx.lineTo(point.x, point.y);
             ctx.stroke();
           }
@@ -41,7 +42,6 @@
         case 'mouseleave':
         case 'mouseout':
           $(this).data('keyDown', false);
-          point.key = false;
           ctx.stroke();
           ctx.closePath();
       }
