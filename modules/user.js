@@ -43,8 +43,10 @@ User.prototype.register = function register(callback){
         });
 
         collection.insert(newUser, {safe : true}, function(err, newer){
+          if(err){
+            mongodb.close(); return callback(err);
+          }
           mongodb.close();
-          //console.log(typeof(newer));
           return callback(err, newer);
         });
     });
