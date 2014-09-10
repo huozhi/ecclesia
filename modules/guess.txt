@@ -7,8 +7,8 @@
 	],
 	"MarkdownList":
 	[
-		{range:"p1" ,data: "chart base64 data"},
-		{range:"p2" ,data: "chart base64 data"},
+		{range:"p1" ,data: "string"},
+		{range:"p2" ,data: "string"},
 	],
 	"sketchList":
 	[
@@ -25,9 +25,9 @@
 	"roomName": " ",
 	"host":" ",
 	markdowns:
-	{	//the same author can be repeated
+	[	//the same author can be repeated
 		{"author":"" , "upload":[]},
 		{"author":"" , "upload":[]},
 		{"author":"" , "upload":[]},
-	}			
+	]			
 }
