@@ -2,3 +2,5 @@
 *.sublime-workspace
 node_modules/*
 modules/example.md
+*.md
+public/rtc/node_modules

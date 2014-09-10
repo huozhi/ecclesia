@@ -1,6 +1,7 @@
 ;(function($) {
   $.fn.Stroke = function(cb, color) {
-    this.on('mousedown mouseleave mouseup mouseout mousemove', function (event) {
+    $(this).on('mousedown mouseleave mouseup mouseout mousemove', function (event) {
+      
       var keyDown, point, ctx;
       keyDown = $(this).data('keyDown');
       if (keyDown == undefined) {
@@ -32,6 +33,7 @@
           break;
         case 'mousemove':
           if (keyDown == true) {
+            point.key = true;
             ctx.lineTo(point.x, point.y);
             ctx.stroke();
           }
@@ -40,14 +42,15 @@
         case 'mouseleave':
         case 'mouseout':
           $(this).data('keyDown', false);
-          point.key = false;
           ctx.stroke();
           ctx.closePath();
       }
+      // if (typeof cb == 'function')
       return cb(point);
     });
   }
   $.fn.syncStroke = function(point, color) {
+    console.log('got sync signal');
     var ctx = $(this).get(0).getContext('2d');
     ctx.lineJoin  = 'round';
     ctx.lineCap   = 'round';
@@ -55,7 +58,7 @@
     ctx.strokeStyle = color || 'black';
     switch (point.type) {
       case 'mousedown':
-          if (point.key == false) {
+          if (point.key == true) {
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
           }
@@ -73,6 +76,6 @@
           ctx.closePath();
           break;
     }
-    return this;
+    return $(this);
   }
 })(jQuery);
