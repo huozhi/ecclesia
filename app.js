@@ -6,7 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var routes = require('./routes/index');
+<<<<<<< HEAD
 var setting = require('./setting');
+=======
+var historyRoutes = require('./routes/history');
+>>>>>>> d044db109d7ea87282ba68ef56b77e2d84a188c5
 
 var app = express();
 
@@ -24,6 +28,7 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
+app.use('/history', historyRoutes);
 
 app.use(session({
     secret: setting.cookieSecret,
@@ -31,6 +36,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
     }));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

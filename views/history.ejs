@@ -70,7 +70,7 @@ h1 span{
 	text-align: center;
 	background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
 }
-.img-container {
+.div-container {
 	float: left;
 	width:300px;
 	height:190px;
@@ -86,7 +86,7 @@ h1 span{
 	box-align:center;
 	border: #7d7d7d solid 1px;
 }
-.img-container img {
+.index {
 	display: inline-block;
 	width: 280px;
 	height: 170px;
@@ -94,7 +94,7 @@ h1 span{
 	border-radius: 3px;
 	cursor: pointer;
 }
-img:hover {
+.index:hover {
 	box-shadow: 0px 0px 35px 4px #292929;
 }
 .his-container {
@@ -175,29 +175,18 @@ img:hover {
 			<img style="position:relative;top:275px;" src="/img/flag.png"/>
 		</div>
 
-			<div class="img-container">
-				<img id="img1" src="/img/chart-type-1.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			<div class="div-container">
+				<div id="div1" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="details(this.id);">
+					<ul>
+						<li>
+					</ul>
+				</div>
 			</div>
-			<div class="img-container">
-				<img id="img2" src="/img/chart-type-2.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			<div class="div-container">
+				<div id="div2" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></div>
 			</div>
-			<div class="img-container">
-				<img id="img3" src="/img/chart-type-3.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
-			</div>
-			<div class="img-container">
-				<img id="img4" src="/img/chart-type-4.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
-			</div>
-			<div class="img-container">
-				<img id="img5" src="img/chart-type-5.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
-			</div>
-			<div class="img-container">
-				<img id="img6" src="img/chart-type-6.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
-			</div>
-			<div class="img-container">
-				<img id="img7" src="img/chart-type-6.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
-			</div>
-			<div class="img-container">
-				<img id="img8" src="img/chart-type-5.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			<div class="div-container">
+				<div id="div3" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></div>
 			</div>
 	</div>
 	<div class="detail-container">
@@ -213,6 +202,7 @@ $(document).ready(function(){
 		$(".his-container").fadeOut();
 		$(".detail-container").fadeIn();
 		$(".btn-back").fadeIn();
+
 	});
 	$(".btn-back").click(function (){
 		$(".btn-back").fadeOut();
