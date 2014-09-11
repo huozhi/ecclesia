@@ -22,11 +22,13 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(session({
     secret: setting.cookieSecret,
     cookie: { maxAge: 24*60*60*1000 },
     resave: true,
     saveUninitialized: true
+
 }));
 
 app.use('/', routes.signupRouter);
@@ -34,6 +36,7 @@ app.use('/login', routes.signinRouter);
 app.use('/home', routes.homeRouter);
 app.use('/history', routes.historyRouter);
 app.use('/chat', routes.chatRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
