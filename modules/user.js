@@ -2,7 +2,7 @@ var mongodb = require('./db');
 
 function User(user){
   this.username = user.username;
-  this.userPwd = user.password;
+  this.userPwd = user.userPwd;
   if(user.conferences == 'undefined'){
    this.conferences = [];
   }else{
@@ -43,14 +43,35 @@ User.prototype.register = function register(callback){
         });
 
         collection.insert(newUser, {safe : true}, function(err, newer){
+          if(err){
+            mongodb.close(); return callback(err);
+          }
           mongodb.close();
-          //console.log(typeof(newer));
           return callback(err, newer);
         });
     });
         
   });
 };
+
+
+User.loginCheck = function(name, pwd, callback){
+  var message = null;
+  User.get(name, function(err, user){
+    if(!err){
+      //console.log(user);
+      var dbPwd = (user == null)? '' : user.userPwd;
+      if( pwd === dbPwd){
+        message = true;
+        return callback(err, message);
+      }
+      message = false;
+      return callback(err, message);
+    }
+    return callback(err, null);
+  });
+}
+
 
 User.get = function get(username, callback){
     mongodb.open(function(err, db){
@@ -64,27 +85,29 @@ User.get = function get(username, callback){
           mongodb.close();
           console.log('no creation');
           return callback(err);
+        }else{
+            db.collection('Users', {strict : true}, function(err, collection){
+              if(err){
+                mongodb.close();
+                return callback(err);
+              }
+
+              collection.findOne({username : username}, function(err, doc) {
+                mongodb.close();
+
+                if(doc){
+                  var user = new User(doc);
+                  return callback(err, user);
+                }else{
+                  mongodb.close();
+                  return callback(err, null);
+                }
+              });
+          });
         }
       });
 
-      db.collection('Users', {strict : true}, function(err, collection){
-        if(err){
-          mongodb.close();
-          return callback(err);
-        }
 
-        collection.findOne({username : username}, function(err, doc) {
-          mongodb.close();
-
-          if(doc){
-            var user = new User(doc);
-            return callback(err, user);
-          }else{
-            mongodb.close();
-            return callback(err, null);
-          }
-        });
-      });
     });
 };
 
