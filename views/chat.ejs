@@ -187,7 +187,16 @@ div.single-chart > button {
   border: black solid 1px;
   border-radius: 5px;
 }
-
+#scan-file {
+  position: relative;
+  left: 497px;
+  top: 10px;
+  width: 71px;
+}
+#MsgList {
+  position: relative;
+  width: 420px;
+}
 </style>
 </head>
 <body>
@@ -210,7 +219,7 @@ div.single-chart > button {
             <span class="glyphicon glyphicon-stats"></span> Add Chart</a>
         </li>
         <li>
-          <a href="#" data-toggle="modal" data-target="">
+          <a href="#" data-toggle="modal" data-target="#add-impress-modal">
             <span class="glyphicon glyphicon-file"></span> Add Impress</a>
         </li>
         <li>
@@ -338,7 +347,32 @@ div.single-chart > button {
     </div>
   </div>
 </div>
+<!-- add impress modal -->
+<div class="modal fade" id="add-impress-modal" tabindex="-1" role="dialog" aria-labelledby="add-impress-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="add-impress-label">Add Impress File</h4>
+      </div>
+      <div class="modal-body">
+        <form enctype="multipart/form-data" method="POST" onsubmit="return HasChecked;">
 
+          <input type="file" id="path" onchange="CheckExt(this);upfile.value=this.value;" style="width:180px;display:none">
+          <input type="text" id="upfile" class="form-control" placeholder="Select a file">
+          <input type="button" id="scan-file" class="btn btn-primary" value="Scan" onclick="path.click()">
+          
+          <div id="MsgList"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="UploadButton" class="btn btn-primary" value="" disabled>Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->
 <div class="container-fluid">
   <div class="affix-left-bar">
     <div id="all-videos" class="sidebar">
@@ -397,16 +431,49 @@ div.single-chart > button {
 
 </div>
 <script type="text/javascript">
-
-new Swiper('.swiper-container',{
-  
-  scrollbar: {
-    container: '.swiper-scrollbar'
-    ,hide: false
-    ,snapOnRelease: true
+/*JS前端检测上传文件类型以*/
+var FileObj,FileExt,ErrMsg,FileMsg,HasCheked;//全局变量 图片相关属性
+//以下为限制变量
+var AllowExt=".md|.markdown|.txt|";
+HasChecked=false;
+ //显示提示信息 tf=true 显示文件信息 tf=false 显示错误信息 msg-信息内容
+function ShowMsg(msg,tf) 
+{
+  if(!tf)
+  {
+      document.all.UploadButton.disabled=true;
+      FileObj.outerHTML=FileObj.outerHTML;
+      MsgList.innerHTML=msg;
+      HasChecked=false;
   }
-});
+  else
+  {
+      document.all.UploadButton.disabled=false;
+      MsgList.innerHTML=msg;
+      HasChecked=true;
+  }
+}
 
+function CheckExt(obj)
+{
+  ErrMsg="";
+  FileMsg="";
+  FileObj=obj;
+  HasChecked=false;
+  if(obj.value=="")return false;
+  MsgList.innerHTML="  Waitting...";
+  document.all.UploadButton.disabled=true;
+  FileExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();
+
+  if(AllowExt!=0&&AllowExt.indexOf(FileExt+"|")==-1) //判断文件类型是否允许上传
+  {
+      ErrMsg="  The document type does not allow uploads. Please upload "+AllowExt+" type of file, the current file type is"+FileExt;
+      ShowMsg(ErrMsg,false);
+      return false;
+  }
+  FileMsg="  File Extension is "+FileExt;
+  ShowMsg(FileMsg,true);
+}
 
 Reveal.initialize({
   width: 800,

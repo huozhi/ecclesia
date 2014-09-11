@@ -20,10 +20,10 @@ router.get('/chat', function(req, res) {
   res.render('chat');
 })
 
-// router.get('/test', function(req, res) {
-//   console.log('filter')
-//   res.send('hehe')
-// })
+
+router.get('/history', function(req, res) {
+  res.render('history');
+})
 
 /* POST handles */
 router.post('/register', function(req,res) {
