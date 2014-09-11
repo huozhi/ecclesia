@@ -1,16 +1,12 @@
 var express = require('express');
+var setting = require('./setting');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var routes = require('./routes/index');
-var setting = require('./setting');
-
-var historyRoutes = require('./routes/history');
-
-
+var routes = require('./routes');
 var app = express();
 
 // view engine setup
@@ -31,10 +27,14 @@ app.use(session({
     cookie: { maxAge: 24*60*60*1000 },
     resave: true,
     saveUninitialized: true
-    }));
+}));
 
-app.use('/history', historyRoutes);
 app.use(routes);
+app.use('/', routes.signupRouter);
+app.use('/login', routes.signinRouter);
+app.use('/home', routes.homeRouter);
+app.use('/history', routes.historyRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

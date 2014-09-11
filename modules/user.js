@@ -3,6 +3,7 @@ var mongodb = require('./db');
 function User(user){
   this.username = user.username;
   this.userPwd = user.userPwd;
+  this.mailbox = user.mailbox;
   if(user.conferences == 'undefined'){
    this.conferences = [];
   }else{
@@ -16,12 +17,12 @@ User.prototype.register = function register(callback){
   var newUser = {
     username : this.username,
     userPwd : this.userPwd,
+    mailbox : this.mailbox,
   };
 
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
-      console.log('open failed');
       return callback(err);
     }
 
@@ -111,6 +112,11 @@ User.get = function get(username, callback){
     });
 };
 
+// var conference = {
+//   roomName : roomname,
+//   host : host,
+//   date : date,
+// }
 User.archive = function archive(username, conference, callback){
   mongodb.open(function(err, db){
     if(err){

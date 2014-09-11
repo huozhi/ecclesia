@@ -1,4 +1,4 @@
-
+Meetings
 { 
 	"ChartList":
 	[
@@ -10,15 +10,23 @@
 		{range:"p1" ,data: "string"},
 		{range:"p2" ,data: "string"},
 	],
-	"sketchList":
+	"SketchList":
 	[
 		{range:"p1" ,data: "chart base64 data?"},
 		{range:"p2" ,data: "chart base64 data"},
 	],
 	"roomName" : "room temp",
-
+	"host": "",
+	"date" : "  ",
+	"userList":
+	[
+		"XX",
+		"CC",
+	]
 
 }
+
+
 
 //MdTemp:
 {
