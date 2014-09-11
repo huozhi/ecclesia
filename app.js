@@ -29,7 +29,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(routes);
 app.use('/', routes.signupRouter);
 app.use('/login', routes.signinRouter);
 app.use('/home', routes.homeRouter);

@@ -1,9 +1,10 @@
-*.sublime-project
-*.sublime-workspace
 node_modules/*
 modules/*.md
 modules/*.jpg
 modules/*.png
 modules/example.md
-*.md
 public/rtc/node_modules
+*.sublime-project
+*.sublime-workspace
+*.md
+*.log
