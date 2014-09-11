@@ -20,9 +20,6 @@ router.get('/chat', function(req, res) {
   res.render('chat');
 })
 
-router.get('/home', function(req, res) {
-  res.render('home');
-})
 // router.get('/test', function(req, res) {
 //   console.log('filter')
 //   res.send('hehe')
