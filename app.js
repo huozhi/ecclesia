@@ -5,7 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var routes = require('./routes/index');
+
+//routers
+var signup = require('./routes/signup');
+var signin = require('./routes/signin');
+var home   = require('./routes/home');
+
 var setting = require('./setting');
 
 var app = express();
@@ -20,18 +25,21 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret:'ecclesiasession', cookie : {maxAge : 60000}}));
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(routes);
 
 app.use(session({
     secret: setting.cookieSecret,
     cookie: { maxAge: 24*60*60*1000 },
     resave: true,
     saveUninitialized: true
-    }));
+}));
+
+app.use('/', signup);
+app.use('/login', signin);
+app.use('/home', home);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

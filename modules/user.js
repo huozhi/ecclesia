@@ -23,7 +23,6 @@ User.prototype.register = function register(callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
-      console.log('open failed');
       return callback(err);
     }
 
