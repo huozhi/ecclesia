@@ -171,21 +171,21 @@ img:hover {
 	<div class="his-container">
 		<div class="head-title">
 			<!-- <h1 style="">Query history </h1> -->
-			<a class="btn-home" href="http://localhost:3000/home" target='_top' >Home</a>
+			<a class="btn-home" href="/home" target='_top' >Home</a>
 			<img style="position:relative;top:275px;" src="/img/flag.png"/>
 		</div>
 
 			<div class="img-container">
-				<img id="img1" src="img/chart-type-1.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+				<img id="img1" src="/img/chart-type-1.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
 			</div>
 			<div class="img-container">
-				<img id="img2" src="img/chart-type-2.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+				<img id="img2" src="/img/chart-type-2.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
 			</div>
 			<div class="img-container">
-				<img id="img3" src="img/chart-type-3.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+				<img id="img3" src="/img/chart-type-3.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
 			</div>
 			<div class="img-container">
-				<img id="img4" src="img/chart-type-4.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+				<img id="img4" src="/img/chart-type-4.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
 			</div>
 			<div class="img-container">
 				<img id="img5" src="img/chart-type-5.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
@@ -223,12 +223,12 @@ $(document).ready(function(){
 var t;
 var imgW=$('.index').width();
 var imgH=$('.index').height();
-var sfbs=1.01;//缩放倍数
+var scale=1.01;//缩放倍数
 var objId;
 function biging(obj){
 	objId = obj;
-  imgW=sfbs*imgW;
-  imgH=sfbs*imgH;
+  imgW=scale*imgW;
+  imgH=scale*imgH;
   $("#"+obj).css('width',imgW);
   $("#"+obj).css('height',imgH);
   if(imgW <= 300){

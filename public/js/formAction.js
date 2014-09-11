@@ -1,14 +1,14 @@
-$(document).ready(function(){
+$(document).ready(function() {
   $("#sign-up-button").click(function(){
-    var name = $("#usernametext").val();
-    var pwd = $("#passwordtext").val();
-    var repwd = $("#repeattext").val();
-
+    var name = $("#username").val();
+    var pwd = $("#password").val();
+    var repwd = $("#repeatpwd").val();
+    var email = $('#useremail').val();
     if( pwd === repwd ){
-       $.post("/register", {username:name, userPwd:pwd}, function(result){
-          if(result){
+       $.post("/register", { username:name, userPwd:pwd, mailbox: email }, function(result){
+          if(result) {
             alert("sign up success");
-            window.location.href = "/login";
+            window.location.href = "/home";
           }
        });      
     }else{
@@ -19,7 +19,7 @@ $(document).ready(function(){
   $("#sign-in-btn").click(function(){
     var name = $("#inputUsername").val();
     var pwd = $("#inputPassword").val();
-    $.post("/login", {username:name, userPwd:pwd}, function(result){
+    $.post("/login", { username:name, userPwd:pwd }, function(result){
         //alert(message);
         if(result){
           window.location.href = "/home";

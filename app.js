@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var routes = require('./routes/index');
-
+var setting = require('./setting');
 
 var app = express();
 
@@ -26,7 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
-
+app.use(session({
+    secret: setting.cookieSecret,
+    cookie: { maxAge: 24*60*60*1000 },
+    resave: true,
+    saveUninitialized: true
+    }));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
