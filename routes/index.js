@@ -13,6 +13,7 @@ router.get('/login', function(req, res) {
 });
 
 router.get('/home', function(req, res) {
+  console.log(req.session.username);
   res.render('home');
 })
 
@@ -24,9 +25,6 @@ router.get('/history', function(req, res) {
   res.render('history');
 })
 
-router.get('/home', function(req, res) {
-  res.render('home');
-})
 // router.get('/test', function(req, res) {
 //   console.log('filter')
 //   res.send('hehe')
@@ -44,6 +42,7 @@ router.post('/register', function(req,res) {
   var result = null;
   user.register(function(err, newuser){
     if(!err){
+      req.session.username = name;
       result = true;
       res.send(result);
     }else{
@@ -60,11 +59,11 @@ router.post('/login', function(req, res){
   User.loginCheck(name, pwd, function(err, result){
       if(!err){
         if(result){
+          req.session.username = name;
           res.send(result);
         }else{
           res.send("login failed");
-        }
-        
+        }        
       }
   });
 });
