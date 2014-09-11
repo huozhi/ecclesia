@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <head>
-	<title>Register test</title>
-	<link href="/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/css/style.css" />
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+<title>Register test</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet"/>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
-	<script src="/js/modernizr.custom.63321.js"></script>
+<script src="/js/modernizr.custom.63321.js"></script>
 
 </head>
 
@@ -26,9 +26,9 @@
 
 </style>
 
-<body style="width:100%">
+<body>
 
-	<div class="head-container"
+	<div class="head-container">
 		<nav class="navbar navbar-default" role="navigation" >
 		<div class="navbar-header" >
 			<a class="navbar-brand" href="#">Ecclesia</a>
@@ -76,9 +76,6 @@
 
 
 <div class="container">	
-			<br>
-			<br>
-			<br>
 			
 			<section class="main">
 
@@ -159,43 +156,6 @@
 
 </div>
 
-
-<script>
-function DoCheck()
-{
-	var reg=/^[\u0391-\uFFE5a-zA-Z0-9]+$/;
-	if(usernametext.value=="")
-	{
-		alert("用户名不能为空！");
-		return false;
-	}
-	else if(!reg.test(usernametext.value))
-	{
-		alert("用户名只能由字母、数字和汉字组成！");
-		return false;
-	}
-	else if(passwordtext.value=="")
-	{
-		alert("密码不能为空！");
-		return false;
-	}
-	else if(!reg.test(passwordtext.value))
-	{
-		alert("密码只能由字母、数字和汉字组成！");
-		return false;
-	}
-	else if(passwordtext.value!=repeattext.value)
-	{
-		alert("密码不一致！");
-		return false;
-	}
-	else
-	{
-		alert("注册成功！");
-		return true;
-	}
-	return true;
-}
 </script>
 
 </body>
