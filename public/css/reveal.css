@@ -247,8 +247,8 @@ body {
 	width: 110px;
 	height: 110px;
 	z-index: 30;
-	right: 10px;
-	bottom: 10px;
+	/*right: 10px;
+	bottom: 10px;*/
 
 	-webkit-user-select: none;
 }
@@ -278,8 +278,8 @@ body {
 }
 
 	.reveal .controls div.navigate-left {
-		top: 42px;
-
+		top: 200px;
+		left: -40px;
 		border-right-width: 22px;
 		border-right-color: #000;
 	}
@@ -288,8 +288,8 @@ body {
 		}
 
 	.reveal .controls div.navigate-right {
-		left: 74px;
-		top: 42px;
+		left: 800px;
+		top: 200px;
 
 		border-left-width: 22px;
 		border-left-color: #000;

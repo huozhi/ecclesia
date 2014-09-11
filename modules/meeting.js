@@ -1,10 +1,13 @@
 var mongodb = require('./db');
+
 function Meeting(meeting){
   this.roomName = meeting.roomName;
   this.date = meeting.date;
   this.host = meeting.host;
   this.userList = meeting.userList;
-  this.ImpressList = meeting.ImpressList;
+  this.ChartList = (typeof (meeting.ChartList) == 'undefined')? []:meeting.ChartList;
+  this.MarkdownList = (typeof (meeting.MarkdownList) == 'undefined')? []:meeting.MarkdownList;
+  this.SketchList = (typeof (meeting.SketchList) == 'undefined')? []:meeting.SketchList;
 };
 
 module.exports = Meeting;
@@ -55,6 +58,29 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
   });
 }
 
+Meeting.queryConference = function(roomname, host, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+      db.collection("Meetings",function(err, collection){
+        if(err){
+          mongodb.close();return callback(err);
+        }else{
+          collection.find({roomName:roomname, host:host}).toArray(function(err, result){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            mongodb.close();
+            //console.log(result);
+            return callback(err, result);
+          });
+        }
+      });
+    }
+  })
+}
+
 Meeting.addParticipant = function(roomname, host, participant, callback){
   
   mongodb.open(function(err, db){
@@ -81,6 +107,68 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
           });
         }
       });
+    }
+  });
+}
+
+Meeting.saveChart = function saveChart(roomname, host, chart, callback){
+
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.collection('Meetings', function(err, collection){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            collection.update({roomName:roomname, host:host},{$push:{ChartList : chart}}, function(err, result){
+              if(err){
+                mongodb.close();return callback(err);
+              }
+              mongodb.close();return callback(err, result);
+            });
+          });
+    }
+  });
+
+}
+
+Meeting.saveMarkdown = function saveMarkdown(roomname, host, wrappedmd, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.collection('Meetings', function(err, collection){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            collection.update({roomName:roomname, host:host},{$push:{MarkdownList : wrappedmd}}, function(err, result){
+              if(err){
+                mongodb.close();return callback(err);
+              }
+              mongodb.close();return callback(err, result);
+            });
+          });
+    }
+  });
+}
+
+Meeting.saveSketchboard = function saveSketchboard(roomname, host, wrappedsketch, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.collection('Meetings', function(err, collection){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            collection.update({roomName:roomname, host:host},{$push:{SketchList : wrappedsketch}}, function(err, result){
+              if(err){
+                mongodb.close();return callback(err);
+              }
+              mongodb.close();return callback(err, result);
+            });
+          });
     }
   });
 }

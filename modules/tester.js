@@ -1,15 +1,14 @@
 var User = require('./user');
-var Meeting = require('./meeting');
 
 var newUser1 = new User({
   username : 'tomas',
-  password : 'itispwd',
+  userPwd : 'itispwd',
   conferences : [],
 });
 
 var newUser2 = new User({
   username : 'heale',
-  password : 'itispwd',
+  userPwd : 'itispwd',
   conferences : [],
 });
 
@@ -33,13 +32,25 @@ var newUser2 = new User({
 // });
 
 //get user tester
-// User.get(newUser2.username,function(err,newUser3){
+// User.get(newUser1.username,function(err,newUser3){
 //   if(err){
 //     console.log(err.message);
 //   }else{
 //     console.log(newUser3.username);
 //   }
 // });
+
+
+//login check test
+
+var name = 'tomasa',
+    pwd = 'itispwd';
+
+var re = User.loginCheck(name, pwd, function(err, message){
+  if(!err){
+    console.log(message);
+  }
+});
 
 
 //archive tester
@@ -61,13 +72,16 @@ var newUser2 = new User({
 /*************************meeting module test case*******************************/
 
 // create a new room (meeting)
+var Meeting = require('./meeting');
 
 var newMeeting = {
   roomName : "9-8",
   date : new Date(),
   host : "dh",
   userList : [],
-  ImpressList : [],
+  ChartList:[],
+  MarkdownList:[],
+  SketchList:[]
 }
 
 // console.log(newMeeting.date);
@@ -78,13 +92,13 @@ var newMeeting = {
 //   }else{
 //     console.log(meeting);
 
-//     // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
-//     //   if(err){
-//     //     console.log(err.message);
-//     //   }else{
-//     //     console.log('add participant.');
-//     //   }
-//     // });
+//     Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
+//       if(err){
+//         console.log(err.message);
+//       }else{
+//         console.log('add participant.');
+//       }
+//     });
 
 //     var spliter = require('./split');
 
@@ -99,8 +113,22 @@ var newMeeting = {
 //         //do sth.
 //       }
 //     });
+ //   }
+ // });
+
+// find conference test
+
+// Meeting.queryConference("9-8", "dh", function(err,result){
+//   if(!err){
+//     console.log('found!');
+//     //console.log(result[0].MarkdownList);
+//     mdList = result[0].MarkdownList;
+//     for(var i in mdList){
+//       console.log(mdList[i]);
+//     }
 //   }
-// });
+// })
+
 
 // add new participant test
 // Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Pony",function(err, result){
@@ -112,20 +140,59 @@ var newMeeting = {
 //     });
 
 
-//save markdowns test
-var spliter = require('./split');
+// save base64 data
 
-var file = "./example.md";
+// var fs = require('fs');
 
-var markdowns = spliter(file);
+// fs.readFile('14.jpg', 'base64', function(err, data){
+//   if(!err){
+//     //console.log(data);
+    
+//     var chart = {
+//       range : "c1",
+//       data : data
+//     };
+//     Meeting.saveChart('9-8', 'dh', chart, function(err){
+//       if(!err)
+//         console.log('save chart!');
+//     });
+//   }
+// } );
 
-Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
-  if(err){
-    console.log(err);
-  }else{
-    //do sth.
-  }
-});
+//save wrapped md test
+// var spliter = require('./split');
+
+// var file = "./example.md";
+
+// var markdowns = spliter(file);
+
+// var wrappedmd = {
+//   range : "p1",
+//   data : markdowns[0]
+// };
+
+// Meeting.saveMarkdown('9-8', 'dh', wrappedmd, function(err, re){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     //do sth.
+//   }
+// });
+
+//save md temp test
+// var spliter = require('./split');
+
+// var file = "./example.md";
+
+// var markdowns = spliter(file);
+
+// Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     //do sth.
+//   }
+// });
 
 /************************************************************************/
 

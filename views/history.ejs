@@ -10,97 +10,239 @@
 </head>
 <style>
 body {
-	background-image: url(img/pattern.png), url(img/bd.jpg);
+	background-image: url(img/pattern2.png), url(img/background.jpg);
+	width: 100%;
+	overflow-x: hidden;
 	background-color: transparent;
-    background-repeat: repeat, no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    -webkit-background-size: auto, cover;
-    -moz-background-size: auto, cover;
-    -o-background-size: auto, cover;
-    background-size: auto, cover;
+  background-repeat: repeat, no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: auto, cover;
+  -moz-background-size: auto, cover;
+  -o-background-size: auto, cover;
+  background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
-}
-img {
-	float: left;
-	width: 300px;
-	height: 180px;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-top: 20px;
-	cursor: pointer;
-}
-.back-container {
-	position: absolute;
-	top: 20px;
-	left: 50%;
-	margin-left: -490px;
-	margin-bottom: 50px;
-	width: 980px;
 	color: #fff;
 }
-#queryLable {
+.header{
+	font-family:'Arial Narrow', Arial, sans-serif;
+	line-height: 24px;
+	font-size: 11px;
+	background: #000;
+	opacity: 0.9;
+	text-transform: uppercase;
+	z-index: 9999;
+	position: relative;
+	-webkit-box-shadow: 1px 0px 2px #000;
+	box-shadow: 1px 0px 2px #000;
+}
+.header a{
+	position: relative;
+	left: 90%;
+	padding: 0px 10px;
+	letter-spacing: 1px;
+	color: #ddd;
+	display: block;
+}
+.header a:hover{
+	color: #fff;
+}
+h1{
+	margin:0px;
+	padding:20px;
+	font-size:42px;
+	color:#fff;
+	text-align:left;
+	font-weight:400;
+  text-align:left;
+}
+h1 span{
+	font-size:22px;
+	color:#ddd;
+	padding-top:10px;
+}
+.head-title {
 	float: left;
-	padding: 20px 0 0 20px;
+	width: 620px;
+	height: 400px;
+	margin: 10px;
+	border: #7d7d7d solid 1px;
+	text-align: center;
+	background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
+}
+.img-container {
+	float: left;
+	width:300px;
+	height:190px;
+	margin: 10px;
+	display:-moz-box;
+	-moz-box-pack:center;
+	-moz-box-align:center;
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+	display:box;
+	box-pack:center;
+	box-align:center;
+	border: #7d7d7d solid 1px;
+}
+.img-container img {
+	display: inline-block;
+	width: 280px;
+	height: 170px;
+	background-color: #fff;
+	border-radius: 3px;
+	cursor: pointer;
+}
+img:hover {
+	box-shadow: 0px 0px 35px 4px #292929;
+}
+.his-container {
+	position: absolute;
+	display: inline-block;
+	width: 1280px;
+	top: 120px;
+	left: 50%;
+	margin-left: -640px;
+	margin-bottom: 50px;
+	color:#fff;
+}
+.btn-home {
+	position: relative;
+	top: 250px;
+	width:120px;
+	height:36px;
+	background-color:#aeab9c;
+	border-radius:100em;
+	font-size: 20px;
+	line-height: 1.8em;
+	color: #fff;
+	display: inline-block;
+	text-decoration: none;
+}
+.btn-home:hover{
+	color: #fff;
+	text-decoration: none;
+	background-color: #848174;
+}
+.detail-container {
+	position: absolute;
+	display: none;
+	top: 130px;
+	left: 50%;
+	margin-left: -630px;
+	margin-bottom: 50px;
+	padding: 20px;
+	border: #7d7d7d solid 1px;
+}
+.detail {	
+	width: 1220px;
+	min-height: 860px;
+	border-radius: 10px;
+	padding: 20px;
+	background:rgba(255, 255, 255, 0.6) none repeat scroll 0 0 !important;
+
 }
 .btn-back {
+	display: none;
 	float: right;
-	margin-top: 15px;
-	margin-right: 28px;
+	margin-top: -40px;
+	margin-right: 125px;
+	width:120px;
+	height:36px;
+	border: #fff solid 3px;
+	border-radius: 100em;
+	font-size: 18px;
+	background-color: transparent;
 }
-.detail {
-	position: absolute;
-	width: 980px;
-	min-height: 700px;
-	background-color: #ffffff;
-	border-radius: 0.5em;
-	display: none;
-}
-.btnfade {
-	display: none;
+.btn-back:hover {
+	background-color: #848174;
+	border: #848174 solid 3px;
 }
 </style>
 <body>
-	<div class="back-container">
-		<h1 style="margin-left:-110px;">Query history </h1>
-		<!-- <h4 class="modal-title" id="queryLable">Query history</h4> -->
-		<button type="button" class="btn btn-primary btn-back" onclick="javascript:window.open('file:///D:/test/home.html','_top')">Home</button>
-		<button type="button" class="btn btn-default btn-back btnfade">Back</button>
-		<br/><br/><br/>
-		<div class="indexs">
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
-			<img src="img/chart-type-1.png" class="img-thumbnail index"></img>
+	<div class="header">
+    <a href="###">
+        <strong>Log out</strong>
+    </a>
+  </div>
+	<h1>Ecclesia Home <span>welcome to use Ecclesia</span></h1>
+	<button class='btn-back'>Back</button>
+	<div class="his-container">
+		<div class="head-title">
+			<!-- <h1 style="">Query history </h1> -->
+			<a class="btn-home" href="/home" target='_top' >Home</a>
+			<img style="position:relative;top:275px;" src="/img/flag.png"/>
 		</div>
+
+			<div class="img-container">
+				<img id="img1" src="/img/chart-type-1.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img2" src="/img/chart-type-2.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img3" src="/img/chart-type-3.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img4" src="/img/chart-type-4.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img5" src="img/chart-type-5.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img6" src="img/chart-type-6.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img7" src="img/chart-type-6.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+			<div class="img-container">
+				<img id="img8" src="img/chart-type-5.png" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);"></img>
+			</div>
+	</div>
+	<div class="detail-container">
 		<div class="detail">
-			<img src="img/chart-type-3.png" class="img-thumbnail"></img>
+			<img src="img/chart-type-5.png" class="img-thumbnail"></img>
 		</div>
 	</div>
 </body>
 
 <script type="text/javascript">
-
 $(document).ready(function(){
-	$(".index").click(function(){
-		$(".indexs").fadeOut();
-		$(".detail").fadeIn();
-		$(".btnfade").css("display", "block");
+	$(".index").click(function (){
+		$(".his-container").fadeOut();
+		$(".detail-container").fadeIn();
+		$(".btn-back").fadeIn();
 	});
-	$(".btnfade").click(function(){
-		$(".detail").fadeOut();
-		$(".indexs").fadeIn();
-		$(".btnfade").css("display", "none");
+	$(".btn-back").click(function (){
+		$(".btn-back").fadeOut();
+		$(".detail-container").fadeOut();
+		$(".his-container").fadeIn();
 	});
 });
+var t;
+var imgW=$('.index').width();
+var imgH=$('.index').height();
+var scale=1.01;//缩放倍数
+var objId;
+function biging(obj){
+	objId = obj;
+  imgW=scale*imgW;
+  imgH=scale*imgH;
+  $("#"+obj).css('width',imgW);
+  $("#"+obj).css('height',imgH);
+  if(imgW <= 300){
+    t = setTimeout("biging(objId);",1);
+  }
+  else
+    clearTimeout(t);
+}
+function smalling(obj){
+  imgW=280;
+  imgH=170;
+  $("#"+obj).css('width',imgW);
+  $("#"+obj).css('height',imgH);
+}
 
 </script>
 
