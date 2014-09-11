@@ -33,7 +33,7 @@ app.use('/', routes.signupRouter);
 app.use('/login', routes.signinRouter);
 app.use('/home', routes.homeRouter);
 app.use('/history', routes.historyRouter);
-
+app.use('/chat', routes.chatRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
