@@ -3,8 +3,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
 
 <title>chat [ecclesia]</title>
-<link rel="stylesheet" href="/css/reveal.css"></style>
-<link rel="stylesheet" href="/css/bootstrap.min.css"></style>
+<link rel="stylesheet" href="/css/reveal.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -15,11 +15,15 @@
 <script type="text/javascript" src="/js/Chart.min.js"></script>
 <script type="text/javascript" src="/rtc/socket.io.js"></script>
 <script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
-<script src="/js/idangerous.swiper-1.9.1.min.js"></script>
-<script src="/js/idangerous.swiper.scrollbar-1.2.js"></script>
+<script type="text/javascript" src="/js/idangerous.swiper-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/idangerous.swiper.scrollbar-1.2.js"></script>
 <style type="text/css">
 html {
   overflow-x: hidden;
+}
+
+body {
+  width: 1347px;
 }
 
 .affix-left-bar {
@@ -63,9 +67,9 @@ html {
   left: 50%;
   margin-left: -400px;
   margin-top: 10px;
-  width: 800px;
+  /*width: 800px;*/
   height: 200px;
-  border: black solid 1px;
+  /*border: black solid 1px;*/
   border-radius: 5px;
 
 }
@@ -137,6 +141,7 @@ section {
 
 .single-chart {
   position: relative;
+  float: left;
   width: 200px;
   height: 200px;
   padding: 5px;
@@ -191,6 +196,9 @@ div.single-chart > button {
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
         <span class="sr-only">navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Tool Box</a>
     </div>
@@ -236,7 +244,7 @@ div.single-chart > button {
                 <div class="row">
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-1.png" ></a>
+                      <a class="add-opt" title="line"><img class="lazy" src="/img/chart-line.png" ></a>
                       <div class="caption">
                       </div>
                     </div>
@@ -244,7 +252,7 @@ div.single-chart > button {
 
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-2.png" ></a>
+                      <a class="add-opt" title="bar"><img class="lazy" src="/img/chart-bar.png" ></a>
                       <div class="caption">
                         
                       </div>
@@ -253,7 +261,7 @@ div.single-chart > button {
 
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-3.png" ></a>
+                      <a class="add-opt" title="radar"><img class="lazy" src="/img/chart-radar.png" ></a>
                       <div class="caption">
                         
                       </div>
@@ -264,7 +272,7 @@ div.single-chart > button {
                 <div class="row">
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-4.png" ></a>
+                      <a class="add-opt" title="polararea"><img class="lazy" src="/img/chart-polararea.png" ></a>
                       <div class="caption">
                        
                       </div>
@@ -273,7 +281,7 @@ div.single-chart > button {
 
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-5.png" ></a>
+                      <a class="add-opt" title="pie"><img class="lazy" src="/img/chart-pie.png" ></a>
                       <div class="caption">
                         
                       </div>
@@ -282,10 +290,8 @@ div.single-chart > button {
 
                   <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
                     <div class="thumbnail">
-
-                      <a class="add-opt" title=""><img class="lazy" src="/img/chart-type-6.png" ></a>
+                      <a class="add-opt" title="doughnut"><img class="lazy" src="/img/chart-doughnut.png" ></a>
                       <div class="caption">
-                        
                       </div>
                     </div>
                   </div>
@@ -314,9 +320,8 @@ div.single-chart > button {
                   </button>
                 </div>
                 <br>
-                <div class="carousel-cpation input-group input-group-md col-md-8 container">
+                <div class="carousel-cpation input-group input-group-md col-md-8 container preview-container">
                   <canvas id="chart-preview" width="300" height="300"></canvas>
-
                 </div>
               </div>
             </div>
@@ -328,7 +333,7 @@ div.single-chart > button {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary">Insert</button>
+        <button type="button" class="btn btn-primary" id="insert-btn">Insert</button>
       </div>
     </div>
   </div>
@@ -384,30 +389,24 @@ div.single-chart > button {
         <div class="swiper-scrollbar"></div>
         <div class="swiper-wrapper">
           <div class="swiper-slide" id="charts">
-              <img src="./img/chart-type-5.png" />
-              <img src="./img/chart-type-2.png" />
-              <img src="./img/chart-type-3.png" />
-              <img src="./img/chart-type-4.png" />
-              <img src="./img/chart-type-5.png" />
-              <img src="./img/chart-type-2.png" />
-              <img src="./img/chart-type-3.png" />
-              <img src="./img/chart-type-4.png" />
           </div>
         </div>
       </div>
     </div><!-- end charts -->
-    <script type="text/javascript">
-      var mySwiper = new Swiper('.swiper-container',{
-        scrollContainer: true,
-        scrollbar: {
-          container: '.swiper-scrollbar'
-        }
-      })
-  </script>
   </div><!-- end main -->
 
 </div>
 <script type="text/javascript">
+
+new Swiper('.swiper-container',{
+  
+  scrollbar: {
+    container: '.swiper-scrollbar'
+    ,hide: false
+    ,snapOnRelease: true
+  }
+});
+
 
 Reveal.initialize({
   width: 800,
@@ -415,8 +414,6 @@ Reveal.initialize({
   margin: 0.5,
   minScale: 1.0,
   maxScale: 1.0,
-
-
   center: true,
   transition: 'liner',
   transitionSpeed: 'fast',
@@ -466,27 +463,17 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     }
   }
   else {
-    // console.log('slideChange no canvas')
     present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
   }
-  // $(function() {
-  //   $('.sketch-present').sketch();
-  // });
-  // $(function() {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
-    // webrtc.on('syncStroke', function (point) {
-    //   console.log('sync remote sketching');
-    //   $('.sketch-present').syncStroke(point);
-    // })
-  // });
 });
 
-
+var genChart, prvwChart, genChartData;
 
 $(document).ready(function() {
-  
+  $.fn.carousel.Constructor.prototype.keydown = function() { };
   $('slides').attr('zoom','1.0')
 
   $('#test-add-chart').click(function() {
@@ -534,20 +521,34 @@ $(document).ready(function() {
     interval: false
   });
 
-
-
+  // go to page fill blanks of chart data
   $('.add-opt').click(function() {
+    var chart_t = $(this).attr('title');
+    var previewCanvas = $('#chart-preview');
+    
+    previewCanvas.data('chart_t', chart_t);
+    if (previewCanvas.attr('width') && previewCanvas.attr('height')) {
+      // previewCanvas.get(0).getContext('2d').clearRect(0,0,300,300);
+      // previewCanvas.attr({ width:"0", height:"0" });
+      // console.log('cleart rect');
+    }
     $('#chart-insert-carousel').carousel('next');
   });
 
+  // back to choose charts
   $('#chart-data-submit').click(function() {
+    var previewCanvas = $('#chart-preview');
+    // previewCanvas.attr({ width:"0", height:"0" });
+    // previewCanvas.get(0).getContext('2d').clearRect(0,0,300,300);
+    genChart.destroy();
     $('#chart-insert-carousel').carousel('prev');
 
   });
 
+  // preview chart
   $('#chart-data-add').click(function() {
     var len = $('.chart-insert').children('div').length;
-    if (len > 2 && len < 5) {
+    if (len > 2 && len < 6) {
       var nums = ['axis','one','two','three'];
       var inputForm = '<div class="input-group input-group-md col-md-8 col-md-offset-2">' +
         '<input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">';
@@ -564,63 +565,147 @@ $(document).ready(function() {
   });
 
   listenChartDataInput();
-
-  // $(function () {
-  //   $('.sketch-present').Stroke(function (point) {
-  //     console.log('sketching...');
-  //     alert(point);
-  //     webrtc.sendSketchPointData(point);
-  //   });
-
-  // });
-
-
+  InsertGenChart();
 
 });
 
 
+function PreviewChart(labels, chart_t) {
+  this.angularChartColors = [
+    {
+      fillColor: 'rgba(220,220,220,0.5)',
+      strokeColor: 'rgba(220,220,220,1)',
+      pointColor: 'rgba(220,220,220,1)',
+    },
+    {
+      fillColor: 'rgba(151,187,205,0.5)',
+      strokeColor: 'rgba(151,187,205,1)',
+      pointColor: 'rgba(151,187,205,1)',
+    },
+    {
+      fillColor: 'rgba(0,0,0,0.5)',
+      strokeColor: 'rgba(0,0,51,1)',
+      pointColor: 'rgba(0,0,102,1)',
+    }
+  ];
+
+  this.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
+  '#E2EAE9','#D4CCC5','#949FB1','#4D5360'];
+
+  this.types = ['line','bar','radar',
+  'polar','pie','dougnut'];
+
+  this.labels  = labels;
+  this.chart_t = $('#chart-preview').data('chart_t');
+  // this.datas   = datas   || [50];
+}
+
+PreviewChart.prototype.collectAttrs = function() {
+  var self = this,
+      chartData,
+      columnData;      
+  if (['line','bar','radar'].indexOf(self.chart_t) != -1) {
+    var values = [];
+    $('.chart-data-val').each(function(index, element) {
+      columnData = $(this).val().split(' ').map(Number);
+      
+      values.push({
+        fillColor : self.angularChartColors[index].fillColor,
+        strokeColor: self.angularChartColors[index].strokeColor,
+        pointColor: self.angularChartColors[index].pointColor,
+        pointStrokeColor : "#fff",
+        data: columnData
+      });
+    });
+    chartData = {
+      labels: self.labels,
+      datasets: values
+    };
+    // console.log('labels',self.labels);
+    // console.log('datasets',chartData.datasets.length);
+  } else {
+    chartData = [];
+    $('.chart-data-val').each(function(index, element) {
+      columnData = $(this).val().split(' ').map(Number);
+      columnData.forEach(function (data, i) {
+        chartData.push({
+          value : data,
+          color : self.roundChartColors[i],
+          label : self.labels[i],
+          labelColor : 'white',
+          labelFontSize : '24'
+        });
+      });
+    });
+  }
+  return chartData;
+}
+
+PreviewChart.prototype.sketchPreviewChart = function(selector, data) {
+  var chartData = data || this.collectAttrs();
+  var previewCtx = selector.get(0).getContext('2d');
+  switch (this.chart_t) {
+    case 'line':
+      genChart = new Chart(previewCtx).Line(chartData);
+      break;
+    case 'bar':
+      genChart = new Chart(previewCtx).Bar(chartData);
+      break;
+    case 'radar':
+      genChart = new Chart(previewCtx).Radar(chartData);
+      break;
+    case 'polararea':
+      genChart = new Chart(previewCtx).PolarArea(chartData);
+      break;
+    case 'pie':
+      genChart = new Chart(previewCtx).Pie(chartData);    
+      break;
+    case 'dougnut':
+      genChart = new Chart(previewCtx).Doughnut(chartData);
+      break;
+    default:
+      break;
+  }
+  genChartData = chartData;
+  $('#charts').data('newest', chartData);
+  $('#charts').data('chart_t', this.chart_t);
+}
+
 function listenChartDataInput() {
 // preview chart to insert
   $('.chart-data-input').dblclick(function() {
-    var xAxis = $('.chart-data-axis').val().split(' ');
-    if (xAxis.length < 2) return;
-    // console.log(xAxis)
-    var datas = [];
-    var colors = [
-      {
-        fillColor: 'rgba(220,220,220,0.5)',
-        strokeColor: 'rgba(220,220,220,1)',
-        pointColor: 'rgba(220,220,220,1)',
-      },
-      {
-        fillColor: 'rgba(151,187,205,0.5)',
-        strokeColor: 'rgba(151,187,205,1)',
-        pointColor: 'rgba(151,187,205,1)',
-      }
-    ];
-    $('.chart-data-val').each(function(index, element) {
-      var columnData = $(this).val().split(' ').map(Number);
-      if (columnData.length != xAxis.length) return;
-      // console.log(columnData);
-      datas.push(
-        {
-          fillColor : colors[index].fillColor,
-          strokeColor: colors[index].strokeColor,
-          pointColor: colors[index].pointColor,
-          pointStrokeColor : "#fff",
-          data: columnData
-        }
-      );
-    });
-    // console.log(datas);
-    var lineData = {
-      labels: xAxis,
-      datasets: datas
-    };
-    var previewCtx = $('#chart-preview').get(0).getContext('2d');
-    new Chart(previewCtx).Line(lineData);
+    $('#chart-preview').attr({ width:"300", height:"300" });
+    var inputLabels = $('.chart-data-axis').val().split(' ');
+    if (!inputLabels.length) {
+      window.console.log('empty axis');
+      return;
+    }
+    var chart_t = $('#chart-preview').data('chart_t');
+    prvwChart = new PreviewChart(inputLabels, chart_t).sketchPreviewChart($('#chart-preview'));
   });
 }
+
+function InsertGenChart() {
+  $('#insert-btn').click(function() {
+    var addContent =
+    '<div class="single-chart">' +
+      '<canvas class="chart" width="180" height="180"></canvas>' +
+      '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+    '</div>';
+    var charts = $('#charts');
+    charts.append(addContent);
+    var ctx = $('canvas.chart').last().get(0).getContext('2d');
+    new PreviewChart(genChartData, charts.data('chart_t'))
+    .sketchPreviewChart($('canvas.chart').last(), genChartData);
+    $('.rm-chart').click(function() {
+      // console.log('rm corresponding chart');
+
+      $(this).parent().remove();
+    });
+    $('#add-chart-modal').modal('hide');
+  });
+}
+
 </script>
 
 <!-- rtc part -->
