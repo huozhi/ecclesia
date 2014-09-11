@@ -14,10 +14,6 @@ router.get('/chat', function(req, res) {
   res.render('chat');
 })
 
-router.get('/history', function(req, res) {
-  res.render('history');
-})
-
 router.get('/home', function(req, res) {
   res.render('home');
 })
