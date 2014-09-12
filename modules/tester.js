@@ -43,14 +43,14 @@ var newUser2 = new User({
 
 //login check test
 
-var name = 'tomasa',
-    pwd = 'itispwd';
+// var name = 'tomasa',
+//     pwd = 'itispwd';
 
-var re = User.loginCheck(name, pwd, function(err, message){
-  if(!err){
-    console.log(message);
-  }
-});
+// var re = User.loginCheck(name, pwd, function(err, message){
+//   if(!err){
+//     console.log(message);
+//   }
+// });
 
 
 //archive tester
@@ -142,22 +142,25 @@ var newMeeting = {
 
 // save base64 data
 
-// var fs = require('fs');
+var fs = require('fs');
 
-// fs.readFile('14.jpg', 'base64', function(err, data){
-//   if(!err){
-//     //console.log(data);
-    
-//     var chart = {
-//       range : "c1",
-//       data : data
-//     };
-//     Meeting.saveChart('9-8', 'dh', chart, function(err){
-//       if(!err)
-//         console.log('save chart!');
-//     });
-//   }
-// } );
+fs.readFile('../test/14.jpg', 'base64', function(err, data){
+  if(!err){
+    //console.log(data);
+    var targetObj = {
+      roomName : "binladen",
+      host : "dh",
+      date : "9/12",
+      listName : "ChartList",
+      page : 1,
+      img : data,
+    }
+    Meeting.saveImg(targetObj, function(err, result){
+      if(!err)
+        console.log('save chart!');
+    });
+  }
+} );
 
 //save wrapped md test
 // var spliter = require('./split');

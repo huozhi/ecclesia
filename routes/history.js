@@ -5,8 +5,13 @@ router.get('/', function (req, res) {
   res.render('history');
 });
 
-router.get('/get-all-history', function (req, res) {
-  
+router.post('/query-history', function (req, res){
+  //req.accepts("application/json");
+  console.log(req.body.date);
+});
+
+router.get('/historyDetail', function (req, res) {
+  res.render('historyDetail');
 });
 
 module.exports = router;

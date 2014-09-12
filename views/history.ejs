@@ -4,16 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia Query History</title>
-
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<script src="/js/idangerous.swiper-1.9.1.min.js"></script>
- <script src="/js/idangerous.swiper.scrollbar-1.2.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/idangerous.swiper.css">
-<link rel="stylesheet" href="/css/swiper-demos.css">
-<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
 <script type="text/javascript" src="/js/reveal.js"></script>
+<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="/js/json.js"></script>
 </head>
 <style>
 body {
@@ -29,7 +25,6 @@ body {
   -o-background-size: auto, cover;
   background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
-	color: #fff;
 }
 .header{
 	font-family:'Arial Narrow', Arial, sans-serif;
@@ -132,93 +127,6 @@ h1 span{
 	text-decoration: none;
 	background-color: #848174;
 }
-.detail-container {
-	position: absolute;
-	/*display: none;*/
-	top: 130px;
-	left: 50%;
-	margin-left: -630px;
-	margin-bottom: 50px;
-	padding: 20px;
-	border: #7d7d7d solid 1px;
-}
-.detail {	
-	width: 1220px;
-	min-height: 860px;
-	border-radius: 10px;
-	padding: 20px;
-	background:rgba(255, 255, 255, 0.6) none repeat scroll 0 0 !important;
-
-}
-.btn-back {
-	display: none;
-	float: right;
-	margin-top: -40px;
-	margin-right: 125px;
-	width:120px;
-	height:36px;
-	border: #fff solid 3px;
-	border-radius: 100em;
-	font-size: 18px;
-	background-color: transparent;
-}
-.btn-back:hover {
-	background-color: #848174;
-	border: #848174 solid 3px;
-}
-.charts {
-  position: relative;
-  left: 50%;
-  top: 10px;
-  margin-left: -400px;
-  width: 800px;
-  height: 200px;
-  overflow: hidden;
-  border: black solid 1px;
-  border-radius: 5px;
-
-}
-.swiper-container {
-	position: relative;
-  width: 800px;
-  height: 200px;
-  text-align: center;
-  border: black solid 1px; 
-  background-color: #fff;
-}
-.swiper-slide {
-  width: 1500px;
-}
-.swiper-scrollbar {
-  width: 100%;
-  height: 4px;
-  position: absolute;
-  left: 0;
-  bottom: 5px;
-  z-index: 1;
-  background-color: red;
-}
-.swiper-slide img{
-  float: left;
-  width: 190px;
-  border: red solid 1px;
-}
-.main {
-  position: relative;
-  display: inline-block;
-  width: 900px;
-  height: 600px;
-}
-
-.board {
-  position: relative;
-  left: 50%;
-  margin-left: -400px;
-  width: 800px;
-  height: 400px;
-  border: black solid 1px;
-  border-radius: 5px;  
-}
 </style>
 <body>
 	<div class="header">
@@ -227,7 +135,6 @@ h1 span{
     </a>
   </div>
 	<h1>Ecclesia Home <span>welcome to use Ecclesia</span></h1>
-	<button class='btn-back'>Back</button>
 	<div class="his-container">
 		<div class="head-title">
 			<!-- <h1 style="">Query history </h1> -->
@@ -240,18 +147,18 @@ h1 span{
 					<table style="color:#000;" class="table table-striped">
 						<tr>
 							<td>Room name:</td>
-							<td></td>
+							<td>sbsbsb</td>
 						</tr>
 						<tr>
 							<td>Host:</td>
-							<td></td>
+							<td>sb</td>
 						</tr>
 							<td>Date:</td>
-							<td></td>
+							<td>2014/09/12</td>
 						</tr>
 						<tr>
 							<td>Users:</td>
-							<td></td>
+							<td>sb,amy</td>
 						</tr>
 					</table>
 				</div>
@@ -283,116 +190,37 @@ h1 span{
 					<table style="color:#000;" class="table table-striped">
 						<tr>
 							<td>Room name:</td>
-							<td></td>
+							<td>testRoom</td>
 						</tr>
 						<tr>
 							<td>Host:</td>
-							<td></td>
+							<td>toy</td>
 						</tr>
 							<td>Date:</td>
-							<td></td>
+							<td>2014/09/12</td>
 						</tr>
 						<tr>
 							<td>Users:</td>
-							<td></td>
+							<td>amy</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 	</div>
-	<div class="detail-container">
-		<div class="detail">
 
-			<div class="main">
-    <!-- sidebar of remote client videos -->
-    <!-- main board and charts blank -->
-		    <div class="board">
-		      <div id="reveal" class="reveal impress">
-
-		        <div class="slides">
-		          <section data-markdown>
-		            <script type="text/template">
-		                ```cpp
-		                #include <iostream>
-		                using namespace std;
-		                int main() { cout << "hello world" << endl; return 0; }
-		                ```
-		            </script>
-		          </section>
-		          <section data-markdown>
-		            <script type="text/template">
-		                ```php
-		                public function foo()
-		                {
-		                    $foo = array(
-		                        'bar' => 'bar'
-		                    )
-		                }
-		                ```
-		            </script>
-		          </section>
-		          <section>
-		            <h1>wtf</h1>
-		          </section>
-		          <section>
-		            <h1>hell</h1>
-		          </section>
-		        </div>
-		      </div>
-		    </div>
-		  <!--========== lsn =========-->
-		    <div class="charts">
-		      <div class="swiper-container">
-<!-- 		        <div class="pagination-free">
-		        	<span class="swiper-pagination-switch"></span>
-		        	<span class="swiper-pagination-switch"></span>
-		        	<span class="swiper-pagination-switch"></span>
-		        	<span class="swiper-pagination-switch swiper-active-switch swiper-activeslide-switch"></span>
-		        	<span class="swiper-pagination-switch"></span>
-		        </div> -->
-		        <div class="swiper-wrapper">
-		          <div class="swiper-slide">
-		              <img src="img/chart-bar.png" />
-		              <img src="img/chart-pie.png" />
-		              <img src="img/chart-line.png" />
-		              <img src="img/chart-radar.png" />
-		              <img src="img/chart-line.png" />
-		              <img src="img/chart-bar.png" />
-		              <img src="img/chart-pie.png" />
-		          </div>
-		        </div>
-		      </div>
-		    </div>
-		    <script type="text/javascript">
-		      var mySwiper = new Swiper('.swiper-container',{
-		        scrollContainer: true,
-		        scrollbar: {
-		          container: '.swiper-scrollbar'
-		        }
-		      })
-		    </script>
-  	<!--==================== end =================-->
-  		</div><!-- end main -->
-		</div>
-	</div>
 </body>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	$(".index").click(function (objId){
-		$(".his-container").fadeOut();
-		$(".detail-container").fadeIn();
-		sendReq(objId);
-		$(".btn-back").fadeIn();
 
-	});
-	$(".btn-back").click(function (){
-		$(".btn-back").fadeOut();
-		$(".detail-container").fadeOut();
-		$(".his-container").fadeIn();
-	});
-});
 function sendReq(obj){
+		var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
+
+		var postJson = {
+			"roomName" : tableArr[0].children[1].innerHTML,
+			"host": tableArr[1].children[1].innerHTML,
+			"date" : tableArr[2].children[1].innerHTML,
+	};
+
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -406,23 +234,15 @@ function sendReq(obj){
 	{
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	  {
+
 	  	alert("send ok");
+	  	window.location.href = "/history/historyDetail";
 	  }
 	}
-	var postJson = {
-		"Meetings" : {
-			"roomName" : "room temp",
-			"host": "",
-			"date" : "2014/01/01",
-			"userList":
-			[
-				"XX",
-				"CC",
-			]
-		}
-	};
 	var postStr = JSON.stringify(postJson);
-	xmlhttp.open("get",""+postStr,true);
+	//alert(postStr);
+	xmlhttp.open("post","/history/query-history",true);
+	xmlhttp.setRequestHeader('Content-Type' , 'application/json');
 	xmlhttp.send(postStr);
 }
 var t;
@@ -448,7 +268,6 @@ function smalling(obj){
   $("#"+obj).css('width',divW);
   $("#"+obj).css('height',divH);
 }
-
 </script>
 
 </html>

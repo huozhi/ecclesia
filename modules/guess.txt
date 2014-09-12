@@ -2,8 +2,8 @@ Meetings
 { 
 	"ChartList":
 	[
-		{range:"c1" ,data: "chart base64 data"},
-		{range:"c2" ,data: "chart base64 data"},
+		{range:"1" ,data: "chart base64 data"},
+		{range:"2" ,data: "chart base64 data"},
 	],
 	"MarkdownList":
 	[
