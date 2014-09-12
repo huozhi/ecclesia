@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "supervisor app.js",
+    "test": "supervisor ./bin/www"
   },
   "dependencies": {
     "express": "~4.8.6",

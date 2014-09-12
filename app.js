@@ -9,6 +9,11 @@ var session = require('express-session');
 var routes = require('./routes');
 var app = express();
 
+var https = require('https');
+var fs = require('fs');
+var debug = require('debug')('ecclesia');
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -40,9 +45,10 @@ app.use('/chat', routes.chatRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+    // var err = new Error('Not Found');
+    // err.status = 404;
+    // next(err);
+    res.render('error');
 });
 
 // error handlers
@@ -69,5 +75,13 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+// module.exports = app;
+
+var privateKey = fs.readFileSync('sslcert/privatekey.pem').toString(),
+    certificate = fs.readFileSync('sslcert/certificate.pem').toString();
+
+var server = https.createServer({key: privateKey, cert: certificate}, app)
+    .listen(3000);
 
 module.exports = app;

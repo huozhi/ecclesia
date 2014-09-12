@@ -1,3 +1,7 @@
+#9-12
+改成https了，npm start现在相当于运行node app.js
+加了需要的密钥什么的。。。还没完全搞懂
+
 #9-10
 男哥这句多写了，`scrollContainer: true,`
 被我机智地注掉了，怪不得老起不来，哼
