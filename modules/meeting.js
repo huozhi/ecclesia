@@ -111,7 +111,54 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
   });
 }
 
-Meeting.saveChart = function saveChart(roomname, host, chart, callback){
+Meeting.saveImg = function saveImg(targetObj, callback){
+
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.createCollection('Images', function (err, collection){
+            if(err){
+              mongodb.close();return callback(err);
+            }else{
+                  db.collection('Images', function(err, collection){
+                if(err){
+                  mongodb.close();return callback(err);
+                }
+                var img = {
+                  img : targetObj.img,
+                }
+                collection.insert(img, {safe : true}, function(err, result){
+                  if(err){
+                    mongodb.close();return callback(err, null);
+                  }
+                  mongodb.close();
+                  //return callback(err, result);
+                  var archiveObj = {
+                    roomName : targetObj.roomName,
+                    host : targetObj.host,
+                    date : targetObj.date,
+                    listName : targetObj.listName,
+                    page : targetObj.page,
+                    id : result[0]._id,
+                  };
+
+                  Meeting.archiveImg(archiveObj, function(err, re){
+                    if(!err){
+                      return callback(err, re);                      
+                    }
+                  });
+
+                });
+              });
+            }
+          });         
+    }
+  });
+
+}
+
+Meeting.archiveImg = function (archiveObj, callback){
 
   mongodb.open(function(err, db){
     if(err){
@@ -121,12 +168,30 @@ Meeting.saveChart = function saveChart(roomname, host, chart, callback){
             if(err){
               mongodb.close();return callback(err);
             }
-            collection.update({roomName:roomname, host:host},{$push:{ChartList : chart}}, function(err, result){
-              if(err){
-                mongodb.close();return callback(err);
-              }
-              mongodb.close();return callback(err, result);
-            });
+            if(archiveObj.listName === 'ChartList'){
+              var chartWrapper = {
+                range : archiveObj.page,
+                id : archiveObj.id,
+              };
+              collection.update({roomName:archiveObj.roomName, host:archiveObj.host, date:archiveObj.date},{$push:{ChartList : chartWrapper}}, {upsert:true},function(err, result){
+                if(err){
+                  mongodb.close();return callback(err);
+                }
+                mongodb.close();return callback(err, result);
+              });
+            }
+            if(archiveObj.listName === 'SketchList'){
+              var sketchWrapper = {
+                range : archiveObj.page,
+                id : archiveObj.id,
+              };
+              collection.update({roomName:archiveObj.roomName, host:archiveObj.host, date:archiveObj.date},{$push:{SketchList : sketchWrapper}}, function(err, result){
+                if(err){
+                  mongodb.close();return callback(err);
+                }
+                mongodb.close();return callback(err, result);
+              });
+            }
           });
     }
   });

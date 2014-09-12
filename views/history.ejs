@@ -240,7 +240,9 @@ function sendReq(obj){
 	  }
 	}
 	var postStr = JSON.stringify(postJson);
-	xmlhttp.open("post","/history/queryhistory",true);
+	//alert(postStr);
+	xmlhttp.open("post","/history/query-history",true);
+	xmlhttp.setRequestHeader('Content-Type' , 'application/json');
 	xmlhttp.send(postStr);
 }
 var t;

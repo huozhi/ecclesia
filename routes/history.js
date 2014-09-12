@@ -5,8 +5,9 @@ router.get('/', function (req, res) {
   res.render('history');
 });
 
-router.post('/query-history', function(req, res){
-
+router.post('/query-history', function (req, res){
+  //req.accepts("application/json");
+  console.log(req.body.date);
 });
 
 router.get('/historyDetail', function (req, res) {
