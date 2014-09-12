@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/reveal.js"></script>
 <script type="text/javascript" src="/js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="/js/json.js"></script>
 </head>
 <style>
 body {
@@ -146,18 +147,18 @@ h1 span{
 					<table style="color:#000;" class="table table-striped">
 						<tr>
 							<td>Room name:</td>
-							<td></td>
+							<td>sbsbsb</td>
 						</tr>
 						<tr>
 							<td>Host:</td>
-							<td></td>
+							<td>sb</td>
 						</tr>
 							<td>Date:</td>
-							<td></td>
+							<td>2014/09/12</td>
 						</tr>
 						<tr>
 							<td>Users:</td>
-							<td></td>
+							<td>sb,amy</td>
 						</tr>
 					</table>
 				</div>
@@ -189,18 +190,18 @@ h1 span{
 					<table style="color:#000;" class="table table-striped">
 						<tr>
 							<td>Room name:</td>
-							<td></td>
+							<td>testRoom</td>
 						</tr>
 						<tr>
 							<td>Host:</td>
-							<td></td>
+							<td>toy</td>
 						</tr>
 							<td>Date:</td>
-							<td></td>
+							<td>2014/09/12</td>
 						</tr>
 						<tr>
 							<td>Users:</td>
-							<td></td>
+							<td>amy</td>
 						</tr>
 					</table>
 				</div>
@@ -211,21 +212,15 @@ h1 span{
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-	$(".index").click(function (objId){
-		$(".his-container").fadeOut();
-		$(".detail-container").fadeIn();
-		sendReq(objId);
-		$(".btn-back").fadeIn();
-
-	});
-	$(".btn-back").click(function (){
-		$(".btn-back").fadeOut();
-		$(".detail-container").fadeOut();
-		$(".his-container").fadeIn();
-	});
-});
 function sendReq(obj){
+		var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
+
+		var postJson = {
+			"roomName" : tableArr[0].children[1].innerHTML,
+			"host": tableArr[1].children[1].innerHTML,
+			"date" : tableArr[2].children[1].innerHTML,
+	};
+
 	var xmlhttp;
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -239,23 +234,13 @@ function sendReq(obj){
 	{
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	  {
+
 	  	alert("send ok");
+	  	window.location.href = "/history/historyDetail";
 	  }
 	}
-	var postJson = {
-		"Meetings" : {
-			"roomName" : "room temp",
-			"host": "",
-			"date" : "2014/01/01",
-			"userList":
-			[
-				"XX",
-				"CC",
-			]
-		}
-	};
 	var postStr = JSON.stringify(postJson);
-	xmlhttp.open("get",""+postStr,true);
+	xmlhttp.open("post","/history/queryhistory",true);
 	xmlhttp.send(postStr);
 }
 var t;

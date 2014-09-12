@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia History Detail</title>
-<link rel="stylesheet" href="css/idangerous.swiper.css">
-<link rel="stylesheet" href="/css/reveal.css">
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/reveal.js"></script>
-<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
-<script src="js/idangerous.swiper-2.1.min.js"></script>
+<link rel="stylesheet" href="../css/idangerous.swiper.css">
+<link rel="stylesheet" href="../css/reveal.css">
+<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/reveal.js"></script>
+<script type="text/javascript" src="../js/lib/js/head.min.js"></script>
+<script src="../js/idangerous.swiper-2.1.min.js"></script>
 </head>
 <style>
 body {
-  background-image: url(img/pattern2.png), url(img/background.jpg);
+  background-image: url(../img/pattern2.png), url(../img/background.jpg);
   width: 100%;
   overflow: hidden;
   background-color: transparent;
@@ -109,7 +109,7 @@ body {
   height: 560px;
   border: black solid 1px;
   border-radius: 5px;
-  background-color: #fff;  
+  /*background-color: #fff;  */
 }
 .reveal .controls div.navigate-left {
     top: 290px;
@@ -130,7 +130,7 @@ body {
       <div class="board">
         <div id="reveal" class="reveal impress">
           <div class="slides">
-            <section data-markdown>
+            <section data-markdown style="background:'../img/sketchtest.png'">
               <script type="text/template">
                   ```cpp
                   #include <iostream>
@@ -139,7 +139,7 @@ body {
                   ```
               </script>
             </section>
-            <section data-markdown>
+            <section data-markdown data-background="red">
               <script type="text/template">
                   ```php
                   public function foo()
@@ -151,7 +151,7 @@ body {
                   ```
               </script>
             </section>
-            <section>
+            <section data-background="#ff0000">
               <h1>wtf</h1>
             </section>
             <section>
@@ -164,13 +164,13 @@ body {
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <img src="img/chart-pie.png"/>
+            <img src="../img/chart-pie.png"/>
           </div>
           <div class="swiper-slide">
-            <img src="img/chart-line.png"/>
+            <img src="../img/chart-line.png"/>
           </div>
           <div class="swiper-slide">
-            <img src="img/chart-radar.png"/>
+            <img src="../img/chart-radar.png"/>
           </div>
         </div>
         <div class="pagination"></div>
@@ -179,6 +179,11 @@ body {
     </div>
   </div>
 <script type="text/javascript">
+$(document).ready(function(){
+  $(".btn-back").click(function(){
+    window.location.href = "/history";
+  });
+});
   //chart slide
 var mySwiper = new Swiper('.swiper-container',{
     pagination: '.pagination',
@@ -199,14 +204,14 @@ Reveal.initialize({
   backgroundTransition: 'slide',
 
   dependencies: [
-    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-    // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
-    { src: 'js/plugin/math/math.js', async: true }
+    { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: '../js/plugin/zoom-../js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: '../js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: '../js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: '../js/plugin/math/math.js', async: true }
     ]  
 });
 </script>
