@@ -10,8 +10,8 @@ router.post('/query-history', function (req, res){
   console.log(req.body.date);
 });
 
-router.get('/historyDetail', function (req, res) {
-  res.render('historyDetail');
+router.get('/history-detail', function (req, res) {
+  res.render('history-detail');
 });
 
 module.exports = router;
