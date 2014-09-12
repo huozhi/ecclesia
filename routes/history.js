@@ -5,8 +5,12 @@ router.get('/', function (req, res) {
   res.render('history');
 });
 
-router.post('/query-history', function (req, res){
-  console.log(req.body.data);
-})
+router.post('/query-history', function(req, res){
+
+});
+
+router.get('/historyDetail', function (req, res) {
+  res.render('historyDetail');
+});
 
 module.exports = router;
