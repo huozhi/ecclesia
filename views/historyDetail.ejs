@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ecclesia History Detail</title>
+<link rel="stylesheet" href="css/idangerous.swiper.css">
+<link rel="stylesheet" href="/css/reveal.css">
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/reveal.js"></script>
+<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
+<script src="js/idangerous.swiper-2.1.min.js"></script>
+</head>
+<style>
+body {
+  background-image: url(img/pattern2.png), url(img/background.jpg);
+  width: 100%;
+  overflow: hidden;
+  background-color: transparent;
+  background-repeat: repeat, no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: auto, cover;
+  -moz-background-size: auto, cover;
+  -o-background-size: auto, cover;
+  background-size: auto, cover;
+  font-family: 'Josefin Slab', Arial, sans-serif;
+}
+.header{
+  font-family:'Arial Narrow', Arial, sans-serif;
+  line-height: 24px;
+  font-size: 11px;
+  background: #000;
+  opacity: 0.9;
+  text-transform: uppercase;
+  z-index: 9999;
+  position: relative;
+  -webkit-box-shadow: 1px 0px 2px #000;
+  box-shadow: 1px 0px 2px #000;
+}
+.header a{
+  position: relative;
+  left: 90%;
+  padding: 0px 10px;
+  letter-spacing: 1px;
+  color: #ddd;
+  display: block;
+}
+.header a:hover{
+  color: #fff;
+}
+.detail-container {
+  position: absolute;
+  /*display: none;*/
+  top: 50px;
+  left: 50%;
+  margin-left: -630px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border: #7d7d7d solid 1px;
+}
+.detail { 
+  width: 1220px;
+  height: 600px;
+  border-radius: 10px;
+  padding: 20px;
+  background:rgba(255, 255, 255, 0.6) none repeat scroll 0 0 !important;
+
+}
+.btn-back {
+  float: right;
+  margin-top: 10px;
+  margin-right: 90px;
+  width:100px;
+  height:36px;
+  border: #e8e8e8 solid 3px;
+  border-radius: 100em;
+  font-size: 18px;
+  color: #e8e8e8;
+  background-color: transparent;
+}
+.btn-back:hover {
+  background-color: #848174;
+  border: #848174 solid 3px;
+}
+
+.swiper-container {
+  float: right;
+  width: 200px;
+  height: 600px;
+  color: #fff;
+  border-radius: 5px;
+  background-color: #aeab9c;
+}
+.swiper-slide {
+  margin-bottom: 10px;
+}
+.swiper-container img {
+  width: 200px;
+  height: 200px;
+  background-color: #fff;
+}
+.board {
+  position: relative;
+  display: inline-block;
+  top: 20px;
+  left: 40px;
+  width: 900px;
+  height: 560px;
+  border: black solid 1px;
+  border-radius: 5px;
+  background-color: #fff;  
+}
+.reveal .controls div.navigate-left {
+    top: 290px;
+}
+.reveal .controls div.navigate-right {
+  left: 905px;
+  top: 290px;
+
+  border-left-width: 22px;
+  border-left-color: #000;
+}
+  </style>
+  <button class='btn-back'>Back</button>
+  <div class="detail-container">
+    <div class="detail">
+    <!-- sidebar of remote client videos -->
+    <!-- main board and charts blank -->
+      <div class="board">
+        <div id="reveal" class="reveal impress">
+          <div class="slides">
+            <section data-markdown>
+              <script type="text/template">
+                  ```cpp
+                  #include <iostream>
+                  using namespace std;
+                  int main() { cout << "hello world" << endl; return 0; }
+                  ```
+              </script>
+            </section>
+            <section data-markdown>
+              <script type="text/template">
+                  ```php
+                  public function foo()
+                  {
+                      $foo = array(
+                          'bar' => 'bar'
+                      )
+                  }
+                  ```
+              </script>
+            </section>
+            <section>
+              <h1>wtf</h1>
+            </section>
+            <section>
+              <h1>hell</h1>
+            </section>
+          </div>
+        </div>
+      </div>
+      <!--========== lsn =========-->
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="img/chart-pie.png"/>
+          </div>
+          <div class="swiper-slide">
+            <img src="img/chart-line.png"/>
+          </div>
+          <div class="swiper-slide">
+            <img src="img/chart-radar.png"/>
+          </div>
+        </div>
+        <div class="pagination"></div>
+      </div>
+      <!--==================== end =================-->
+    </div>
+  </div>
+<script type="text/javascript">
+  //chart slide
+var mySwiper = new Swiper('.swiper-container',{
+    pagination: '.pagination',
+    paginationClickable: true,
+    mode: 'vertical',
+    freeMode: true,
+  })
+
+Reveal.initialize({
+  width: 900,
+  height: 540,
+  margin: 0.5,
+  minScale: 1.0,
+  maxScale: 1.0,
+  center: true,
+  transition: 'liner',
+  transitionSpeed: 'fast',
+  backgroundTransition: 'slide',
+
+  dependencies: [
+    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'js/plugin/math/math.js', async: true }
+    ]  
+});
+</script>
+</body>
+</html>

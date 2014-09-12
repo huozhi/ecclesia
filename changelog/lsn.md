@@ -1,3 +1,24 @@
+#9-11
+
+* 文件上传
+  增加chat.ejs中的script style html元素
+* 图标拖拉
+  替换原js，增加idangerous.swiper.css
+  修改chat.ejs中的css
+* 历史详细界面
+  增加historyDetail.html
+  修改了index.js【加了测试用，有问题】
+* 历史界面
+  删去detail板块，script还没有来得及修改
+
+#9-10
+
+* 历史记录界面
+  大改：history.ejs
+* home界面
+  修改home.css部分内容
+  修改home.ejs部分细节
+
 #9-9
 
 * charts 拖拉效果
@@ -8,11 +29,3 @@
         reveal.css 244、280、290行
 * home界面
   合并home.css
-
-#9-10
-
-* 历史记录界面
-  大改：history.ejs
-* home界面
-  修改home.css部分内容
-  修改home.ejs部分细节

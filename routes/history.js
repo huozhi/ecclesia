@@ -6,5 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res) {
   res.render('history');
 })
-
+router.get('/historyDetail', function(req, res) {
+  res.render('historyDetail');
+})
 module.exports = router;

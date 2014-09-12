@@ -25,6 +25,9 @@ router.get('/history', function(req, res) {
   res.render('history');
 })
 
+router.get('/historyDetail', function(req, res) {
+  res.render('historyDetail');
+})
 /* POST handles */
 router.post('/register', function(req,res) {
   var name = req.body.username;
