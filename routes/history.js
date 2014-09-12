@@ -5,8 +5,8 @@ router.get('/', function (req, res) {
   res.render('history');
 });
 
-router.get('/get-all-history', function (req, res) {
-  
-});
+router.post('/query-history', function (req, res){
+  console.log(req.body.data);
+})
 
 module.exports = router;
