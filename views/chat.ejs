@@ -171,6 +171,17 @@ div.single-chart > button {
   border: black solid 1px;
   border-radius: 5px;
 }
+
+.vol-bar {
+  position: absolute;
+  width: 5px;
+  height: 0px;
+  right: 0px;
+  bottom: 10px;
+  max-height: 140px;
+  background-color: #12acef;
+}
+
 #scan-file {
   position: relative;
   left: 497px;
@@ -360,7 +371,9 @@ div.single-chart > button {
 <div class="container-fluid">
   <div class="affix-left-bar">
     <div id="all-videos" class="sidebar">
-      <div id="local-video" class="video-frame"></div>
+      <div id="local-video" class="video-frame">
+        <div id="localVolBar" class="vol-bar" ></div>
+      </div>
     </div>
   </div>
 
@@ -779,6 +792,9 @@ webrtc.on('readyToCall', function() {
 webrtc.on('videoAdded', function (video, peer) {
   var remotes = $('.sidebar');
   var addPeer = $(document.createElement('div'));
+  var volBar  = $(document.createElement('div'));
+  volBar.addClass('vol-var');
+  addPeer.append(volBar);
   addPeer.addClass('video-frame');
   addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
   addPeer.append(video);
@@ -792,6 +808,18 @@ webrtc.on('videoRemoved', function (video, pper) {
     leavePeer.remove();
   }
 })
+
+webrtc.on('volumeChange', function (volume, threshold) {
+  var volBar = $('#localVolBar');
+  if (volBar == []) return;
+  if (volume < -45) { // vary between -45 and -20
+    volBar.css('height', '0px');
+  } else if (volume > -20) {
+    volBar.css('height', '100%');
+  } else {
+    volBar.css('height', '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%');
+  }
+});
 
 webrtc.on('rtcSyncStroke', function (point) {
   // console.log('syncStroke event');
