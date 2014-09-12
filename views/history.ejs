@@ -10,7 +10,9 @@
 <script type="text/javascript" src="/js/reveal.js"></script>
 <script type="text/javascript" src="/js/lib/js/head.min.js"></script>
 <script type="text/javascript" src="/js/json.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
+
 <style>
 body {
 	background-image: url(/img/pattern2.png), url(/img/background.jpg);
@@ -234,13 +236,18 @@ function sendReq(obj){
 	{
 	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 	  {
-
-	  	alert("send ok");
+	  	var getJson;
+	  	getJson = xmlhttp.responseText;
+	  	getJson = JSON.parse(getJson);
+	  	$.cookie("ChartList",getJson['ChartList']);
+	  	$.cookie("MarkdownList",getJson['MarkdownList']);
+	  	$.cookie("SketchList",getJson['SketchList']);
 	  	window.location.href = "/history/historyDetail";
 	  }
 	}
 	var postStr = JSON.stringify(postJson);
-	xmlhttp.open("post","/history/queryhistory",true);
+	xmlhttp.open("post","/history/query-history",true);
+	xmlhttp.setRequestHeader('Content-Type','application/json');
 	xmlhttp.send(postStr);
 }
 var t;
