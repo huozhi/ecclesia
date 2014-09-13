@@ -72,8 +72,8 @@ Meeting.queryConference = function(roomname, host, date, callback){
               mongodb.close();return callback(err);
             }
             mongodb.close();
-            //console.log(result);
-            return callback(err, doc);
+            console.log('findOne', result);
+            return callback(null, result);
           });
         }
       });

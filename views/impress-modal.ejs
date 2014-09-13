@@ -7,20 +7,20 @@
         <h4 class="modal-title" id="add-impress-label">Add Impress File</h4>
       </div>
       <div class="modal-body">
-        <form enctype="multipart/form-data" method="POST" onsubmit="return HasChecked;">
-
-          <input type="file" id="path" onchange="CheckExt(this);upfile.value=this.value;" style="width:180px;display:none">
-          <input type="text" id="upfile" class="form-control" placeholder="Select a file">
-          <input type="button" id="scan-file" class="btn btn-primary" value="Scan" onclick="path.click()">
-          
-          <div id="MsgList"></div>
-        </form>
+        <!-- <form method="post" enctype="multipart/form-data" id="file-upload-form"> -->
+          <input type="file" id="upload-md-file" class="sr-only">
+          <div class="input-group">
+          <input type="text" id="md-file-path" class="form-control" placeholder="Select markdown file">
+          <span class="input-group-btn"><button type="button" id="scan-btn" class="btn btn-primary">Scan</button></span>
+          </div><br>
+          <div id="upload-message" class="alert" role="alert"></div>
+        <!-- </form> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="UploadButton" class="btn btn-primary" value="" disabled>Upload</button>
+        <button type="button" id="upload-btn" class="btn btn-primary disabled">Upload</button>
       </div>
     </div>
   </div>
 </div>
-<!-- end -->
+<!-- end

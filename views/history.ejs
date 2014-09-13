@@ -215,7 +215,7 @@ h1 span{
 
 function sendReq(obj){
 	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
-
+	// $(objId).get(0).next('tr');
 	var postJson = {
 		"roomName" : tableArr[0].children[1].innerHTML,
 		"host": tableArr[1].children[1].innerHTML,
@@ -229,6 +229,7 @@ function sendReq(obj){
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
+			// alert(data);
 			var getJson;
 	  	getJson = JSON.parse(data);
 	  	$.cookie("ChartList",getJson['ChartList']);
