@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Meeting = require('../modules/meeting');
+var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
   res.render('history');
@@ -22,6 +23,9 @@ router.get('/history-detail', function (req, res) {
 });
 
 router.post('/history-detail', function (req, res) {
-  console.log(req.body);
+  var objId = new ObjectID(chart.id);
+  Meeting.queryImg(objId, function (err, result){
+      res.send(result);
+  });
 })
 module.exports = router;

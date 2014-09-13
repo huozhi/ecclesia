@@ -208,7 +208,6 @@ body {
 function loadData(){
   var postDataStr = {
     ChartList : JSON.parse($.cookie('ChartList')),
-    MarkdownList : JSON.parse($.cookie('MarkdownList')),
     SketchList : JSON.parse($.cookie('SketchList')),
   };  
   var postStr = JSON.stringify(postDataStr);
@@ -221,6 +220,7 @@ function loadData(){
     data:postStr,
     success: function (data, status){
       var getJson = data;
+      alert(data.page);
       addValue(getJson);
     },
     error: function (data, status, e){
