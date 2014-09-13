@@ -223,15 +223,16 @@ function sendReq(obj){
 	};
 	var postStr = JSON.stringify(postJson);
 	$.ajax({
-		url:'https://223.3.83.99:3000/history/query-history',
+		url:'/history/query-history',
 		type:'POST',
 		contentType : 'application/json',
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
-			alert(JSON.stringify(data));
+			alert(data);
 	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
 	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
+	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
 	  	window.location.href = "/history/history-detail";
 		},
 		error: function (data, status, e){

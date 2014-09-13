@@ -213,7 +213,6 @@ Meeting.queryImg = function (imgId, callback){
             mongodb.close();return callback(err, null);
           }
           mongodb.close();
-          console.log(result);
           return callback(err, result);
         });
       });
