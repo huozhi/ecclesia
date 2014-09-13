@@ -1,6 +1,8 @@
 var express = require('express'); 
 var router = express.Router();
-var formidable = require('formidable'),
+var Meeting = require('meetings');  
+var spliter = require('../modules/spliter');
+//var formidable = require('formidable'),
     util = require('util'),
     fs = require('fs');
 
@@ -11,7 +13,13 @@ router.get('/', function (req, res) {
 
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
-  console.log(req.body);
+  var markdowns = t.split(/\+{6,}/);
+  Meeting.saveMdTemp(req.roomName, req.host, req.username,markdowns, function(err, result){
+    if(!err){
+      //do sth
+    }
+  });
+  //console.log(req.body.text);
   if (t == undefined) {
     return res.send('1');
   }
