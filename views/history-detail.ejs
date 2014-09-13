@@ -173,46 +173,31 @@ body {
       <div class="board">
         <div id="reveal" class="reveal impress">
           <div class="slides" style="border:green solid 1px;">
-            <section data-markdown>
-              <script type="text/template">
-                  ```cpp
-                  #include <iostream>
-                  using namespace std;
-                  int main() { cout << "hello world" << endl; return 0; }
-                  ```
-              </script>
-            </section>
+            
           </div>
         </div>
       </div>
-      <!--========== lsn =========-->
+
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="../img/chart-pie.png"/>
-          </div>
-          <div class="swiper-slide">
-            <img src="../img/chart-line.png"/>
-          </div>
-          <div class="swiper-slide">
-            <img src="../img/chart-radar.png"/>
-          </div>
+
         </div>
         <div class="pagination"></div>
       </div>
-      <!--==================== end =================-->
+
     </div>
       <div class="btn-close">×</div>
   </div>
 <script type="text/javascript">
 function loadData(){
+  var mdlist = JSON.parse($.cookie('MarkdownList'));
+  alert($.cookie('MarkdownList'));
   var chartlist = JSON.parse($.cookie('ChartList'));
   for(i=0; i< chartlist.length; i++){
       var chart = {
         id : chartlist[i].id,
       }
       postData = JSON.stringify(chart);
-      alert(postData);
       $.ajax({
         url:'/history/history-detail',
         type:'POST',
@@ -220,9 +205,8 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          var getJson = data;
-          alert(data.img);
-          //addValue(getJson);
+          var eleStr = '<div class="swiper-slide"><img '+'id="chart-'+data.range+'" src="data:image/png;base64,'+data.img+'"/></div>';
+          $(".swiper-wrapper").append(eleStr);
         },
         error: function (data, status, e){
           alert(e);
@@ -235,7 +219,6 @@ function loadData(){
         id : sketchlist[i].id,
       }
       postData = JSON.stringify(chart);
-      alert(postData);
       $.ajax({
         url:'/history/history-detail',
         type:'POST',
@@ -243,28 +226,21 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          var getJson = data;
-          alert(data.img);
-          //addValue(getJson);
+          var eleStr = '<section data-markdown><script type="text/template">'+ mdlist[i]['data'] +'</section>';
+          $(".slides").append(eleStr);
+          $($(".slides")[0].lastChild.previousSibling).append('<img class="sketch-cover" src="data:image/png;base64,'+data.img+'"/>');
         },
         error: function (data, status, e){
           alert(e);
         }
     });
-  }
-  var postDataStr = {
-    ChartList : JSON.parse($.cookie('ChartList')),
-    SketchList : JSON.parse($.cookie('SketchList')),
-  };  
+  }  
 }
 
 function addValue(get_Json){
   var cookieList = get_Json[0];//ChartList
   var eleStr;
-  for (var i = 0; i < cookieList.length; i++) {
-    eleStr = '<div class="swiper-slide"><img '+'id="chart-'+cookieList[i]['range']+'" src="'+cookieList[i]['data']+'"/></div>';
-    $(".swiper-wrapper").append(eleStr);
-  };
+
   cookieList = get_Json[1];//MarkdownList
   var cookieList2 = get_Json[2];//SketchList
   for (var i = 0; i < cookieList.length; i++) {

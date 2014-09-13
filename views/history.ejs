@@ -231,6 +231,7 @@ function sendReq(obj){
 		success: function (data, status){
 	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
 	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
+	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
 	  	window.location.href = "/history/history-detail";
 		},
 		error: function (data, status, e){
