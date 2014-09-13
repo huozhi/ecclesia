@@ -11,7 +11,6 @@
 <script type="text/javascript" src="../js/lib/js/head.min.js"></script>
 <script src="../js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="/js/json.js"></script>
 </head>
 <style>
 body {
@@ -168,8 +167,9 @@ body {
           <div class="slides" style="border:green solid 1px;">
             <section data-background="#000">
               <p>slid1 ,</p>
+              <img class="sketch-cover" src="../img/sketchtest.png"/>
             </section>
-            <img class="sketch-cover" src="../img/sketchtest.png"/>
+
             <section data-background="red">
               <p>slid2 ,</p>
             </section>
@@ -211,35 +211,27 @@ function loadData(){
   postDataStr.push("'MarkdownList':"+cookieVal);
   cookieVal = $.cookie('SketchList');
   postDataStr.push("'SketchList':"+cookieVal);
-  var xmlhttp;
-  if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  }
-  else
-  {// code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function()
-  {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-      var getJson;
-      getJson = xmlhttp.responseText;
-      addValue(getJson);
-    }
-  }
   var postStr = JSON.stringify(postDataStr);
-  xmlhttp.open("post","/history/query-history",true);
-  xmlhttp.setRequestHeader('Content-Type','application/json');
-  xmlhttp.send(postStr);
+  $.ajax({
+    url:'/history/query-history',
+    dataType: 'json',
+    data:{postStr:postStr},
+    success: function (data, status){
+      var getJson;
+      getJson = JSON.parse(data);
+      addValue(getJson);
+    },
+    error: function (data, status, e){
+      alert(e);
+    }
+  });
 }
 
 function addValue(get_Json){
   var cookieList = get_Json[0];//ChartList
   var eleStr;
   for (var i = 0; i < cookieList.length; i++) {
-    eleStr = '<div class="swiper-slide"><img '+'id="img'+cookieList[i]['range']+'" src="'+cookieList[i]['data']+'"/></div>';
+    eleStr = '<div class="swiper-slide"><img '+'id="chart-'+cookieList[i]['range']+'" src="'+cookieList[i]['data']+'"/></div>';
     $(".swiper-wrapper").append(eleStr);
   };
   cookieList = get_Json[1];//MarkdownList

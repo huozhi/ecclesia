@@ -5,8 +5,8 @@ router.get('/', function (req, res) {
   res.render('history');
 });
 
-router.get('/historyDetail', function (req, res) {
-  res.render('historyDetail');
+router.get('/history-detail', function (req, res) {
+  res.render('history-detail');
 });
 
 router.get('/get-all-history', function (req, res) {
