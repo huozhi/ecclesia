@@ -7,14 +7,12 @@ router.get('/', function (req, res) {
 });
 
 router.post('/query-history', function (req, res){
-  console.log(req.body);
   var roomName = req.body.roomName;
   var host = req.body.host;
   var date = req.body.date;
-  console.log(roomName);
   Meeting.queryConference(roomName, host, date, function (err, result){
     if(!err){
-      console.log(result);
+      res.json(result);
     }
   });
 });
@@ -23,4 +21,7 @@ router.get('/history-detail', function (req, res) {
   res.render('history-detail');
 });
 
+router.post('/history-detail', function (req, res) {
+  console.log(req.body);
+})
 module.exports = router;

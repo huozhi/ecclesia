@@ -229,11 +229,9 @@ function sendReq(obj){
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
-			var getJson;
-	  	getJson = JSON.parse(data);
-	  	$.cookie("ChartList",getJson['ChartList']);
-	  	$.cookie("MarkdownList",getJson['MarkdownList']);
-	  	$.cookie("SketchList",getJson['SketchList']);
+	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
+	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
+	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
 	  	window.location.href = "/history/history-detail";
 		},
 		error: function (data, status, e){

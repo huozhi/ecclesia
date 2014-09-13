@@ -1,0 +1,1 @@
+mongorestore -d ecclesia ecclesia/
