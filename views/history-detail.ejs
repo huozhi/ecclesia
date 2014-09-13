@@ -163,7 +163,8 @@ body {
 .btn-close:hover{
   background-color: #eeeeee;
 }
-  </style>
+</style>
+<body onload = "loadData()">
   <button class='btn-back'>Back</button>
   <div class="detail-container">
     <div class="detail">
@@ -205,29 +206,56 @@ body {
   </div>
 <script type="text/javascript">
 function loadData(){
-  var postDataStr = [];
-  var cookieVal;
-  cookieVal = $.cookie('ChartList');
-  postDataStr.push("'ChartList':"+cookieVal);
-  cookieVal = $.cookie('MarkdownList');
-  postDataStr.push("'MarkdownList':"+cookieVal);
-  cookieVal = $.cookie('SketchList');
-  postDataStr.push("'SketchList':"+cookieVal);
-  var postStr = JSON.stringify(postDataStr);
-  $.ajax({
-    url:'/history/query-history',
-    type:'POST',
-    dataType: 'json',
-    data:{postStr:postStr},
-    success: function (data, status){
-      var getJson;
-      getJson = JSON.parse(data);
-      addValue(getJson);
-    },
-    error: function (data, status, e){
-      alert(e);
-    }
-  });
+  var chartlist = JSON.parse($.cookie('ChartList'));
+  for(i=0; i< chartlist.length; i++){
+      var chart = {
+        id : chartlist[i].id,
+      }
+      postData = JSON.stringify(chart);
+      alert(postData);
+      $.ajax({
+        url:'/history/history-detail',
+        type:'POST',
+        contentType : 'application/json',
+        dataType: 'json',
+        data:postData,
+        success: function (data, status){
+          var getJson = data;
+          alert(data.img);
+          //addValue(getJson);
+        },
+        error: function (data, status, e){
+          alert(e);
+        }
+    });
+  }
+  var sketchlist = JSON.parse($.cookie('SketchList'));
+  for(i=0; i< sketchlist.length; i++){
+      var chart = {
+        id : sketchlist[i].id,
+      }
+      postData = JSON.stringify(chart);
+      alert(postData);
+      $.ajax({
+        url:'/history/history-detail',
+        type:'POST',
+        contentType : 'application/json',
+        dataType: 'json',
+        data:postData,
+        success: function (data, status){
+          var getJson = data;
+          alert(data.img);
+          //addValue(getJson);
+        },
+        error: function (data, status, e){
+          alert(e);
+        }
+    });
+  }
+  var postDataStr = {
+    ChartList : JSON.parse($.cookie('ChartList')),
+    SketchList : JSON.parse($.cookie('SketchList')),
+  };  
 }
 
 function addValue(get_Json){

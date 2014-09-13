@@ -72,7 +72,7 @@ Meeting.queryConference = function(roomname, host, date, callback){
               mongodb.close();return callback(err);
             }
             mongodb.close();
-            console.log('findOne', result);
+
             return callback(null, result);
           });
         }
@@ -208,11 +208,12 @@ Meeting.queryImg = function (imgId, callback){
         if(err){
           mongodb.close();return callback(err,null);
         }
-        collection.find({_id : imgId}).toArray(function(err, result){
+        collection.findOne({_id : imgId}, function(err, result){
           if(err){
             mongodb.close();return callback(err, null);
           }
-          mongodb.close();return callback(err, result);
+          mongodb.close();
+          return callback(err, result);
         });
       });
     }
