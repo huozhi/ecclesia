@@ -67,13 +67,13 @@ Meeting.queryConference = function(roomname, host, date, callback){
         if(err){
           mongodb.close();return callback(err);
         }else{
-          collection.find({roomName:roomname, host:host, date:date}).toArray(function(err, result){
+          collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
             if(err){
               mongodb.close();return callback(err);
             }
             mongodb.close();
             //console.log(result);
-            return callback(err, result);
+            return callback(err, doc);
           });
         }
       });

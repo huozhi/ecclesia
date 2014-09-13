@@ -223,17 +223,17 @@ function sendReq(obj){
 	};
 	var postStr = JSON.stringify(postJson);
 	$.ajax({
-		url:'/query-history',
+		url:'/history/query-history',
 		type:'POST',
+		contentType : 'application/json',
 		dataType: 'json',
-		data:{postStr:postStr},
+		data:postStr,
 		success: function (data, status){
 			var getJson;
 	  	getJson = JSON.parse(data);
 	  	$.cookie("ChartList",getJson['ChartList']);
 	  	$.cookie("MarkdownList",getJson['MarkdownList']);
 	  	$.cookie("SketchList",getJson['SketchList']);
-<<<<<<< HEAD
 	  	window.location.href = "/history/history-detail";
 		},
 		error: function (data, status, e){
