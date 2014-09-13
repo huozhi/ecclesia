@@ -229,8 +229,8 @@ function sendReq(obj){
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
+			alert(JSON.stringify(data));
 	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
-	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
 	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
 	  	window.location.href = "/history/history-detail";
 		},

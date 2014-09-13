@@ -75,9 +75,9 @@ var newUser2 = new User({
 var Meeting = require('./meeting');
 
 var newMeeting = {
-  roomName : "9-8",
-  date : new Date(),
-  host : "dh",
+  roomName : "sbsbsb",
+  date : "2014/09/12",
+  host : "sb",
   userList : [],
   ChartList:[],
   MarkdownList:[],
@@ -91,43 +91,21 @@ var newMeeting = {
 //     console.log(err.message);
 //   }else{
 //     console.log(meeting);
-
-//     Meeting.addParticipant(newMeeting.roomName, newMeeting.host,  "Charpser",function(err, result){
-//       if(err){
-//         console.log(err.message);
-//       }else{
-//         console.log('add participant.');
-//       }
-//     });
-
-//     var spliter = require('./split');
-
-//     var file = "./README.md";
-
-//     var markdowns = spliter(file);
-
-//     Meeting.saveMdTemp('9-8', 'dh', 'binladen',markdowns, function(err, re){
-//       if(err){
-//         console.log(err);
-//       }else{
-//         //do sth.
-//       }
-//     });
- //   }
- // });
+//    }
+//  });
 
 // find conference test
 
-Meeting.queryConference("sbsbsb", "sb", "2014/9/12", function(err,result){
-  if(!err){
-    console.log('found!');
-    //console.log(result[0].MarkdownList);
-    mdList = result[0].MarkdownList;
-    for(var i in mdList){
-      console.log(mdList[i]);
-    }
-  }
-})
+// Meeting.queryConference("sbsbsb", "sb", "2014/9/12", function(err,result){
+//   if(!err){
+//     console.log('found!');
+//     //console.log(result[0].MarkdownList);
+//     mdList = result[0].MarkdownList;
+//     for(var i in mdList){
+//       console.log(mdList[i]);
+//     }
+//   }
+// })
 
 
 // add new participant test
@@ -148,19 +126,25 @@ Meeting.queryConference("sbsbsb", "sb", "2014/9/12", function(err,result){
 //   if(!err){
 //     //console.log(data);
 //     var targetObj = {
-//       roomName : "binladen",
-//       host : "dh",
-//       date : "9/12",
-//       listName : "ChartList",
+//       roomName : "sbsbsb",
+//       host : "sb",
+//       date : "2014/09/12",
+//       listName : "SketchList",
 //       page : 1,
 //       img : data,
 //     }
 //     Meeting.saveImg(targetObj, function(err, result){
 //       if(!err)
-//         console.log('save chart!');
+//         console.log('save ' + targetObj.listName);
+
 //     });
 //   }
 // } );
+var ObjectID = require('mongodb').ObjectID;
+var objid = new ObjectID("54140ab79d982a0413769efd");
+Meeting.queryImg(objid, function(err, result){
+          console.log("img" + result);
+});
 
 //save wrapped md test
 // var spliter = require('./split');
@@ -170,11 +154,11 @@ Meeting.queryConference("sbsbsb", "sb", "2014/9/12", function(err,result){
 // var markdowns = spliter(file);
 
 // var wrappedmd = {
-//   range : "p1",
+//   range : 1,
 //   data : markdowns[0]
 // };
 
-// Meeting.saveMarkdown('9-8', 'dh', wrappedmd, function(err, re){
+// Meeting.saveMarkdown('sbsbsb', 'sb', wrappedmd, function(err, re){
 //   if(err){
 //     console.log(err);
 //   }else{
