@@ -1,0 +1,3 @@
+{ "username" : "jjfly", "userPwd" : "11", "mailbox" : null, "_id" : { "$oid" : "54114c88d3fcc3480fc727b5" } }
+{ "username" : "diao", "userPwd" : "11", "mailbox" : null, "_id" : { "$oid" : "541183a72436424c1dfb8090" } }
+{ "username" : "nima", "userPwd" : "11", "mailbox" : null, "_id" : { "$oid" : "54129f210a17b01008dcb67f" } }

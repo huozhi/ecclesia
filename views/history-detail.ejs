@@ -163,7 +163,8 @@ body {
 .btn-close:hover{
   background-color: #eeeeee;
 }
-  </style>
+</style>
+<body onload = "loadData()">
   <button class='btn-back'>Back</button>
   <div class="detail-container">
     <div class="detail">
@@ -205,23 +206,21 @@ body {
   </div>
 <script type="text/javascript">
 function loadData(){
-  var postDataStr = [];
-  var cookieVal;
-  cookieVal = $.cookie('ChartList');
-  postDataStr.push("'ChartList':"+cookieVal);
-  cookieVal = $.cookie('MarkdownList');
-  postDataStr.push("'MarkdownList':"+cookieVal);
-  cookieVal = $.cookie('SketchList');
-  postDataStr.push("'SketchList':"+cookieVal);
+  var postDataStr = {
+    ChartList : JSON.parse($.cookie('ChartList')),
+    MarkdownList : JSON.parse($.cookie('MarkdownList')),
+    SketchList : JSON.parse($.cookie('SketchList')),
+  };  
   var postStr = JSON.stringify(postDataStr);
+  alert(postStr);
   $.ajax({
-    url:'/history/query-history',
+    url:'/history/history-detail',
     type:'POST',
+    contentType : 'application/json',
     dataType: 'json',
-    data:{postStr:postStr},
+    data:postStr,
     success: function (data, status){
-      var getJson;
-      getJson = JSON.parse(data);
+      var getJson = data;
       addValue(getJson);
     },
     error: function (data, status, e){

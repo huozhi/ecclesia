@@ -67,7 +67,7 @@ Meeting.queryConference = function(roomname, host, date, callback){
         if(err){
           mongodb.close();return callback(err);
         }else{
-          collection.find({roomName:roomname, host:host, date:date}).toArray(function(err, result){
+          collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
             if(err){
               mongodb.close();return callback(err);
             }
@@ -126,6 +126,7 @@ Meeting.saveImg = function saveImg(targetObj, callback){
                   mongodb.close();return callback(err);
                 }
                 var img = {
+                  page : targetObj.page,
                   img : targetObj.img,
                 }
                 collection.insert(img, {safe : true}, function(err, result){
@@ -198,6 +199,27 @@ Meeting.archiveImg = function (archiveObj, callback){
 
 }
 
+Meeting.queryImg = function (imgId, callback){
+  mongodb.open(function (err ,db){
+    if(err){
+      mongodb.close();return callback(err, null);
+    }else{
+      db.collection('Images', function (err, collection){
+        if(err){
+          mongodb.close();return callback(err,null);
+        }
+        collection.find({_id : imgId}).toArray(function(err, result){
+          if(err){
+            mongodb.close();return callback(err, null);
+          }
+          mongodb.close();return callback(err, result);
+        });
+      });
+    }
+  })
+};
+
+
 Meeting.saveMarkdown = function saveMarkdown(roomname, host, wrappedmd, callback){
   mongodb.open(function(err, db){
     if(err){
@@ -208,26 +230,6 @@ Meeting.saveMarkdown = function saveMarkdown(roomname, host, wrappedmd, callback
               mongodb.close();return callback(err);
             }
             collection.update({roomName:roomname, host:host},{$push:{MarkdownList : wrappedmd}}, function(err, result){
-              if(err){
-                mongodb.close();return callback(err);
-              }
-              mongodb.close();return callback(err, result);
-            });
-          });
-    }
-  });
-}
-
-Meeting.saveSketchboard = function saveSketchboard(roomname, host, wrappedsketch, callback){
-  mongodb.open(function(err, db){
-    if(err){
-      mongodb.close();return callback(err);
-    }else{
-          db.collection('Meetings', function(err, collection){
-            if(err){
-              mongodb.close();return callback(err);
-            }
-            collection.update({roomName:roomname, host:host},{$push:{SketchList : wrappedsketch}}, function(err, result){
               if(err){
                 mongodb.close();return callback(err);
               }

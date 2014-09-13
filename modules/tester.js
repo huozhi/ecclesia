@@ -118,16 +118,16 @@ var newMeeting = {
 
 // find conference test
 
-// Meeting.queryConference("9-8", "dh", function(err,result){
-//   if(!err){
-//     console.log('found!');
-//     //console.log(result[0].MarkdownList);
-//     mdList = result[0].MarkdownList;
-//     for(var i in mdList){
-//       console.log(mdList[i]);
-//     }
-//   }
-// })
+Meeting.queryConference("sbsbsb", "sb", "2014/9/12", function(err,result){
+  if(!err){
+    console.log('found!');
+    //console.log(result[0].MarkdownList);
+    mdList = result[0].MarkdownList;
+    for(var i in mdList){
+      console.log(mdList[i]);
+    }
+  }
+})
 
 
 // add new participant test
@@ -142,25 +142,25 @@ var newMeeting = {
 
 // save base64 data
 
-var fs = require('fs');
+// var fs = require('fs');
 
-fs.readFile('../test/14.jpg', 'base64', function(err, data){
-  if(!err){
-    //console.log(data);
-    var targetObj = {
-      roomName : "binladen",
-      host : "dh",
-      date : "9/12",
-      listName : "ChartList",
-      page : 1,
-      img : data,
-    }
-    Meeting.saveImg(targetObj, function(err, result){
-      if(!err)
-        console.log('save chart!');
-    });
-  }
-} );
+// fs.readFile('../test/14.jpg', 'base64', function(err, data){
+//   if(!err){
+//     //console.log(data);
+//     var targetObj = {
+//       roomName : "binladen",
+//       host : "dh",
+//       date : "9/12",
+//       listName : "ChartList",
+//       page : 1,
+//       img : data,
+//     }
+//     Meeting.saveImg(targetObj, function(err, result){
+//       if(!err)
+//         console.log('save chart!');
+//     });
+//   }
+// } );
 
 //save wrapped md test
 // var spliter = require('./split');
