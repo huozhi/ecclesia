@@ -223,7 +223,7 @@ function sendReq(obj){
 	};
 	var postStr = JSON.stringify(postJson);
 	$.ajax({
-		url:'/history/query-history',
+		url:'https://223.3.83.99:3000/history/query-history',
 		type:'POST',
 		contentType : 'application/json',
 		dataType: 'json',
