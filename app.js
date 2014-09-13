@@ -79,9 +79,10 @@ app.use(function(err, req, res, next) {
 // module.exports = app;
 
 var privateKey = fs.readFileSync('sslcert/privatekey.pem').toString(),
-    certificate = fs.readFileSync('sslcert/certificate.pem').toString();
+    certificate = fs.readFileSync('sslcert/certificate.pem').toString(),
+    cacert = fs.readFileSync('sslcert/cacert.pem').toString();
 
-var server = https.createServer({key: privateKey, cert: certificate}, app)
+var server = https.createServer({key: privateKey, cert: certificate, ca: cacert}, app)
     .listen(3000);
 
 module.exports = app;

@@ -10,6 +10,7 @@
 <script type="text/javascript" src="../js/reveal.js"></script>
 <script type="text/javascript" src="../js/lib/js/head.min.js"></script>
 <script src="../js/idangerous.swiper-2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
 <style>
 body {
@@ -109,17 +110,58 @@ body {
   height: 560px;
   border: black solid 1px;
   border-radius: 5px;
-  /*background-color: #fff;  */
+  background-color: #fff;  
+  text-align: center;
+}
+.impress {
+  top: 80px;
+  left: 50px;
+  height: 400px;
+  width: 800px;
+  border: blue solid 1px;
 }
 .reveal .controls div.navigate-left {
     top: 290px;
+    left: -90px;
 }
 .reveal .controls div.navigate-right {
-  left: 905px;
+  left: 855px;
   top: 290px;
 
   border-left-width: 22px;
   border-left-color: #000;
+}
+.sketch-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /*display: inline-block;*/
+  width: 800px;
+  height: 400px;
+  background-color: yellow;
+}
+.reveal .slides>section, .reveal .slides>section>section {
+  padding: 0;
+}
+.btn-close {
+  position:absolute;
+  z-index: 1000;
+  top:65px;
+  left:950px;
+  width:24px;
+  height:24px;
+  background-color:#e3e3e3;
+  border:gray solid 1px;
+  border-radius:5px;
+  text-align:center;
+  font-width:2px;
+  font-size:33px;
+  line-height:0.8em;
+  cursor: pointer;
+}
+.btn-close:hover{
+  background-color: #eeeeee;
 }
   </style>
   <button class='btn-back'>Back</button>
@@ -129,8 +171,8 @@ body {
     <!-- main board and charts blank -->
       <div class="board">
         <div id="reveal" class="reveal impress">
-          <div class="slides">
-            <section data-markdown style="background:'../img/sketchtest.png'">
+          <div class="slides" style="border:green solid 1px;">
+            <section data-markdown>
               <script type="text/template">
                   ```cpp
                   #include <iostream>
@@ -138,24 +180,6 @@ body {
                   int main() { cout << "hello world" << endl; return 0; }
                   ```
               </script>
-            </section>
-            <section data-markdown data-background="red">
-              <script type="text/template">
-                  ```php
-                  public function foo()
-                  {
-                      $foo = array(
-                          'bar' => 'bar'
-                      )
-                  }
-                  ```
-              </script>
-            </section>
-            <section data-background="#ff0000">
-              <h1>wtf</h1>
-            </section>
-            <section>
-              <h1>hell</h1>
             </section>
           </div>
         </div>
@@ -177,13 +201,69 @@ body {
       </div>
       <!--==================== end =================-->
     </div>
+      <div class="btn-close">×</div>
   </div>
 <script type="text/javascript">
+function loadData(){
+  var postDataStr = [];
+  var cookieVal;
+  cookieVal = $.cookie('ChartList');
+  postDataStr.push("'ChartList':"+cookieVal);
+  cookieVal = $.cookie('MarkdownList');
+  postDataStr.push("'MarkdownList':"+cookieVal);
+  cookieVal = $.cookie('SketchList');
+  postDataStr.push("'SketchList':"+cookieVal);
+  var postStr = JSON.stringify(postDataStr);
+  $.ajax({
+    url:'/history/query-history',
+    type:'POST',
+    dataType: 'json',
+    data:{postStr:postStr},
+    success: function (data, status){
+      var getJson;
+      getJson = JSON.parse(data);
+      addValue(getJson);
+    },
+    error: function (data, status, e){
+      alert(e);
+    }
+  });
+}
+
+function addValue(get_Json){
+  var cookieList = get_Json[0];//ChartList
+  var eleStr;
+  for (var i = 0; i < cookieList.length; i++) {
+    eleStr = '<div class="swiper-slide"><img '+'id="chart-'+cookieList[i]['range']+'" src="'+cookieList[i]['data']+'"/></div>';
+    $(".swiper-wrapper").append(eleStr);
+  };
+  cookieList = get_Json[1];//MarkdownList
+  var cookieList2 = get_Json[2];//SketchList
+  for (var i = 0; i < cookieList.length; i++) {
+    eleStr = '<section data-markdown><script type="text/template">'+ cookieList[i]['data'] +'</section>';
+    $(".slides").append(eleStr);
+    $($(".slides")[0].lastChild.previousSibling).append('<img class="sketch-cover" src="../img/sketchtest.png"/>');
+  };
+}
+
 $(document).ready(function(){
+  var btnStatus = true;
+  $(".btn-close").click(function(){
+    if (btnStatus) {
+      $(".sketch-cover").css("visibility","hidden");
+      $(".btn-close")[0].innerHTML = "+";
+      btnStatus = false;
+    } else {
+      $(".sketch-cover").css("visibility","visible");
+      $(".btn-close")[0].innerHTML = "×";
+      btnStatus = true;
+    }
+  });
   $(".btn-back").click(function(){
     window.location.href = "/history";
   });
 });
+
   //chart slide
 var mySwiper = new Swiper('.swiper-container',{
     pagination: '.pagination',

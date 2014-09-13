@@ -9,8 +9,9 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/reveal.js"></script>
 <script type="text/javascript" src="/js/lib/js/head.min.js"></script>
-<script type="text/javascript" src="/js/json.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
+
 <style>
 body {
 	background-image: url(/img/pattern2.png), url(/img/background.jpg);
@@ -213,38 +214,34 @@ h1 span{
 <script type="text/javascript">
 
 function sendReq(obj){
-		var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
+	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
 
-		var postJson = {
-			"roomName" : tableArr[0].children[1].innerHTML,
-			"host": tableArr[1].children[1].innerHTML,
-			"date" : tableArr[2].children[1].innerHTML,
+	var postJson = {
+		"roomName" : tableArr[0].children[1].innerHTML,
+		"host": tableArr[1].children[1].innerHTML,
+		"date" : tableArr[2].children[1].innerHTML,
 	};
-
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	  {
-
-	  	alert("send ok");
-	  	window.location.href = "/history/historyDetail";
-	  }
-	}
 	var postStr = JSON.stringify(postJson);
-	//alert(postStr);
-	xmlhttp.open("post","/history/query-history",true);
-	xmlhttp.setRequestHeader('Content-Type' , 'application/json');
-	xmlhttp.send(postStr);
+	$.ajax({
+		url:'/query-history',
+		type:'POST',
+		dataType: 'json',
+		data:{postStr:postStr},
+		success: function (data, status){
+			var getJson;
+	  	getJson = JSON.parse(data);
+	  	$.cookie("ChartList",getJson['ChartList']);
+	  	$.cookie("MarkdownList",getJson['MarkdownList']);
+	  	$.cookie("SketchList",getJson['SketchList']);
+<<<<<<< HEAD
+	  	window.location.href = "/history/history-detail";
+		},
+		error: function (data, status, e){
+			alert(e);
+		}
+	});
 }
+
 var t;
 var divW=$('.index').width();
 var divH=$('.index').height();

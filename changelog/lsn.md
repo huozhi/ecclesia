@@ -1,3 +1,10 @@
+#9-12
+
+* 历史查看数据响应
+  增加响应script，history的post已经测试成功
+  historyDetail界面数据渲染没有测试过
+  historyDetail中图和markdown没有实现同步
+
 #9-11
 
 * 文件上传
