@@ -1,0 +1,112 @@
+<div class="modal fade" id="add-chart-modal" tabindex="-1" role="dialog" aria-labelledby="chart-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+        <h4 class="modal-title" id="chart-modal-label">Choose Chart</h4>
+      </div>
+      <div class="modal-body">
+
+        <div id="chart-insert-carousel" class="carousel slide" data-ride="carousel">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="line"><img class="lazy" src="/img/chart-line.png" ></a>
+                      <div class="caption">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="bar"><img class="lazy" src="/img/chart-bar.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="radar"><img class="lazy" src="/img/chart-radar.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="polararea"><img class="lazy" src="/img/chart-polararea.png" ></a>
+                      <div class="caption">
+                       
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="pie"><img class="lazy" src="/img/chart-pie.png" ></a>
+                      <div class="caption">
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-ms-2 col-lg-2 chart-label">
+                    <div class="thumbnail">
+                      <a class="add-opt" title="doughnut"><img class="lazy" src="/img/chart-doughnut.png" ></a>
+                      <div class="caption">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!--end container-->
+        
+            </div>
+
+            <div class="item">
+              <div class="chart-insert chart-insert-form center" role="form">
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <input type="text" class="form-control chart-data-input chart-data-axis" placeholder="X-axis">
+                </div>
+                <br>
+                <div class="input-group input-group-md col-md-8 col-md-offset-2">
+                  <input type="text" class="form-control chart-data-input chart-data-val" placeholder="data">
+                </div>                
+                <br>
+                <div class="chart-btn input-group input-group-md col-md-8 ">
+
+                  <button id="chart-data-add" class="btn btn-primary col-md-offset-6">
+                    <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                  <button id="chart-data-submit" class="btn btn-primary col-md-offset-2">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </button>
+                </div>
+                <br>
+                <div class="carousel-cpation input-group input-group-md col-md-8 container preview-container">
+                  <canvas id="chart-preview" width="300" height="300"></canvas>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="insert-btn">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>

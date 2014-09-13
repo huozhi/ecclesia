@@ -12,7 +12,7 @@ function SimpleWebRTC(opts) {
     var config = this.config = {
             // url: 'http://signaling.simplewebrtc.com:8888',
             // url: 'http://223.3.78.120:8888',
-            url: 'http://localhost:8888',
+            url: 'https://localhost:8888',
             socketio: { 'force new connection':true },
             debug: false,
             localVideoEl: '',
