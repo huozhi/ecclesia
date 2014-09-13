@@ -23,9 +23,12 @@ router.get('/history-detail', function (req, res) {
 });
 
 router.post('/history-detail', function (req, res) {
-  var objId = new ObjectID(chart.id);
+  console.log(req.body);
+  var objId = new ObjectID(req.body.id);
   Meeting.queryImg(objId, function (err, result){
-      res.send(result);
+    if(!err){
+      res.json(result);      
+    }
   });
 })
 module.exports = router;

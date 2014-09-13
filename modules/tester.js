@@ -120,31 +120,32 @@ var newMeeting = {
 
 // save base64 data
 
-// var fs = require('fs');
+var fs = require('fs');
 
-// fs.readFile('../test/14.jpg', 'base64', function(err, data){
-//   if(!err){
-//     //console.log(data);
-//     var targetObj = {
-//       roomName : "sbsbsb",
-//       host : "sb",
-//       date : "2014/09/12",
-//       listName : "SketchList",
-//       page : 1,
-//       img : data,
-//     }
-//     Meeting.saveImg(targetObj, function(err, result){
-//       if(!err)
-//         console.log('save ' + targetObj.listName);
+fs.readFile('../test/22.jpg', 'base64', function(err, data){
+  if(!err){
+    //console.log(data);
+    var targetObj = {
+      roomName : "sbsbsb",
+      host : "sb",
+      date : "2014/09/12",
+      listName : "SketchList",
+      page : 1,
+      img : data,
+    }
+    Meeting.saveImg(targetObj, function(err, result){
+      if(!err)
+        console.log('save ' + targetObj.listName);
 
-//     });
-//   }
-// } );
-var ObjectID = require('mongodb').ObjectID;
-var objid = new ObjectID("54140ab79d982a0413769efd");
-Meeting.queryImg(objid, function(err, result){
-          console.log("img" + result);
-});
+    });
+  }
+} );
+
+// var ObjectID = require('mongodb').ObjectID;
+// var objid = new ObjectID("54140ab79d982a0413769efd");
+// Meeting.queryImg(objid, function(err, result){
+//           console.log("img" + result);
+// });
 
 //save wrapped md test
 // var spliter = require('./split');

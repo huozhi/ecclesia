@@ -206,27 +206,56 @@ body {
   </div>
 <script type="text/javascript">
 function loadData(){
+  var chartlist = JSON.parse($.cookie('ChartList'));
+  for(i=0; i< chartlist.length; i++){
+      var chart = {
+        id : chartlist[i].id,
+      }
+      postData = JSON.stringify(chart);
+      alert(postData);
+      $.ajax({
+        url:'/history/history-detail',
+        type:'POST',
+        contentType : 'application/json',
+        dataType: 'json',
+        data:postData,
+        success: function (data, status){
+          var getJson = data;
+          alert(data.img);
+          //addValue(getJson);
+        },
+        error: function (data, status, e){
+          alert(e);
+        }
+    });
+  }
+  var sketchlist = JSON.parse($.cookie('SketchList'));
+  for(i=0; i< sketchlist.length; i++){
+      var chart = {
+        id : sketchlist[i].id,
+      }
+      postData = JSON.stringify(chart);
+      alert(postData);
+      $.ajax({
+        url:'/history/history-detail',
+        type:'POST',
+        contentType : 'application/json',
+        dataType: 'json',
+        data:postData,
+        success: function (data, status){
+          var getJson = data;
+          alert(data.img);
+          //addValue(getJson);
+        },
+        error: function (data, status, e){
+          alert(e);
+        }
+    });
+  }
   var postDataStr = {
     ChartList : JSON.parse($.cookie('ChartList')),
     SketchList : JSON.parse($.cookie('SketchList')),
   };  
-  var postStr = JSON.stringify(postDataStr);
-  alert(postStr);
-  $.ajax({
-    url:'/history/history-detail',
-    type:'POST',
-    contentType : 'application/json',
-    dataType: 'json',
-    data:postStr,
-    success: function (data, status){
-      var getJson = data;
-      alert(data.page);
-      addValue(getJson);
-    },
-    error: function (data, status, e){
-      alert(e);
-    }
-  });
 }
 
 function addValue(get_Json){
