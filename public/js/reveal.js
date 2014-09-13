@@ -1033,10 +1033,14 @@ var Reveal = (function(){
 			availableWidth -= ( availableHeight * config.margin );
 			availableHeight -= ( availableHeight * config.margin );
 
-			// Dimensions of the content
-			var slideWidth = config.width,
+			// Dimensions of the content 
+			//lsn changed
+			var slideWidth = 800,
+					slideHeight = 400,
+					slidePadding = 0;
+			/*var slideWidth = config.width,
 				slideHeight = config.height,
-				slidePadding = 20; // TODO Dig this out of DOM
+				slidePadding = 20;*/ // TODO Dig this out of DOM
 
 			// Layout the contents of the slides
 			layoutSlideContents( config.width, config.height, slidePadding );

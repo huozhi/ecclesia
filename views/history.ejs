@@ -224,6 +224,7 @@ function sendReq(obj){
 	var postStr = JSON.stringify(postJson);
 	$.ajax({
 		url:'/query-history',
+		type:'POST',
 		dataType: 'json',
 		data:{postStr:postStr},
 		success: function (data, status){

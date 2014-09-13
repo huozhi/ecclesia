@@ -132,10 +132,17 @@ body {
   border-left-color: #000;
 }
 .sketch-cover {
-  position: relative;
-  display: inline-block;
-  width: 900px;
-  height: 560px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /*display: inline-block;*/
+  width: 800px;
+  height: 400px;
+  background-color: yellow;
+}
+.reveal .slides>section, .reveal .slides>section>section {
+  padding: 0;
 }
 .btn-close {
   position:absolute;
@@ -165,19 +172,14 @@ body {
       <div class="board">
         <div id="reveal" class="reveal impress">
           <div class="slides" style="border:green solid 1px;">
-            <section data-background="#000">
-              <p>slid1 ,</p>
-              <img class="sketch-cover" src="../img/sketchtest.png"/>
-            </section>
-
-            <section data-background="red">
-              <p>slid2 ,</p>
-            </section>
-            <section data-background="#ff0000">
-              <h1>wtf</h1>
-            </section>
-            <section data-background="#000000">
-              <h1>hell</h1>
+            <section data-markdown>
+              <script type="text/template">
+                  ```cpp
+                  #include <iostream>
+                  using namespace std;
+                  int main() { cout << "hello world" << endl; return 0; }
+                  ```
+              </script>
             </section>
           </div>
         </div>
@@ -214,6 +216,7 @@ function loadData(){
   var postStr = JSON.stringify(postDataStr);
   $.ajax({
     url:'/history/query-history',
+    type:'POST',
     dataType: 'json',
     data:{postStr:postStr},
     success: function (data, status){
@@ -238,8 +241,8 @@ function addValue(get_Json){
   var cookieList2 = get_Json[2];//SketchList
   for (var i = 0; i < cookieList.length; i++) {
     eleStr = '<section data-markdown><script type="text/template">'+ cookieList[i]['data'] +'</section>';
-    //------图片加在什么位置还没有定好。。
     $(".slides").append(eleStr);
+    $($(".slides")[0].lastChild.previousSibling).append('<img class="sketch-cover" src="../img/sketchtest.png"/>');
   };
 }
 
