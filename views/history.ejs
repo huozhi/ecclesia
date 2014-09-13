@@ -215,7 +215,7 @@ h1 span{
 
 function sendReq(obj){
 	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
-
+	// $(objId).get(0).next('tr');
 	var postJson = {
 		"roomName" : tableArr[0].children[1].innerHTML,
 		"host": tableArr[1].children[1].innerHTML,
