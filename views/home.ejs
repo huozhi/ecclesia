@@ -28,37 +28,31 @@ a.home-link {
 
 <script type="text/javascript">
 $(document).ready(function() {
-  $("#create-btn").click(function() {
-    $.cookie('roomname', $('#roomname').val());
-  });
-
-  $("#enter-room-btn").click(function() {
-    var username = $.cookie("username"),
-        roomname = $.cookie("roomname"),
-        date = new Date().toDateString(),
-        roomuuid = null;
-
-    // $.cookie('date', date);
-
+  $("#create-room-btn").click(function() {
+    var roomname = $('#roomName').val();
     
-    // $.ajax({
-    //   url:'/home/create-room',
-    //   contentType:'application/json',
-    //   dataType: 'json',
-    //   data: JSON.stringfy({
-    //     request: 'create-room',
-    //     username: username,
-    //     roomname: roomname
-    //   }),
-    //   success: function (data) {
-    //     var ret = JSON.parse(data);
-    //     if (ret) {
-
-    //     } else {
-
-    //     }
-    //   }
-    // });
+    $.ajax({
+      url:'/home/create-room',
+      contentType:'application/json',
+      dataType: 'json',
+      data: JSON.stringfy({
+        request: 'create-room',
+        roomName: roomname
+      }),
+      success: function (data) {
+        var ret = JSON.parse(data);
+        if (ret.response === 'create-success') {
+          $.cookie('roomName', ret.roomName),
+          $.cookie('creator', ret.creator),
+          $.cookie('roomHash', ret.roomHash);
+          $.cookie('date', ret.date);
+          window.location.href = '/chat';
+        }
+        else {
+          alert(ret.response);
+        }
+      }
+    });
   });
 });
 </script>
@@ -178,7 +172,7 @@ $(document).ready(function() {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button id="create-btn" type="button" class="btn btn-primary">Create</button>
+      	<button id="create-room-btn" type="button" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>

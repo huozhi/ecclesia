@@ -6,7 +6,10 @@ var formidable = require('formidable'),
 
 
 router.get('/', function (req, res) {
-  res.render('chat');
+  var uname = "test" || req.session.username;
+  res.render('chat', {
+    username: uname
+  });
 });
 
 router.post('/upload-markdown', function (req, res) {

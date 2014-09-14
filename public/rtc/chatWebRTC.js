@@ -6,7 +6,8 @@ WebRTC and Reveal.js initialized
 
 function enableWebRTC (mediaContrains) {
 
-var room = location.search && location.search.split('?')[1];
+// var room = location.search && location.search.split('?')[1];
+var room = $.cookie('roomName');
 
 var webrtc = new SimpleWebRTC({
   // url: "http://localhost:8888",
@@ -63,15 +64,17 @@ webrtc.on('rtcSyncStroke', function (point) {
 });
 
 if (!room) {
-  $('#create-room-btn').click(function () {
+  // $('#create-room-btn').click(function () {
     // use uuid to create room, pass null to first arg
-    webrtc.createRoom(null, function (err, name) {
-      var roomUrl = location.pathname + '?' + name;
-      if (!err) {
-        history.replaceState(null, null, roomUrl);
-      }
-    })
-  })
+  var roomHash = $.cookie('roomHash');
+  
+  webrtc.createRoom(roomHash, function (err, name) {
+    var roomUrl = location.pathname + '?' + name;
+    if (!err) {
+      history.replaceState({ roomHash: $.cookie('roomHash') }, null, roomUrl);
+    }
+  });
+  // })
 } else {
   console.log('already in a room');
 }
