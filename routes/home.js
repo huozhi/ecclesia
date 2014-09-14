@@ -21,10 +21,13 @@ router.get('/logout', function (req, res) {
   }
 })
 
+router.post('/join-room', function(req, res){
+  var roomname = req.body.roomName;
+});
+
 router.get('/create-room', function (req, res) {
   // deal with post json data 
   // { request:'create-room' username:'..', roomname:'..' }
   // ... code here
 });
-
 module.exports = router;

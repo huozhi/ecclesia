@@ -1,6 +1,6 @@
 var mongodb = require('./db');
 
-function Meeting(meeting){
+  function Meeting(meeting){
   this.roomName = meeting.roomName;
   this.date = meeting.date;
   this.host = meeting.host;
