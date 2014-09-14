@@ -3,11 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ecclesia home</title>
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/bootstrap.min.css"></style>
-<link rel="stylesheet" type="text/css" href="css/home.css" />
+<title>ecclesia [home]</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css"></style>
+<link rel="stylesheet" href="/css/home.css" />
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
 <style>
 thead{
@@ -18,8 +19,49 @@ body {
 	width: 100%;
 	overflow: hidden;
 }
+a.home-link {
+  text-decoration: none;
+  line-height: 1.8em;
+}
 
 </style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#create-btn").click(function() {
+    $.cookie('roomname', $('#roomname').val());
+  });
+
+  $("#enter-room-btn").click(function() {
+    var username = $.cookie("username"),
+        roomname = $.cookie("roomname"),
+        date = new Date().toDateString(),
+        roomuuid = null;
+
+    // $.cookie('date', date);
+
+    
+    // $.ajax({
+    //   url:'/home/create-room',
+    //   contentType:'application/json',
+    //   dataType: 'json',
+    //   data: JSON.stringfy({
+    //     request: 'create-room',
+    //     username: username,
+    //     roomname: roomname
+    //   }),
+    //   success: function (data) {
+    //     var ret = JSON.parse(data);
+    //     if (ret) {
+
+    //     } else {
+
+    //     }
+    //   }
+    // });
+  });
+});
+</script>
 
 <body>
 	<div>
@@ -31,11 +73,10 @@ body {
 	    <h1>Ecclesia Home <span>welcome to use Ecclesia</span></h1>
 	    <div class="content menu-block">
 	        <ul class="bmenu">
-	            <li><a href="###" data-toggle="modal" data-target="#createModal" style="text-decoration: none;line-height:1.8em;">Create Room</a></li>
-	            <li><a href="###" data-toggle="modal" data-target="#joinModal" style="text-decoration: none;line-height:1.8em;">Join Room</a></li>
-	            <li><a href="history" style="text-decoration: none;line-height:1.8em;">Query History</a></li>
-	            <li><a href="###" style="text-decoration: none;line-height:1.8em;">About</a></li>
-	            <!-- <li><a href="###" style="text-decoration: none;line-height:1.8em;">Description</a></li> -->
+	            <li><a data-toggle="modal" data-target="#createModal" class="home-link">Create Room</a></li>
+	            <li><a data-toggle="modal" data-target="#joinModal" class="home-link">Join Room</a></li>
+	            <li><a href="/history" class="home-link">Query History</a></li>
+	            <li><a href="#" class="home-link">About</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -51,30 +92,30 @@ body {
       <div class="modal-body">
 
 			<form class="form-horizontal" role="form">
-			<div class='form-group'>
-				<label for='creatorName' class='col-sm-2 control-label'>Creator's name</label>
-				<div class='col-sm-10'>
-					<input type='text' class='form-control' id='creatorName' placeholder='Creator s name'>
+			<div class="form-group">
+				<label for="creatorName" class="col-sm-2 control-label">Creator"s name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="creatorName" placeholder="Creator s name">
 				</div>
 			</div>
-			<div class='form-group'>
-			<label for='roomName' class='col-sm-2 control-label'>Room's name</label>
-				<div class='col-sm-10'>
-					<input type='text' class='form-control' id='roomName' placeholder='Room s name'>
+			<div class="form-group">
+			<label for="roomName" class="col-sm-2 control-label">Room"s name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="roomName" placeholder="Room s name">
 				</div>
 			</div>
-			<div class='form-group'>
-				<label for='key' class='col-sm-2 control-label'>Room's key</label>
-					<div class='col-sm-10'>
-						<input type='password' class='form-control' id='key' placeholder='Room s key'>
+			<div class="form-group">
+				<label for="key" class="col-sm-2 control-label">Room"s key</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="key" placeholder="Room s key">
 					</div>
 			</div>
 			</form>
 
       </div>
       <div class="modal-footer">
-		<button class='btn btn-default col-md-offset-2' data-dismiss="modal">Close</button>
-		<button class='btn btn-primary col-md-offset-6'>Join</button>
+		<button class="btn btn-default col-md-offset-2" data-dismiss="modal">Close</button>
+		<button class="btn btn-primary col-md-offset-6">Join</button>
       </div>
     </div>
   </div>
@@ -88,13 +129,13 @@ body {
         <h4 class="modal-title">Query history</h4>
       </div>
       <div class="modal-body">
-			<iframe class='history-frame' src='file:///C:/Users/Administrator/Desktop/Query%20History.html' seamless></iframe>
+			<iframe class="history-frame" src="file:///C:/Users/Administrator/Desktop/Query%20History.html" seamless></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+    </div>
+  </div>
 </div> -->
 <!--==================== create room ==========================-->
 <div class="modal fade" id="createModal">
@@ -108,7 +149,7 @@ body {
 			<div class="create-room-block">
 				<div class="user-list">
 					<ul class="list-group">
-					  <!--user's name list-->
+					  <!--user"s name list-->
 					</ul>
 				</div>
 				<div class="user-list-right">
@@ -137,19 +178,20 @@ body {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button type="button" class="btn btn-primary">Create</button>
+      	<button id="create-btn" type="button" class="btn btn-primary">Create</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+    </div>
+  </div>
 </div>
 <!--===========================================================-->
+
 </body>
 
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#add-user").click(function(){
 		var username = $("#user-input").val();
-		var str = "<li class='list-group-item'>" + username + "<span class='glyphicon glyphicon-remove' id='" + username + "' style='float:right;'></span></li>"
+		var str = '<li class="list-group-item">' + username + '<span class="glyphicon glyphicon-remove" id="' + username + '" style="float:right;"></span></li>'
 		$(".list-group").append(str);
 		$("#user-input").val("");
 		$("#"+ username).click(function(){

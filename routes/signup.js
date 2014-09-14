@@ -18,7 +18,6 @@ router.post('/register', function(req,res) {
   user.register(function(err, newuser){
     if(!err){
       req.session.username = name;
-      req.session.isLogin  = true;
       result = true;
       res.send(result);
     }else{

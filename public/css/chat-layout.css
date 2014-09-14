@@ -167,7 +167,13 @@ div.single-chart > button {
   top: 10px;
   width: 71px;
 }
-#MsgList {
+
+.cert-right {
   position: relative;
-  width: 420px;
+  float: right;
+}
+
+ul.dropdown-menu {
+  position: relative;
+  width: 100%;
 }
