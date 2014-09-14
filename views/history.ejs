@@ -198,7 +198,6 @@ function sendReq(obj){
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
-
 	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
 	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
 	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));

@@ -1,6 +1,6 @@
 var mongodb = require('./db');
 
-function Meeting(meeting){
+  function Meeting(meeting){
   this.roomName = meeting.roomName;
   this.date = meeting.date;
   this.host = meeting.host;
@@ -146,7 +146,7 @@ Meeting.saveImg = function saveImg(targetObj, callback){
 
                   Meeting.archiveImg(archiveObj, function(err, re){
                     if(!err){
-                      return callback(err, re);                      
+                      return callback(err, result[0]);                      
                     }
                   });
 

@@ -73,6 +73,7 @@ var newUser2 = new User({
 
 // create a new room (meeting)
 var Meeting = require('./meeting');
+var crypto = require('crypto');
 
 var newMeeting = {
   roomName : "sbsbsb",
@@ -83,6 +84,11 @@ var newMeeting = {
   MarkdownList:[],
   SketchList:[]
 }
+
+// var cryptor  = crypto.createHash('sha512');
+// var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
+// newMeeting.roomKey = cryptor.update(rawKey).digest('hex');
+// console.log(newMeeting.roomKey);
 
 // console.log(newMeeting.date);
 
@@ -120,7 +126,7 @@ var newMeeting = {
 
 // save base64 data
 
- var fs = require('fs');
+/* var fs = require('fs');
 
 fs.readFile('../test/14.jpg', 'base64', function(err, data){
   if(!err){
@@ -139,7 +145,28 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
     });
   }
-} );
+} );*/
+
+// var fs = require('fs');
+
+// fs.readFile('../test/22.jpg', 'base64', function(err, data){
+//   if(!err){
+//     //console.log(data);
+//     var targetObj = {
+//       roomName : "sbsbsb",
+//       host : "sb",
+//       date : "2014/09/12",
+//       listName : "SketchList",
+//       page : 1,
+//       img : data,
+//     }
+//     Meeting.saveImg(targetObj, function(err, result){
+//       if(!err)
+//         console.log('save ' + targetObj.listName);
+
+//     });
+//   }
+// } );
 
 // var ObjectID = require('mongodb').ObjectID;
 // var objid = new ObjectID("54140ab79d982a0413769efd");
@@ -184,4 +211,6 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
 /************************************************************************/
 
+// var date = new Date();
+// console.log(date.toDateString());
 /*************************/

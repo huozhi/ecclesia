@@ -1,11 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var Meeting = require('../modules/meeting');
+var User = require('../modules/user');
 var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
   res.render('history');
 });
+
+router.post('/history-preview', function (req, res){
+  var user = req.session.username;
+  User.get(user, function (err, result){
+    if(!err){
+      res.json({conferences : result.conferences});
+    }
+  })
+})
 
 router.post('/query-history', function (req, res){
 

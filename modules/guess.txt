@@ -2,18 +2,18 @@ Meetings
 { 
 	"ChartList":
 	[
-		{range:"1" ,data: "chart base64 data"},
-		{range:"2" ,data: "chart base64 data"},
+		{range:1 ,id: string},
+		{range:2 ,id: string},
 	],
 	"MarkdownList":
 	[
-		{range:"p1" ,data: "string"},
-		{range:"p2" ,data: "string"},
+		{range:1 ,data: string},
+		{range:2 ,data: string},
 	],
 	"SketchList":
 	[
-		{range:"p1" ,data: "chart base64 data?"},
-		{range:"p2" ,data: "chart base64 data"},
+		{range: 1 ,id: string},
+		{range: 2 ,id: string},
 	],
 	"roomName" : "room temp",
 	"host": "",
