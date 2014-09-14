@@ -1,9 +1,20 @@
+/*
+
+WebRTC and Reveal.js initialized
+
+*/
+
+function enableWebRTC (mediaContrains) {
+
 var room = location.search && location.search.split('?')[1];
 
 var webrtc = new SimpleWebRTC({
   // url: "http://localhost:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
+  media: mediaContrains || {
+    video: true, audio: true
+  },
   autoRequestMedia: true,
   debug: false,
   detectSpeakingEvents: true,
@@ -63,4 +74,70 @@ if (!room) {
   })
 } else {
   console.log('already in a room');
+}
+
+
+
+Reveal.initialize({
+  width: 800,
+  height: 400,
+  margin: 0.5,
+  minScale: 1.0,
+  maxScale: 1.0,
+  center: true,
+  transition: 'liner',
+  transitionSpeed: 'fast',
+  backgroundTransition: 'slide',
+
+  dependencies: [
+    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+    // { src: 'js/plugin/math/math.js', async: true }
+    ]  
+});
+
+Reveal.addEventListener( 'ready', function( event ) {
+  var present = $('section.present');
+  if (present.children('canvas').length != 0) {
+    console.log('has canvas')
+    var curCanvas = $('.present > canvas');
+    if (!curCanvas.hasClass('sketch-present')) {
+      // console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+
+});
+
+Reveal.addEventListener( 'slidechanged', function( event ) {
+  $('.sketch-present').removeClass('sketch-present');
+  var present = $('.slides > section.present');
+  if (present.children('canvas').length != 0) {
+    // console.log('has canvas')
+    var curCanvas = $('.present > canvas');
+    if (curCanvas.hasClass('sketch-present') == false) {
+      // console.log('no active class')
+      curCanvas.addClass('sketch-present');
+    }
+  }
+  else {
+    present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
+  }
+    $('.sketch-present').Stroke(function (point) {
+      webrtc.sendSketchPointData(point);
+    });
+});
+
 }

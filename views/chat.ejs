@@ -19,6 +19,7 @@
 <script type="text/javascript" src="/rtc/simplewebrtc.bundle.js"></script>
 <script type="text/javascript" src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/checkMediaPlugin.js"></script>
 
 
 <style type="text/css">
@@ -64,6 +65,11 @@
 <% include chart-modal.ejs %>
 
 <% include impress-modal.ejs %>
+
+<!-- Check media trigger modal -->
+<button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal"></button>
+
+<% include check-media.ejs %>
 
 <div class="container-fluid">
   <div class="affix-left-bar">
@@ -126,9 +132,21 @@
 <script type="text/javascript">
 </script>
 
-<script type="text/javascript" src="/js/chatInit.js"></script>
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>
+<script type="text/javascript" src="/js/chatInit.js"></script>
 <script type="text/javascript" src="/js/checkMarkdownUpload.js"></script>
-
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#media-check-btn").click(function(){
+    $("#check-media-modal").checkMedia(function (constrains) {
+      $('#enter-room-btn').click(function() {
+        enableWebRTC(constrains);
+      })
+    });
+    
+  }).click();
+});
+  
+</script>
 </body>
 </html>

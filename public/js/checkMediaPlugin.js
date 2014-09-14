@@ -1,35 +1,36 @@
 ;(function($) {
-  $.fn.checkMedia = function () {
-    var mr = new MeidaReady(),
-        audioList  = [],
-        cameraList = [];
+  $.fn.checkMedia = function (cb) {
     function MeidaReady (asrc, vsrc, mready, cready) {
       this.audioSource = asrc   || null,
       this.videoSource = vsrc   || null;
       this.micReady    = mready || false,
       this.camReady    = cready || false;
     }
+    var mr = new MeidaReady(),
+        audioList  = [],
+        cameraList = [];
 
     MediaStreamTrack.getSources(function (sourceInfos) {
       for (var i = 0; i != sourceInfos.length; ++i) {
         var sourceInfo = sourceInfos[i];
         if (sourceInfo.kind === 'audio') {
           audioList.push({id: sourceInfo.id, label: sourceInfo.label || 'microphone'});
-
+          // console.log(sourceInfo.id, sourceInfo.label || 'm');
         } else if (sourceInfo.kind === 'video') {
           cameraList.push({id: sourceInfo.id, label: sourceInfo.label || 'camera'});
+          // console.log(sourceInfo.id, sourceInfo.label || 'c');
         } else {
-          console.log('other type media');
+          // console.log('other type media');
         }
         if (audioList.length) {
           mr.audioSource = audioList[0].id;
-          mr.data('audioSource', audioList[0].id);
+          $(this).data('audioSource', audioList[0].id);
           mr.micReady = true;
           $('#select-audio').text(audioList[0].label).append('<span class="caret cert-right"></span>');
         }
         if (cameraList.length) {
           mr.videoSource = cameraList[0].id;
-          mr.data('videoSource', cameraList[0].id);
+          $(this).data('videoSource', cameraList[0].id);
           mr.camReady = true;
           $('#select-camera').text(cameraList[0].label).append('<span class="caret cert-right"></span>');
         }
@@ -50,15 +51,25 @@
       });
       $('a.audio-item').click(function() {
         mr.audioSource = $(this).prev().text();
-        mr.data('audioSource', $(this).prev().text());
+        $(this).data('audioSource', $(this).prev().text());
         $('#select-audio').text($(this).text()).append('<span class="caret cert-right"></span>');
       });
 
       $('a.camera-item').click(function() {
         mr.videoSource = $(this).prev().text();
-        mr.data('videoSource', $(this).prev().text());
+        $(this).data('videoSource', $(this).prev().text());
         $('#select-camera').text($(this).text()).append('<span class="caret cert-right"></span>');
       });
-    }); 
+      var constraints = {
+        audio: {
+          optional: [{sourceId: $(this).data('audioSource')}]
+        },
+        video: {
+          optional: [{sourceId: $(this).data('videoSource')}]
+        }
+      };
+      return cb(constraints);
+    });
   }
 })(jQuery);
+

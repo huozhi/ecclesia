@@ -14,7 +14,6 @@ router.post('/loginCheck', function(req, res){
       if(!err){
         if(result){
           req.session.username = name;
-          req.session.isLogin = true;
           res.send(result);
         }else{
           res.send("login failed");
