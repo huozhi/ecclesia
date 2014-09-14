@@ -1,7 +1,7 @@
 var express = require('express'); 
 var router = express.Router();
-var Meeting = require('meetings');  
-var spliter = require('../modules/spliter');
+var Meeting = require('../modules/meeting');  
+var spliter = require('../modules/split');
 //var formidable = require('formidable'),
     util = require('util'),
     fs = require('fs');
@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
-  Meeting.saveMdTemp(req.roomName, req.host, req.username,markdowns, function(err, result){
+  Meeting.saveMdTemp(req.session.roomName, req.session.host, req.session.username, markdowns, function(err, result){
     if(!err){
       //do sth
     }

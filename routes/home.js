@@ -21,4 +21,7 @@ router.get('/logout', function(req, res){
   }
 })
 
+router.post('/join-room', function(req, res){
+  var roomname = req.body.roomName;
+});
 module.exports = router;
