@@ -78,6 +78,7 @@ h1 span{
 	width:300px;
 	height:190px;
 	margin: 10px;
+	overflow: hidden;
 	display:-moz-box;
 	-moz-box-pack:center;
 	-moz-box-align:center;
@@ -93,6 +94,7 @@ h1 span{
 	display: inline-block;
 	width: 280px;
 	height: 170px;
+	overflow: hidden;
 	background-color: #fff;
 	border-radius: 3px;
 	cursor: pointer;
@@ -128,6 +130,11 @@ h1 span{
 	text-decoration: none;
 	background-color: #848174;
 }
+td {
+	font-size: 20px;
+	overflow: hidden;
+	word-break:break-all
+}
 </style>
 <body>
 	<div class="header">
@@ -147,8 +154,8 @@ h1 span{
 				<div id="div1" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);">
 					<table style="color:#000;" class="table table-striped">
 						<tr>
-							<td>Room name:</td>
-							<td>sbsbsb</td>
+							<td>Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:</td>
+							<td>sbsbsbkkkkkklllllllllllkkkk</td>
 						</tr>
 						<tr>
 							<td>Host:</td>
@@ -156,53 +163,6 @@ h1 span{
 						</tr>
 							<td>Date:</td>
 							<td>2014/9/13</td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td>sb,amy</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="div-container">
-				<div id="div2" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room name:</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td></td>
-						</tr>
-							<td>Date:</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="div-container">
-
-				<div id="div3" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room name:</td>
-							<td>testRoom</td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td>toy</td>
-						</tr>
-							<td>Date:</td>
-							<td>2014/09/12</td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td>amy</td>
 						</tr>
 					</table>
 				</div>
@@ -212,7 +172,16 @@ h1 span{
 </body>
 
 <script type="text/javascript">
-
+function loadInfo(){
+	$.post("/history/query-history","history-preview",
+		function(data){
+			data.forEach(
+					function(value,index){
+						$(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
+					}
+				);
+	},"json");
+}
 function sendReq(obj){
 	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
 	// $(objId).get(0).next('tr');
@@ -252,7 +221,7 @@ function biging(obj){
   divH=scale*divH;
   $("#"+obj).css('width',divW);
   $("#"+obj).css('height',divH);
-  if(divW <= 300){
+  if(divW <= 305){
     t = setTimeout("biging(objId);",1);
   }
   else
