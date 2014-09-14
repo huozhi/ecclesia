@@ -2,48 +2,7 @@ var genChart, prvwChart, genChartData;
 
 $(document).ready(function() {
   $.fn.carousel.Constructor.prototype.keydown = function() { };
-  $('slides').attr('zoom','1.0')
-
-  $('#test-add-chart').click(function() {
-    var addContent =
-    '<div class="single-chart">' +
-      '<canvas class="chart" width="180" height="180"></canvas>' +
-      '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
-    '</div>';
-    $('#charts').append(addContent);
-    var ctx = $('canvas.chart').last().get(0).getContext('2d');
-    var pieData = [
-      {
-        value : 20,
-        color : "#F38630",
-        label : 'Sleep',
-        labelColor : 'white',
-        labelFontSize : '24'
-      },
-      {
-        value : 30,
-        color : "#E38231",
-        label : 'Wocao',
-        labelColor : 'white',
-        labelFontSize : '24'
-      },
-      {
-        value : 50,
-        color : "#FFF630",
-        label : 'Heihei',
-        labelColor : 'white',
-        labelFontSize : '24'
-      },
-      
-    ];
-    
-    new Chart(ctx).Pie(pieData);
-    $('.rm-chart').click(function() {
-      // console.log('rm corresponding chart');
-
-      $(this).parent().remove();
-    });
-  });
+  $('slides').attr('zoom','1.0');
 
   $('.carousel').carousel({
     interval: false

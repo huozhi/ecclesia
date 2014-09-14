@@ -14,10 +14,10 @@
       for (var i = 0; i != sourceInfos.length; ++i) {
         var sourceInfo = sourceInfos[i];
         if (sourceInfo.kind === 'audio') {
-          audioList.push({id: sourceInfo.id, label: sourceInfo.label || 'microphone'});
+          audioList.push({id: sourceInfo.id, label: sourceInfo.label || 'microphone-' + i});
           // console.log(sourceInfo.id, sourceInfo.label || 'm');
         } else if (sourceInfo.kind === 'video') {
-          cameraList.push({id: sourceInfo.id, label: sourceInfo.label || 'camera'});
+          cameraList.push({id: sourceInfo.id, label: sourceInfo.label || 'camera-' + i});
           // console.log(sourceInfo.id, sourceInfo.label || 'c');
         } else {
           // console.log('other type media');
@@ -60,6 +60,12 @@
         $(this).data('videoSource', $(this).prev().text());
         $('#select-camera').text($(this).text()).append('<span class="caret cert-right"></span>');
       });
+
+      $('。media-check-close').click(function() {
+        audioMenu.children().remove(); cameraMenu.children().remove();
+        window.location.href = "/home";
+      });
+
       var constraints = {
         audio: {
           optional: [{sourceId: $(this).data('audioSource')}]

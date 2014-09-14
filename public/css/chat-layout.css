@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  width: 1347px;
+  width: 100%;
+  overflow: hidden;
 }
 .affix-left-bar {
   position: relative;

@@ -5,7 +5,7 @@ router.get('/', function (req, res) {
   if(req.session.username){
       res.render('home');
   }else{
-    res.redirect('/login');
+    res.redirect('/');
   }
 })
 
@@ -13,11 +13,11 @@ router.get('/logout', function (req, res) {
   if(req.session.username){
     req.session.destroy(function(err){
         if(!err){
-          res.redirect('/login');
+          res.redirect('/');
         }
     });
   }else{
-    res.redirect('/login');
+    res.redirect('/');
   }
 })
 

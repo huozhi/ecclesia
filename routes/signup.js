@@ -3,7 +3,11 @@ var router = express.Router();
 var User = require('../modules/user');
 
 router.get('/', function(req, res) {
-  res.render('register');
+  if (req.session.username) {
+    res.redirect('/home');
+  } else {
+    res.render('register');
+  }
 });
 
 router.post('/register', function(req,res) {
