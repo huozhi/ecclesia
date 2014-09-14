@@ -5,14 +5,16 @@ var User = require('../modules/user');
 var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
+  console.log(req.session.username);
   res.render('history');
 });
 
 router.post('/history-preview', function (req, res){
   var user = req.session.username;
+  console.log(user);
   User.get(user, function (err, result){
     if(!err){
-      res.json({conferences : result.conferences});
+      res.json(result.conferences);
     }
   })
 })

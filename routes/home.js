@@ -6,6 +6,7 @@ var crypto = require('crypto');
 
 router.get('/', function (req, res) {
   if(req.session.username){
+      console.log(req.session.username);
       res.render('home');
   }else{
     res.redirect('/');

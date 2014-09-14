@@ -55,17 +55,18 @@ var newUser2 = new User({
 
 //archive tester
 
-// var conference = {
-//   name:'world cup',
-//   host:'heale',
-// };
-// User.archive(newUser1.username, conference, function(err, result){
-//   if(err){
-//     console.log(err.message);
-//   }else{
-//     console.log(result);
-//   }
-// });
+var conference = {
+  roomName:'nba',
+  host:'wowo',
+  date : "2014/9/12",
+};
+User.archive("nima", conference, function(err, result){
+  if(err){
+    console.log(err.message);
+  }else{
+    console.log(result);
+  }
+});
 
 /********************************************************************************/
 

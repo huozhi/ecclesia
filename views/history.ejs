@@ -27,6 +27,28 @@ body {
   background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
 }
+img:hover{
+	box-shadow: 0px 0px 35px 4px #292929;
+}
+td {
+	font-size: 20px;
+	overflow: hidden;
+	word-break:break-all
+}
+h1{
+	margin:0px;
+	padding:20px;
+	font-size:42px;
+	color:#fff;
+	text-align:left;
+	font-weight:400;
+  text-align:left;
+}
+h1 span{
+	font-size:22px;
+	color:#ddd;
+	padding-top:10px;
+}
 .header{
 	font-family:'Arial Narrow', Arial, sans-serif;
 	line-height: 24px;
@@ -50,20 +72,6 @@ body {
 .header a:hover{
 	color: #fff;
 }
-h1{
-	margin:0px;
-	padding:20px;
-	font-size:42px;
-	color:#fff;
-	text-align:left;
-	font-weight:400;
-  text-align:left;
-}
-h1 span{
-	font-size:22px;
-	color:#ddd;
-	padding-top:10px;
-}
 .head-title {
 	float: left;
 	width: 620px;
@@ -78,7 +86,6 @@ h1 span{
 	width:300px;
 	height:190px;
 	margin: 10px;
-	overflow: hidden;
 	display:-moz-box;
 	-moz-box-pack:center;
 	-moz-box-align:center;
@@ -130,13 +137,8 @@ h1 span{
 	text-decoration: none;
 	background-color: #848174;
 }
-td {
-	font-size: 20px;
-	overflow: hidden;
-	word-break:break-all
-}
 </style>
-<body>
+<body onload="loadInfo()">
 	<div class="header">
     <a href="###">
         <strong>Log out</strong>
@@ -150,41 +152,23 @@ td {
 			<img style="position:relative;top:275px;" src="img/flag.png"/>
 		</div>
 
-			<div class="div-container">
-				<div id="div1" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:</td>
-							<td>sbsbsbkkkkkklllllllllllkkkk</td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td>sb</td>
-						</tr>
-							<td>Date:</td>
-							<td>2014/9/13</td>
-						</tr>
-					</table>
-				</div>
-			</div>
 	</div>
 
 </body>
 
 <script type="text/javascript">
 function loadInfo(){
-	$.post("/history/query-history","history-preview",
+	$.post("/history/history-preview",
 		function(data){
 			data.forEach(
 					function(value,index){
-						$(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
+						$(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
 					}
 				);
 	},"json");
 }
-function sendReq(obj){
-	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
-	// $(objId).get(0).next('tr');
+function sendReq(objId){
+	var tableArr = document.getElementById(objId).firstChild.firstChild.getElementsByTagName('tr');
 	var postJson = {
 		"roomName" : tableArr[0].children[1].innerHTML,
 		"host": tableArr[1].children[1].innerHTML,
