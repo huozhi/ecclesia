@@ -79,17 +79,16 @@ var newMeeting = {
   roomName : "sbsbsb",
   date : "2014/09/12",
   host : "sb",
-  roomKey : "",
   userList : [],
   ChartList:[],
   MarkdownList:[],
   SketchList:[]
 }
 
-var cryptor  = crypto.createHash('sha512');
-var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
-newMeeting.roomKey = cryptor.update(rawKey).digest('hex');
-console.log(newMeeting.roomKey);
+// var cryptor  = crypto.createHash('sha512');
+// var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
+// newMeeting.roomKey = cryptor.update(rawKey).digest('hex');
+// console.log(newMeeting.roomKey);
 
 // console.log(newMeeting.date);
 
@@ -192,4 +191,6 @@ console.log(newMeeting.roomKey);
 
 /************************************************************************/
 
+// var date = new Date();
+// console.log(date.toDateString());
 /*************************/

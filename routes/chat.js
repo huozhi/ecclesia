@@ -28,4 +28,21 @@ router.post('/upload-markdown', function (req, res) {
     return res.send('2');
 });
 
+router.post('/upload-chart', function (req, res){
+  var target = {
+    roomName : req.session.roomName,
+    host : req.session.host,
+    date : req.session.date,
+    listName : req.body.listName,
+    page : req.body.page,
+    img : req.body.img,
+  };
+
+  Meeting.saveImg(target, function (err, result){
+    if(!err){
+      res.json({response : "upload-success", page : result.page});
+    }
+  });
+});
+
 module.exports = router;
