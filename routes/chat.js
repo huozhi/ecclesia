@@ -27,7 +27,7 @@ router.post('/upload-markdown', function (req, res) {
     return res.send('2');
 });
 
-router.post('/upload-chart', function (req, res){
+router.post('/upload-img', function (req, res){
   var target = {
     roomName : req.session.roomName,
     host : req.session.host,
@@ -39,7 +39,7 @@ router.post('/upload-chart', function (req, res){
 
   Meeting.saveImg(target, function (err, result){
     if(!err){
-      res.json({response : "upload-success", page : result.page});
+      res.json({response : "upload-success", id : result._id});
     }
   });
 });
