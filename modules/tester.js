@@ -120,15 +120,15 @@ var newMeeting = {
 
 // save base64 data
 
-var fs = require('fs');
+ var fs = require('fs');
 
-fs.readFile('../test/22.jpg', 'base64', function(err, data){
+fs.readFile('../test/14.jpg', 'base64', function(err, data){
   if(!err){
     //console.log(data);
     var targetObj = {
       roomName : "sbsbsb",
       host : "sb",
-      date : "2014/09/12",
+      date : "2014/9/13",
       listName : "SketchList",
       page : 1,
       img : data,
@@ -155,8 +155,8 @@ fs.readFile('../test/22.jpg', 'base64', function(err, data){
 // var markdowns = spliter(file);
 
 // var wrappedmd = {
-//   range : 1,
-//   data : markdowns[0]
+//   range : 2,
+//   data : markdowns[1]
 // };
 
 // Meeting.saveMarkdown('sbsbsb', 'sb', wrappedmd, function(err, re){

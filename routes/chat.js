@@ -1,8 +1,8 @@
 var express = require('express'); 
 var router = express.Router();
-var formidable = require('formidable'),
+/*var formidable = require('formidable'),
     util = require('util'),
-    fs = require('fs');
+    fs = require('fs');*/
 
 
 router.get('/', function (req, res) {

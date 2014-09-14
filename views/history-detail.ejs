@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia History Detail</title>
-<link rel="stylesheet" href="../css/idangerous.swiper.css">
-<link rel="stylesheet" href="../css/reveal.css">
-<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="../js/reveal.js"></script>
-<script type="text/javascript" src="../js/lib/js/head.min.js"></script>
-<script src="../js/idangerous.swiper-2.1.min.js"></script>
+<link rel="stylesheet" href="/css/idangerous.swiper.css">
+<link rel="stylesheet" href="/css/reveal.css">
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/lib/js/head.min.js"></script>
+<script type="text/javascript" src="/js/reveal.js"></script>
+<script src="/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
 <style>
 body {
-  background-image: url(../img/pattern2.png), url(../img/background.jpg);
+  background-image: url(/img/pattern2.png), url(/img/background.jpg);
   width: 100%;
   overflow: hidden;
   background-color: transparent;
@@ -190,14 +190,13 @@ body {
   </div>
 <script type="text/javascript">
 function loadData(){
-  var mdlist = JSON.parse($.cookie('MarkdownList'));
-  alert($.cookie('MarkdownList'));
   var chartlist = JSON.parse($.cookie('ChartList'));
-  for(i=0; i< chartlist.length; i++){
+  chartlist.forEach(
+    function(value,index){
       var chart = {
-        id : chartlist[i].id,
+        id : value.id,
       }
-      postData = JSON.stringify(chart);
+      var postData = JSON.stringify(chart);
       $.ajax({
         url:'/history/history-detail',
         type:'POST',
@@ -205,49 +204,63 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          var eleStr = '<div class="swiper-slide"><img '+'id="chart-'+data.range+'" src="data:image/png;base64,'+data.img+'"/></div>';
-          $(".swiper-wrapper").append(eleStr);
+          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,'+data.img+'"/></div>');
         },
         error: function (data, status, e){
           alert(e);
         }
-    });
-  }
-  var sketchlist = JSON.parse($.cookie('SketchList'));
-  for(i=0; i< sketchlist.length; i++){
-      var chart = {
-        id : sketchlist[i].id,
+      });
+    }
+  );
+
+  var mdlist = JSON.parse($.cookie('MarkdownList'));
+  mdlist.forEach(
+      function(value,index){
+        $(".slides").append('<section data-markdown><script type="text/template">'+ mdlist[0].data + '</'+'script></section>');       
       }
-      postData = JSON.stringify(chart);
-      $.ajax({
-        url:'/history/history-detail',
-        type:'POST',
-        contentType : 'application/json',
-        dataType: 'json',
-        data:postData,
-        success: function (data, status){
-          var eleStr = '<section data-markdown><script type="text/template">'+ mdlist[i]['data'] +'</section>';
-          $(".slides").append(eleStr);
-          $($(".slides")[0].lastChild.previousSibling).append('<img class="sketch-cover" src="data:image/png;base64,'+data.img+'"/>');
-        },
-        error: function (data, status, e){
-          alert(e);
+    );
+  Reveal.initialize({
+    width: 900,
+    height: 540,
+    margin: 0.5,
+    minScale: 1.0,
+    maxScale: 1.0,
+    center: true,
+    transition: 'liner',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'slide',
+
+    dependencies: [
+      { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      ]  
+  });
+  var sketchlist = JSON.parse($.cookie('SketchList'));  
+  var childrenList = $(".slides").children();
+  sketchlist.forEach(
+      function(value,index){
+        var chart = {
+          id : value.id,
         }
-    });
-  }  
-}
+        var postData = JSON.stringify(chart);
+        $.ajax({
+          url:'/history/history-detail',
+          type:'POST',
+          contentType : 'application/json',
+          dataType: 'json',
+          data:postData,
+          success: function (data, status){
+            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+data.img+'"/>');
+          },
+          error: function (data, status, e){
+            alert(e);
+          }
+        });
+      }
+  );              
 
-function addValue(get_Json){
-  var cookieList = get_Json[0];//ChartList
-  var eleStr;
-
-  cookieList = get_Json[1];//MarkdownList
-  var cookieList2 = get_Json[2];//SketchList
-  for (var i = 0; i < cookieList.length; i++) {
-    eleStr = '<section data-markdown><script type="text/template">'+ cookieList[i]['data'] +'</section>';
-    $(".slides").append(eleStr);
-    $($(".slides")[0].lastChild.previousSibling).append('<img class="sketch-cover" src="../img/sketchtest.png"/>');
-  };
 }
 
 $(document).ready(function(){
@@ -275,29 +288,6 @@ var mySwiper = new Swiper('.swiper-container',{
     mode: 'vertical',
     freeMode: true,
   })
-
-Reveal.initialize({
-  width: 900,
-  height: 540,
-  margin: 0.5,
-  minScale: 1.0,
-  maxScale: 1.0,
-  center: true,
-  transition: 'liner',
-  transitionSpeed: 'fast',
-  backgroundTransition: 'slide',
-
-  dependencies: [
-    { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
-    { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-    // { src: '../js/plugin/zoom-../js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: '../js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-    // { src: '../js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
-    { src: '../js/plugin/math/math.js', async: true }
-    ]  
-});
 </script>
 </body>
 </html>
