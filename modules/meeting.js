@@ -146,7 +146,7 @@ Meeting.saveImg = function saveImg(targetObj, callback){
 
                   Meeting.archiveImg(archiveObj, function(err, re){
                     if(!err){
-                      return callback(err, re);                      
+                      return callback(err, result[0]);                      
                     }
                   });
 
