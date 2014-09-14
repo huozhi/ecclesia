@@ -1,6 +1,6 @@
 var express = require('express'); 
 var router = express.Router();
-var formidable = require('formidable'),
+var formidable = require('formidable');
 var Meeting = require('../modules/meeting');  
 var spliter = require('../modules/split');
 
@@ -15,17 +15,30 @@ router.get('/', function (req, res) {
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
-  Meeting.saveMdTemp(req.session.roomName, req.session.host, req.session.username, markdowns, function(err, result){
-    if(!err){
-      //do sth
+  console.log(markdowns);
+
+  // test
+  Meeting.saveMdTemp('roomName', 'host', 
+    'username', markdowns, function(err, result){
+    if (!err) {
+      
+      return res.json({ response: 'upload-markdown-success',
+                       markdowns: markdowns });
+    } else {
+      return res.json({response: 'upload-markdown-failed'});
     }
   });
-  //console.log(req.body.text);
-  if (t == undefined) {
-    return res.send('1');
-  }
-  else
-    return res.send('2');
+
+  // Meeting.saveMdTemp(req.session.roomName, req.session.host, 
+  //   req.session.username, markdowns, function(err, result){
+  //   if (!err) {
+  //     return res.json({response: 'upload-markdown-success',
+  //                      markdowns: markdowns
+  //                   });
+  //   } else {
+  //     return res.json({response: 'upload-markdown-failed'});
+  //   }
+  // });
 });
 
 router.post('/upload-chart', function (req, res){

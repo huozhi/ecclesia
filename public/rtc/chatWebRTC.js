@@ -66,7 +66,7 @@ webrtc.on('rtcSyncStroke', function (point) {
 if (!room) {
   // $('#create-room-btn').click(function () {
     // use uuid to create room, pass null to first arg
-  var roomHash = $.cookie('roomHash');
+  var roomHash = $.cookie('roomHash') || 'hash123';
   
   webrtc.createRoom(roomHash, function (err, name) {
     var roomUrl = location.pathname + '?' + name;
@@ -93,10 +93,10 @@ Reveal.initialize({
   backgroundTransition: 'slide',
 
   dependencies: [
-    { src: 'js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-    { src: 'js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: 'js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-    { src: 'js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: '/js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: '/js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: '/js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: '/js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
     // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
     // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
     // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },

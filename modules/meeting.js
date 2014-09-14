@@ -296,13 +296,14 @@ Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callba
                   {'roomName':rooname,'host':host},
                   {$push : {"markdowns":newmdtemp}}, //找到时候匹配同一个人的全部多个upload[]
                   {upsert: true}, 
-                  function(err,doc){
+                  function(err,docCount){
                   if(err){
                     mongodb.close();
                     return callback(err);
                   }else{
                     mongodb.close();
-                    console.log(doc);
+                    console.log('insert success', docCount);
+                    return callback(null, docCount);
                   }
               });
             }
