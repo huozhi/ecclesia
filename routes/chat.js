@@ -60,7 +60,7 @@ router.post('/upload-img', function (req, res){
 });
 
 router.post('/refresh-img', function (req, res){
-  var type = req.body.type;
+  var type = req.body.request;
   var roomName = req.session.roomName;
   var host = req.session.host;
   var date = req.session.date;
