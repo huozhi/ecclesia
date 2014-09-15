@@ -232,7 +232,7 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,' + lzw_uncompress(data.img.img) +'"/></div>');
+          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,' + lzw_uncompress(data.image.img) +'"/></div>');
         },
         error: function (data, status, e){
           alert(e);
@@ -281,7 +281,7 @@ function loadData(){
           dataType: 'json',
           data:postData,
           success: function (data, status){
-            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+ lzw_uncompress(data.img.img) + '"/>');
+            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+ lzw_uncompress(data.image.img) + '"/>');
           },
           error: function (data, status, e){
             alert(e);

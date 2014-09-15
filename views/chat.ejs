@@ -194,7 +194,7 @@ function syncCharts() {
                       dataType: 'json',
                       data:postData,
                       success: function (data, status){
-                        $(".swiper-slide").append('<img id="chart-' + data.img.page + '" src="data:image/png;base64,' + lzw_uncompress(data.img.img) + '"/>');
+                        $(".swiper-slide").append('<img id="chart-' + data.image.page + '" src="data:image/png;base64,' + lzw_uncompress(data.image.img) + '"/>');
                       },
                       error: function (data, status, e){
                         alert(e);
