@@ -14,20 +14,13 @@ $(document).ready(function() {
     var previewCanvas = $('#chart-preview');
     
     previewCanvas.data('chart_t', chart_t);
-    if (previewCanvas.attr('width') && previewCanvas.attr('height')) {
-      // previewCanvas.get(0).getContext('2d').clearRect(0,0,300,300);
-      // previewCanvas.attr({ width:"0", height:"0" });
-      // console.log('cleart rect');
-    }
     $('#chart-insert-carousel').carousel('next');
   });
 
   // back to choose charts
   $('#chart-data-submit').click(function() {
     var previewCanvas = $('#chart-preview');
-    // previewCanvas.attr({ width:"0", height:"0" });
-    // previewCanvas.get(0).getContext('2d').clearRect(0,0,300,300);
-    genChart.destroy();
+    if (genChart) genChart.clear();
     $('#chart-insert-carousel').carousel('prev');
 
   });

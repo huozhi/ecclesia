@@ -277,6 +277,9 @@ body {
 	margin-top: 1px;
 }
 
+.navigate-left .navigate-right {
+	position: absolute;
+}
 	.reveal .controls div.navigate-left {
 		top: 200px;
 		left: -40px;

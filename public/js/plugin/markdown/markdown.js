@@ -262,6 +262,7 @@
 
 			}
 			else {
+				if (section.getAttribute('markdown-script').length) return;
 				section.innerHTML = createMarkdownSlide( getMarkdownFromSlide( section ) );
 			}
 		}
@@ -348,12 +349,14 @@
 
 			// Only parse the same slide once
 			if( !section.getAttribute( 'data-markdown-parsed' ) ) {
+				// console.log(i,section,section.getAttribute( 'data-markdown-parsed' ));
 
-				section.setAttribute( 'data-markdown-parsed', true )
+				section.setAttribute( 'data-markdown-parsed', true );
+				section.setAttribute( 'markdown-script', true );
 
 				var notes = section.querySelector( 'aside.notes' );
 				var markdown = getMarkdownFromSlide( section );
-
+				// console.log(markdown);
 				section.innerHTML = marked( markdown );
 				addAttributes( 	section, section, null, section.getAttribute( 'data-element-attributes' ) ||
 								section.parentNode.getAttribute( 'data-element-attributes' ) ||
@@ -378,7 +381,15 @@
 	return {
 
 		initialize: function() {
+			convertSlides();
 			processSlides();
+		},
+
+		reinit: function() {
+			// var sections = document.querySelectorAll( '[data-markdown]');
+			// for( var i = 0, len = sections.length; i < len; i++ ) {
+			// 	sections[i].removeAttribute('data-markdown-parsed');
+			// }
 			convertSlides();
 		},
 

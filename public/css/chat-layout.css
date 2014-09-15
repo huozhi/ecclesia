@@ -147,11 +147,24 @@ div.single-chart > button {
 }
 
 .container-frame {
+  overflow: hidden;
   margin: 10px 10px 0px 10px;
   position: relative;
   width: 180px; height: 140px;
   border: black solid 1px;
   border-radius: 2px;
+}
+
+.container-frame > pre {
+  overflow: hidden;
+  position: relative;
+  font-size: 1px;
+  margin: 0px 0px 0px 0px;
+  width: 180px; height: 140px;
+}
+
+.container-frame > pre > code {
+  font-size: 1px;
 }
 
 .container-frame > video {
