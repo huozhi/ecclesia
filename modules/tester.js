@@ -202,14 +202,11 @@ var file = "./example.md";
 
 var markdowns = spliter(file);
 
-var mdIdArr = [];
-  markdowns.forEach(function (markdown){
-    Meeting.saveMdTemp("author", markdown, function (err, result){
-      mdIdArr.push(result._id);
-    });
-});
-
-console.log(mdIdArr);
+Meeting.saveMdTemp("author", markdowns, function (err, idArr){
+  if(!err){
+    console.log(idArr);
+  }
+})
 
 /***********************************Date test**********************************/
 

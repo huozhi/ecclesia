@@ -281,19 +281,24 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
               mongodb.close();
               return callback(err);
             }else{
-              var newmdtemp = {
-                  author:author,
-                  upload:markdown
-              };                
-              collection.insert(newmdtemp, function (err, result){
+              console.log(markdowns.length);
+              markdowns.forEach(function (markdown){
+                var newTemp = {
+                  author : author,
+                  upload : markdown,
+                };
+                collection.insert(newTemp, function (err, result){
                   if(err){
-                    // mongodb.close();
-                    // return callback(err, result);
+                    mongodb.close();return callback(err, result);
                   }else{
-                    mongodb.close();
-                    return callback(err, result[0]);
+                    console.log(result[0]._id);
+                    objIdArr.push(result[0]._id);
                   }
-              }); 
+                });
+                
+              });
+
+              
             }
           });
         }
