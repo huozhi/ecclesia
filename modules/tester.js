@@ -55,18 +55,18 @@ var newUser2 = new User({
 
 //archive tester
 
-var conference = {
-  roomName:'nba',
-  host:'wowo',
-  date : "2014/9/12",
-};
-User.archive("nima", conference, function(err, result){
-  if(err){
-    console.log(err.message);
-  }else{
-    console.log(result);
-  }
-});
+// var conference = {
+//   roomName:'nba',
+//   host:'wowo',
+//   date : "2014/9/12",
+// };
+// User.archive("nima", conference, function(err, result){
+//   if(err){
+//     console.log(err.message);
+//   }else{
+//     console.log(result);
+//   }
+// });
 
 /********************************************************************************/
 
@@ -210,8 +210,21 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 //   }
 // });
 
-/************************************************************************/
+/***********************************Date test**********************************/
 
 // var date = new Date();
 // console.log(date.toDateString());
 /*************************/
+
+/*            compress test                    */
+
+// var compress = require('./compresser.js').compress;
+
+// var zip = compress('{"type" : "chart"}');
+
+// var uncompress = require('./compresser.js').uncompress;
+
+// var raw = uncompress(zip);
+// console.log(raw);
+
+/***************************************************************/

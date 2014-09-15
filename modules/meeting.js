@@ -217,7 +217,7 @@ Meeting.queryImg = function (imgId, callback){
         });
       });
     }
-  })
+  });
 };
 
 
