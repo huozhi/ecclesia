@@ -4,6 +4,7 @@ var router = express.Router();
 var Meeting = require('../modules/meeting');  
 var spliter = require('../modules/split');
 var ObjectID = require('mongodb').ObjectID;
+var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
@@ -47,9 +48,9 @@ router.post('/upload-img', function (req, res){
     roomName : req.session.roomName,
     host : req.session.host,
     date : req.session.date,
-    listName : req.body.listName,
+    listName : req.body.request,
     page : req.body.page,
-    img : req.body.img,
+    img : compresser.uncompress(req.body.img),
   };
 
   Meeting.saveImg(target, function (err, result){
@@ -60,7 +61,7 @@ router.post('/upload-img', function (req, res){
 });
 
 router.post('/refresh-img', function (req, res){
-  var type = req.body.type;
+  var type = req.body.request;
   var roomName = req.session.roomName;
   var host = req.session.host;
   var date = req.session.date;
@@ -93,6 +94,7 @@ router.post('/query-img', function (req, res){
 
   Meeting.queryImg(objId, function (err, image){
     if(!err){
+      image.img = compresser.compress(image.img);
       return res.json({response : "query-img-success", img : image});
     }
   });

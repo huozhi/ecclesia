@@ -1,7 +1,7 @@
 function lzw_compress(s) {
     var dict = {};
     var data = (s + "").split("");
-    console.log(data);
+    // console.log(data);
     var out = [];
     var currChar;
     var phrase = data[0];
@@ -23,7 +23,7 @@ function lzw_compress(s) {
     for (var i=0; i<out.length; i++) {
         out[i] = String.fromCharCode(out[i]);
     }
-    console.log(dict);
+    // console.log(dict);
     return out.join("");
 }
  
