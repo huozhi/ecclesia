@@ -58,4 +58,30 @@ router.post('/upload-img', function (req, res){
   });
 });
 
+router.post('/refresh-img', function (req, res){
+  var type = req.body.type;
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+  var date = req.session.date;
+
+  Meeting.queryConference(roomName, host, date, function (err, conference)}{
+    if(!err){
+      var idList = [];
+      if(type === "chart"){
+        resList = conference.ChartList;
+        res.json({response : "refresh-success", ChartList : resList})
+      }
+      if(type === "sketch"){
+        resList = conference.SketchList;
+        res.json({response : "refresh-success", SketchList : resList})
+      }
+    }
+  });
+});
+
+router.post('/query-img', function (req, res){
+
+});
+
+
 module.exports = router;
