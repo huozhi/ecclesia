@@ -43,7 +43,7 @@
         case 'mouseout':
           $(this).data('keyDown', false);
           ctx.stroke();
-          ctx.closePath();
+          // ctx.closePath();
       }
       // if (typeof cb == 'function')
       return cb(point);
@@ -73,7 +73,7 @@
         case 'mouseleave':
         case 'mouseout':
           ctx.stroke();
-          ctx.closePath();
+          // ctx.closePath();
           break;
     }
     return $(this);

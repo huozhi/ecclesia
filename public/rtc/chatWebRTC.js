@@ -6,8 +6,8 @@ WebRTC and Reveal.js initialized
 
 function enableWebRTC (mediaContrains) {
 
-// var room = location.search && location.search.split('?')[1];
-var room = $.cookie('roomName');
+var room = location.search && location.search.split('?')[1];
+// var room = $.cookie('roomName');
 
 var webrtc = new SimpleWebRTC({
   // url: "http://localhost:8888",
@@ -27,22 +27,34 @@ webrtc.on('readyToCall', function() {
 });
 
 webrtc.on('videoAdded', function (video, peer) {
-  var remotes = $('.sidebar');
+  addVideoContainer(video, peer);
+  addPreviewContainer();
+});
+
+function addPreviewContainer(peer) {
+  var remotes = $('.right-sidebar');
+  var addPeer = $(document.createElement('div')).addClass('container-frame');
+  addPeer.attr('id', 'preview_' + webrtc.getDomId(peer));
+  remotes.append(addPeer);
+}
+
+function addVideoContainer(video, peer) {
+  var remotes = $('.left-sidebar');
   var addPeer = $(document.createElement('div'));
   var volBar  = $(document.createElement('div'));
   volBar.addClass('vol-var');
   addPeer.append(volBar);
-  addPeer.addClass('video-frame');
+  addPeer.addClass('container-frame');
   addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
   addPeer.append(video);
   remotes.append(addPeer);
-});
+}
 
-webrtc.on('videoRemoved', function (video, pper) {
-  var remotes = $('.sidebar');
+webrtc.on('videoRemoved', function (video, peer) {
+  var remotes = $('.left-sidebar');
   var leavePeer = $('#video_' + webrtc.getDomId(peer));
   if (remotes && leavePeer) {
-    leavePeer.remove();
+    leavePeer.fadeOut().remove();
   }
 })
 
@@ -104,7 +116,7 @@ Reveal.initialize({
     ]  
 });
 
-Reveal.addEventListener( 'ready', function( event ) {
+Reveal.addEventListener('ready', function (event) {
   var present = $('section.present');
   if (present.children('canvas').length != 0) {
     console.log('has canvas')
@@ -124,7 +136,8 @@ Reveal.addEventListener( 'ready', function( event ) {
 
 });
 
-Reveal.addEventListener( 'slidechanged', function( event ) {
+Reveal.addEventListener('slidechanged', function (event) {
+  // dynamically manage sketch borad class
   $('.sketch-present').removeClass('sketch-present');
   var present = $('.slides > section.present');
   if (present.children('canvas').length != 0) {
@@ -141,6 +154,11 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
+
+    // if is the last one, save the previous one
+    var $prevSketch = $(Reveal.getPreviousSlide());
+
+    // saveImage()
 });
 
 }
