@@ -113,30 +113,12 @@
       </div>
     </div>
     <!-- chart groove -->
-    <button type="button" class="btn btn-primary btn-xs btn-refresh"><span class="glyphicon glyphicon-refresh"></span></button>
-    <div class="charts">
-      <div class="swiper-container">
-        <div class="pagination"></div>
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" id="charts">
-            <div class="single-chart">
-              <canvas class="chart" width="180" height="180"></canvas>
-              <button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <% include chart-preview.ejs %>
     <!-- end chart groove -->
-  </div>
   <!-- end main -->
-  <div class="affix-bar affix-right-bar">
-    <div id="all-preview-impress" class="sidebar right-sidebar">
-      <div id="local-preview" class="container-frame">xx</div>
-    </div>
-  </div>
+  <% include impress-preview.ejs %>
+
 </div>
-  <!-- right affix bar client videos -->
   <!-- end right affix bar -->
   
 

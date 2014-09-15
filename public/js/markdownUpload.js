@@ -57,8 +57,8 @@ $(document).ready(function () {
           var $text = $('<section data-markdown></section>').append($mdScript);
           // console.log($impressText);
           $('#reveal > .slides').append($text);
-          Reveal.next();
-          RevealMarkdown.initialize();
+          // Reveal.next();
+          RevealMarkdown.reinit();
         },
         error: function (ret) {
           var retdata = JSON.stringify(ret);
