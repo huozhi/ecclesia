@@ -88,10 +88,11 @@ router.post('/refresh-img', function (req, res){
 });
 
 router.post('/query-img', function (req, res){
+  console.log(req.body.id);
   var objId = new ObjectID(req.body.id);
 
   Meeting.queryImg(objId, function (err, image){
-    if(!err)}{
+    if(!err){
       return res.json({response : "query-img-success", img : image});
     }
   });

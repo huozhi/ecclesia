@@ -32,9 +32,6 @@
   left: 825px;
   top: 410px;
 }
-.single-chart{
-  border: red solid 1px;
-}
 </style>
 </head>
 <body>
@@ -166,7 +163,7 @@ $(document).ready(function() {
                       dataType: 'json',
                       data:postData,
                       success: function (data, status){
-                        $(".swiper-slide").append('<img id="chart-' + data.range + '" src="data:image/png;base64,'+data.img+'"/>');
+                        $(".swiper-slide").append('<img id="chart-' + data.img.page + '" src="data:image/png;base64,'+data.img.img+'"/>');
                       },
                       error: function (data, status, e){
                         alert(e);
@@ -179,33 +176,6 @@ $(document).ready(function() {
                 alert(e);
               }
             });//end ajax
-
-
-    /*$.post("/chat/refresh-img",JSON.stringify(typeJson),
-    function(data){
-      data.forEach(
-          function(value,index){
-            alert(index);
-            var chart = {
-              id : value.id,
-            }
-            var postData = JSON.stringify(chart);
-            $.ajax({
-              url:'/chat/query-img',
-              type:'POST',
-              contentType : 'application/json',
-              dataType: 'json',
-              data:postData,
-              success: function (data, status){
-                $(".swiper-slide").append('<img id="chart-' + data.range + '" src="data:image/png;base64,'+data.img+'"/>');
-              },
-              error: function (data, status, e){
-                alert(e);
-              }
-            });//end ajax
-          }
-        );//end forEach
-  },"json");//end post*/
 
   });//end btn-refresh click
 });
