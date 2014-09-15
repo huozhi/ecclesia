@@ -36,7 +36,7 @@ router.get('/history-detail', function (req, res) {
 });
 
 router.post('/history-detail', function (req, res) {
-  console.log(req.body);
+  //console.log(req.body);
   var objId = new ObjectID(req.body.id);
   Meeting.queryImg(objId, function (err, result){
     if(!err){

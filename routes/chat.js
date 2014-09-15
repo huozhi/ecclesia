@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Meeting = require('../modules/meeting');  
 var spliter = require('../modules/split');
+var ObjectID = require('mongodb').ObjectID;
 
 
 router.get('/', function (req, res) {
@@ -87,7 +88,13 @@ router.post('/refresh-img', function (req, res){
 });
 
 router.post('/query-img', function (req, res){
+  var objId = new ObjectID(req.body.id);
 
+  Meeting.queryImg(objId, function (err, image){
+    if(!err)}{
+      return res.json({response : "query-img-success", img : image});
+    }
+  });
 });
 
 
