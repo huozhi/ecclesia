@@ -191,4 +191,4 @@ var mySwiper = new Swiper('.swiper-container',{
   paginationClickable: true,
   freeMode: true,
   freeModeFluid: true
-})
+});

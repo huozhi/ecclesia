@@ -57,7 +57,7 @@ $(document).ready(function () {
           var $text = $('<section data-markdown></section>').append($mdScript);
           // console.log($impressText);
           $('#reveal > .slides').append($text);
-          // Reveal.next();
+          while (!Reveal.isLastSlide()) Reveal.next();
           RevealMarkdown.reinit();
         },
         error: function (ret) {
@@ -66,5 +66,6 @@ $(document).ready(function () {
       });
     };
     fileReader.readAsText(upfile);
-  })
+    $('#add-impress-modal').modal('toggle');
+  });
 });
