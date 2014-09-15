@@ -28,7 +28,7 @@ webrtc.on('readyToCall', function() {
 
 webrtc.on('videoAdded', function (video, peer) {
   addVideoContainer(video, peer);
-  addPreviewContainer();
+  addPreviewContainer(peer);
 });
 
 function addPreviewContainer(peer) {
@@ -70,10 +70,74 @@ webrtc.on('volumeChange', function (volume, threshold) {
   }
 });
 
+
+/* ============= new event ============== */
 webrtc.on('rtcSyncStroke', function (point) {
-  // console.log('syncStroke event');
   $('.sketch-present').syncStroke(point);
 });
+
+webrtc.on('rtcSyncChart', function (chartData) {
+  console.log('webrtc.on rtcSyncChart');
+  $.ajax({
+    url: '/chat/query-img',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-chart',
+      objectId: chartData.objectId
+    }),
+    success: function (data) {
+      console.log('success', data.image);
+      var base64code = data.image.img;
+      var addContent =
+      '<div class="single-chart">' +
+        '<canvas class="chart" width="180" height="180"></canvas>' +
+        '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+      '</div>';
+      $('#charts').append(addContent);
+
+      var chartContext = $('canvas.chart').last().get(0).getContext('2d');
+      var canvasImg = new Image();
+      canvasImg.onload = function() {
+        canvasImg.src = data.image.img;
+        chartContext.drawImage(canvasImg, 0, 0);
+      };
+      
+
+    },
+    error: function (err) { alert(err); }
+  });
+});
+
+webrtc.on('rtcSyncImpress', function (impressData) {
+  $.ajax({
+    url: '/chat/query-markdown',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-markdown',
+      objectId: impressData.objectId
+    }),
+    success: function (data) {
+      // the server return value and 
+      // database structure should be fixed
+      var $mdScript = $("<script />", {
+        html: splitedMdArr,
+        type: "text/template"
+      });
+      var $text = $('<section data-markdown></section>').append($mdScript);
+      // console.log($impressText);
+      $('#reveal > .slides').append($text);
+      while (!Reveal.isLastSlide()) Reveal.next();
+      RevealMarkdown.reinit();
+    },
+    error: function (err) { alert(err); }
+  })
+});
+
+/* ============= end new event ============== */
 
 if (!room) {
   // $('#create-room-btn').click(function () {
@@ -88,7 +152,7 @@ if (!room) {
   });
   // })
 } else {
-  console.log('already in a room');
+  // console.log('already in a room');
 }
 
 
@@ -156,9 +220,13 @@ Reveal.addEventListener('slidechanged', function (event) {
     });
 
     // if is the last one, save the previous one
-    var $prevSketch = $(Reveal.getPreviousSlide());
-
-    // saveImage()
+    var $prevSlide  = $(Reveal.getPreviousSlide()),
+        $prevSkect  = $prevSlide.find('canvas');
+        
+    saveImage($prevSkect, 'sketch', Reveal.getIndices().h);
 });
+
+// load chartInit.js script
+enableChartPreview(webrtc);
 
 }

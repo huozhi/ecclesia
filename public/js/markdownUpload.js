@@ -43,13 +43,8 @@ $(document).ready(function () {
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
-          // var splitedMdArr = ret.markdowns;
-          // alert(data.markdowns);
-          // alert(JSON.stringify(data));
-          // alert(JSON.stringify(data.markdowns));
-          var splitedMdArr = data.markdowns;
-          // var splitedMdArr = JSON.stringify(data.markdowns);
-          // var $headpage = (splitedMdArr.length) ? (splitedMdArr[0]) : null;
+          // the server return value and 
+          // database structure should be fixed          var splitedMdArr = data.markdowns;
           var $mdScript = $("<script />", {
             html: splitedMdArr,
             type: "text/template"
@@ -60,8 +55,8 @@ $(document).ready(function () {
           while (!Reveal.isLastSlide()) Reveal.next();
           RevealMarkdown.reinit();
         },
-        error: function (ret) {
-          var retdata = JSON.stringify(ret);
+        error: function (err) {
+          alert(err);
         }
       });
     };

@@ -50,7 +50,7 @@
     });
   }
   $.fn.syncStroke = function(point, color) {
-    console.log('got sync signal');
+    // console.log('got sync signal');
     var ctx = $(this).get(0).getContext('2d');
     ctx.lineJoin  = 'round';
     ctx.lineCap   = 'round';
