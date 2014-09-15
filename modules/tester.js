@@ -196,19 +196,20 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // });
 
 //save md temp test
-// var spliter = require('./split');
+var spliter = require('./split');
 
-// var file = "./example.md";
+var file = "./example.md";
 
-// var markdowns = spliter(file);
+var markdowns = spliter(file);
 
-// Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     //do sth.
-//   }
-// });
+var mdIdArr = [];
+  markdowns.forEach(function (markdown){
+    Meeting.saveMdTemp("author", markdown, function (err, result){
+      mdIdArr.push(result._id);
+    });
+});
+
+console.log(mdIdArr);
 
 /***********************************Date test**********************************/
 

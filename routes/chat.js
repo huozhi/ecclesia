@@ -17,8 +17,7 @@ router.get('/', function (req, res) {
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
-  console.log(markdowns);
-
+  var author = req.body.username;
   // test
   Meeting.saveMdTemp('roomName', 'host', 
     'username', markdowns, function(err, result){
@@ -30,6 +29,15 @@ router.post('/upload-markdown', function (req, res) {
       return res.json({response: 'upload-markdown-failed'});
     }
   });
+
+  var mdIdArr = [];
+  markdowns.forEach(function (markdown){
+    Meeting.seveMdTemp(author, markdown, function (err, result){
+      mdIdArr.push(result._id);
+    });
+  });
+
+  console.log(mdIdArr);
 
   // Meeting.saveMdTemp(req.session.roomName, req.session.host, 
   //   req.session.username, markdowns, function(err, result){
@@ -55,7 +63,7 @@ router.post('/upload-img', function (req, res){
 
   Meeting.saveImg(target, function (err, result){
     if(!err){
-      res.json({response : "upload-success", id : result._id});
+      res.json({response : "upload-success", id : result._id, imgType : req.body.request});
     }
   });
 });
@@ -95,7 +103,7 @@ router.post('/query-img', function (req, res){
   Meeting.queryImg(objId, function (err, image){
     if(!err){
       image.img = compresser.compress(image.img);
-      return res.json({response : "query-img-success", img : image});
+      return res.json({response : "query-img-success", image : image});
     }
   });
 });

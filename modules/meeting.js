@@ -45,10 +45,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
                 return callback(err);
               }else{
                 mongodb.close();
-                Meeting.initMdTemp(mdTempdoc, function(err){
-                  if(!err)
-                    callback(err, meeting);
-                });
+                callback(err, meeting);
               }
             });
 
@@ -264,7 +261,9 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   });
 }
 
-Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callback){ 
+Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
+  
+  var objIdArr = []; 
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
@@ -282,30 +281,19 @@ Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callba
               mongodb.close();
               return callback(err);
             }else{
-                collection.ensureIndex({"markdowns.author":1},{unique:true},function(err){
-                  if(err){
-                    mongodb.close();
-                    return callback(err);
-                  }
-                });
-                var newmdtemp = {
+              var newmdtemp = {
                   author:author,
-                  upload:markdowns
-                }
-                collection.update(
-                  {'roomName':rooname,'host':host},
-                  {$push : {"markdowns":newmdtemp}}, //找到时候匹配同一个人的全部多个upload[]
-                  {upsert: true}, 
-                  function(err,docCount){
+                  upload:markdown
+              };                
+              collection.insert(newmdtemp, function (err, result){
                   if(err){
-                    mongodb.close();
-                    return callback(err);
+                    // mongodb.close();
+                    // return callback(err, result);
                   }else{
                     mongodb.close();
-                    console.log('insert success', docCount);
-                    return callback(null, docCount);
+                    return callback(err, result[0]);
                   }
-              });
+              }); 
             }
           });
         }
