@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Meeting = require('../modules/meeting');
 var User = require('../modules/user');
+var compresser = require('../modules/compresser.js');
 var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
@@ -40,7 +41,8 @@ router.post('/history-detail', function (req, res) {
   var objId = new ObjectID(req.body.id);
   Meeting.queryImg(objId, function (err, result){
     if(!err){
-      res.json(result);      
+      result.img = compresser.compress(result.img);
+      res.json({response : "query-detail-success", img : result});      
     }
   });
 })
