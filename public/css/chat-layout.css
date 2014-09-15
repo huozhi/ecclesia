@@ -4,14 +4,20 @@ html {
 
 body {
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
-.affix-left-bar {
+
+.affix-bar {
   position: relative;
   display: inline-block;
+  width: 200px;
+  height: 610px;
+}
+.affix-left-bar {
   float: left;
-  width: 220px;
-  height: 600px;
+}
+.affix-right-bar {
+  float: right;
 }
 
 .main {
@@ -28,7 +34,7 @@ body {
   width: 800px;
   height: 400px;
   border: black solid 1px;
-  border-radius: 5px;  
+  border-radius: 2px;  
 }
 .sketch {
   position: absolute;
@@ -36,7 +42,7 @@ body {
   left: 0;
   padding: 0px;
   border: black solid 0px;
-  border-radius: 5px;
+  border-radius: 2px;
   z-index: 2;
   background-color: rgba(255,255,255,0);
 }
@@ -47,10 +53,10 @@ body {
   height: 200px;
   background-color: #fff;
   border: #000 solid 1px;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 .swiper-wrapper {
-  width: 4000px;
+  width: 8000px;
 }
 .swiper-slide {
   margin-right: 10px;
@@ -72,7 +78,7 @@ body {
   margin: 0px;
   border: black solid 1px;
 
-  border-radius: 5px;
+  border-radius: 2px;
 }
 .slides {
   border: black solid 1px;
@@ -127,29 +133,32 @@ div.single-chart > button {
 
 .sidebar {
   position: relative;
-  float: left;
   border: black solid 1px;
-  border-radius: 5px;
-  width: 220px;
-  margin-left: 10px;
+  border-radius: 2px;
+  width: 200px;
   height: 610px;
 }
 
-.video-frame {
-  margin: 20px 20px 0px 20px;
-  position: relative;
-  width: 180px;
-  height: 180px;
-  border: black solid 1px;
-  border-radius: 5px;
+.left-sidebar {
+  left: 0;
+}
+.right-sidebar {
+  right: 0;
 }
 
-.video-frame > video {
-  margin: 10px 10px 10px 10px;
+.container-frame {
+  margin: 10px 10px 0px 10px;
   position: relative;
-  width: 160px; height: 160px;
+  width: 180px; height: 140px;
   border: black solid 1px;
-  border-radius: 5px;
+  border-radius: 2px;
+}
+
+.container-frame > video {
+  margin: 5px 5px 5px 5px;
+  position: relative;
+  width: 170px; height: 130px;
+  border-radius: 2px;
 }
 
 .vol-bar {

@@ -74,69 +74,60 @@
 <% include check-media.ejs %>
 
 <div class="container-fluid">
-  <div class="affix-left-bar">
-    <div id="all-videos" class="sidebar">
-      <div id="local-video" class="video-frame">
+  <!-- left affix bar client videos -->
+  <div class="affix-bar affix-left-bar">
+    <div id="all-videos" class="sidebar left-sidebar">
+      <div id="local-video" class="container-frame">
         <div id="localVolBar" class="vol-bar" ></div>
       </div>
     </div>
   </div>
-
+  <!-- end left affix bar -->
+  <!-- sidebar of remote client videos -->
+  <!-- main board and charts blank -->
   <div class="main">
-    <!-- sidebar of remote client videos -->
-    <!-- main board and charts blank -->
     <div class="board">
       <div id="reveal" class="reveal impress">
-
         <div class="slides">
           <section data-markdown>
             <script type="text/template">
-                ```cpp
-                #include <iostream>
-                using namespace std;
-                int main() { cout << "hello world" << endl; return 0; }
-                ```
+              ```cpp
+              #include <iostream>
+              using namespace std;
+              int main() { cout << "hello world" << endl; return 0; }
+              ```
             </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-                ```php
-                public function foo()
-                {
-                    $foo = array(
-                        'bar' => 'bar'
-                    )
-                }
-                ```
-            </script>
-          </section>
-          <section>
-            <h1>wtf</h1>
-          </section>
-          <section>
-            <h1>hell</h1>
           </section>
         </div>
       </div>
     </div>
-    
+    <!-- chart groove -->
     <div class="charts">
       <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <!-- 这里放chart<div class="swiper-slide">...</div>-->
-          </div>
-          <div class="pagination"></div>
-        </div>
+        <div class="swiper-wrapper"></div>
+          <!-- 这里放chart<div class="swiper-slide">...</div>-->
+        <div class="pagination"></div>
       </div>
-    </div><!-- end charts -->
-  </div><!-- end main -->
+    </div>
+    <!-- end chart groove -->
+  </div>
+  <!-- end main -->
+  <div class="affix-bar affix-right-bar">
+    <div id="all-preview-impress" class="sidebar right-sidebar">
+      <div id="local-preview" class="container-frame">xx</div>
+    </div>
+  </div>
 </div>
+  <!-- right affix bar client videos -->
+  <!-- end right affix bar -->
+  
+
 <script type="text/javascript">
 </script>
 
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>
 <script type="text/javascript" src="/js/chatInit.js"></script>
-<script type="text/javascript" src="/js/checkMarkdownUpload.js"></script>
+<script type="text/javascript" src="/js/markdownUpload.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
   $("#media-check-btn").click(function(){
