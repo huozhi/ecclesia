@@ -23,7 +23,18 @@
 
 
 <style type="text/css">
-
+.pagination {
+  position: absolute;
+}
+.btn-refresh {
+  position: absolute;
+  z-index: 10;
+  left: 825px;
+  top: 410px;
+}
+.single-chart{
+  border: red solid 1px;
+}
 </style>
 </head>
 <body>
@@ -102,11 +113,18 @@
       </div>
     </div>
     <!-- chart groove -->
+    <button type="button" class="btn btn-primary btn-xs btn-refresh"><span class="glyphicon glyphicon-refresh"></span></button>
     <div class="charts">
       <div class="swiper-container">
-        <div class="swiper-wrapper"></div>
-          <!-- 这里放chart<div class="swiper-slide">...</div>-->
         <div class="pagination"></div>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" id="charts">
+            <div class="single-chart">
+              <canvas class="chart" width="180" height="180"></canvas>
+              <button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- end chart groove -->
@@ -136,8 +154,38 @@ $(document).ready(function() {
         enableWebRTC(constrains);
       })
     });
-    
   }).click();
+  //------- lsn refresh btn -------
+  $(".btn-refresh").click(function(){
+    var typeJson = {
+      type : 'chart'
+    }
+    alert(JSON.stringify(typeJson));
+    $.post("/chat/refresh-img",JSON.stringify(typeJson),
+    function(data){
+      data.forEach(
+          function(value,index){
+            var chart = {
+              id : value.id,
+            }
+            var postData = JSON.stringify(chart);
+            $.ajax({
+              url:'/history/history-detail',
+              type:'POST',
+              contentType : 'application/json',
+              dataType: 'json',
+              data:postData,
+              success: function (data, status){
+                $(".swiper-slide").append('<img id="chart-' + data.range + '" src="data:image/png;base64,'+data.img+'"/>');
+              },
+              error: function (data, status, e){
+                alert(e);
+              }
+            });//end ajax
+          }
+        );//end forEach
+  },"json");//end post
+  });//end btn-refresh click
 });
   
 </script>
