@@ -137,7 +137,11 @@ $(document).ready(function() {
   }).click();
   //------- lsn refresh btn -------
   $(".btn-refresh").click(function(){
-    var typeJson = {
+
+  });//end btn-refresh click
+});
+function syncCharts() {
+  var typeJson = {
       type : 'chart'
     }
     typeJson = JSON.stringify(typeJson);
@@ -176,10 +180,7 @@ $(document).ready(function() {
                 alert(e);
               }
             });//end ajax
-
-  });//end btn-refresh click
-});
-  
+}
 </script>
 </body>
 </html>
