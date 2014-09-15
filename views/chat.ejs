@@ -141,22 +141,23 @@ $(document).ready(function() {
   });//end btn-refresh click
 });
 function syncCharts() {
-  var typeJson = {
-      type : 'chart'
+  var requestJson = {
+      request : 'chart'
     }
-    typeJson = JSON.stringify(typeJson);
+    requestJson = JSON.stringify(requestJson);
     $.ajax({
               url:'/chat/refresh-img',
               type:'POST',
               contentType : 'application/json',
               dataType: 'json',
-              data:typeJson,
+              data:requestJson,
               success: function (data, status){
                  // alert(JSON.stringify(data.ChartList));
                 data.ChartList.forEach(
                   function(value,index){
                     // alert(index);
                     var chart = {
+                      request : 's',
                       id : value.id,
                     }
                     var postData = JSON.stringify(chart);

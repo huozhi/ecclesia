@@ -170,6 +170,7 @@ function loadInfo(){
 function sendReq(objId){
 	var tableArr = document.getElementById(objId).firstChild.firstChild.getElementsByTagName('tr');
 	var postJson = {
+		request : 's',
 		"roomName" : tableArr[0].children[1].innerHTML,
 		"host": tableArr[1].children[1].innerHTML,
 		"date" : tableArr[2].children[1].innerHTML,

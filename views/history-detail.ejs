@@ -194,6 +194,7 @@ function loadData(){
   chartlist.forEach(
     function(value,index){
       var chart = {
+        request : 's',
         id : value.id,
       }
       var postData = JSON.stringify(chart);
@@ -241,10 +242,11 @@ function loadData(){
   var childrenList = $(".slides").children();
   sketchlist.forEach(
       function(value,index){
-        var chart = {
+        var sketch = {
+          request : 's',
           id : value.id,
         }
-        var postData = JSON.stringify(chart);
+        var postData = JSON.stringify(sketch);
         $.ajax({
           url:'/history/history-detail',
           type:'POST',
