@@ -94,7 +94,10 @@ router.post('/query-img', function (req, res){
 
   Meeting.queryImg(objId, function (err, image){
     if(!err){
+      var s = new Date().getTime();
       image.img = compresser.compress(image.img);
+      var e = new Date().getTime();
+      console.log(e-s);
       return res.json({response : "query-img-success", img : image});
     }
   });

@@ -127,6 +127,33 @@
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
 
 <script type="text/javascript">
+function lzw_uncompress(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    // console.log(data);
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i=1; i<data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        }
+        else {
+            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+            // case (oldPhrase + currChart) for utf-8 character encode in two integers
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
 $(document).ready(function() {
   $("#media-check-btn").click(function(){
     $("#check-media-modal").checkMedia(function (constrains) {
@@ -137,7 +164,7 @@ $(document).ready(function() {
   }).click();
   //------- lsn refresh btn -------
   $(".btn-refresh").click(function(){
-
+    syncCharts();
   });//end btn-refresh click
 });
 function syncCharts() {
@@ -155,7 +182,6 @@ function syncCharts() {
                  // alert(JSON.stringify(data.ChartList));
                 data.ChartList.forEach(
                   function(value,index){
-                    // alert(index);
                     var chart = {
                       request : 's',
                       id : value.id,
@@ -168,7 +194,7 @@ function syncCharts() {
                       dataType: 'json',
                       data:postData,
                       success: function (data, status){
-                        $(".swiper-slide").append('<img id="chart-' + data.img.page + '" src="data:image/png;base64,'+data.img.img+'"/>');
+                        $(".swiper-slide").append('<img id="chart-' + data.img.page + '" src="data:image/png;base64,' + lzw_uncompress(data.img.img) + '"/>');
                       },
                       error: function (data, status, e){
                         alert(e);
