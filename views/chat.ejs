@@ -128,6 +128,7 @@
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>
 <script type="text/javascript" src="/js/chatInit.js"></script>
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
   $("#media-check-btn").click(function(){
@@ -142,17 +143,55 @@ $(document).ready(function() {
     var typeJson = {
       type : 'chart'
     }
-    alert(JSON.stringify(typeJson));
-    $.post("/chat/refresh-img",JSON.stringify(typeJson),
+    typeJson = JSON.stringify(typeJson);
+    $.ajax({
+              url:'/chat/refresh-img',
+              type:'POST',
+              contentType : 'application/json',
+              dataType: 'json',
+              data:typeJson,
+              success: function (data, status){
+                 // alert(JSON.stringify(data.ChartList));
+                data.ChartList.forEach(
+                  function(value,index){
+                    // alert(index);
+                    var chart = {
+                      id : value.id,
+                    }
+                    var postData = JSON.stringify(chart);
+                    $.ajax({
+                      url:'chat/query-img',
+                      type:'POST',
+                      contentType : 'application/json',
+                      dataType: 'json',
+                      data:postData,
+                      success: function (data, status){
+                        $(".swiper-slide").append('<img id="chart-' + data.range + '" src="data:image/png;base64,'+data.img+'"/>');
+                      },
+                      error: function (data, status, e){
+                        alert(e);
+                      }
+                    });//end ajax
+                  }
+                );//end forEach
+              },
+              error: function (data, status, e){
+                alert(e);
+              }
+            });//end ajax
+
+
+    /*$.post("/chat/refresh-img",JSON.stringify(typeJson),
     function(data){
       data.forEach(
           function(value,index){
+            alert(index);
             var chart = {
               id : value.id,
             }
             var postData = JSON.stringify(chart);
             $.ajax({
-              url:'/history/history-detail',
+              url:'/chat/query-img',
               type:'POST',
               contentType : 'application/json',
               dataType: 'json',
@@ -166,7 +205,8 @@ $(document).ready(function() {
             });//end ajax
           }
         );//end forEach
-  },"json");//end post
+  },"json");//end post*/
+
   });//end btn-refresh click
 });
   

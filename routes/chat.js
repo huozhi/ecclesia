@@ -64,16 +64,23 @@ router.post('/refresh-img', function (req, res){
   var host = req.session.host;
   var date = req.session.date;
 
-  Meeting.queryConference(roomName, host, date, function (err, conference)}{
+  Meeting.queryConference("world cup", "heale", "2014/9/13", function (err, conference){
     if(!err){
-      var idList = [];
+      var resList = [];
+      console.log(conference.ChartList);
       if(type === "chart"){
         resList = conference.ChartList;
-        res.json({response : "refresh-success", ChartList : resList})
+        console.log('chart type');
+        return res.json({response : "refresh-success", ChartList : resList})
       }
-      if(type === "sketch"){
+      else if(type === "sketch"){
         resList = conference.SketchList;
-        res.json({response : "refresh-success", SketchList : resList})
+        console.log('sketch type');
+        return res.json({response : "refresh-success", SketchList : resList})
+      }
+      else {
+        console.log('err type');
+
       }
     }
   });
