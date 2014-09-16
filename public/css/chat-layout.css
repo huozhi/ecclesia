@@ -2,36 +2,38 @@ body {
   width: 100%;
   overflow: hidden;
   /*background: #ffffff url(/img/bg-struck.png) repeat 0 0 fixed;ccece0 A1D2C2 B4ECDA*/
-  background:  -webkit-radial-gradient(bottom left, circle, #B4ECDA 10%,#fcffe0 90%);
+  background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
+}
+.bodyBlock {
+  background: url(/img/triangles-bg-big.png);
+  /*background: url(/img/bg-struck.png);*/
 }
 .big-block {
-  width: 100%;
+  position: relative;
+  width: 1300px;
+  left: 50%;
+  margin-left: -650px;  
   overflow: hidden;
-  background: url(/img/bg-struck.png) repeat center center;
   white-space:nowrap;
+}
+.container-fluid {
+  padding: 0;
 }
 .affix-bar {
   position: relative;
   display: inline-block;
-  top: -435px;
+  top: -450px;
   width: 205px;
   height: 610px;
-  border: #a8a8a8 solid 1px;
+  border: #3B3B3B solid 1px;
   border-radius: 5px;
-  background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
+  background:rgba(0, 0, 0, 0.2) none repeat scroll 0 0 !important;
 }
-.affix-left-bar {
-  left: 60px;
-}
-.affix-right-bar {
-  left: 60px;
-}
+
 .main {
   position: relative;
-  top: 15px;
-  left: 60px;
   display: inline-block;
-  width: 940px;
+  width: 880px;
   height: 650px;
   padding: 20px;
 }
@@ -57,10 +59,10 @@ body {
 .swiper-container {
   position: relative;
   top: 10px;
-  width: 900px;
+  width: 820px;
   height: 200px;
   background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
-  border: #a8a8a8 solid 1px;
+  border: #3B3B3B solid 1px;
   border-radius: 5px;
 }
 .swiper-wrapper {
@@ -202,7 +204,7 @@ ul.dropdown-menu {
 .btn-refresh {
   position: absolute;
   z-index: 10;
-  left: 895px;
+  left: 828px;
   top: 430px;
   border: none;
   background-color: transparent;
