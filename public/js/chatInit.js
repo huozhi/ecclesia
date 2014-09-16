@@ -1,5 +1,8 @@
 var genChart, prvwChart, genChartData;
 
+
+function enableChartPreview (webrtc) {
+
 $(document).ready(function() {
   $.fn.carousel.Constructor.prototype.keydown = function() { };
   $('slides').attr('zoom','1.0');
@@ -173,16 +176,20 @@ function InsertGenChart() {
       '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
     '</div>';
     var charts = $('#charts');
+        
     charts.append(addContent);
-    var ctx = $('canvas.chart').last().get(0).getContext('2d');
+    var $allCharts = $('canvas.chart');
+    var ctx = $allCharts.last().get(0).getContext('2d');
     new PreviewChart(genChartData, charts.data('chart_t'))
-    .sketchPreviewChart($('canvas.chart').last(), genChartData);
+    .sketchPreviewChart($allCharts.last(), genChartData);
+    // upload new chart
+    saveImage($allCharts.last(), 'chart', $allCharts.length - 1, function (chartData) {
+      webrtc.signalSyncChart(chartData);
+    });
     $('.rm-chart').click(function() {
-      // console.log('rm corresponding chart');
-
       $(this).parent().remove();
     });
-    $('#add-chart-modal').modal('hide');
+    $('#add-chart-modal').modal('toggle');
   });
 }
 
@@ -192,3 +199,5 @@ var mySwiper = new Swiper('.swiper-container',{
   freeMode: true,
   freeModeFluid: true
 });
+
+}
