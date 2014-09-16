@@ -18,15 +18,27 @@
 
 <style>
 .head-container {
-	background-color: #a1a3a6;
+	background-color: #130c0e;
 	height:50px;
+
 }
 .sign-up-container {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #a1a3a6), color-stop(1,#130c0e));
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));
 	height:500px;
 	padding: 100px 50px 0px 50px;
+	position: relative;
 }
-
+.sign-up-container:after{
+	content:'';
+	display:block;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background: url(img/pattern3.png) repeat center center;
+	opacity: .2;
+}
 .sign-up-form .huge-title {
 	/*top: 100px;*/
 	position: relative;
@@ -36,18 +48,41 @@
 }
 .sign-up-form{
 	float: right;
+	position: absolute;
+	left:950px;
+	top:150px;
+	z-index: 999;
 }
 .huge-title {
 	float: left;
 	text-indent: 3cm;
 	line-height: 210px;
 }
+.welcome-form{
+	font-family:"Josefin Slab", Arial, sans-serif;
+	font-size:65px;
+	color: white;
+}
+.join-form{
+	font-family:"Josefin Slab", Arial, sans-serif;
+	font-size:35px;
+	color: white;
+}
+.sign-up-form,.sign-up-container:before{
+	display: table;
+	content: "";
+}
+.sign-up-container,.sign-up-form:after{
+	clear:both;
+}
+}
+
 </style>
 
 <body>
 
 	<div class="head-container">
-		<nav class="navbar navbar-default" role="navigation" >
+		<nav class="navbar navbar-default" role="navigation" style="border-radius:0px;">
 		<div class="navbar-header" >
 			<a class="navbar-brand" href="#">Ecclesia</a>
 		</div>
@@ -60,13 +95,15 @@
 		</nav>
 	</div>
 
-<div class="sign-up-container">
-
-	<div class=" huge-title">
-		<p></p>
-		<p><font face="Monotype Corsiva" size="7">Welcome to join us !</font></p>
+	<div class="sign-up-container">
+		<div class=" huge-title">
+			<p></p>
+			<p><font class="welcome-form">Welcome   </font><font class="join-form">to join us </font></p>
+		</div>
 	</div>
+
 	<div class="sign-up-form">
+
 		<div>
 			<input id="useremail" type="text" class="form-control" placeholder="Your email required">
 		</div>
@@ -89,20 +126,17 @@
 		</div>
 		<br>
 
-		<button type="button" id="sign-up-button" class="btn btn-primary btn-lg btn-block" >
+		<button type="button" id="sign-up-button" class="btn btn-lg btn-primary btn-block" >
 			Sign up for Ecclesia
 		</button>
 	</div>
 
-</div>
-
-
-<div class="container-fluid">	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>	
+	<div class="container-fluid">	
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>	
 			<section class="main">
 
 				<ul class="timeline">
@@ -180,7 +214,7 @@
 				</ul>
 			</section>
 
-</div>
+	</div>
 
 </script>
 
