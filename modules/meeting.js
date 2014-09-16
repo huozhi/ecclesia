@@ -227,7 +227,15 @@ Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
 
         if(!err){
           mdCollection.find({author : author}).toArray(function (err, docs){
-            if(!err){ 
+            if(!err){
+
+              mdCollection.remove({author : author}, {safe : true}, function (err, rmcount){
+                if(err){
+                  mongodb.close();return callback(err);
+                }else{
+                  // console.log(rmcount);
+                }
+              }); 
               db.collection('Meetings', function (err, meetingCollection){
                 if(err){
                   mongodb.close();return callback(err);
@@ -257,7 +265,8 @@ Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
                     }
                   })
                 }
-              })
+              });
+
             }            
           });
         }

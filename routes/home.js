@@ -45,7 +45,7 @@ router.post('/join-room', function(req, res){
       };
       User.archive(username, conference, function (err, archiveRe){
         if(!err){
-          res.json({response : "join-success", roomHash :roomHash} );
+          res.json({response : "join-success", roomName : roomname, creator : host, roomHash :roomHash} );
         }
       });
     }
