@@ -202,6 +202,8 @@ var file = "./example.md";
 
 var markdowns = spliter(file);
 
+//console.log(markdowns);
+
 Meeting.saveMdTemp("author", markdowns, function (err, idArr){
   if(!err){
     console.log(idArr);

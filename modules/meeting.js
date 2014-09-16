@@ -264,6 +264,7 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
 Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
   
   var objIdArr = []; 
+  var tempDocs = [];
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
@@ -276,29 +277,34 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
           mongodb.close();
           return callback(err);
         }else{
-            db.collection('MdTemp',function(err,collection){
+            db.collection('MdTemp', function(err,collection){
             if(err){
               mongodb.close();
               return callback(err);
             }else{
               console.log(markdowns.length);
-              markdowns.forEach(function (markdown){
+              for(i = 0; i < markdowns.length; i++){
                 var newTemp = {
                   author : author,
-                  upload : markdown,
+                  upload : markdowns[i],
                 };
-                collection.insert(newTemp, function (err, result){
+
+                tempDocs.push(newTemp);           
+              }
+//              console.log(tempDocs);
+              collection.insert(tempDocs,  function (err, result){
                   if(err){
+                    console.log(err);
                     mongodb.close();return callback(err, result);
                   }else{
-                    console.log(result[0]._id);
-                    objIdArr.push(result[0]._id);
+                    if(result){
+                      result.forEach(function (newmd){
+                        objIdArr.push(newmd._id);
+                      });
+                    }
+                    return callback(null, objIdArr);
                   }
-                });
-                
-              });
-
-              
+                });              
             }
           });
         }

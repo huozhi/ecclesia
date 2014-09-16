@@ -18,37 +18,12 @@ router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
   var author = req.body.username;
-  // test
-  Meeting.saveMdTemp('roomName', 'host', 
-    'username', markdowns, function(err, result){
-    if (!err) {
-      
-      return res.json({ response: 'upload-markdown-success',
-                       markdowns: markdowns });
-    } else {
-      return res.json({response: 'upload-markdown-failed'});
+  
+  Meeting.seveMdTemp(author, markdown, function (err, objIds){
+    if(!err){
+      res.json({response : "upload-markdown-success", objectIdArr : objIds});
     }
   });
-
-  var mdIdArr = [];
-  markdowns.forEach(function (markdown){
-    Meeting.seveMdTemp(author, markdown, function (err, result){
-      mdIdArr.push(result._id);
-    });
-  });
-
-  console.log(mdIdArr);
-
-  // Meeting.saveMdTemp(req.session.roomName, req.session.host, 
-  //   req.session.username, markdowns, function(err, result){
-  //   if (!err) {
-  //     return res.json({response: 'upload-markdown-success',
-  //                      markdowns: markdowns
-  //                   });
-  //   } else {
-  //     return res.json({response: 'upload-markdown-failed'});
-  //   }
-  // });
 });
 
 router.post('/upload-img', function (req, res){
