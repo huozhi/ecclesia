@@ -8,7 +8,7 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  var uname = "test" || req.session.username;
+  var uname = req.session.username || 'test';
   res.render('chat', {
     username: uname
   });
@@ -50,7 +50,7 @@ router.post('/upload-img', function (req, res){
     page : req.body.page,
     img : compresser.uncompress(req.body.img),
   };
-
+  // console.log(req.body.img);
   Meeting.saveImg(target, function (err, result){
     if(!err){
       return res.json({response : "upload-success", 

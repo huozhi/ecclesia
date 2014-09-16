@@ -17,6 +17,7 @@ function SimpleWebRTC(opts) {
             debug: false,
             localVideoEl: '',
             remoteVideosEl: '',
+            username: '',
             enableDataChannels: true,
             autoRequestMedia: false,
             autoRemoveVideos: true,
@@ -82,6 +83,7 @@ function SimpleWebRTC(opts) {
                 peer = self.webrtc.createPeer({
                     id: message.from,
                     type: message.roomType,
+                    username: message.username,
                     enableDataChannels: self.config.enableDataChannels && message.roomType !== 'screen',
                     sharemyscreen: message.roomType === 'screen' && !message.broadcaster,
                     broadcaster: message.roomType === 'screen' && !message.broadcaster ? self.connection.socket.sessionid : null
@@ -209,6 +211,7 @@ function SimpleWebRTC(opts) {
             if (existingPeer.type === 'video') {
                 peer = self.webrtc.createPeer({
                     id: existingPeer.id,
+                    username: existingPeer.username,
                     type: 'screen',
                     sharemyscreen: true,
                     enableDataChannels: false,
@@ -272,6 +275,8 @@ SimpleWebRTC.prototype.handlePeerStreamAdded = function (peer) {
 
     // store video element as part of peer for easy removal
     peer.videoEl = video;
+    // console.log('this.username:',this.config['username']);
+    // peer.username = this.config['username'];
     video.id = this.getDomId(peer);
 
     if (container) container.appendChild(video);
@@ -305,6 +310,10 @@ SimpleWebRTC.prototype.getDomId = function (peer) {
     return [peer.id, peer.type, peer.broadcaster ? 'broadcasting' : 'incoming'].join('_');
 };
 
+SimpleWebRTC.prototype.getUserName = function (peer) {
+    return peer.username;
+}
+
 // set volume on video tag for all peers takse a value between 0 and 1
 SimpleWebRTC.prototype.setVolumeForAll = function (volume) {
     this.webrtc.peers.forEach(function (peer) {
@@ -329,6 +338,7 @@ SimpleWebRTC.prototype.joinRoom = function (name, cb) {
                     if (client[type]) {
                         peer = self.webrtc.createPeer({
                             id: id,
+                            username: self.config.username, // KEY POINT!!! HACK THIS!
                             type: type,
                             enableDataChannels: self.config.enableDataChannels && type !== 'screen',
                             receiveMedia: {

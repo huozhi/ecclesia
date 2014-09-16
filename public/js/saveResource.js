@@ -1,7 +1,10 @@
 
-function saveImage(_ele, _eleType, _page, callback) {
-  var $ele = _ele;
-  var base64code = $ele.get(0).toDataURL();
+function saveImage(base64code, _eleType, _page, callback) {
+  // var $ele = _ele;
+  // var base64code = _ele.get(0).toDataURL();
+  console.log(base64code);
+
+  // alert(base64code);
   var imageType;
   switch (_eleType) {
     case 'chart':
@@ -21,7 +24,7 @@ function saveImage(_ele, _eleType, _page, callback) {
     data: JSON.stringify({
       request: imageType,
       page: _page,
-      img: base64code
+      img: lzw_compress( base64code )
     }),
     success: function(data) {
       var objectId = data.objectId,
