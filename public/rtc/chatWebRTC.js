@@ -6,13 +6,23 @@ WebRTC and Reveal.js initialized
 
 function enableWebRTC (mediaContrains) {
 
-var room = location.search && location.search.split('?')[1];
-// var room = $.cookie('roomName');
+// var room = location.search && location.search.split('?')[1];
+var room = sessionStorage.getItem('roomName') || 'roomTest';
+var roomHash = sessionStorage.getItem('roomHash') 
+    || location.search && location.search.split('?')[1]
+    || 'roomURL';
+  
+console.log('roomName:',room);
+console.log('roomHash:',roomHash);
+console.log('host',sessionStorage.getItem('creator'));
 
+
+var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
-  // url: "http://localhost:8888",
+  url: "https://223.3.90.4:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
+  username: uname,
   media: mediaContrains || {
     video: true, audio: true
   },
@@ -22,11 +32,18 @@ var webrtc = new SimpleWebRTC({
   autoAdjustMic: false
 });
 
+
 webrtc.on('readyToCall', function() {
-  if (room) webrtc.joinRoom(room);
+  if (room) {
+    webrtc.joinRoom(roomHash);
+    console.log('join room');
+  }
 });
 
+
+
 webrtc.on('videoAdded', function (video, peer) {
+  console.log(peer);
   addVideoContainer(video, peer);
   addPreviewContainer(peer);
 });
@@ -34,7 +51,7 @@ webrtc.on('videoAdded', function (video, peer) {
 function addPreviewContainer(peer) {
   var remotes = $('.right-sidebar');
   var addPeer = $(document.createElement('div')).addClass('container-frame');
-  addPeer.attr('id', 'preview_' + webrtc.getDomId(peer));
+  addPeer.attr('id', 'preview_' + peer.username);
   remotes.append(addPeer);
 }
 
@@ -45,14 +62,14 @@ function addVideoContainer(video, peer) {
   volBar.addClass('vol-var');
   addPeer.append(volBar);
   addPeer.addClass('container-frame');
-  addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
+  addPeer.attr('id', 'video_' + webrtc.getUserName(peer));
   addPeer.append(video);
   remotes.append(addPeer);
 }
 
 webrtc.on('videoRemoved', function (video, peer) {
   var remotes = $('.left-sidebar');
-  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+  var leavePeer = $('#video_' + webrtc.getUserName(peer));
   if (remotes && leavePeer) {
     leavePeer.fadeOut().remove();
   }
@@ -70,6 +87,21 @@ webrtc.on('volumeChange', function (volume, threshold) {
   }
 });
 
+
+if (!room) {
+  console.log('get err, create room now');
+  var roomUrl;
+  webrtc.createRoom(roomHash, function (err, name) {
+    // name equal roomHash equal roomUrl splited by '?'
+    roomUrl = location.pathname + '?' + room;
+    if (!err) {
+      history.replaceState({ roomHash: roomHash }, null, roomUrl);
+    }
+  });
+} else {
+  roomUrl = location.pathname + '?' + room;
+  history.replaceState({ roomHash: roomHash }, null, roomUrl);
+}
 
 /* ============= new event ============== */
 webrtc.on('rtcSyncStroke', function (point) {
@@ -147,21 +179,6 @@ webrtc.on('rtcSyncImpress', function (impressData) {
 
 /* ============= end new event ============== */
 
-if (!room) {
-  // $('#create-room-btn').click(function () {
-    // use uuid to create room, pass null to first arg
-  var roomHash = $.cookie('roomHash') || 'hash123';
-  
-  webrtc.createRoom(roomHash, function (err, name) {
-    var roomUrl = location.pathname + '?' + name;
-    if (!err) {
-      history.replaceState({ roomHash: $.cookie('roomHash') }, null, roomUrl);
-    }
-  });
-  // })
-} else {
-  // console.log('already in a room');
-}
 
 
 
