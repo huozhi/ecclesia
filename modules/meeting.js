@@ -45,10 +45,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
                 return callback(err);
               }else{
                 mongodb.close();
-                Meeting.initMdTemp(mdTempdoc, function(err){
-                  if(!err)
-                    callback(err, meeting);
-                });
+                callback(err, meeting);
               }
             });
 
@@ -264,7 +261,10 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   });
 }
 
-Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callback){ 
+Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
+  
+  var objIdArr = []; 
+  var tempDocs = [];
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
@@ -277,35 +277,34 @@ Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callba
           mongodb.close();
           return callback(err);
         }else{
-            db.collection('MdTemp',function(err,collection){
+            db.collection('MdTemp', function(err,collection){
             if(err){
               mongodb.close();
               return callback(err);
             }else{
-                collection.ensureIndex({"markdowns.author":1},{unique:true},function(err){
+              console.log(markdowns.length);
+              for(i = 0; i < markdowns.length; i++){
+                var newTemp = {
+                  author : author,
+                  upload : markdowns[i],
+                };
+
+                tempDocs.push(newTemp);           
+              }
+//              console.log(tempDocs);
+              collection.insert(tempDocs,  function (err, result){
                   if(err){
-                    mongodb.close();
-                    return callback(err);
-                  }
-                });
-                var newmdtemp = {
-                  author:author,
-                  upload:markdowns
-                }
-                collection.update(
-                  {'roomName':rooname,'host':host},
-                  {$push : {"markdowns":newmdtemp}}, //找到时候匹配同一个人的全部多个upload[]
-                  {upsert: true}, 
-                  function(err,docCount){
-                  if(err){
-                    mongodb.close();
-                    return callback(err);
+                    console.log(err);
+                    mongodb.close();return callback(err, result);
                   }else{
-                    mongodb.close();
-                    console.log('insert success', docCount);
-                    return callback(null, docCount);
+                    if(result){
+                      result.forEach(function (newmd){
+                        objIdArr.push(newmd._id);
+                      });
+                    }
+                    return callback(null, objIdArr);
                   }
-              });
+                });              
             }
           });
         }

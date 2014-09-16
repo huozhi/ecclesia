@@ -1,6 +1,18 @@
 #change log
 
 ---
+9/15
+
+加压缩解压
+
+`/history-detail` : compress response data
+                    {response : "query-detail-success", img : result}
+
+`/upload-img` : uncompress request data
+
+`/query-img` : compress  response data
+
+***
 9/10
 
 register & login 目前可用
