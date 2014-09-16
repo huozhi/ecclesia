@@ -166,7 +166,7 @@ Meeting.archiveImg = function (archiveObj, callback){
             if(err){
               mongodb.close();return callback(err);
             }
-            if(archiveObj.listName === 'ChartList'){
+            if(archiveObj.listName === 'chart'){
               var chartWrapper = {
                 range : archiveObj.page,
                 id : archiveObj.id,
@@ -178,7 +178,7 @@ Meeting.archiveImg = function (archiveObj, callback){
                 mongodb.close();return callback(err, result);
               });
             }
-            if(archiveObj.listName === 'SketchList'){
+            if(archiveObj.listName === 'sketch'){
               var sketchWrapper = {
                 range : archiveObj.page,
                 id : archiveObj.id,

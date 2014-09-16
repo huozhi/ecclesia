@@ -27,10 +27,11 @@ router.post('/upload-markdown', function (req, res) {
 });
 
 router.post('/upload-img', function (req, res){
+  console.log('upload-img request comming');
   var target = {
-    roomName : req.session.roomName,
-    host : req.session.host,
-    date : req.session.date,
+    roomName : req.session.roomName || 'sbsbsb',
+    host : req.session.host || 'sb',
+    date : req.session.date || '2014/9/12',
     listName : req.body.request,
     page : req.body.page,
     img : compresser.uncompress(req.body.img),
@@ -38,7 +39,12 @@ router.post('/upload-img', function (req, res){
 
   Meeting.saveImg(target, function (err, result){
     if(!err){
-      res.json({response : "upload-success", id : result._id, imgType : req.body.request});
+      return res.json({response : "upload-success", 
+                       objectId : result._id, 
+                       imgType: req.body.request});
+    } else {
+      console.log('upload-failed');
+      return res.json({response: 'upload-failed'});
     }
   });
 });
@@ -72,8 +78,8 @@ router.post('/refresh-img', function (req, res){
 });
 
 router.post('/query-img', function (req, res){
-  console.log(req.body.id);
-  var objId = new ObjectID(req.body.id);
+  console.log(req.body.objectId);
+  var objId = new ObjectID(req.body.objectId);
 
   Meeting.queryImg(objId, function (err, image){
     if(!err){

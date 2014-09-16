@@ -87,7 +87,7 @@ body {
   z-index: 1;
   zoom: 1;
 }
-section {
+.reveal > .slides > section {
   height: 400px;
 }
 
@@ -146,6 +146,10 @@ div.single-chart > button {
   right: 0;
 }
 
+/*.preview-section > * {
+  
+}
+*/
 .container-frame {
   overflow: hidden;
   margin: 10px 10px 0px 10px;
@@ -155,16 +159,15 @@ div.single-chart > button {
   border-radius: 2px;
 }
 
-.container-frame > pre {
-  overflow: hidden;
+.container-frame > section {
   position: relative;
-  font-size: 1px;
-  margin: 0px 0px 0px 0px;
-  width: 180px; height: 140px;
+  height: 80%;
+  margin-top: 10%;
+  -webkit-transform: scale(0.8,0.7);
 }
 
-.container-frame > pre > code {
-  font-size: 1px;
+.container-frame > section:hover {
+  -webkit-transform: scale(1.0,1.0);
 }
 
 .container-frame > video {

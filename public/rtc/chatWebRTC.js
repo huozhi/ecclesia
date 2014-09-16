@@ -6,8 +6,8 @@ WebRTC and Reveal.js initialized
 
 function enableWebRTC (mediaContrains) {
 
-// var room = location.search && location.search.split('?')[1];
-var room = $.cookie('roomName');
+var room = location.search && location.search.split('?')[1];
+// var room = $.cookie('roomName');
 
 var webrtc = new SimpleWebRTC({
   // url: "http://localhost:8888",
@@ -27,22 +27,34 @@ webrtc.on('readyToCall', function() {
 });
 
 webrtc.on('videoAdded', function (video, peer) {
-  var remotes = $('.sidebar');
+  addVideoContainer(video, peer);
+  addPreviewContainer(peer);
+});
+
+function addPreviewContainer(peer) {
+  var remotes = $('.right-sidebar');
+  var addPeer = $(document.createElement('div')).addClass('container-frame');
+  addPeer.attr('id', 'preview_' + webrtc.getDomId(peer));
+  remotes.append(addPeer);
+}
+
+function addVideoContainer(video, peer) {
+  var remotes = $('.left-sidebar');
   var addPeer = $(document.createElement('div'));
   var volBar  = $(document.createElement('div'));
   volBar.addClass('vol-var');
   addPeer.append(volBar);
-  addPeer.addClass('video-frame');
+  addPeer.addClass('container-frame');
   addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
   addPeer.append(video);
   remotes.append(addPeer);
-});
+}
 
-webrtc.on('videoRemoved', function (video, pper) {
-  var remotes = $('.sidebar');
+webrtc.on('videoRemoved', function (video, peer) {
+  var remotes = $('.left-sidebar');
   var leavePeer = $('#video_' + webrtc.getDomId(peer));
   if (remotes && leavePeer) {
-    leavePeer.remove();
+    leavePeer.fadeOut().remove();
   }
 })
 
@@ -58,10 +70,74 @@ webrtc.on('volumeChange', function (volume, threshold) {
   }
 });
 
+
+/* ============= new event ============== */
 webrtc.on('rtcSyncStroke', function (point) {
-  // console.log('syncStroke event');
   $('.sketch-present').syncStroke(point);
 });
+
+webrtc.on('rtcSyncChart', function (chartData) {
+  console.log('webrtc.on rtcSyncChart');
+  $.ajax({
+    url: '/chat/query-img',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-chart',
+      objectId: chartData.objectId
+    }),
+    success: function (data) {
+      console.log('success', data.image);
+      var base64code = data.image.img;
+      var addContent =
+      '<div class="single-chart">' +
+        '<canvas class="chart" width="180" height="180"></canvas>' +
+        '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+      '</div>';
+      $('#charts').append(addContent);
+
+      var chartContext = $('canvas.chart').last().get(0).getContext('2d');
+      var canvasImg = new Image();
+      canvasImg.onload = function() {
+        canvasImg.src = data.image.img;
+        chartContext.drawImage(canvasImg, 0, 0);
+      };
+      
+
+    },
+    error: function (err) { alert(err); }
+  });
+});
+
+webrtc.on('rtcSyncImpress', function (impressData) {
+  $.ajax({
+    url: '/chat/query-markdown',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-markdown',
+      objectId: impressData.objectId
+    }),
+    success: function (data) {
+      // the server return value and 
+      // database structure should be fixed
+      var $mdScript = $("<script />", {
+        html: splitedMdArr,
+        type: "text/template"
+      });
+      var $text = $('<section data-markdown></section>').append($mdScript);
+      // console.log($impressText);
+      $('#reveal > .slides').append($text);
+      while (!Reveal.isLastSlide()) Reveal.next();
+      RevealMarkdown.reinit();
+    },
+    error: function (err) { alert(err); }
+  })
+});
+
+/* ============= end new event ============== */
 
 if (!room) {
   // $('#create-room-btn').click(function () {
@@ -76,7 +152,7 @@ if (!room) {
   });
   // })
 } else {
-  console.log('already in a room');
+  // console.log('already in a room');
 }
 
 
@@ -104,7 +180,7 @@ Reveal.initialize({
     ]  
 });
 
-Reveal.addEventListener( 'ready', function( event ) {
+Reveal.addEventListener('ready', function (event) {
   var present = $('section.present');
   if (present.children('canvas').length != 0) {
     console.log('has canvas')
@@ -124,7 +200,8 @@ Reveal.addEventListener( 'ready', function( event ) {
 
 });
 
-Reveal.addEventListener( 'slidechanged', function( event ) {
+Reveal.addEventListener('slidechanged', function (event) {
+  // dynamically manage sketch borad class
   $('.sketch-present').removeClass('sketch-present');
   var present = $('.slides > section.present');
   if (present.children('canvas').length != 0) {
@@ -141,6 +218,15 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
+
+    // if is the last one, save the previous one
+    var $prevSlide  = $(Reveal.getPreviousSlide()),
+        $prevSkect  = $prevSlide.find('canvas');
+        
+    saveImage($prevSkect, 'sketch', Reveal.getIndices().h);
 });
+
+// load chartInit.js script
+enableChartPreview(webrtc);
 
 }

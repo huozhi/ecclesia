@@ -125,7 +125,7 @@
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>
 <script type="text/javascript" src="/js/chatInit.js"></script>
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
-
+<script type="text/javascript" src="/js/saveResource.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
   $("#media-check-btn").click(function(){
@@ -163,7 +163,7 @@ $(document).ready(function() {
                       dataType: 'json',
                       data:postData,
                       success: function (data, status){
-                        $(".swiper-slide").append('<img id="chart-' + data.img.page + '" src="data:image/png;base64,'+data.img.img+'"/>');
+                        $(".swiper-slide").append('<img id="chart-' + data.image.page + '" src="data:image/png;base64,'+data.image.img+'"/>');
                       },
                       error: function (data, status, e){
                         alert(e);

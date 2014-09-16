@@ -101,10 +101,21 @@ function SimpleWebRTC(opts) {
         }
     });
 
+    /* ================= new socket.io event listener ============== */
     connection.on('syncStroke', function (point) {
-        // console.log('emit rtcSycnStroke event');
         self.emit('rtcSyncStroke', point);
     });
+
+    connection.on('syncChart', function (chartData) {
+        console.log('connection.on syncChart');
+        self.emit('rtcSyncChart', chartData);
+    });
+
+    connection.on('syncImpress', function (impressData) {
+        self.emit('rtcSyncImpress', impressData);
+    });
+
+    /* ================= end new socket.io event listener ============== */
 
     // instantiate our main WebRTC helper
     // using same logger from logic here
@@ -438,6 +449,15 @@ SimpleWebRTC.prototype.sendFile = function () {
 /* this is the socket io part of boardcast sketch graph */
 SimpleWebRTC.prototype.sendSketchPointData = function (point) {
     this.connection.emit('sendStroke', point);
+}
+
+SimpleWebRTC.prototype.signalSyncChart = function (chartData) {
+    console.log('this.connection.emit signalSyncChart');
+    this.connection.emit('signalSyncChart', chartData);
+}
+
+SimpleWebRTC.prototype.signalSyncImpress = function (impressData) {
+    this.connection.emit('signalSyncImpress', impressData);
 }
 
 module.exports = SimpleWebRTC;
