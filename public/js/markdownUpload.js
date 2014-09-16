@@ -44,7 +44,8 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
           // the server return value and 
-          // database structure should be fixed          var splitedMdArr = data.markdowns;
+          // database structure should be fixed          
+          var splitedMdArr = data.markdowns;
           var $mdScript = $("<script />", {
             html: splitedMdArr,
             type: "text/template"
@@ -52,7 +53,7 @@ $(document).ready(function () {
           var $text = $('<section data-markdown></section>').append($mdScript);
           // console.log($impressText);
           $('#reveal > .slides').append($text);
-          while (!Reveal.isLastSlide()) Reveal.next();
+          // while (!Reveal.isLastSlide()) Reveal.next();
           RevealMarkdown.reinit();
         },
         error: function (err) {

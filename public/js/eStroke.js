@@ -28,8 +28,9 @@
             point.key = true;
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
-
           }
+          if($.cookie('sketchChanged') == 'false')
+            $.cookie('sketchChanged',true);
           break;
         case 'mousemove':
           if (keyDown == true) {

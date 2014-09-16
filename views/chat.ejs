@@ -106,6 +106,15 @@
               ```
             </script>
           </section>
+          <section data-markdown>
+            <script type="text/template">
+              ```cpp
+              #include <iostream>
+              using namespace std;
+              int main() { cout << "hello world" << endl; return 0; }
+              ```
+            </script>
+          </section>
         </div>
       </div>
     </div>
@@ -127,7 +136,35 @@
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
 <script type="text/javascript" src="/js/saveResource.js"></script>
 <script type="text/javascript">
+function lzw_uncompress(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    // console.log(data);
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i=1; i<data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        }
+        else {
+            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+            // case (oldPhrase + currChart) for utf-8 character encode in two integers
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
 $(document).ready(function() {
+  $.cookie('sketchChanged',false);
   $("#media-check-btn").click(function(){
     $("#check-media-modal").checkMedia(function (constrains) {
       $('#enter-room-btn').click(function() {
@@ -137,33 +174,37 @@ $(document).ready(function() {
   }).click();
   //------- lsn refresh btn -------
   $(".btn-refresh").click(function(){
-    var typeJson = {
-      type : 'chart'
+    syncCharts();
+  });//end btn-refresh click
+});
+function syncCharts() {
+  var requestJson = {
+      request : 'chart'
     }
-    typeJson = JSON.stringify(typeJson);
+    requestJson = JSON.stringify(requestJson);
     $.ajax({
               url:'/chat/refresh-img',
               type:'POST',
               contentType : 'application/json',
               dataType: 'json',
-              data:typeJson,
+              data:requestJson,
               success: function (data, status){
                  // alert(JSON.stringify(data.ChartList));
                 data.ChartList.forEach(
                   function(value,index){
-                    // alert(index);
                     var chart = {
+                      request : 's',
                       id : value.id,
                     }
                     var postData = JSON.stringify(chart);
                     $.ajax({
-                      url:'chat/query-img',
+                      url:'/chat/query-img',
                       type:'POST',
                       contentType : 'application/json',
                       dataType: 'json',
                       data:postData,
                       success: function (data, status){
-                        $(".swiper-slide").append('<img id="chart-' + data.image.page + '" src="data:image/png;base64,'+data.image.img+'"/>');
+                        $(".swiper-slide").append('<img id="chart-' + data.image.page + '" src="data:image/png;base64,' + lzw_uncompress(data.image.img) + '"/>');
                       },
                       error: function (data, status, e){
                         alert(e);
@@ -176,10 +217,7 @@ $(document).ready(function() {
                 alert(e);
               }
             });//end ajax
-
-  });//end btn-refresh click
-});
-  
+}
 </script>
 </body>
 </html>
