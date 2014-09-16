@@ -189,11 +189,39 @@ body {
       <div class="btn-close">×</div>
   </div>
 <script type="text/javascript">
+function lzw_uncompress(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    // console.log(data);
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i=1; i<data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        }
+        else {
+            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+            // case (oldPhrase + currChart) for utf-8 character encode in two integers
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
 function loadData(){
   var chartlist = JSON.parse($.cookie('ChartList'));
   chartlist.forEach(
     function(value,index){
       var chart = {
+        request : 's',
         id : value.id,
       }
       var postData = JSON.stringify(chart);
@@ -204,7 +232,7 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,'+data.img+'"/></div>');
+          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,' + lzw_uncompress(data.image.img) +'"/></div>');
         },
         error: function (data, status, e){
           alert(e);
@@ -237,14 +265,16 @@ function loadData(){
       { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
       ]  
   });
+
   var sketchlist = JSON.parse($.cookie('SketchList'));  
   var childrenList = $(".slides").children();
   sketchlist.forEach(
       function(value,index){
-        var chart = {
+        var sketch = {
+          request : 's',
           id : value.id,
         }
-        var postData = JSON.stringify(chart);
+        var postData = JSON.stringify(sketch);
         $.ajax({
           url:'/history/history-detail',
           type:'POST',
@@ -252,7 +282,7 @@ function loadData(){
           dataType: 'json',
           data:postData,
           success: function (data, status){
-            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+data.img+'"/>');
+            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+ lzw_uncompress(data.image.img) + '"/>');
           },
           error: function (data, status, e){
             alert(e);

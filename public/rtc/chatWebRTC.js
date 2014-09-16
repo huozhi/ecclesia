@@ -187,7 +187,11 @@ Reveal.initialize({
     // { src: 'js/plugin/math/math.js', async: true }
     ]  
 });
-
+//---------- lsn -----------
+/*$(".navigate-left").click(function(){
+  Reveal.
+});*/
+//--------------------------
 Reveal.addEventListener('ready', function (event) {
   var present = $('section.present');
   if (present.children('canvas').length != 0) {
@@ -205,7 +209,23 @@ Reveal.addEventListener('ready', function (event) {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
-
+    
+    $(".navigate-left").click(function(){
+      if($.cookie('sketchChanged')=='true'){
+        var $currSlide  = $(Reveal.getCurrentSlide()),
+            $currSkect  = $currSlide.find('canvas');
+        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged',false);
+      }
+    });
+    $(".navigate-right").click(function(){
+      if($.cookie('sketchChanged')=='true'){
+        var $currSlide  = $(Reveal.getCurrentSlide()),
+            $currSkect  = $currSlide.find('canvas');
+        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged',false);
+      }
+    });
 });
 
 Reveal.addEventListener('slidechanged', function (event) {
@@ -228,10 +248,10 @@ Reveal.addEventListener('slidechanged', function (event) {
     });
 
     // if is the last one, save the previous one
-    var $prevSlide  = $(Reveal.getPreviousSlide()),
+    /*var $prevSlide  = $(Reveal.getPreviousSlide()),
         $prevSkect  = $prevSlide.find('canvas');
         
-    saveImage($prevSkect, 'sketch', Reveal.getIndices().h);
+    saveImage($prevSkect, 'sketch', Reveal.getIndices().h);*/
 });
 
 // load chartInit.js script

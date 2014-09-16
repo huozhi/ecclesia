@@ -176,39 +176,27 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // });
 
 //save wrapped md test
+
+// Meeting.saveMarkdown('sbsbsb', 'sb', "author", function(err, re){
+ 
+// });
+
+//save md temp test
 // var spliter = require('./split');
 
 // var file = "./example.md";
 
 // var markdowns = spliter(file);
 
-// var wrappedmd = {
-//   range : 2,
-//   data : markdowns[1]
-// };
+// //console.log(markdowns);
 
-// Meeting.saveMarkdown('sbsbsb', 'sb', wrappedmd, function(err, re){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     //do sth.
+// Meeting.saveMdTemp("author", markdowns, function (err, idArr){
+//   if(!err){
+//     console.log(idArr);
 //   }
-// });
+// })
 
-//save md temp test
-var spliter = require('./split');
 
-var file = "./example.md";
-
-var markdowns = spliter(file);
-
-//console.log(markdowns);
-
-Meeting.saveMdTemp("author", markdowns, function (err, idArr){
-  if(!err){
-    console.log(idArr);
-  }
-})
 
 /***********************************Date test**********************************/
 

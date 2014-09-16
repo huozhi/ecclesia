@@ -218,22 +218,50 @@ Meeting.queryImg = function (imgId, callback){
 };
 
 
-Meeting.saveMarkdown = function saveMarkdown(roomname, host, wrappedmd, callback){
+Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
     }else{
-          db.collection('Meetings', function(err, collection){
-            if(err){
-              mongodb.close();return callback(err);
-            }
-            collection.update({roomName:roomname, host:host},{$push:{MarkdownList : wrappedmd}}, function(err, result){
-              if(err){
-                mongodb.close();return callback(err);
-              }
-              mongodb.close();return callback(err, result);
-            });
+      db.collection('MdTemp', function (err, mdCollection){
+
+        if(!err){
+          mdCollection.find({author : author}).toArray(function (err, docs){
+            if(!err){ 
+              db.collection('Meetings', function (err, meetingCollection){
+                if(err){
+                  mongodb.close();return callback(err);
+                }else{
+                  meetingCollection.findOne({roomName:roomname, host:host}, function (err, meeting){
+                    if(err){
+                      mongodb.close();return callback(err);
+                    }else{
+                      var mdArr = [];
+                      var len = meeting.MarkdownList.length;
+                      for (i = 0; i < docs.length; i++){
+                        var mdDoc = {
+                          range : i+len+1,
+                          data : docs[i],
+                        };
+
+                        mdArr.push(mdDoc);
+                      }
+
+                      meetingCollection.update({roomName:roomname, host:host},
+                        {$push :{MarkdownList : {$each : mdArr}}},
+                        function (err, updateCount){
+                          if(!err){
+                            mongodb.close();return callback(null, updateCount); 
+                          }
+                        });
+                    }
+                  })
+                }
+              })
+            }            
           });
+        }
+      });
     }
   });
 }
@@ -297,12 +325,12 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
                     console.log(err);
                     mongodb.close();return callback(err, result);
                   }else{
-                    if(result){
-                      result.forEach(function (newmd){
-                        objIdArr.push(newmd._id);
-                      });
-                    }
-                    return callback(null, objIdArr);
+                    // if(result){
+                    //   result.forEach(function (newmd){
+                    //     objIdArr.push(newmd._id);
+                    //   });
+                    // }
+                    return callback(null, result);
                   }
                 });              
             }

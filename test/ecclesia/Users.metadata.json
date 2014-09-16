@@ -1,1 +1,1 @@
-{ "options" : { "create" : "Users", "strict" : true }, "indexes" : [ { "v" : 1, "name" : "_id_", "key" : { "_id" : 1 }, "ns" : "ecclesia.Users" }, { "v" : 1, "name" : "username_1", "key" : { "username" : 1 }, "unique" : true, "ns" : "ecclesia.Users" } ] }
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "name" : "_id_", "ns" : "ecclesia.Users" }, { "v" : 1, "unique" : true, "key" : { "username" : 1 }, "name" : "username_1", "ns" : "ecclesia.Users" } ] }
