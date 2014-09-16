@@ -12,7 +12,9 @@ var roomHash = sessionStorage.getItem('roomHash')
     || location.search && location.search.split('?')[1]
     || 'roomURL';
   
-
+console.log('roomName:',room);
+console.log('roomHash:',roomHash);
+console.log('host',sessionStorage.getItem('creator'));
 
 
 var uname = $('#userName').text();
@@ -32,7 +34,10 @@ var webrtc = new SimpleWebRTC({
 
 
 webrtc.on('readyToCall', function() {
-  if (room) webrtc.joinRoom(roomHash);
+  if (room) {
+    webrtc.joinRoom(roomHash);
+    console.log('join room');
+  }
 });
 
 
@@ -84,16 +89,18 @@ webrtc.on('volumeChange', function (volume, threshold) {
 
 
 if (!room) {
-  
+  console.log('get err, create room now');
+  var roomUrl;
   webrtc.createRoom(roomHash, function (err, name) {
     // name equal roomHash equal roomUrl splited by '?'
-    var roomUrl = location.pathname + '?' + name;
+    roomUrl = location.pathname + '?' + name;
     if (!err) {
       history.replaceState({ roomHash: roomHash }, null, roomUrl);
     }
   });
 } else {
-  // console.log('already in a room');
+  roomUrl = location.pathname + '?' + roomHash;
+  history.replaceState({ roomHash: roomHash }, null, roomUrl);
 }
 
 /* ============= new event ============== */

@@ -36,6 +36,7 @@ router.post('/join-room', function(req, res){
   var raw = host + roomname + date;
   var roomHash = cryptor.update(raw).digest('hex');
 
+  
   Meeting.addParticipant (roomname, host, username, function (err, addRe){
     if(!err){
       var conference  = {
@@ -56,10 +57,11 @@ router.post('/create-room', function (req, res) {
   // deal with post json data 
   // { request:'create-room' username:'..', roomname:'..' }
   // ... code here
+  console.log(req.body, req.session.username);
   var resInfo = "";
-  if (req.body.roomName === 'undefined'){
+  if (req.body.roomName === undefined){
     resInfo = "create-failed";
-    res.json({response: resInfo});
+    return res.json({response: resInfo});
   }else{
     req.session.roomName = req.body.roomName;
     var date = new Date();
@@ -67,23 +69,28 @@ router.post('/create-room', function (req, res) {
     var  newMeeting = {
       roomName : req.body.roomName,
       date : date.toDateString(),
-      host : req.body.username,
+      host : req.session.username,
       userList : [],
       ChartList:[],
       MarkdownList:[],
       SketchList:[]
     };
-
     var raw = newMeeting.host + newMeeting.roomName + newMeeting.date;
+    var cryptor = crypto.createHash('sha1');
     var roomHash = cryptor.update(raw).digest('hex');
+    console.log('hash:',roomHash);
 
     Meeting.createRoom(newMeeting, function (err, meeting){
       if(!err){
         resInfo = "create-success";
-        res.json({response:resInfo, roomName:meeting.roomName, creater: meeting.host, roomHash : roomHash});
+        
+        return res.json({response:resInfo, roomName:meeting.roomName, creator: meeting.host, roomHash : roomHash});
       }
-    })
-
-    }
+      else {
+        console.log(err);
+        return res.json({response: resInfo});
+      }
+    });
+  }
 });
 module.exports = router;

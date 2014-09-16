@@ -45,7 +45,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
                 return callback(err);
               }else{
                 mongodb.close();
-                callback(err, meeting);
+                return callback(null, meeting[0]);
               }
             });
 

@@ -33,13 +33,15 @@ $(document).ready(function() {
     
     $.ajax({
       url:'/home/create-room',
+      type: 'POST',
       contentType:'application/json',
       dataType: 'json',
-      data: JSON.stringfy({
+      data: JSON.stringify({
         request: 'create-room',
         roomName: roomName
       }),
       success: function (data) {
+        console.log(data);
         if (data.response === 'create-success') {
           // $.cookie('roomName', data.roomName),
           // $.cookie('creator', data.creator),
@@ -50,7 +52,7 @@ $(document).ready(function() {
           window.location.href = '/chat';
         }
         else {
-          alert(data.response);
+          console.log(data.response);
         }
       }
     });
@@ -61,9 +63,10 @@ $(document).ready(function() {
     
     $.ajax({
       url:'/home/join-room',
+      type: 'POST',
       contentType:'application/json',
       dataType: 'json',
-      data: JSON.stringfy({
+      data: JSON.stringify({
         request: 'join-room',
         roomName: roomName,
         host: host
@@ -76,7 +79,7 @@ $(document).ready(function() {
           window.location.href = '/chat';
         }
         else {
-          alert(data.response);
+          console.log(data.response);
         }
       }
     });
