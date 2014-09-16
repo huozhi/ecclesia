@@ -36,7 +36,7 @@ router.post('/upload-img', function (req, res){
     page : req.body.page,
     img : compresser.uncompress(req.body.img),
   };
-
+  // console.log(req.body.img);
   Meeting.saveImg(target, function (err, result){
     if(!err){
       return res.json({response : "upload-success", 

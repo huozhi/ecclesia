@@ -23,7 +23,7 @@ $(document).ready(function() {
   // back to choose charts
   $('#chart-data-submit').click(function() {
     var previewCanvas = $('#chart-preview');
-    if (genChart) genChart.clear();
+    if (genChart) genChart.destroy();
     $('#chart-insert-carousel').carousel('prev');
 
   });
@@ -124,27 +124,34 @@ PreviewChart.prototype.collectAttrs = function() {
   return chartData;
 }
 
-PreviewChart.prototype.sketchPreviewChart = function(selector, data) {
+PreviewChart.prototype.sketchPreviewChart = function(selector, data, callback) {
   var chartData = data || this.collectAttrs();
   var previewCtx = selector.get(0).getContext('2d');
+  var base64code;
   switch (this.chart_t) {
     case 'line':
       genChart = new Chart(previewCtx).Line(chartData);
+      base64code = genChart.toBase64Image();
       break;
     case 'bar':
       genChart = new Chart(previewCtx).Bar(chartData);
+      base64code = genChart.toBase64Image();
       break;
     case 'radar':
       genChart = new Chart(previewCtx).Radar(chartData);
+      base64code = genChart.toBase64Image();
       break;
     case 'polararea':
       genChart = new Chart(previewCtx).PolarArea(chartData);
+      base64code = genChart.toBase64Image();
       break;
     case 'pie':
       genChart = new Chart(previewCtx).Pie(chartData);    
+      base64code = genChart.toBase64Image();
       break;
     case 'dougnut':
       genChart = new Chart(previewCtx).Doughnut(chartData);
+      base64code = genChart.toBase64Image();
       break;
     default:
       break;
@@ -152,21 +159,30 @@ PreviewChart.prototype.sketchPreviewChart = function(selector, data) {
   genChartData = chartData;
   $('#charts').data('newest', chartData);
   $('#charts').data('chart_t', this.chart_t);
+  if (typeof callback == 'function') {
+    callback(genChart.toBase64Image(), 'chart', selector.length - 1, function (newChartData) {
+      console.log('toBase64Image', genChart.toBase64Image());
+      webrtc.signalSyncChart(newChartData);
+    });
+  }
 }
 
 function listenChartDataInput() {
 // preview chart to insert
   $('.chart-data-input').dblclick(function() {
-    $('#chart-preview').attr({ width:"300", height:"300" });
+    $('#chart-preview').attr({ width:"180", height:"180" });
     var inputLabels = $('.chart-data-axis').val().split(' ');
     if (!inputLabels.length) {
       window.console.log('empty axis');
       return;
     }
     var chart_t = $('#chart-preview').data('chart_t');
-    prvwChart = new PreviewChart(inputLabels, chart_t).sketchPreviewChart($('#chart-preview'));
+    new PreviewChart(inputLabels, chart_t).sketchPreviewChart($('#chart-preview'));
   });
 }
+
+
+
 
 function InsertGenChart() {
   $('#insert-btn').click(function() {
@@ -176,16 +192,18 @@ function InsertGenChart() {
       '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
     '</div>';
     var charts = $('#charts');
-        
+    var previewBase64 = genChart.toBase64Image();
     charts.append(addContent);
     var $allCharts = $('canvas.chart');
     var ctx = $allCharts.last().get(0).getContext('2d');
     new PreviewChart(genChartData, charts.data('chart_t'))
     .sketchPreviewChart($allCharts.last(), genChartData);
     // upload new chart
-    saveImage($allCharts.last(), 'chart', $allCharts.length - 1, function (chartData) {
-      webrtc.signalSyncChart(chartData);
+    var $allCharts = $('canvas.chart');
+    saveImage(previewBase64, 'chart', $allCharts.length - 1, function (newChartData) {
+      webrtc.signalSyncChart(newChartData);
     });
+    
     $('.rm-chart').click(function() {
       $(this).parent().remove();
     });

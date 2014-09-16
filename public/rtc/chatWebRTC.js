@@ -77,7 +77,7 @@ webrtc.on('rtcSyncStroke', function (point) {
 });
 
 webrtc.on('rtcSyncChart', function (chartData) {
-  console.log('webrtc.on rtcSyncChart');
+  // console.log('webrtc.on rtcSyncChart');
   $.ajax({
     url: '/chat/query-img',
     type: 'POST',
@@ -88,8 +88,9 @@ webrtc.on('rtcSyncChart', function (chartData) {
       objectId: chartData.objectId
     }),
     success: function (data) {
-      console.log('success', data.image);
-      var base64code = data.image.img;
+      
+      var base64code = lzw_uncompress(data.image.img);
+      // console.log(base64code);
       var $singleChart = $(document.createElement('div'))
                         .addClass('single-chart')
                         .append('<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>');
@@ -102,13 +103,15 @@ webrtc.on('rtcSyncChart', function (chartData) {
                     .addClass('chart').attr({width:"180",height:"180"});
       var chartContext = $createCanvas.get(0).getContext('2d');
       var canvasImg = new Image();
-      canvasImg.src = lzw_uncompress(data.image.img);
+      canvasImg.src = base64code;
       canvasImg.onload = function() {
         chartContext.drawImage(canvasImg, 0, 0);
         $singleChart.prepend($createCanvas);
         $('#charts').append($singleChart);
       };
-      
+      $('.rm-chart').click(function() {
+        $(this).parent().remove();
+      });
 
     },
     error: function (err) { alert(err); }
