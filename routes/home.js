@@ -29,28 +29,34 @@ router.post('/join-room', function(req, res){
   var roomname = req.body.roomName;
   var host = req.body.host;
   var username = req.session.username;
-  var date = req.session.date;
+  var date = "";
 
   req.session.host = host;
-  var cryptor = crypto.createHash('sha1');
-  var raw = host + roomname + date;
-  var roomHash = cryptor.update(raw).digest('hex');
-
   
-  Meeting.addParticipant (roomname, host, username, function (err, addRe){
+
+  Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
-      var conference  = {
-        roomName : roomname,
-        host : host,
-        date : date,
-      };
-      User.archive(username, conference, function (err, archiveRe){
+      date = result.date;
+      var cryptor = crypto.createHash('sha1');
+      var raw = host + roomname + date;
+      var roomHash = cryptor.update(raw).digest('hex');
+
+      Meeting.addParticipant (roomname, host, username, function (err, addRe){
         if(!err){
-          return res.json({response : "join-success", roomName : roomname, creator : host, roomHash :roomHash} );
+          var conference  = {
+            roomName : roomname,
+            host : host,
+            date : date,
+          };
+          User.archive(username, conference, function (err, archiveRe){
+            if(!err){
+              return res.json({response : "join-success", roomName : roomname, creator : host, roomHash :roomHash} );
+            }
+          });
         }
       });
     }
-  });
+  });    
 });
 
 router.post('/create-room', function (req, res) {

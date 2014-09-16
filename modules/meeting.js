@@ -55,7 +55,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
   });
 }
 
-Meeting.queryConference = function(roomname, host, date, callback){
+Meeting.queryConference = function(roomname, host, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
