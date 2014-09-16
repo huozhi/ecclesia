@@ -8,7 +8,7 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  var uname = "test" || req.session.username;
+  var uname = req.session.username || 'test';
   res.render('chat', {
     username: uname
   });

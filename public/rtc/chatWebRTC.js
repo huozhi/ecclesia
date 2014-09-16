@@ -8,11 +8,12 @@ function enableWebRTC (mediaContrains) {
 
 var room = location.search && location.search.split('?')[1];
 // var room = $.cookie('roomName');
-
+var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
-  // url: "http://localhost:8888",
+  url: "https://223.3.90.4:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
+  username: uname,
   media: mediaContrains || {
     video: true, audio: true
   },
@@ -22,11 +23,13 @@ var webrtc = new SimpleWebRTC({
   autoAdjustMic: false
 });
 
+
 webrtc.on('readyToCall', function() {
   if (room) webrtc.joinRoom(room);
 });
 
 webrtc.on('videoAdded', function (video, peer) {
+  console.log(peer);
   addVideoContainer(video, peer);
   addPreviewContainer(peer);
 });
@@ -34,7 +37,7 @@ webrtc.on('videoAdded', function (video, peer) {
 function addPreviewContainer(peer) {
   var remotes = $('.right-sidebar');
   var addPeer = $(document.createElement('div')).addClass('container-frame');
-  addPeer.attr('id', 'preview_' + webrtc.getDomId(peer));
+  addPeer.attr('id', 'preview_' + peer.username);
   remotes.append(addPeer);
 }
 
@@ -45,14 +48,14 @@ function addVideoContainer(video, peer) {
   volBar.addClass('vol-var');
   addPeer.append(volBar);
   addPeer.addClass('container-frame');
-  addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
+  addPeer.attr('id', 'video_' + webrtc.getUserName(peer));
   addPeer.append(video);
   remotes.append(addPeer);
 }
 
 webrtc.on('videoRemoved', function (video, peer) {
   var remotes = $('.left-sidebar');
-  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+  var leavePeer = $('#video_' + webrtc.getUserName(peer));
   if (remotes && leavePeer) {
     leavePeer.fadeOut().remove();
   }
