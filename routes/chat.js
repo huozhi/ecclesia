@@ -19,9 +19,23 @@ router.post('/upload-markdown', function (req, res) {
   var markdowns = t.split(/\+{6,}/);
   var author = req.body.username;
   
-  Meeting.seveMdTemp(author, markdown, function (err, objIds){
+  Meeting.seveMdTemp(author, markdown, function (err, newMds){
     if(!err){
-      res.json({response : "upload-markdown-success", objectIdArr : objIds});
+      res.json({response : "upload-markdown-success", mdArr : newMds});
+    }
+  });
+});
+
+router.post('/archive-markdown', function (req, res){
+  // markdown id
+  //roomName, host, get from session
+  var roomName = req.session.roomName || "",
+      host = req.session.host || "",
+      mdId = req.body.objectId;
+
+  Meeting.saveMarkdown(roomName, host, author, function (err, result){
+    if(!err){
+      req.json({response : "archive-markdown-success"});
     }
   });
 });
