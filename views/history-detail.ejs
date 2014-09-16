@@ -265,6 +265,7 @@ function loadData(){
       { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
       ]  
   });
+
   var sketchlist = JSON.parse($.cookie('SketchList'));  
   var childrenList = $(".slides").children();
   sketchlist.forEach(

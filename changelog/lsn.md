@@ -1,3 +1,19 @@
+#9-16
+
+* 添加eStroke.js第23行：if($.cookie('sketchChanged') == 'false')
+    $.cookie('sketchChanged',true);
+  添加chatWebRTC.js中Reveal.addEventListener('ready', function (event){}内：
+  $(".navigate-left").click和$(".navigate-right").click
+  添加chat.ejs中ready：$.cookie('sketchChanged',false);
+* 注释：chatWebRTC.js中saveImage
+* 问题：浏览器console中提示saveImage中未定义callback。不敢改。
+
+
+#9-15
+
+* 调整login.ejs布局
+* 同步chat界面中的chat
+
 #9-12
 
 * 历史查看数据响应

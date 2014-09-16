@@ -43,7 +43,7 @@ router.post('/history-detail', function (req, res) {
   Meeting.queryImg(objId, function (err, result){
     if(!err){
       result.img = compresser.compress(result.img);
-      res.json({response : "query-detail-success", img : result});      
+      res.json({response : "query-detail-success", image : result});      
     }
   });
 })
