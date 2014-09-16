@@ -93,13 +93,13 @@ if (!room) {
   var roomUrl;
   webrtc.createRoom(roomHash, function (err, name) {
     // name equal roomHash equal roomUrl splited by '?'
-    roomUrl = location.pathname + '?' + name;
+    roomUrl = location.pathname + '?' + room;
     if (!err) {
       history.replaceState({ roomHash: roomHash }, null, roomUrl);
     }
   });
 } else {
-  roomUrl = location.pathname + '?' + roomHash;
+  roomUrl = location.pathname + '?' + room;
   history.replaceState({ roomHash: roomHash }, null, roomUrl);
 }
 

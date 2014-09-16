@@ -64,7 +64,7 @@ Meeting.queryConference = function(roomname, host, callback){
         if(err){
           mongodb.close();return callback(err);
         }else{
-          collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
+          collection.findOne({roomName:roomname, host:host},function(err, result){
             if(err){
               mongodb.close();return callback(err);
             }

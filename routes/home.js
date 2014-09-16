@@ -26,7 +26,7 @@ router.get('/logout', function (req, res) {
 })
 
 router.post('/join-room', function(req, res){
-  var roomname = req.body.roomName;
+  var roomName = req.body.roomName;
   var host = req.body.host;
   var username = req.session.username;
   var date = "";
@@ -37,20 +37,21 @@ router.post('/join-room', function(req, res){
   Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
       date = result.date;
+      console.log('date',result.date);
       var cryptor = crypto.createHash('sha1');
-      var raw = host + roomname + date;
+      var raw = host + roomName + date;
       var roomHash = cryptor.update(raw).digest('hex');
-
-      Meeting.addParticipant (roomname, host, username, function (err, addRe){
+      console.log('hash',roomHash);
+      Meeting.addParticipant (roomName, host, username, function (err, addRe){
         if(!err){
           var conference  = {
-            roomName : roomname,
+            roomName : roomName,
             host : host,
             date : date,
           };
           User.archive(username, conference, function (err, archiveRe){
             if(!err){
-              return res.json({response : "join-success", roomName : roomname, creator : host, roomHash :roomHash} );
+              return res.json({response : "join-success", roomName : roomName, creator : host, roomHash :roomHash} );
             }
           });
         }
