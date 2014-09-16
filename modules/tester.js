@@ -177,9 +177,9 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
 //save wrapped md test
 
-// Meeting.saveMarkdown('sbsbsb', 'sb', "author", function(err, re){
+Meeting.saveMarkdown('sbsbsb', 'sb', "author", function(err, re){
  
-// });
+});
 
 //save md temp test
 // var spliter = require('./split');
