@@ -6,8 +6,15 @@ WebRTC and Reveal.js initialized
 
 function enableWebRTC (mediaContrains) {
 
-var room = location.search && location.search.split('?')[1];
-// var room = $.cookie('roomName');
+// var room = location.search && location.search.split('?')[1];
+var room = sessionStorage.getItem('roomName') || 'roomTest';
+var roomHash = sessionStorage.getItem('roomHash') 
+    || location.search && location.search.split('?')[1]
+    || 'roomURL';
+  
+
+
+
 var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
   url: "https://223.3.90.4:8888",
@@ -25,8 +32,10 @@ var webrtc = new SimpleWebRTC({
 
 
 webrtc.on('readyToCall', function() {
-  if (room) webrtc.joinRoom(room);
+  if (room) webrtc.joinRoom(roomHash);
 });
+
+
 
 webrtc.on('videoAdded', function (video, peer) {
   console.log(peer);
@@ -73,6 +82,19 @@ webrtc.on('volumeChange', function (volume, threshold) {
   }
 });
 
+
+if (!room) {
+  
+  webrtc.createRoom(roomHash, function (err, name) {
+    // name equal roomHash equal roomUrl splited by '?'
+    var roomUrl = location.pathname + '?' + name;
+    if (!err) {
+      history.replaceState({ roomHash: roomHash }, null, roomUrl);
+    }
+  });
+} else {
+  // console.log('already in a room');
+}
 
 /* ============= new event ============== */
 webrtc.on('rtcSyncStroke', function (point) {
@@ -150,21 +172,6 @@ webrtc.on('rtcSyncImpress', function (impressData) {
 
 /* ============= end new event ============== */
 
-if (!room) {
-  // $('#create-room-btn').click(function () {
-    // use uuid to create room, pass null to first arg
-  var roomHash = $.cookie('roomHash') || 'hash123';
-  
-  webrtc.createRoom(roomHash, function (err, name) {
-    var roomUrl = location.pathname + '?' + name;
-    if (!err) {
-      history.replaceState({ roomHash: $.cookie('roomHash') }, null, roomUrl);
-    }
-  });
-  // })
-} else {
-  // console.log('already in a room');
-}
 
 
 
