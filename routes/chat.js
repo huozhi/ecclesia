@@ -31,7 +31,7 @@ router.post('/archive-markdown', function (req, res){
   //roomName, host, get from session
   var roomName = req.session.roomName || "",
       host = req.session.host || "",
-      mdId = req.body.objectId;
+      author = req.body.username || "author";
 
   Meeting.saveMarkdown(roomName, host, author, function (err, result){
     if(!err){
