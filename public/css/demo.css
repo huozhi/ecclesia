@@ -34,7 +34,6 @@ body {
     font-weight: 300;
     font-size: 14px; 
     color: #333;
-    overflow-y: scroll;
     overflow-x: hidden;
 }
 
