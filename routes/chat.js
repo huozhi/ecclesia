@@ -8,9 +8,9 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  if (!req.session.username) {
-    return res.redirect('/');
-  }
+  // if (!req.session.username) {
+  //   return res.redirect('/');
+  // }
 
   return res.render('chat', {
     session: req.session,
@@ -26,8 +26,8 @@ router.post('/upload-markdown', function (req, res) {
   var roomName = req.session.roomName;
   var host = req.session.host;
   
-  console.log(markdowns);
-  console.log(author, roomName, host);
+  // console.log(markdowns);
+  // console.log(author, roomName, host);
   Meeting.saveMdTemp(roomName, host, author, markdowns, function (err, newMds){
     if(!err){
       return res.json({response : "upload-markdown-success", mdArr : newMds});
@@ -37,55 +37,75 @@ router.post('/upload-markdown', function (req, res) {
   });
 });
 
-router.post('/query-preview-markdown', function (req, res){
-  var roomName = req.session.roomName;
-  var host = req.session.host;
-  if (!roomName || !host) {
-    return res.json({response:"query-markdown-success", previewDict: null});
-  }
-  Meeting.queryMdPreview(roomName, host, function (err, previewDict){
-    if (!err) {
-      if (previewDict.length) {
-        return res.json({response:"query-markdown-success", previewDict : previewDict});
-      } else {
-        return res.json({response:"query-markdown-success", previewDict : null});
-      }
-    } else {
-      console.log(err);
-      return res.json({response:'query-markdown-failed', previewDict: null});
-    }
-
-  });
-
-})
 router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
   if (!roomName || !host) {
     return res.rendirect('/home');
   }
+  console.log('query-meeting-markdown:',roomName,host);
   Meeting.queryConference(roomName, host, function (err, meeting){
+    console.log('in query-meeting-markdown');
     if(!err){
+      console.log('meeting',meeting);
       if (meeting) {
+        console.log('mdlist',meeting.MarkdownList);
         var result = [];
         meeting.MarkdownList.forEach(function (md){
           result.push(md);
         });
+        console.log('result',result);
         return res.json({response:"query-markdown-success", mdArr : result});
       } else {
+        console.log('query-meeting-md, null');
         return res.json({response:"query-markdown-success", mdArr: null});
       }
-
+    } else {
+      console.log('query-metting-md err', err);
+      return res.json({response:"query-markdown-success", mdArr: null});
     }
   });
 });
 
+router.post('/query-preview-markdown', function (req, res){
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+  // console.log('query-preview-markdown:',roomName,host);
+  if (!roomName || !host) {
+    console.log('user info error in query-preview-markdown');
+    return res.json({response:"query-markdown-success", previewDict: null});
+  }
+  Meeting.queryMdPreview(roomName, host, function (err, previewDict){
+    // console.log('in queryMdPreview');
+    if (!err) {
+      console.log('previewDict',previewDict || 'undefined');
+      if (!previewDict) {
+        console.log('!previewDict');
+        return res.json({response:"query-markdown-success", previewDict : null});
+      }
+      if (previewDict.length) {
+        console.log('previewDict.length');
+        return res.json({response:"query-markdown-success", previewDict : previewDict});
+      } else {
+        console.log('0 === previewDict.length');
+        return res.json({response:"query-markdown-success", previewDict : null});
+      }
+    } else {
+      console.log('wocaonima:',err);
+      return res.json({response:'query-markdown-failed', previewDict: null});
+    }
+
+  });
+
+})
+
+
 router.post('/archive-markdown', function (req, res){
   // markdown id
   //roomName, host, get from session
-  var roomName = req.session.roomName || "",
-      host = req.session.host || "",
-      author = req.session.username || "author";
+  var roomName = req.session.roomName,
+      host = req.session.host,
+      author = req.session.username;
 
   Meeting.saveMarkdown(roomName, host, author, function (err, result){
     if(!err){
@@ -97,9 +117,9 @@ router.post('/archive-markdown', function (req, res){
 router.post('/upload-img', function (req, res){
   console.log('upload-img request comming');
   var target = {
-    roomName : req.session.roomName || 'sbsbsb',
-    host : req.session.host || 'sb',
-    date : req.session.date || '2014/9/12',
+    roomName : req.session.roomName,
+    host : req.session.host,
+    date : req.session.date,
     listName : req.body.request,
     page : req.body.page,
     img : compresser.uncompress(req.body.img),
@@ -123,17 +143,19 @@ router.post('/refresh-img', function (req, res){
   var host = req.session.host;
   var date = req.session.date;
 
-  if (!type || !roomName || !host || !data) {
+  if (!type || !roomName || !host || !date) {
+    console.log('err info in refresh-img');
     return res.json({response : "refresh-success", SketchList : null});
   }
+  console.log(type,roomName,host,date);
   Meeting.queryHistory(roomName, host, date, function (err, conference){
+    console.log('img, i m here');
     if(!err){
       var resList = [];
-      console.log(conference.ChartList);
+      if (!conference || !conference.ChartList.length) {
+        return res.json({response: 'refresh-success', ChartList: null});
+      }
       if(type === "chart"){
-        if (conference.ChartList.length == 0) {
-          return res.json({response: 'refresh-success', ChartList: null});
-        }
         resList = conference.ChartList;
         console.log('chart type');
         return res.json({response : "refresh-success", ChartList : resList});
