@@ -86,6 +86,14 @@ var newMeeting = {
   SketchList:[]
 }
 
+Meeting.queryMdTemp("nidd", "nima", function (err, result){
+  if(err){
+    console.log(err);
+  }else{
+    console.log(result);
+  }
+})
+
 // var cryptor  = crypto.createHash('sha512');
 // var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
 // newMeeting.roomKey = cryptor.update(rawKey).digest('hex');
@@ -221,3 +229,5 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // console.log(raw);
 
 /***************************************************************/
+
+

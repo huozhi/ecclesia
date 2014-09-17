@@ -28,7 +28,7 @@ router.post('/upload-markdown', function (req, res) {
   
   console.log(markdowns);
   console.log(author, roomName, host);
-  Meeting.seveMdTemp(roomName, host, author, markdown, function (err, newMds){
+  Meeting.saveMdTemp(roomName, host, author, markdowns, function (err, newMds){
     if(!err){
       return res.json({response : "upload-markdown-success", mdArr : newMds});
     } else {
@@ -64,10 +64,13 @@ router.post('/query-meeting-markdown', function (req, res){
   if (!roomName || !host) {
     return res.rendirect('/home');
   }
-  Meeting.queryMdTemp(roomName, host, function (err, result){
+  Meeting.queryConference(roomName, host, function (err, meeting){
     if(!err){
-      if (result.length) {
-        console.log(result);
+      if (meeting) {
+        var result = [];
+        meeting.MarkdownList.forEach(function (md){
+          result.push(md);
+        });
         return res.json({response:"query-markdown-success", mdArr : result});
       } else {
         return res.json({response:"query-markdown-success", mdArr: null});
