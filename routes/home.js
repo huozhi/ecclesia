@@ -98,7 +98,7 @@ router.post('/create-room', function (req, res) {
     Meeting.createRoom(newMeeting, function (err, meeting){
       if(!err){
         resInfo = "create-success";
-        
+        req.session.host = req.session.username;
         return res.json({response:resInfo, roomName:meeting.roomName, creator: meeting.host, roomHash : roomHash});
       }
       else {

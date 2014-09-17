@@ -25,52 +25,67 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
 
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();
+      db.close();
+
       return callback(err, null);
     }
     db.createCollection('Meetings', function(err, collection){
       if(err){
-        mongodb.close();
+        db.close();
+
         return callback(err, null);
       }else{
         db.collection('Meetings', {strict : true}, function(err, collection){
+          if(err){
+            db.close();
+
+            return callback(err, null);
+          }
+
+          collection.insert(newMeeting, {safe:true}, function(err, meeting){
             if(err){
-              mongodb.close();
+              db.close();
+
               return callback(err, null);
+            }else{
+              db.close();
+
+              return callback(null, meeting[0]);
             }
-
-            collection.insert(newMeeting, {safe:true}, function(err, meeting){
-              if(err){
-                mongodb.close();
-                return callback(err, null);
-              }else{
-                mongodb.close();
-                return callback(null, meeting[0]);
-              }
-            });
-
-          });        
+          });
+        });        
       }
     });   
   });
 }
 
-Meeting.queryConference = function(roomname, host, callback){
+Meeting.queryConference = function(roomName, host, callback){
+  // console.log('AAAAAAAAAA');
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err, null);
+      console.log('open err');
+      db.close();
+      return callback(err, null);
     }else{
+      console.log('collection Meetings');
       db.collection("Meetings",function(err, collection){
         if(err){
-          mongodb.close();return callback(err, null);
+          console.log('!Meetings',err);
+          db.close();
+          return callback(err, null);
         }else{
-          collection.findOne({roomName:roomname, host:host},function(err, result){
+          console.log('findOne queryConference');
+          collection.findOne({roomName:roomName, host:host},function(err, result){
             if(err){
-              mongodb.close();return callback(err,null);
-            }
-            mongodb.close();
+              console.log('!findOne',err);
+              db.close();
+              return callback(err,null);
+            } else {
+              db.close();
 
-            return callback(null, result);
+              console.log('db result',result);
+              return callback(null, result);
+            }
           });
         }
       });
@@ -81,19 +96,29 @@ Meeting.queryConference = function(roomname, host, callback){
 Meeting.queryHistory = function(roomname, host, date, callback){
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err, null);
+      console.log('open:',err);
+      db.close();
+      return callback(err, null);
     }else{
       db.collection("Meetings",function(err, collection){
+        console.log('Meetings here');
         if(err){
-          mongodb.close();return callback(err, null);
+          console.log('collection:',err);
+          db.close();
+          return callback(err, null);
         }else{
           collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
+            console.log('queryHistory empty');
             if(err){
-              mongodb.close();return callback(err, null);
-            }
-            mongodb.close();
+              console.log('find',err);
+              db.close();
+              return callback(err, null);
+            } else {
+              console.log('find');
+              db.close();
 
-            return callback(null, result);
+              return callback(null, result);
+            }
           });
         }
       });
@@ -105,20 +130,24 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
   
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();
+      db.close();
+
       return callback(err, null);
     }else{
       db.collection('Meetings', {strict:true}, function(err, collection){
         if(err){
-          mongodb.close();
+          db.close();
+
           return callback(err, null);
         }else{
           collection.update({roomName: roomname,host:host}, {$push:{"userList": participant}}, function(err, doc){
             if(err){
-              mongodb.close();
+              db.close();
+
               return callback(err, null);
             }else{
-              mongodb.close();
+              db.close();
+
               if(doc){
                 console.log(doc);
                 return callback(null, doc);
@@ -135,15 +164,18 @@ Meeting.saveImg = function saveImg(targetObj, callback){
 
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      db.close();
+      return callback(err);
     }else{
           db.createCollection('Images', function (err, collection){
             if(err){
-              mongodb.close();return callback(err);
+              db.close();
+              return callback(err);
             }else{
                   db.collection('Images', function(err, collection){
                 if(err){
-                  mongodb.close();return callback(err);
+                  db.close();
+                  return callback(err);
                 }
                 var img = {
                   page : targetObj.page,
@@ -151,9 +183,11 @@ Meeting.saveImg = function saveImg(targetObj, callback){
                 }
                 collection.insert(img, {safe : true}, function(err, result){
                   if(err){
-                    mongodb.close();return callback(err, null);
+                    db.close();
+                    return callback(err, null);
                   }
-                  mongodb.close();
+                  db.close();
+
                   //return callback(err, result);
                   var archiveObj = {
                     roomName : targetObj.roomName,
@@ -183,11 +217,13 @@ Meeting.archiveImg = function (archiveObj, callback){
 
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      db.close();
+      return callback(err);
     }else{
           db.collection('Meetings', function(err, collection){
             if(err){
-              mongodb.close();return callback(err);
+              db.close();
+              return callback(err);
             }
             if(archiveObj.listName === 'chart'){
               var chartWrapper = {
@@ -196,9 +232,11 @@ Meeting.archiveImg = function (archiveObj, callback){
               };
               collection.update({roomName:archiveObj.roomName, host:archiveObj.host, date:archiveObj.date},{$push:{ChartList : chartWrapper}}, {upsert:true},function(err, result){
                 if(err){
-                  mongodb.close();return callback(err);
+                  db.close();
+                  return callback(err);
                 }
-                mongodb.close();return callback(err, result);
+                db.close();
+                return callback(err, result);
               });
             }
             if(archiveObj.listName === 'sketch'){
@@ -208,9 +246,11 @@ Meeting.archiveImg = function (archiveObj, callback){
               };
               collection.update({roomName:archiveObj.roomName, host:archiveObj.host, date:archiveObj.date},{$push:{SketchList : sketchWrapper}}, function(err, result){
                 if(err){
-                  mongodb.close();return callback(err);
+                  db.close();
+                  return callback(err);
                 }
-                mongodb.close();return callback(err, result);
+                db.close();
+                return callback(err, result);
               });
             }
           });
@@ -222,17 +262,21 @@ Meeting.archiveImg = function (archiveObj, callback){
 Meeting.queryImg = function (imgId, callback){
   mongodb.open(function (err ,db){
     if(err){
-      mongodb.close();return callback(err, null);
+      db.close();
+      return callback(err, null);
     }else{
       db.collection('Images', function (err, collection){
         if(err){
-          mongodb.close();return callback(err,null);
+          db.close();
+          return callback(err,null);
         }
         collection.findOne({_id : imgId}, function(err, result){
           if(err){
-            mongodb.close();return callback(err, null);
+            db.close();
+            return callback(err, null);
           }
-          mongodb.close();
+          db.close();
+
           return callback(err, result);
         });
       });
@@ -247,65 +291,76 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
 
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      db.close();
+      return callback(err);
     }else{
       db.collection("MdTemp", function (err, mdCollection){
 
         if(!err){
-          mdCollection.find({roomName : roomName, host: host, username : author}).toArray(function (err, docs){
-            if(!err){
+          mdCollection.find({roomName : roomName, host: host, username : author}, function(err, tempMds) {
+            if (!tempMds) {
+              console.log('empty while saving markdowns');
+              return callback(null, null);
+            }
+            tempMds.toArray(function (err, docs){
+              if(!err){
 
-              mdCollection.remove({roomName : roomName, host: host, username : author}, {safe : true}, function (err, rmcount){
-                if(err){
-                  mongodb.close();return callback(err);
-                }else{
-                  // console.log(rmcount);
-                }
-              });
+                mdCollection.remove({roomName : roomName, host: host, username : author}, {safe : true}, function (err, rmcount){
+                  if(err){
+                    db.close();
+                    return callback(err);
+                  }else{
+                    // console.log(rmcount);
+                  }
+                });
 
-              db.collection ("MdPreview", function (err, prevCollection){
-                if(err){
-                  mongodb.close();return callback(err);
-                }else{
-                  prevCollection.remove({roomName : roomName, host: host, username : author}, {safe:true}, function (err, rmcount){
-                    if(!err){
-                      //do sth
-                    }
-                  });
-                }
-              }); 
-              db.collection('Meetings', function (err, meetingCollection){
-                if(err){
-                  mongodb.close();return callback(err);
-                }else{
-                  meetingCollection.findOne({roomName:roomName, host:host}, function (err, meeting){
-                    if(err){
-                      mongodb.close();return callback(err);
-                    }else{
-                      var mdArr = [];
-                      var len = meeting.MarkdownList.length;
-                      for (i = 0; i < docs.length; i++){
-                        var mdDoc = {
-                          range : i+len+1,
-                          data : docs[i].splitMd,
-                        };
-
-                        mdArr.push(mdDoc);
+                db.collection ("MdPreview", function (err, prevCollection){
+                  if(err){
+                    db.close();
+                    return callback(err);
+                  }else{
+                    prevCollection.remove({roomName : roomName, host: host, username : author}, {safe:true}, function (err, rmcount){
+                      if(!err){
+                        //do sth
                       }
+                    });
+                  }
+                }); 
+                db.collection('Meetings', function (err, meetingCollection){
+                  if(err){
+                    db.close();
+                    return callback(err);
+                  }else{
+                    meetingCollection.findOne({roomName:roomName, host:host}, function (err, meeting){
+                      if(err){
+                        db.close();
+                        return callback(err);
+                      }else{
+                        var mdArr = [];
+                        var len = meeting.MarkdownList.length;
+                        for (i = 0; i < docs.length; i++){
+                          var mdDoc = {
+                            range : i+len+1,
+                            data : docs[i].splitMd,
+                          };
 
-                      meetingCollection.update({roomName:roomName, host:host},
-                        {$push :{MarkdownList : {$each : mdArr}}},
-                        function (err, updateCount){
-                          if(!err){
-                            mongodb.close();return callback(null, updateCount); 
-                          }
-                        });
-                    }
-                  })
-                }
-              });
+                          mdArr.push(mdDoc);
+                        }
 
-            }            
+                        meetingCollection.update({roomName:roomName, host:host},
+                          {$push :{MarkdownList : {$each : mdArr}}},
+                          function (err, updateCount){
+                            if(!err){
+                              db.close();
+                              return callback(null, updateCount); 
+                            }
+                          });
+                      }
+                    });//end findOne meeting
+                  }
+                });//end meeting db query
+              }         
+            });
           });
         }
       });
@@ -316,18 +371,22 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
 Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      db.close();
+      return callback(err);
     }else{
       db.createCollection('MdTemp', function(err, collection){
         if(err){
-          mongodb.close();return callback(err);
+          db.close();
+          return callback(err);
         }else{
           db.collection('MdTemp', function(err, collection){
             collection.insert(tempdoc,{safe:true}, function(err, mdtemp){
               if(err){
-                mongodb.close();return callback(err);
+                db.close();
+                return callback(err);
               }
-              mongodb.close();return callback(err, mdtemp);
+              db.close();
+              return callback(err, mdtemp);
             });
           });
         }
@@ -350,19 +409,22 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
   var tempName = roomName+host+"Temp";
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();
+      db.close();
+
       return callback(err);
     }else{
 
       db.createCollection("MdTemp", function(err, collection){
 
         if(err){
-          mongodb.close();
+          db.close();
+
           return callback(err, null);
         }else{
             db.collection("MdTemp", function(err,collection){
             if(err){
-              mongodb.close();
+              db.close();
+
               return callback(err, null);
             }else{
               console.log(markdowns.length);
@@ -380,7 +442,8 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
               collection.insert(tempDocs,  function (err, result){
                   if(err){
                     console.log(err);
-                    mongodb.close();return callback(err);
+                    db.close();
+                    return callback(err);
                   }else{
                     // if(result){
                     //   result.forEach(function (newmd){
@@ -390,7 +453,8 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
                     var previewName = roomName + host + "Preview";
                     Meeting.saveMdPreview("MdPreview", prev, function (err, prevArr){
                       if(!err)
-                         mongodb.close();return callback(null, result);
+                        db.close();
+                        return callback(null, result);
                     });
                   }
                 });              
@@ -406,23 +470,27 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
 Meeting.saveMdPreview = function (previewName, prev, callback){
   mongodb.open(function (err, db){
     if(err){
-      mongodb.close();return callback(err, null);
+      db.close();
+      return callback(err, null);
     }else{
-          db.createCollection(previewName, function (err, collection){
-            if(err){
-              mongodb.close();return callback(err, null);
+      db.createCollection(previewName, function (err, collection){
+        if(err){
+          db.close();
+          return callback(err, null);
+        }
+        db.collection(previewName, function (err, collection){
+          if(err){
+            db.close();
+            return callback(err, null);
+          }
+          collection.insert(prev, function (err, result){
+            if(!err){
+              db.close();
+              return callback(null, result[0]);
             }
-            db.collection(previewName, function (err, collection){
-              if(err){
-                mongodb.close();return callback(err, null);
-              }
-                collection.insert(prev, function (err, result){
-                  if(!err){
-                    mongodb.close();return callback(null, result[0]);
-                  }
-                });
-            });
-          });          
+          });
+        });
+      });          
     }
   });
 
@@ -434,21 +502,31 @@ Meeting.queryMdTemp = function (roomName, host, callback){
   console.log(tempName);
   mongodb.open(function (err, db){
     if(err){
-      mongodb.close();return callback(err, null);
+      db.close();
+      return callback(err, null);
     }else{
 
      db.collection('MdTemp', function (err, collection){
-            if(err){
-              mongodb.close();return callback(err, null);
-            }else{
-              collection.find({roomName: roomName, host : host}).toArray(function (err, result){
-                if(err){
-                  mongodb.close();return callback(err, null);
-                }else{
-                  mongodb.close();return callback(null, result);
-                }
-              });
+        if(err){
+          db.close();
+          return callback(err, null);
+        }else{
+          collection.find({roomName: roomName, host : host}, function(err, tempMds) {
+            if (!tempMds) {
+              console.log('queryMdTemp none result');
+              return callback(null, null);
             }
+            tempMds.toArray(function (err, result){
+              if(err){
+                db.close();
+                return callback(err, null);
+              }else{
+                db.close();
+                return callback(null, result);
+              }
+            });
+          });
+        }
       });
     }
   });
@@ -458,20 +536,43 @@ Meeting.queryMdPreview = function (roomName, host, callback){
   //var previewName = roomName + host + "Preview";
   mongodb.open(function (err, db){
     if(err){
-      mongodb.close();return callback(err, null);
+      console.log('aaaa',err);
+      db.close();
+      return callback(err, null);
     }else{
-          db.collection("MdPreview", function (err, collection){
+      console.log('query preview m here');
+      db.collection("MdPreview", function (err, collection){
+        if(err){
+          console.log(err);
+          db.close();
+          return callback(err, null);
+        }
+        collection.find({roomName : roomName, host: host}, function(err, result) {
+          console.log('find no problem');
+          if (err) {
+            db.close();
+            console.log(err);
+            return callback(err, null);
+          }
+          if (!result || !result.length) {
+
+            console.log('nothing found');
+            return callback(null, null);
+          }
+          console.log(result);
+          result.toArray(function (err, prevArr){
             if(err){
-              mongodb.close();return callback(err, null);
+              console.log(err);
+              db.close();
+              return callback(err, null);
+            }else{
+              console.log('db prevArr', prevArr);
+              db.close();
+              return callback(null, prevArr);
             }
-            collection.find({roomName : roomName, host: host}).toArray(function (err, prevArr){
-              if(err){
-                mongodb.close();return callback(err, null);
-              }else{
-                mongodb.close();return callback(null, prevArr);
-              }
-            })
-      })
+          });
+        });
+      });
     }
   });
 

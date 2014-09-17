@@ -9,12 +9,12 @@ $(document).ready(function() {
   }).click();
 
   // sync charts in loading page
-  syncCharts();
   // sync impress in loading page
-  syncImpress();
+  syncCharts();
+  $(".btn-refresh").click(function(){
   syncPreview();
-  // $(".btn-refresh").click(function(){
-  // });
+    syncImpress();
+  });
 });
 
 
@@ -61,12 +61,16 @@ function syncPreview() {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
-      if (!data.previewDict) return;
+      console.log(data);
+      if (!data.previewDict || data.previewDict.length) {
+        console.log('none preview');
+        return;
+      }
       var dict = data.previewDict;
       dict.forEach(function (userPreview, index) {
-        var previewCntrId = 'preview_' + userPreview.author;
+        var previewCntrId = 'preview_' + userPreview.username;
         var $mdScript = $('<script />', {
-                html: userPreview,
+                html: userPreview.preview,
                 type: 'text/template'
         });
         var $section = $('<section data-markdown></section>').append($mdScript);
