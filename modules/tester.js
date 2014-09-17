@@ -196,7 +196,7 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
 // var markdowns = spliter(file);
 
-//console.log(markdowns);
+// console.log(markdowns);
 
 // Meeting.saveMdTemp("sbsbsb", "sb", "author", markdowns, function (err, idArr){
 //   if(!err){
