@@ -156,9 +156,12 @@ webrtc.on('rtcSYncImpress', function (impressData) {
 });
 
 webrtc.on('rtcSyncPreview', function (previewData) {
-  var previewCntrId = 'preview_' + previewData.username;
+  console.log('recv from', previewData.username);
+  var previewCntrId = '#preview_' + previewData.username;
+  console.log($(previewCntrId));
   $(previewCntrId).children().remove();
   var $section = $('<section data-markdown></section>');
+  console.log('md',previewData.preview);
   $section.append(
       $('<script />', {
         html: previewData.preview,
