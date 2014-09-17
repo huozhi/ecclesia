@@ -26,23 +26,23 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
-      return callback(err);
+      return callback(err, null);
     }
     db.createCollection('Meetings', function(err, collection){
       if(err){
         mongodb.close();
-        return callback(err);
+        return callback(err, null);
       }else{
         db.collection('Meetings', {strict : true}, function(err, collection){
             if(err){
               mongodb.close();
-              return callback(err);
+              return callback(err, null);
             }
 
             collection.insert(newMeeting, {safe:true}, function(err, meeting){
               if(err){
                 mongodb.close();
-                return callback(err);
+                return callback(err, null);
               }else{
                 mongodb.close();
                 return callback(null, meeting[0]);
@@ -58,15 +58,15 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
 Meeting.queryConference = function(roomname, host, callback){
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      mongodb.close();return callback(err, null);
     }else{
       db.collection("Meetings",function(err, collection){
         if(err){
-          mongodb.close();return callback(err);
+          mongodb.close();return callback(err, null);
         }else{
           collection.findOne({roomName:roomname, host:host},function(err, result){
             if(err){
-              mongodb.close();return callback(err);
+              mongodb.close();return callback(err,null);
             }
             mongodb.close();
 
@@ -81,15 +81,15 @@ Meeting.queryConference = function(roomname, host, callback){
 Meeting.queryHistory = function(roomname, host, date, callback){
   mongodb.open(function(err, db){
     if(err){
-      mongodb.close();return callback(err);
+      mongodb.close();return callback(err, null);
     }else{
       db.collection("Meetings",function(err, collection){
         if(err){
-          mongodb.close();return callback(err);
+          mongodb.close();return callback(err, null);
         }else{
           collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
             if(err){
-              mongodb.close();return callback(err);
+              mongodb.close();return callback(err, null);
             }
             mongodb.close();
 
@@ -106,22 +106,22 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
-      return callback(err);
+      return callback(err, null);
     }else{
       db.collection('Meetings', {strict:true}, function(err, collection){
         if(err){
           mongodb.close();
-          return callback(err);
+          return callback(err, null);
         }else{
           collection.update({roomName: roomname,host:host}, {$push:{"userList": participant}}, function(err, doc){
             if(err){
               mongodb.close();
-              return callback(err);
+              return callback(err, null);
             }else{
               mongodb.close();
               if(doc){
                 console.log(doc);
-                return callback(err, doc);
+                return callback(null, doc);
               }
             }
           });
@@ -426,14 +426,16 @@ Meeting.queryMdTemp = function (roomName, host, callback){
   var tempName = roomName+host+"Temp";
   mongodb.open(function (err, db){
     if(err){
-      mongodb.close();return callback(err);
+      mongodb.close();return callback(err, null);
     }else{
       db.collection(tempName, function (err, collection){
         if(err){
-          mongodb.close();return callback(err);
+          mongodb.close();return callback(err, null);
         }else{
           collection.find({}).toArray(function (err, result){
-            if(!err){
+            if(err){
+              mongodb.close();return callback(err, null);
+            }else{
               mongodb.close();return callback(null, result);
             }
           })
@@ -447,12 +449,15 @@ Meeting.queryMdPreview = function (roomName, host, callback){
   var previewName = roomName + host + "Preview";
   mongodb.open(function (err, db){
     if(err){
-      mongodb.close();return callback(err);
+      mongodb.close();return callback(err, null);
     }else{
           db.collection(previewName, function (err, collection){
+            if(err){
+              mongodb.close();return callback(err, null);
+            }
             collection.find({}).toArray(function (err, prevArr){
               if(err){
-                mongodb.close();return callback(err);
+                mongodb.close();return callback(err, null);
               }else{
                 mongodb.close();return callback(null, prevArr);
               }
