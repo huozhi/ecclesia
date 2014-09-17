@@ -163,7 +163,7 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
 
 Meeting.saveImg = function saveImg(targetObj, callback){
 
-  mongodb.open(function(err, db){
+ MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true}, function(err, db){
     if(err){
       mongodb.close();
       return callback(err);
@@ -216,7 +216,7 @@ Meeting.saveImg = function saveImg(targetObj, callback){
 
 Meeting.archiveImg = function (archiveObj, callback){
 
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true}, function(err, db){
     if(err){
       mongodb.close();
       return callback(err);
@@ -294,9 +294,9 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
   var tempName = roomName + host + "Temp";
   var previewName = roomName + host + "Preview";
 
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser : true}, function(err, db){
     if(err){
-      mongodb.close();
+      db.close();
       return callback(err);
     }else{
       db.collection("MdTemp", function (err, mdCollection){
@@ -312,7 +312,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
 
                 mdCollection.remove({roomName : roomName, host: host, username : author}, {safe : true}, function (err, rmcount){
                   if(err){
-                    mongodb.close();
+                    db.close();
                     return callback(err);
                   }else{
                     // console.log(rmcount);
@@ -321,7 +321,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
 
                 db.collection ("MdPreview", function (err, prevCollection){
                   if(err){
-                    mongodb.close();
+                    db.close();
                     return callback(err);
                   }else{
                     prevCollection.remove({roomName : roomName, host: host, username : author}, {safe:true}, function (err, rmcount){
@@ -333,12 +333,12 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                 }); 
                 db.collection('Meetings', function (err, meetingCollection){
                   if(err){
-                    mongodb.close();
+                    db.close();
                     return callback(err);
                   }else{
                     meetingCollection.findOne({roomName:roomName, host:host}, function (err, meeting){
                       if(err){
-                        mongodb.close();
+                        db.close();
                         return callback(err);
                       }else{
                         var mdArr = [];
@@ -356,7 +356,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                           {$push :{MarkdownList : {$each : mdArr}}},
                           function (err, updateCount){
                             if(!err){
-                              mongodb.close();
+                              db.close();
                               return callback(null, updateCount); 
                             }
                           });
@@ -509,15 +509,15 @@ Meeting.saveMdPreview = function (previewName, prev, callback){
 Meeting.queryMdTemp = function (roomName, host, callback){
   var tempName = roomName+host+"Temp";
   console.log(tempName);
-  mongodb.open(function (err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser : true}, function (err, db){
     if(err){
-      mongodb.close();
+      db.close();
       return callback(err, null);
     }else{
 
      db.collection('MdTemp', function (err, collection){
         if(err){
-          mongodb.close();
+          db.close();
           return callback(err, null);
         }else{
           collection.find({roomName: roomName, host : host}, function(err, tempMds) {
@@ -527,10 +527,10 @@ Meeting.queryMdTemp = function (roomName, host, callback){
             }
             tempMds.toArray(function (err, result){
               if(err){
-                mongodb.close();
+                db.close();
                 return callback(err, null);
               }else{
-                mongodb.close();
+                db.close();
                 return callback(null, result);
               }
             });
