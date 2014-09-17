@@ -78,6 +78,29 @@ Meeting.queryConference = function(roomname, host, callback){
   })
 }
 
+Meeting.queryHistory = function(roomname, host, date, callback){
+  mongodb.open(function(err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+      db.collection("Meetings",function(err, collection){
+        if(err){
+          mongodb.close();return callback(err);
+        }else{
+          collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            mongodb.close();
+
+            return callback(null, result);
+          });
+        }
+      });
+    }
+  })
+}
+
 Meeting.addParticipant = function(roomname, host, participant, callback){
   
   mongodb.open(function(err, db){
@@ -218,18 +241,19 @@ Meeting.queryImg = function (imgId, callback){
 };
 
 
-Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
+Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
+  var tempName = roomName + host + "Temp";
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
     }else{
-      db.collection('MdTemp', function (err, mdCollection){
+      db.collection(tempName, function (err, mdCollection){
 
         if(!err){
-          mdCollection.find({author : author}).toArray(function (err, docs){
+          mdCollection.find({username : author}).toArray(function (err, docs){
             if(!err){
 
-              mdCollection.remove({author : author}, {safe : true}, function (err, rmcount){
+              mdCollection.remove({username : author}, {safe : true}, function (err, rmcount){
                 if(err){
                   mongodb.close();return callback(err);
                 }else{
@@ -240,7 +264,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
                 if(err){
                   mongodb.close();return callback(err);
                 }else{
-                  meetingCollection.findOne({roomName:roomname, host:host}, function (err, meeting){
+                  meetingCollection.findOne({roomName:roomName, host:host}, function (err, meeting){
                     if(err){
                       mongodb.close();return callback(err);
                     }else{
@@ -255,7 +279,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
                         mdArr.push(mdDoc);
                       }
 
-                      meetingCollection.update({roomName:roomname, host:host},
+                      meetingCollection.update({roomName:roomName, host:host},
                         {$push :{MarkdownList : {$each : mdArr}}},
                         function (err, updateCount){
                           if(!err){
@@ -298,23 +322,24 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   });
 }
 
-Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
+Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns,callback){
   
   var objIdArr = []; 
   var tempDocs = [];
+  var tempName = roomName+host+"Temp";
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
       return callback(err);
     }else{
 
-      db.createCollection('MdTemp', function(err, collection){
+      db.createCollection(tempName, function(err, collection){
 
         if(err){
           mongodb.close();
           return callback(err);
         }else{
-            db.collection('MdTemp', function(err,collection){
+            db.collection(tempName, function(err,collection){
             if(err){
               mongodb.close();
               return callback(err);
@@ -322,8 +347,8 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
               console.log(markdowns.length);
               for(i = 0; i < markdowns.length; i++){
                 var newTemp = {
-                  author : author,
-                  upload : markdowns[i],
+                  username : author,
+                  splitMds : markdowns[i], 
                 };
 
                 tempDocs.push(newTemp);           
@@ -332,7 +357,7 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
               collection.insert(tempDocs,  function (err, result){
                   if(err){
                     console.log(err);
-                    mongodb.close();return callback(err, result);
+                    mongodb.close();return callback(err);
                   }else{
                     // if(result){
                     //   result.forEach(function (newmd){
@@ -349,4 +374,25 @@ Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
       
     }
   });
+}
+
+Meeting.queryMdTemp = function (roomName, host, callback){
+  var tempName = roomName+host+"Temp";
+  mongodb.open(function (err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+      db.collection(tempName, function (err, collection){
+        if(err){
+          mongodb.close();return callback(err);
+        }else{
+          collection.find({}).toArray(function (err, result){
+            if(!err){
+              mongodb.close();return callback(null, result);
+            }
+          })
+        }
+      })
+    }
+  })
 }
