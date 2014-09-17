@@ -1,59 +1,69 @@
-html {
-  overflow-x: hidden;
-}
-
 body {
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
+  /*background: #ffffff url(/img/bg-struck.png) repeat 0 0 fixed;ccece0 A1D2C2 B4ECDA*/
+  background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
 }
-
+.bodyBlock {
+  background: url(/img/triangles-bg-big.png);
+  /*background: url(/img/bg-struck.png);*/
+}
+.big-block {
+  position: relative;
+  width: 1300px;
+  left: 50%;
+  margin-left: -650px;  
+  overflow: hidden;
+  white-space:nowrap;
+}
+.container-fluid {
+  padding: 0;
+}
 .affix-bar {
   position: relative;
   display: inline-block;
-  width: 200px;
+  top: -450px;
+  width: 205px;
   height: 610px;
-}
-.affix-left-bar {
-  float: left;
-}
-.affix-right-bar {
-  float: right;
+  border: #3B3B3B solid 1px;
+  border-radius: 5px;
+  background:rgba(0, 0, 0, 0.2) none repeat scroll 0 0 !important;
 }
 
 .main {
   position: relative;
   display: inline-block;
-  width: 900px;
-  height: 600px;
+  width: 880px;
+  height: 650px;
+  padding: 20px;
 }
 
 .board {
   position: relative;
-  left: 50%;
-  margin-left: -400px;
-  width: 800px;
+  margin: 0 auto;
+  width: 820px;
   height: 400px;
-  border: black solid 1px;
-  border-radius: 2px;  
+  border: #a8a8a8 solid 1px;
+  border-radius: 5px;  
 }
 .sketch {
   position: absolute;
   top: 0;
   left: 0;
   padding: 0px;
-  border: black solid 0px;
-  border-radius: 2px;
+  border: #a8a8a8 solid 0px;
+  border-radius: 5px;
   z-index: 2;
   background-color: rgba(255,255,255,0);
 }
 .swiper-container {
   position: relative;
   top: 10px;
-  width: 800px;
+  width: 820px;
   height: 200px;
-  background-color: #fff;
-  border: #000 solid 1px;
-  border-radius: 2px;
+  background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
+  border: #3B3B3B solid 1px;
+  border-radius: 5px;
 }
 .swiper-wrapper {
   width: 8000px;
@@ -76,12 +86,12 @@ body {
 .impress {
   position: absolute;
   margin: 0px;
-  border: black solid 1px;
-
+  border: #a8a8a8 solid 1px;
+  background:rgba(255, 255, 255, 0.3) none repeat scroll 0 0 !important;
   border-radius: 2px;
 }
 .slides {
-  border: black solid 1px;
+  border: #a8a8a8 solid 1px;
   width: 800px;
   height: 400px;
   z-index: 1;
@@ -90,11 +100,6 @@ body {
 .reveal > .slides > section {
   height: 400px;
 }
-
-.navbar {
-  margin-bottom: 5px;
-}
-
 .lazy {
   width: 100px;
   height: 100px;
@@ -132,31 +137,20 @@ div.single-chart > button {
 }
 
 .sidebar {
-  position: relative;
-  border: black solid 1px;
-  border-radius: 2px;
-  width: 200px;
-  height: 610px;
-}
-
-.left-sidebar {
-  left: 0;
+  padding: 10px;
 }
 .right-sidebar {
   right: 0;
 }
-
-/*.preview-section > * {
-  
-}
-*/
 .container-frame {
-  overflow: hidden;
-  margin: 10px 10px 0px 10px;
   position: relative;
-  width: 180px; height: 140px;
-  border: black solid 1px;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: #a8a8a8 solid 1px;
   border-radius: 2px;
+  background-color: #fff;
 }
 
 .container-frame > section {
@@ -202,4 +196,22 @@ div.single-chart > button {
 ul.dropdown-menu {
   position: relative;
   width: 100%;
+}
+
+.pagination {
+  position: absolute;
+}
+.btn-refresh {
+  position: absolute;
+  z-index: 10;
+  left: 828px;
+  top: 430px;
+  border: none;
+  background-color: transparent;
+  color: #686868;
+}
+.btn-refresh:hover {
+  border: none;
+  background-color: transparent;
+  color: #a8a8a8;
 }

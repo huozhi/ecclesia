@@ -17,10 +17,17 @@
 </head>
 
 <style>
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/open-sans.light.ttf');
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: 'Open Sans';
+	font-weight: 300;
+}
 .head-container {
 	background-color: #130c0e;
 	height:50px;
-
 }
 .sign-up-container {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));
@@ -57,14 +64,17 @@
 	float: left;
 	text-indent: 3cm;
 	line-height: 210px;
+	font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .welcome-form{
-	font-family:"Josefin Slab", Arial, sans-serif;
-	font-size:65px;
+	/*font-family:"Open Sans","Josefin Slab", "Helvetica Neue",Helvetica,Arial,sans-serif,Arial, sans-serif;*/
+	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size:36px;
 	color: white;
 }
 .join-form{
-	font-family:"Josefin Slab", Arial, sans-serif;
+	font-family: 'Open Sans', 'Josefin Slab', Arial, sans-serif;
 	font-size:35px;
 	color: white;
 }
@@ -75,6 +85,12 @@
 .sign-up-container,.sign-up-form:after{
 	clear:both;
 }
+
+.introduction {
+	position: relative;
+	width: 100%;
+	top: 40px;
+	padding-top: 40px;
 }
 
 </style>
@@ -83,22 +99,21 @@
 
 	<div class="head-container">
 		<nav class="navbar navbar-default" role="navigation" style="border-radius:0px;">
-		<div class="navbar-header" >
-			<a class="navbar-brand" href="/">Ecclesia</a>
-		</div>
-		<div>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="/">Sign up</a></li>
-				<li><a href="/login">Sign in</a></li>
-			</ul>
-		</div>
+			<div class="navbar-header" >
+				<a class="navbar-brand" href="/">Ecclesia</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="/">Sign up</a></li>
+					<li><a href="/login">Sign in</a></li>
+				</ul>
+			</div>
 		</nav>
 	</div>
 
 	<div class="sign-up-container">
 		<div class=" huge-title">
-			<p></p>
-			<p><font class="welcome-form">Welcome   </font><font class="join-form">to join us </font></p>
+			<p><font class="join-form">Welcome&nbsp; to </font><font class="welcome-form">&nbsp;Ecclesia</font></p>
 		</div>
 	</div>
 
@@ -131,92 +146,8 @@
 		</button>
 	</div>
 
-	<div class="container-fluid">	
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>	
-			<section class="main">
+	<% include introduction.ejs %>
 
-				<ul class="timeline">
-
-					<li class="event">
-						<input type="radio" name="tl-group" checked/>
-						<label></label>
-						<div class="thumb user-1"><span></span></div>
-						<div class="content-perspective">
-							<div class="content">
-								<div class="content-inner">
-									<h3>About Ecclesia</h3>
-									<p>Ecclesia is an application which simulates a real-time meeting online. We approve at most 6 participants to attend the meeting at the same time. Several functions are provided to help you hold the meeting. It's high time for you joining us and enjoying the convenience brought by Ecclesia.</p>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li class="event">
-						<input type="radio" name="tl-group"/>
-						<label></label>
-						<div class="thumb user-2"><span></span></div>
-						<div class="content-perspective">
-							<div class="content">
-								<div class="content-inner">
-									<h3>Online Voice And Online Video</h3>
-									<p>When you are in a online meeting, it's quite inconvenient to communicate by typing. Accordingly, we support online voice and online video, making the online meeting feel like face-to-face. You will never be botherd by typing any more.</p>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li class="event">
-						<input type="radio" name="tl-group"/>
-						<label></label>
-						<div class="thumb user-3"><span></span></div>
-						<div class="content-perspective">
-							<div class="content">
-								<div class="content-inner">
-									<h3>Drawing</h3>
-									<p>When we have a discussion in reality, we usually use pen to draw on paper to help us present ourselves more clearly. Therefore, we make it possible to draw in the screen using your mouse. You draw something by the mouse in the screen, and Ecclesia will synchronize this to the others.</p>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li class="event">
-						<input type="radio" name="tl-group"/>
-						<label></label>
-						<div class="thumb user-4"><span></span></div>
-						<div class="content-perspective">
-							<div class="content">
-								<div class="content-inner">
-									<h3>Add Chart</h3>
-									<p>This is a function which can generate a chart by the data you put in. You can choose one template from several templates we provide, than put in the data you want to show to the other members in the form of this chart. After that, the final chart will be delivered to everyone in the meeting.</p>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li class="event">
-						<input type="radio" name="tl-group"/>
-						<label></label>
-						<div class="thumb user-5"><span></span></div>
-						<div class="content-perspective">
-							<div class="content">
-								<div class="content-inner">
-									<h3>Add Presentations</h3>
-									<p>This function can help you demonstrate presentations from the local. You can choose your local PPT and Ecclesia will import it into the real-time meeting. By this, the demonstration will make your opinion much easier to understand.</p>
-								</div>
-							</div>
-						</div>
-					</li>
-					
-				</ul>
-			</section>
-
-	</div>
-
-</script>
 
 </body>
 </html>        
