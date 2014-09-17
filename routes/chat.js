@@ -10,6 +10,7 @@ var compresser = require('../modules/compresser.js');
 router.get('/', function (req, res) {
   var uname = req.session.username || 'test';
   res.render('chat', {
+    session: req.session,
     username: uname
   });
 });

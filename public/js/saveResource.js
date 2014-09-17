@@ -30,10 +30,13 @@ function saveImage(base64code, _eleType, _page, callback) {
       var objectId = data.objectId,
           saveImgType = data.imgType;
       console.log(data.response, objectId, saveImgType);
-      callback({objectId:objectId, imgType:saveImgType});
+      if (typeof callback === 'function') {
+        callback({objectId:objectId, imgType:saveImgType});
+      }
     },
     err: function(err) {
       alert(err);
     }
   });
 }
+
