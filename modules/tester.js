@@ -86,13 +86,13 @@ var newMeeting = {
   SketchList:[]
 }
 
-Meeting.queryMdTemp("nidd", "nima", function (err, result){
-  if(err){
-    console.log(err);
-  }else{
-    console.log(result);
-  }
-})
+// Meeting.queryMdTemp("nidd", "nima", function (err, result){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     console.log(result);
+//   }
+// })
 
 // var cryptor  = crypto.createHash('sha512');
 // var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
@@ -231,3 +231,16 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 /***************************************************************/
 
 
+/*****************************500 fucking test**************************/
+
+// Meeting.queryMdPreview("sbsbsb", "sb", function (err, re){
+//   if(!err){
+//     console.log(re);
+//   }
+// })
+
+
+// var s = "dagggeafasfsadfsadfertefsdfasrfea";
+
+// var down = s.split(".");
+// console.log(down);

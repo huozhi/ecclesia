@@ -459,18 +459,25 @@ Meeting.queryMdPreview = function (roomName, host, callback){
     if(err){
       mongodb.close();return callback(err, null);
     }else{
-          db.collection("MdPreview", function (err, collection){
+          db.createCollection("MdPreview", function (err, collection){
             if(err){
               mongodb.close();return callback(err, null);
+            }else{
+              db.collection("MdPreview", function (err, collection){
+                if(err){
+                  mongodb.close();return callback(err, null);
+                }
+                collection.find({roomName : roomName, host: host}).toArray(function (err, prevArr){
+                  if(err){
+                    mongodb.close();return callback(err, null);
+                  }else{
+                    mongodb.close();return callback(null, prevArr);
+                  }
+                })
+              });
+
             }
-            collection.find({roomName : roomName, host: host}).toArray(function (err, prevArr){
-              if(err){
-                mongodb.close();return callback(err, null);
-              }else{
-                mongodb.close();return callback(null, prevArr);
-              }
-            })
-      })
+          })
     }
   });
 
