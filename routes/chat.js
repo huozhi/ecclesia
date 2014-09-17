@@ -37,6 +37,36 @@ router.post('/upload-markdown', function (req, res) {
   });
 });
 
+router.post('/query-meeting-markdown', function (req, res){
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+  if (!roomName || !host) {
+    return res.rendirect('/home');
+  }
+  console.log('query-meeting-markdown:',roomName,host);
+  Meeting.queryConference(roomName, host, function (err, meeting){
+    console.log('in query-meeting-markdown');
+    if(!err){
+      console.log('meeting',meeting);
+      if (meeting) {
+        console.log('mdlist',meeting.MarkdownList);
+        var result = [];
+        meeting.MarkdownList.forEach(function (md){
+          result.push(md);
+        });
+        console.log('result',result);
+        return res.json({response:"query-markdown-success", mdArr : result});
+      } else {
+        console.log('query-meeting-md, null');
+        return res.json({response:"query-markdown-success", mdArr: null});
+      }
+    } else {
+      console.log('query-metting-md err', err);
+      return res.json({response:"query-markdown-success", mdArr: null});
+    }
+  });
+});
+
 router.post('/query-preview-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
@@ -68,35 +98,7 @@ router.post('/query-preview-markdown', function (req, res){
   });
 
 })
-router.post('/query-meeting-markdown', function (req, res){
-  var roomName = req.session.roomName;
-  var host = req.session.host;
-  if (!roomName || !host) {
-    return res.rendirect('/home');
-  }
-  console.log('query-meeting-markdown:',roomName,host);
-  Meeting.queryConference(roomName, host, function (err, meeting){
-    console.log('in query-meeting-markdown');
-    if(!err){
-      console.log('meeting',meeting);
-      if (meeting) {
-        console.log('mdlist',meeting.MarkdownList);
-        var result = [];
-        meeting.MarkdownList.forEach(function (md){
-          result.push(md);
-        });
-        console.log('result',result);
-        return res.json({response:"query-markdown-success", mdArr : result});
-      } else {
-        console.log('query-meeting-md, null');
-        return res.json({response:"query-markdown-success", mdArr: null});
-      }
-    } else {
-      console.log('query-metting-md err', err);
-      return res.json({response:"query-markdown-success", mdArr: null});
-    }
-  });
-});
+
 
 router.post('/archive-markdown', function (req, res){
   // markdown id

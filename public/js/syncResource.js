@@ -12,8 +12,9 @@ $(document).ready(function() {
   // sync impress in loading page
   syncCharts();
   $(".btn-refresh").click(function(){
-  syncPreview();
-    syncImpress();
+  
+    // syncImpress();
+      syncPreview();
   });
 });
 
@@ -33,7 +34,7 @@ function syncImpress() {
       var markdownArr = data.mdArr;
       createImpress(markdownArr);
     },
-    error: function (data, status, err) { alert(err); }
+    error: function (data, status, err) { console.log(err); }
   });
 }
 

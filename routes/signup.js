@@ -18,14 +18,14 @@ router.post('/register', function(req,res) {
     username : name,
     userPwd  : pwd,
   });
-  var result = null;
+  var result = 'null';
   user.register(function(err, newuser){
     if(!err){
       req.session.username = name;
-      result = true;
+      result = 'true';
       res.send(result);
     }else{
-      result = false;
+      result = 'false';
       res.send(result);
     }
   });

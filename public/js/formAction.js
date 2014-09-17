@@ -1,7 +1,5 @@
 $(document).ready(function() {
-  $("#sign-up-btn").click(function(){
-    window.location.href = "/";
-  });
+  
 
   $("#sign-in-btn").click(function(){
     var name = $("#inputUsername").val();
