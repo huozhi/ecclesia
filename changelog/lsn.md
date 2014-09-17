@@ -8,6 +8,8 @@
 * 注释：chatWebRTC.js中saveImage
 * 问题：浏览器console中提示saveImage中未定义callback。不敢改。
 
+* 调整chat.ejs界面布局：chat-layout.css
+
 
 #9-15
 

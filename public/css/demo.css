@@ -29,11 +29,11 @@
 
 body {
     font-family: 'Lato', Calibri, Arial, sans-serif;
-    background: #c2edf4;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0,#f8f8f8), color-stop(1,#c6dcef));
+    <!--background: #c2edf4;-->
     font-weight: 300;
     font-size: 14px; 
     color: #333;
-    overflow-y: scroll;
     overflow-x: hidden;
 }
 
@@ -63,7 +63,7 @@ a {
 .container > header h1 {
 	margin: 0;
 	font-weight: 400;
-	color: #41838e;
+	color: #ea66a6;
 	font-size: 16px; 
 	text-shadow: 0 1px 1px rgba(255,255,255,0.4);
 }
@@ -81,7 +81,7 @@ a {
 	font-weight: 400;
 	position: relative;
 	background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAI0lEQVQIW2P8DwSMQMCABBhBgiA+sgRYBboEXBuyBIpZMAkAW1YUAh9deX8AAAAASUVORK5CYII=) repeat-x bottom left;
-	text-shadow: 4px 4px 0px #41838e;
+	text-shadow: 4px 4px 0px #ea66a6;
 }
 
 .container > header h2 span {

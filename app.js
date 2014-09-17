@@ -7,6 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var routes = require('./routes');
+var cluster = require('cluster');
+var numCPUs = require('os').cpus().length;
+
 var app = express();
 
 var https = require('https');
@@ -76,13 +79,29 @@ app.use(function(err, req, res, next) {
 });
 
 
-// module.exports = app;
-
 var privateKey = fs.readFileSync('sslcert/privatekey.pem').toString(),
     certificate = fs.readFileSync('sslcert/certificate.pem').toString(),
     cacert = fs.readFileSync('sslcert/cacert.pem').toString();
 
-var server = https.createServer({key: privateKey, cert: certificate, ca: cacert}, app)
-    .listen(3000);
+// if (cluster.isMaster) {
+//     console.log('master start...');
+
+//     // fork workers
+//     for (var i = 0; i < numCPUs; i++) {
+//         cluster.fork();
+//     }
+//     cluster.on('listening',function(worker,address){
+//         console.log('listening: worker ' + worker.process.pid +', Address: '+address.address+":"+address.port);
+//     });
+
+//     cluster.on('exit', function(worker, code, signal) {
+//         console.log('worker ' + worker.process.pid + ' died');
+//     });
+// } else {
+    var server = 
+        https.createServer({key: privateKey, cert: certificate, ca: cacert}, app)
+        .listen(3000);    
+// }
+
 
 module.exports = app;

@@ -3,10 +3,6 @@ $(document).ready(function() {
     window.location.href = "/";
   });
 
-  $('#cancel-btn').click(function() {
-    window.location.href = "/";
-  })
-
   $("#sign-in-btn").click(function(){
     var name = $("#inputUsername").val();
     var pwd = $("#inputPassword").val();

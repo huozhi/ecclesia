@@ -109,7 +109,8 @@ webrtc.on('rtcSyncStroke', function (point) {
 });
 
 webrtc.on('rtcSyncChart', function (chartData) {
-  // console.log('webrtc.on rtcSyncChart');
+
+  console.log('webrtc.on rtcSyncChart');
   $.ajax({
     url: '/chat/query-img',
     type: 'POST',
@@ -150,32 +151,50 @@ webrtc.on('rtcSyncChart', function (chartData) {
   });
 });
 
-webrtc.on('rtcSyncImpress', function (impressData) {
-  $.ajax({
-    url: '/chat/query-markdown',
-    type: 'POST',
-    contentType: 'application/json',
-    dataType: 'json',
-    data: JSON.stringify({
-      request: 'get-markdown',
-      objectId: impressData.objectId
-    }),
-    success: function (data) {
-      // the server return value and 
-      // database structure should be fixed
-      var $mdScript = $("<script />", {
-        html: splitedMdArr,
-        type: "text/template"
-      });
-      var $text = $('<section data-markdown></section>').append($mdScript);
-      // console.log($impressText);
-      $('#reveal > .slides').append($text);
-      while (!Reveal.isLastSlide()) Reveal.next();
-      RevealMarkdown.reinit();
-    },
-    error: function (err) { alert(err); }
-  })
+webrtc.on('rtcSYncImpress', function (impressData) {
+  syncImperss();
 });
+
+webrtc.on('rtcSyncPreview', function (previewData) {
+  var previewCntrId = 'preview_' + chartData.username;
+  $(previewCntrId).children().remove();
+  var $section = $('<section data-markdown></section>');
+  $section.append(
+      $('<script />', {
+        html: previewData.markdown,
+        type: 'text/template'
+      })
+    );
+  $(previewCntrId).append($section);
+  RevealMarkdown.reinit();
+  // $.ajax({
+  //   url: '/chat/query-preview-markdown',
+  //   type: 'POST',
+  //   contentType: 'application/json',
+  //   dataType: 'json',
+  //   data: JSON.stringify({
+  //     request: 'get-markdown',
+  //     objectId: impressData.objectId
+  //   }),
+  //   success: function (data) {
+  //     // the server return value and 
+  //     // database structure should be fixed
+  //     var $mdScript = $("<script />", {
+  //       html: splitedMdArr,
+  //       type: "text/template"
+  //     });
+  //     var $text = $('<section data-markdown></section>').append($mdScript);
+  //     // console.log($impressText);
+  //     $('#reveal > .slides').append($text);
+  //     while (!Reveal.isLastSlide()) Reveal.next();
+  //     RevealMarkdown.reinit();
+  //   },
+  //   error: function (err) { alert(err); }
+  // })
+});
+
+// share rtc object with markdownUpload.js
+markdownUpload_setWebRTCRef(webrtc);
 
 /* ============= end new event ============== */
 
@@ -228,19 +247,19 @@ Reveal.addEventListener('ready', function (event) {
     });
     
     $(".navigate-left").click(function(){
-      if($.cookie('sketchChanged')=='true'){
+      if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
-        $.cookie('sketchChanged',false);
+        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged', 'false');
       }
     });
     $(".navigate-right").click(function(){
-      if($.cookie('sketchChanged')=='true'){
+      if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
-        $.cookie('sketchChanged',false);
+        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged','false');
       }
     });
 });

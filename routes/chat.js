@@ -8,43 +8,71 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  var uname = req.session.username || 'test';
-  res.render('chat', {
-    username: uname
+  if (!req.session.username) {
+    return res.redirect('/');
+  }
+
+  return res.render('chat', {
+    session: req.session,
+    username: req.session.username,
+    isHost: req.session.username === req.session.host
   });
 });
 
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
-  var author = req.body.username;
+  var author = req.session.username;
   var roomName = req.session.roomName;
   var host = req.session.host;
   
+  console.log(markdowns);
+  console.log(author, roomName, host);
   Meeting.seveMdTemp(roomName, host, author, markdown, function (err, newMds){
     if(!err){
-      res.json({response : "upload-markdown-success", mdArr : newMds});
+      return res.json({response : "upload-markdown-success", mdArr : newMds});
+    } else {
+      return res.json({response: 'upload-markdown-failed'});
     }
   });
 });
 
-router.post('/query-preview', function (req, res){
+router.post('/query-preview-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
-
-  Meeting.queryMdPreview(roomName, host, function (err, mdArr){
-      return res.json({response:"query-markdown-success", mdArr : mdArr});
+  if (!roomName || !host) {
+    return res.json({response:"query-markdown-success", previewDict: null});
+  }
+  Meeting.queryMdPreview(roomName, host, function (err, previewDict){
+    if (!err) {
+      if (previewDict.length) {
+        return res.json({response:"query-markdown-success", previewDict : previewDict});
+      } else {
+        return res.json({response:"query-markdown-success", previewDict : null});
+      }
+    } else {
+      console.log(err);
+      return res.json({response:'query-markdown-failed', previewDict: null});
     }
+
   });
 
 })
 router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
-
+  if (!roomName || !host) {
+    return res.rendirect('/home');
+  }
   Meeting.queryMdTemp(roomName, host, function (err, result){
     if(!err){
-      return res.json({response:"query-markdown-success", mdArr : result});
+      if (result.length) {
+        console.log(result);
+        return res.json({response:"query-markdown-success", mdArr : result});
+      } else {
+        return res.json({response:"query-markdown-success", mdArr: null});
+      }
+
     }
   });
 });
@@ -92,23 +120,32 @@ router.post('/refresh-img', function (req, res){
   var host = req.session.host;
   var date = req.session.date;
 
-  Meeting.queryHistory("world cup", "heale", "2014/9/13", function (err, conference){
+  if (!type || !roomName || !host || !data) {
+    return res.json({response : "refresh-success", SketchList : null});
+  }
+  Meeting.queryHistory(roomName, host, date, function (err, conference){
     if(!err){
       var resList = [];
       console.log(conference.ChartList);
       if(type === "chart"){
+        if (conference.ChartList.length == 0) {
+          return res.json({response: 'refresh-success', ChartList: null});
+        }
         resList = conference.ChartList;
         console.log('chart type');
-        return res.json({response : "refresh-success", ChartList : resList})
+        return res.json({response : "refresh-success", ChartList : resList});
       }
       else if(type === "sketch"){
+        if (conference.SketchList.length == 0) {
+          return res.json({response: 'refresh-success', SketchList: null});
+        }
         resList = conference.SketchList;
         console.log('sketch type');
-        return res.json({response : "refresh-success", SketchList : resList})
+        return res.json({response : "refresh-success", SketchList : resList});
       }
       else {
         console.log('err type');
-
+        return res.json({response: "refresh-failed", SketchList: null});
       }
     }
   });
@@ -120,10 +157,7 @@ router.post('/query-img', function (req, res){
 
   Meeting.queryImg(objId, function (err, image){
     if(!err){
-      var s = new Date().getTime();
       image.img = compresser.compress(image.img);
-      var e = new Date().getTime();
-      console.log(e-s);
       return res.json({response : "query-img-success", image : image});
     }
   });
