@@ -183,13 +183,14 @@ function sendReq(objId){
 		dataType: 'json',
 		data:postStr,
 		success: function (data, status){
+			console.log(data);
 	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
 	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
 	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
 	  	window.location.href = "/history/history-detail";
 		},
 		error: function (data, status, e){
-			alert(e);
+			console.log(e);
 		}
 	});
 }
