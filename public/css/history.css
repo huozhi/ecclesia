@@ -1,0 +1,124 @@
+body {
+  background-image: url(/img/pattern2.png), url(/img/background.jpg);
+  width: 100%;
+  overflow-x: hidden;
+  background-color: transparent;
+  background-repeat: repeat, no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  -webkit-background-size: auto, cover;
+  -moz-background-size: auto, cover;
+  -o-background-size: auto, cover;
+  background-size: auto, cover;
+  font-family: 'Josefin Slab', Arial, sans-serif;
+}
+img:hover{
+  box-shadow: 0px 0px 35px 4px #292929;
+}
+td {
+  font-size: 20px;
+  overflow: hidden;
+  word-break:break-all
+}
+h1{
+  margin:0px;
+  padding:20px;
+  font-size:42px;
+  color:#fff;
+  text-align:left;
+  font-weight:400;
+  text-align:left;
+}
+h1 span{
+  font-size:22px;
+  color:#ddd;
+  padding-top:10px;
+}
+.header{
+  font-family:'Arial Narrow', Arial, sans-serif;
+  line-height: 24px;
+  font-size: 11px;
+  background: #000;
+  opacity: 0.9;
+  text-transform: uppercase;
+  z-index: 9999;
+  position: relative;
+  -webkit-box-shadow: 1px 0px 2px #000;
+  box-shadow: 1px 0px 2px #000;
+}
+.header a{
+  position: relative;
+  left: 90%;
+  padding: 0px 10px;
+  letter-spacing: 1px;
+  color: #ddd;
+  display: block;
+}
+.header a:hover{
+  color: #fff;
+}
+.head-title {
+  float: left;
+  width: 620px;
+  height: 400px;
+  margin: 10px;
+  border: #7d7d7d solid 1px;
+  text-align: center;
+  background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
+}
+.div-container {
+  float: left;
+  width:300px;
+  height:190px;
+  margin: 10px;
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+  display:box;
+  box-pack:center;
+  box-align:center;
+  border: #7d7d7d solid 1px;
+}
+.index {
+  display: inline-block;
+  width: 280px;
+  height: 170px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.index:hover {
+  box-shadow: 0px 0px 35px 4px #292929;
+}
+.his-container {
+  position: absolute;
+  display: inline-block;
+  width: 1280px;
+  top: 120px;
+  left: 50%;
+  margin-left: -640px;
+  margin-bottom: 50px;
+  color:#fff;
+}
+.btn-home {
+  position: relative;
+  top: 250px;
+  width:120px;
+  height:36px;
+  background-color:#aeab9c;
+  border-radius:100em;
+  font-size: 20px;
+  line-height: 1.8em;
+  color: #fff;
+  display: inline-block;
+  text-decoration: none;
+}
+.btn-home:hover{
+  color: #fff;
+  text-decoration: none;
+  background-color: #848174;
+}
