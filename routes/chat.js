@@ -10,6 +10,7 @@ var compresser = require('../modules/compresser.js');
 router.get('/', function (req, res) {
   var uname = req.session.username || 'test';
   res.render('chat', {
+    session: req.session,
     username: uname
   });
 });
@@ -18,10 +19,33 @@ router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
   var author = req.body.username;
+  var roomName = req.session.roomName;
+  var host = req.session.host;
   
-  Meeting.seveMdTemp(author, markdown, function (err, newMds){
+  Meeting.seveMdTemp(roomName, host, author, markdown, function (err, newMds){
     if(!err){
       res.json({response : "upload-markdown-success", mdArr : newMds});
+    }
+  });
+});
+
+router.post('/query-preview', function (req, res){
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+
+  Meeting.queryMdPreview(roomName, host, function (err, mdArr){
+      return res.json({response:"query-markdown-success", mdArr : mdArr});
+    }
+  });
+
+})
+router.post('/query-meeting-markdown', function (req, res){
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+
+  Meeting.queryMdTemp(roomName, host, function (err, result){
+    if(!err){
+      return res.json({response:"query-markdown-success", mdArr : result});
     }
   });
 });
@@ -31,7 +55,7 @@ router.post('/archive-markdown', function (req, res){
   //roomName, host, get from session
   var roomName = req.session.roomName || "",
       host = req.session.host || "",
-      author = req.body.username || "author";
+      author = req.session.username || "author";
 
   Meeting.saveMarkdown(roomName, host, author, function (err, result){
     if(!err){
@@ -69,7 +93,7 @@ router.post('/refresh-img', function (req, res){
   var host = req.session.host;
   var date = req.session.date;
 
-  Meeting.queryConference("world cup", "heale", "2014/9/13", function (err, conference){
+  Meeting.queryHistory("world cup", "heale", "2014/9/13", function (err, conference){
     if(!err){
       var resList = [];
       console.log(conference.ChartList);

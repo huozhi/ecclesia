@@ -1,4 +1,10 @@
-function getUploadMarkdown() {
+var webrtcRef;
+
+function markdownUpload_setWebRTCRef (webrtc) {
+  webrtcRef = webrtc;
+}
+
+function getUploadMarkdown () {
   var mdFile = $('#upload-md-file').get(0).files[0],
       fileName = mdFile.name,
       fileType = fileName.split('.')[1];
@@ -42,12 +48,12 @@ $(document).ready(function () {
         data: JSON.stringify({ text: _text }),
         contentType: 'application/json',
         dataType: 'json',
-        success: function (data, textStatus, jqXHR) {
+        success: function (data) {
           // the server return value and 
           // database structure should be fixed          
           var splitedMdArr = data.markdowns;
           var $mdScript = $("<script />", {
-            html: splitedMdArr,
+            html: splitedMdArr[0],
             type: "text/template"
           });
           var $text = $('<section data-markdown></section>').append($mdScript);
@@ -55,6 +61,13 @@ $(document).ready(function () {
           $('#reveal > .slides').append($text);
           // while (!Reveal.isLastSlide()) Reveal.next();
           RevealMarkdown.reinit();
+          // send preview to all
+          var username = sessionStorage.getItem('username');
+          webrtcRef.signalSyncImpress({
+            username: username,
+            preview: splitedMdArr[0]
+          });
+          $('#add-impress-modal').modal('toggle');
         },
         error: function (err) {
           alert(err);
@@ -62,6 +75,5 @@ $(document).ready(function () {
       });
     };
     fileReader.readAsText(upfile);
-    $('#add-impress-modal').modal('toggle');
   });
 });

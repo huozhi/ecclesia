@@ -25,7 +25,7 @@ router.post('/query-history', function (req, res){
   var roomName = req.body.roomName;
   var host = req.body.host;
   var date = req.body.date;
-  Meeting.queryConference(roomName, host, date, function (err, result){
+  Meeting.queryHistory(roomName, host, date, function (err, result){
     if(!err){
       res.json(result);
     }

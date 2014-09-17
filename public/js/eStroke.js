@@ -30,7 +30,7 @@
             ctx.moveTo(point.x, point.y);
           }
           if($.cookie('sketchChanged') == 'false')
-            $.cookie('sketchChanged',true);
+            $.cookie('sketchChanged', 'true');
           break;
         case 'mousemove':
           if (keyDown == true) {
