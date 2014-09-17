@@ -99,11 +99,23 @@ router.post('/create-room', function (req, res) {
       if(!err){
         resInfo = "create-success";
         req.session.host = req.session.username;
-        return res.json({response:resInfo, roomName:meeting.roomName, creator: meeting.host, roomHash : roomHash});
+        var conference  = {
+            roomName : req.body.roomName,
+            host : req.session.username,
+            date : req.session.date,
+          };
+        var username = req.session.username;
+          User.archive(username, conference, function (err, archiveRe){
+            if(!err){
+              return res.json({response : "create-success", roomName : roomName, creator : host, roomHash :roomHash} );
+            } else {
+              console.log(err);
+              return res.json({response: 'create-failed'});
+            }
+          });
       }
       else {
-        console.log(err);
-        return res.json({response: resInfo});
+        return res.json({response: 'create-failed'});        
       }
     });
   }
