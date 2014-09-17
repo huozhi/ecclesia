@@ -1,4 +1,5 @@
 var mongodb = require('./db');
+var MongoClient = require('mongodb').MongoClient;
 
   function Meeting(meeting){
   this.roomName = meeting.roomName;
@@ -260,26 +261,26 @@ Meeting.archiveImg = function (archiveObj, callback){
 }
 
 Meeting.queryImg = function (imgId, callback){
-  mongodb.open(function (err ,db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true}, function (err ,db){
     if(err){
-      mongodb.close();
+      db.close();
       return callback(err, null);
     }else{
       db.collection('Images', function (err, collection){
         if(err){
           console.log('queryImg open Images:',err);
 
-          mongodb.close();
+          db.close();
           return callback(err,null);
         }
         collection.findOne({_id : imgId}, function(err, result){
           if(err){
             console.log('queryImg:',err);
-            mongodb.close();
+            db.close();
             return callback(err, null);
           } else {
-            console.log(result);
-            mongodb.close();
+            //console.log(result);
+            db.close();
             return callback(null, result);
           }
         });

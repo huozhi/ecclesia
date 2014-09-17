@@ -180,7 +180,7 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // var ObjectID = require('mongodb').ObjectID;
 // var objid = new ObjectID("54140ab79d982a0413769efd");
 // Meeting.queryImg(objid, function(err, result){
-//           console.log("img" + result);
+//           console.log("img" + result._id);
 // });
 
 //save wrapped md test
@@ -244,3 +244,5 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
 // var down = s.split(".");
 // console.log(down);
+
+
