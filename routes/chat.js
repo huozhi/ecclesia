@@ -66,13 +66,16 @@ router.post('/query-meeting-markdown', function (req, res){
   }
   Meeting.queryMdTemp(roomName, host, function (err, result){
     if(!err){
-      if (result.length) {
+      if (result && result.length) {
         console.log(result);
         return res.json({response:"query-markdown-success", mdArr : result});
       } else {
+        console.log('query-meeting-md, null');
         return res.json({response:"query-markdown-success", mdArr: null});
       }
-
+    } else {
+      console.log('query-metting-md err', err);
+      return res.json({response:"query-markdown-success", mdArr: null});
     }
   });
 });

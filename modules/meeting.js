@@ -428,21 +428,28 @@ Meeting.queryMdTemp = function (roomName, host, callback){
     if(err){
       mongodb.close();return callback(err, null);
     }else{
-      db.collection(tempName, function (err, collection){
-        if(err){
-          mongodb.close();return callback(err, null);
-        }else{
-          collection.find({}).toArray(function (err, result){
+      db.createCollection(tempName, function(err, result){
+        if(err) {
+          mongodb.close();
+          return callback(err, null);
+        } else {
+          db.collection(tempName, function (err, collection){
             if(err){
               mongodb.close();return callback(err, null);
             }else{
-              mongodb.close();return callback(null, result);
+              collection.find({}).toArray(function (err, result){
+                if(err){
+                  mongodb.close();return callback(err, null);
+                }else{
+                  mongodb.close();return callback(null, result);
+                }
+              });
             }
-          })
+          });
         }
-      })
+      });
     }
-  })
+  });
 }
 
 Meeting.queryMdPreview = function (roomName, host, callback){
