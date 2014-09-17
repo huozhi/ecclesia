@@ -8,15 +8,18 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  // if (!req.session.username) {
-  //   return res.redirect('/');
-  // }
+  if (!req.session.username) {
+    return res.redirect('/');
+    // return res.render('chat');
+  } else {
 
-  return res.render('chat', {
-    session: req.session,
-    username: req.session.username,
-    isHost: req.session.username === req.session.host
-  });
+    return res.render('chat', {
+      session: req.session,
+      username: req.session.username,
+      isHost: req.session.username === req.session.host
+    });
+  }
+
 });
 
 router.post('/upload-markdown', function (req, res) {

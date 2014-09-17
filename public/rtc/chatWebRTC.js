@@ -51,7 +51,7 @@ webrtc.on('videoAdded', function (video, peer) {
 function addPreviewContainer(peer) {
   var remotes = $('.right-sidebar');
   var addPeer = $(document.createElement('div')).addClass('container-frame');
-  addPeer.attr('id', 'preview_' + peer.username);
+  addPeer.attr('id', 'preview_' + webrtc.getUserName(peer));
   remotes.append(addPeer);
 }
 
@@ -69,9 +69,11 @@ function addVideoContainer(video, peer) {
 
 webrtc.on('videoRemoved', function (video, peer) {
   var remotes = $('.left-sidebar');
+  var leavePreview = $('#preview_' + webrtc.getUserName(peer));
   var leavePeer = $('#video_' + webrtc.getUserName(peer));
   if (remotes && leavePeer) {
-    leavePeer.fadeOut().remove();
+    leavePeer.remove();
+    leavePreview.remove();
   }
 })
 
@@ -156,12 +158,15 @@ webrtc.on('rtcSYncImpress', function (impressData) {
 });
 
 webrtc.on('rtcSyncPreview', function (previewData) {
-  var previewCntrId = 'preview_' + chartData.username;
+  console.log('recv from', previewData.username);
+  var previewCntrId = '#preview_' + previewData.username;
+  console.log($(previewCntrId));
   $(previewCntrId).children().remove();
   var $section = $('<section data-markdown></section>');
+  console.log('md',previewData.preview);
   $section.append(
       $('<script />', {
-        html: previewData.markdown,
+        html: previewData.preview,
         type: 'text/template'
       })
     );

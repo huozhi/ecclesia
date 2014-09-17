@@ -37,6 +37,9 @@ router.post('/join-room', function(req, res){
   }
   Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
+      if (!result) {
+        return res.json({response: 'join-failed'});
+      }
       date = result.date;
       console.log('date',result.date);
       var cryptor = crypto.createHash('sha1');
@@ -107,7 +110,7 @@ router.post('/create-room', function (req, res) {
         var username = req.session.username;
           User.archive(username, conference, function (err, archiveRe){
             if(!err){
-              return res.json({response : "create-success", roomName : roomName, creator : host, roomHash :roomHash} );
+              return res.json({response : "create-success", roomName : conference.roomName, creator : conference.host, roomHash :roomHash} );
             } else {
               console.log(err);
               return res.json({response: 'create-failed'});

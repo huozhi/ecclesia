@@ -11,7 +11,7 @@ $(document).ready(function() {
           sessionStorage.setItem('username', name);
           window.location.href = "/home";
         }else{
-          alert('login failed');
+          window.location.href = "/login";
         }
     });
   });

@@ -435,7 +435,7 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
                   username : author,
                   splitMd : markdowns[i], 
                 };
-
+                console.log(newTemp);
                 tempDocs.push(newTemp);           
               }
 //              console.log(tempDocs);
