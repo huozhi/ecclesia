@@ -17,6 +17,10 @@
 </head>
 
 <style>
+html {
+	width: 100%;
+	overflow-x: hidden;
+}
 .head-container {
 	background-color: #130c0e;
 	height:50px;
@@ -75,18 +79,19 @@
 .sign-up-container,.sign-up-form:after{
 	clear:both;
 }
+.btn-li {
+	margin-right: 15px;
 }
-
 </style>
 
-<body overflow="hidden">
+<body>
 
 	<div class="head-container">
 		<nav class="navbar navbar-default" role="navigation" style="border-radius:0px;">
 		<div class="navbar-header" >
 			<a class="navbar-brand" href="/">Ecclesia</a>
 		</div>
-		<div>
+		<div class="btn-li">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active"><a href="/">Sign up</a></li>
 				<li><a href="/login">Sign in</a></li>
