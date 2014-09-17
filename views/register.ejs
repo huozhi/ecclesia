@@ -17,7 +17,7 @@
 </head>
 
 <style>
-html {
+body {
 	width: 100%;
 	overflow-x: hidden;
 }
@@ -33,25 +33,19 @@ h1,h2,h3,h4,h5,h6 {
 	background-color: #130c0e;
 	height:50px;
 }
-.sign-up-container {
+.sign-up-container {	
+	position: relative;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));
 	height:500px;
-	padding: 100px 50px 0px 50px;
-	position: relative;
 }
-.sign-up-container:after{
-	content:'';
-	display:block;
-	position:absolute;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
-	background: url(img/pattern3.png) repeat center center;
-	opacity: .2;
+.sign-up-bgimage {
+	position: relative;
+	padding: 100px 50px 0px 50px;
+	height:500px;
+	background: url(/img/pattern3.png) repeat center center;
 }
 .sign-up-form .huge-title {
-	/*top: 100px;*/
+	
 	position: relative;
 	height: 500px;
 	display: inline-block;
@@ -59,12 +53,14 @@ h1,h2,h3,h4,h5,h6 {
 }
 .sign-up-form{
 	float: right;
-	position: absolute;
-	left:950px;
-	top:150px;
+	position: relative;
+	right:5%;
+	/*top:150px;*/
 }
 .huge-title {
+	position: relative;
 	float: left;
+	left: 50px;
 	font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:white;
@@ -121,6 +117,8 @@ h1,h2,h3,h4,h5,h6 {
 	</div>
 
 	<div class="sign-up-container">
+		<div class="sign-up-bgimage">
+		<!-- left part: introduction -->
 		<div class=" huge-title">
 			<p><font class="join-form">Welcome&nbsp; to </font><font class="welcome-form">&nbsp;Ecclesia</font></p>
 			<p style="line-height:90%">
@@ -133,37 +131,39 @@ h1,h2,h3,h4,h5,h6 {
 				</font>
 			</p>
 		</div>
+		<!-- right part: sign in part -->
+		<div class="sign-up-form">
+			<div>
+				<input id="useremail" type="text" class="form-control" placeholder="Your email required">
+			</div>
+			<br>
+			<div>
+				<input id="username" type="text" class="form-control" placeholder="Pick a username">
+			</div>
+			<br>
+			<div>
+				<input id="password" type="password" class="form-control" placeholder="Create a password">
+			</div>
+			<br>
+
+			<div>
+				<input id="repeatpwd" type="password" class="form-control" placeholder="Repeat your password">
+			</div>
+			<br>
+			<div class="text-muted">
+				<p><font color="white">Use letters, umerals and characters as your username or password</p>
+			</div>
+			<br>
+
+			<button type="button" id="sign-up-button" class="btn btn-lg btn-success btn-block" >
+				Sign up for Ecclesia
+			</button>
+		</div>
+	</div>
 	</div>
 
 
-	<div class="sign-up-form">
 
-		<div>
-			<input id="useremail" type="text" class="form-control" placeholder="Your email required">
-		</div>
-		<br>
-		<div>
-			<input id="username" type="text" class="form-control" placeholder="Pick a username">
-		</div>
-		<br>
-		<div>
-			<input id="password" type="password" class="form-control" placeholder="Create a password">
-		</div>
-		<br>
-
-		<div>
-			<input id="repeatpwd" type="password" class="form-control" placeholder="Repeat your password">
-		</div>
-		<br>
-		<div class="text-muted">
-			<p><font color="white">Use letters, umerals and characters as your username or password</p>
-		</div>
-		<br>
-
-		<button type="button" id="sign-up-button" class="btn btn-lg btn-primary btn-block" >
-			Sign up for Ecclesia
-		</button>
-	</div>
 
 	<% include introduction.ejs %>
 

@@ -113,9 +113,13 @@ function SimpleWebRTC(opts) {
         self.emit('rtcSyncChart', chartData);
     });
 
+    connection.on('syncPreview', function (previewData) {
+        self.emit('rtcSyncPreview', previewData);
+    });
+
     connection.on('syncImpress', function (impressData) {
         self.emit('rtcSyncImpress', impressData);
-    });
+    })
 
     /* ================= end new socket.io event listener ============== */
 
@@ -464,6 +468,10 @@ SimpleWebRTC.prototype.sendSketchPointData = function (point) {
 SimpleWebRTC.prototype.signalSyncChart = function (chartData) {
     console.log('this.connection.emit signalSyncChart');
     this.connection.emit('signalSyncChart', chartData);
+}
+
+SimpleWebRTC.prototype.signalSyncPreview = function (previewData) {
+    this.connection.emit('signalSyncPreview', previewData);
 }
 
 SimpleWebRTC.prototype.signalSyncImpress = function (impressData) {

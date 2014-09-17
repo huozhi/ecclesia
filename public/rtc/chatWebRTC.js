@@ -151,15 +151,19 @@ webrtc.on('rtcSyncChart', function (chartData) {
   });
 });
 
-webrtc.on('rtcSyncImpress', function (impressData) {
+webrtc.on('rtcSYncImpress', function (impressData) {
+  syncImperss();
+});
+
+webrtc.on('rtcSyncPreview', function (previewData) {
   var previewCntrId = 'preview_' + chartData.username;
   $(previewCntrId).children().remove();
   var $section = $('<section data-markdown></section>');
   $section.append(
       $('<script />', {
-        html: impressData.markdown,
+        html: previewData.markdown,
         type: 'text/template'
-      });
+      })
     );
   $(previewCntrId).append($section);
   RevealMarkdown.reinit();
