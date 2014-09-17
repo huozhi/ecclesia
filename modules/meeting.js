@@ -243,6 +243,8 @@ Meeting.queryImg = function (imgId, callback){
 
 Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
   var tempName = roomName + host + "Temp";
+  var previewName = roomName + host + "Preview";
+
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
@@ -258,6 +260,18 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                   mongodb.close();return callback(err);
                 }else{
                   // console.log(rmcount);
+                }
+              });
+
+              db.collection (previewName, function (err, prevCollection){
+                if(err){
+                  mongodb.close();return callback(err);
+                }else{
+                  prevCollection.remove({username : author}, {safe:true}, function (err, rmcount){
+                    if(!err){
+                      //do sth
+                    }
+                  });
                 }
               }); 
               db.collection('Meetings', function (err, meetingCollection){
@@ -322,10 +336,15 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   });
 }
 
-Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns,callback){
+Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, callback){
   
   var objIdArr = []; 
   var tempDocs = [];
+  var prev = {
+    username : author,
+    preview : markdowns[0],
+  };
+
   var tempName = roomName+host+"Temp";
   mongodb.open(function(err, db){
     if(err){
@@ -364,7 +383,11 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns,callb
                     //     objIdArr.push(newmd._id);
                     //   });
                     // }
-                    return callback(null, result);
+                    var previewName = roomName + host + "Preview";
+                    Meeting.saveMdPreview(previewName, prev, function (err, prevArr){
+                      if(!err)
+                         mongodb.close();return callback(null, result);
+                    });
                   }
                 });              
             }
@@ -375,6 +398,29 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns,callb
     }
   });
 }
+
+Meeting.saveMdPreview = function (previewName, prev, callback){
+  mongodb.open(function (err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.createCollection(previewName, function (err, collection){
+            if(err){
+              mongodb.close();return callback(err);
+            }
+            db.collection(previewName, function (err, collection){
+                collection.insert(prev, function (err, result){
+                  if(!err){
+                    mongodb.close();return callback(null, result);
+                  }
+                });
+            });
+          });          
+    }
+  });
+
+}
+
 
 Meeting.queryMdTemp = function (roomName, host, callback){
   var tempName = roomName+host+"Temp";
@@ -395,4 +441,24 @@ Meeting.queryMdTemp = function (roomName, host, callback){
       })
     }
   })
+}
+
+Meeting.queryMdPreview = function (roomName, host, callback){
+  var previewName = roomName + host + "Preview";
+  mongodb.open(function (err, db){
+    if(err){
+      mongodb.close();return callback(err);
+    }else{
+          db.collection(previewName, function (err, collection){
+            collection.find({}).toArray(function (err, prevArr){
+              if(err){
+                mongodb.close();return callback(err);
+              }else{
+                mongodb.close();return callback(null, prevArr);
+              }
+            })
+      })
+    }
+  });
+
 }

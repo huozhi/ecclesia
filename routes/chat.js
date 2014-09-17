@@ -28,7 +28,17 @@ router.post('/upload-markdown', function (req, res) {
   });
 });
 
-router.post('/query-markdown', function (req, res){
+router.post('/query-preview', function (req, res){
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+
+  Meeting.queryMdPreview(roomName, host, function (err, mdArr){
+      return res.json({response:"query-markdown-success", mdArr : mdArr});
+    }
+  });
+
+})
+router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
 
