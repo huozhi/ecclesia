@@ -267,17 +267,21 @@ Meeting.queryImg = function (imgId, callback){
     }else{
       db.collection('Images', function (err, collection){
         if(err){
+          console.log('queryImg open Images:',err);
+
           mongodb.close();
           return callback(err,null);
         }
         collection.findOne({_id : imgId}, function(err, result){
           if(err){
+            console.log('queryImg:',err);
             mongodb.close();
             return callback(err, null);
+          } else {
+            console.log(result);
+            mongodb.close();
+            return callback(null, result);
           }
-          mongodb.close();
-
-          return callback(err, result);
         });
       });
     }
