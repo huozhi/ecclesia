@@ -51,24 +51,25 @@ $(document).ready(function () {
           console.log(data.response);
           // the server return value and 
           // database structure should be fixed          
-          var splitedMdArr = data.markdowns;
+          var splitedMdArr = data.mdArr;
           var $mdScript = $("<script />", {
-            html: splitedMdArr[0],
+            html: splitedMdArr[0].splitMd,
             type: "text/template"
           });
-          var $text = $('div#localpreview').append($mdScript);
+          var $section = $('<section data-markdown></section>');
+          $section.append($mdScript);
+          $('#local-preview').append($section);
+          RevealMarkdown.reinit();
           
           // console.log($impressText);
-          $('#all-preview-impress').append($text);
           // while (!Reveal.isLastSlide()) Reveal.next();
-          RevealMarkdown.reinit();
           // send preview to all
           var username = sessionStorage.getItem('username');
           webrtcRef.signalSyncPreview({
             username: username,
-            preview: splitedMdArr[0]
+            preview: splitedMdArr[0].splitMd
           });
-          $('#add-impress-modal').modal('toggle');
+          
         },
         error: function (err) {
           alert(err);
@@ -76,5 +77,6 @@ $(document).ready(function () {
       });
     };
     fileReader.readAsText(upfile);
+    $('#add-impress-modal').modal('toggle');
   });
 });

@@ -114,6 +114,7 @@ function SimpleWebRTC(opts) {
     });
 
     connection.on('syncPreview', function (previewData) {
+        console.log('client got syncPreview, and signal rtcsyncPreview');
         self.emit('rtcSyncPreview', previewData);
     });
 
@@ -471,6 +472,7 @@ SimpleWebRTC.prototype.signalSyncChart = function (chartData) {
 }
 
 SimpleWebRTC.prototype.signalSyncPreview = function (previewData) {
+    console.log('signalSyncPreview');
     this.connection.emit('signalSyncPreview', previewData);
 }
 
