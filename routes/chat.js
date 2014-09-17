@@ -11,7 +11,8 @@ router.get('/', function (req, res) {
   var uname = req.session.username || 'test';
   res.render('chat', {
     session: req.session,
-    username: uname
+    username: uname,
+    isHost: uname === req.session.host
   });
 });
 
@@ -29,23 +30,32 @@ router.post('/upload-markdown', function (req, res) {
   });
 });
 
-router.post('/query-preview', function (req, res){
+router.post('/query-preview-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
-
-  Meeting.queryMdPreview(roomName, host, function (err, mdArr){
-      return res.json({response:"query-markdown-success", mdArr : mdArr});
-    }
+  if (!roomName || !host) {
+    return res.json({response:"query-markdown-success", previewDict: null});
+  }
+  Meeting.queryMdPreview(roomName, host, function (err, previewDict){
+      return res.json({response:"query-markdown-success", previewDict : previewDict});
   });
 
 })
 router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
-
+  if (!roomName || !host) {
+    return res.json({response:"query-markdown-success", mdArr: null});
+  }
   Meeting.queryMdTemp(roomName, host, function (err, result){
     if(!err){
-      return res.json({response:"query-markdown-success", mdArr : result});
+      if (result.length) {
+        console.log(result);
+        return res.json({response:"query-markdown-success", mdArr : result});
+      } else {
+        return res.json({response:"query-markdown-success", mdArr: null});
+      }
+
     }
   });
 });
@@ -93,6 +103,9 @@ router.post('/refresh-img', function (req, res){
   var host = req.session.host;
   var date = req.session.date;
 
+  if (!type || !roomName || !host || !data) {
+    return res.json({response : "refresh-success", SketchList : null});
+  }
   Meeting.queryHistory("world cup", "heale", "2014/9/13", function (err, conference){
     if(!err){
       var resList = [];
@@ -100,12 +113,12 @@ router.post('/refresh-img', function (req, res){
       if(type === "chart"){
         resList = conference.ChartList;
         console.log('chart type');
-        return res.json({response : "refresh-success", ChartList : resList})
+        return res.json({response : "refresh-success", ChartList : resList});
       }
       else if(type === "sketch"){
         resList = conference.SketchList;
         console.log('sketch type');
-        return res.json({response : "refresh-success", SketchList : resList})
+        return res.json({response : "refresh-success", SketchList : resList});
       }
       else {
         console.log('err type');

@@ -15,7 +15,6 @@ function getUploadMarkdown () {
     window.console.log(fileType);
     return false;
   }
-
 }
 
 $(document).ready(function () {
@@ -56,14 +55,15 @@ $(document).ready(function () {
             html: splitedMdArr[0],
             type: "text/template"
           });
-          var $text = $('<section data-markdown></section>').append($mdScript);
+          var $text = $('div#localpreview').append($mdScript);
+          
           // console.log($impressText);
-          $('#reveal > .slides').append($text);
+          $('#all-preview-impress').append($text);
           // while (!Reveal.isLastSlide()) Reveal.next();
           RevealMarkdown.reinit();
           // send preview to all
           var username = sessionStorage.getItem('username');
-          webrtcRef.signalSyncImpress({
+          webrtcRef.signalSyncPreview({
             username: username,
             preview: splitedMdArr[0]
           });

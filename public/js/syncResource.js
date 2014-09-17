@@ -12,6 +12,7 @@ $(document).ready(function() {
   syncCharts();
   // sync impress in loading page
   syncImpress();
+  syncPreview();
   // $(".btn-refresh").click(function(){
   // });
 });
@@ -28,10 +29,11 @@ function syncImpress() {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
+      if (!data.mdAdd) return;
       var markdownArr = data.mdAdd;
       createImpress(markdownArr);
-    }
-    error: function (err) { alert(err); }
+    },
+    error: function (data, status, err) { alert(err); }
   });
 }
 
@@ -48,7 +50,7 @@ function createImpress(markdownArr) {
   RevealMarkdown.reinit();
 }
 
-function syncPreview(callback) {
+function syncPreview() {
   var syncReq = {
     request: 'preview'
   };
@@ -59,6 +61,7 @@ function syncPreview(callback) {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
+      if (!data.previewDict) return;
       var dict = data.previewDict;
       dict.forEach(function (userPreview, index) {
         var previewCntrId = 'preview_' + userPreview.author;
@@ -87,6 +90,7 @@ function syncCharts() {
     dataType: 'json',
     data:requestJson,
     success: function (data, status){
+      if (!data.SketchList) return;
        // console.log(JSON.stringify(data.ChartList));
       data.ChartList.forEach(function(value,index){
         var chart = {
@@ -103,14 +107,14 @@ function syncCharts() {
           success: function (data, status){
             $(".swiper-slide").append('<img id="chart-' + data.image.page + '" src="' + lzw_uncompress(data.image.img) + '"/>');
           },
-          error: function (data, status, e){
-            alert(e);
+          error: function (data, status, err){
+            console.log(err);
           }
         });//end ajax
       });//end forEach
     },
-    error: function (data, status, e){
-      alert(e);
+    error: function (data, status, err){
+      console.log(err);
     }
   });//end ajax
 }
