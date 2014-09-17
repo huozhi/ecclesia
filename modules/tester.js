@@ -56,10 +56,11 @@ var newUser2 = new User({
 //archive tester
 
 // var conference = {
-//   name:'world cup',
-//   host:'heale',
+//   roomName:'nba',
+//   host:'wowo',
+//   date : "2014/9/12",
 // };
-// User.archive(newUser1.username, conference, function(err, result){
+// User.archive("nima", conference, function(err, result){
 //   if(err){
 //     console.log(err.message);
 //   }else{
@@ -126,6 +127,26 @@ var newMeeting = {
 
 // save base64 data
 
+/* var fs = require('fs');
+
+fs.readFile('../test/14.jpg', 'base64', function(err, data){
+  if(!err){
+    //console.log(data);
+    var targetObj = {
+      roomName : "sbsbsb",
+      host : "sb",
+      date : "2014/9/13",
+      listName : "SketchList",
+      page : 1,
+      img : data,
+    }
+    Meeting.saveImg(targetObj, function(err, result){
+      if(!err)
+        console.log('save ' + targetObj.listName);
+
+    });
+  }
+} );*/
 
 // var fs = require('fs');
 
@@ -155,24 +176,10 @@ var newMeeting = {
 // });
 
 //save wrapped md test
-// var spliter = require('./split');
 
-// var file = "./example.md";
-
-// var markdowns = spliter(file);
-
-// var wrappedmd = {
-//   range : 2,
-//   data : markdowns[1]
-// };
-
-// Meeting.saveMarkdown('sbsbsb', 'sb', wrappedmd, function(err, re){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     //do sth.
-//   }
-// });
+Meeting.saveMarkdown('sbsbsb', 'sb', "author", function(err, re){
+ 
+});
 
 //save md temp test
 // var spliter = require('./split');
@@ -181,16 +188,31 @@ var newMeeting = {
 
 // var markdowns = spliter(file);
 
-// Meeting.saveMdTemp('9-8', 'dh', 'zawahli',markdowns, function(err, re){
-//   if(err){
-//     console.log(err);
-//   }else{
-//     //do sth.
-//   }
-// });
+// //console.log(markdowns);
 
-/************************************************************************/
+// Meeting.saveMdTemp("author", markdowns, function (err, idArr){
+//   if(!err){
+//     console.log(idArr);
+//   }
+// })
+
+
+
+/***********************************Date test**********************************/
 
 // var date = new Date();
 // console.log(date.toDateString());
 /*************************/
+
+/*            compress test                    */
+
+// var compress = require('./compresser.js').compress;
+
+// var zip = compress('{"type" : "chart"}');
+
+// var uncompress = require('./compresser.js').uncompress;
+
+// var raw = uncompress(zip);
+// console.log(raw);
+
+/***************************************************************/

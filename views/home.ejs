@@ -29,31 +29,62 @@ a.home-link {
 <script type="text/javascript">
 $(document).ready(function() {
   $("#create-room-btn").click(function() {
-    var roomname = $('#roomName').val();
+    var roomName = $('#create-room-name').val();
     
     $.ajax({
       url:'/home/create-room',
+      type: 'POST',
       contentType:'application/json',
       dataType: 'json',
-      data: JSON.stringfy({
+      data: JSON.stringify({
         request: 'create-room',
-        roomName: roomname
+        roomName: roomName
       }),
       success: function (data) {
-        var ret = JSON.parse(data);
-        if (ret.response === 'create-success') {
-          $.cookie('roomName', ret.roomName),
-          $.cookie('creator', ret.creator),
-          $.cookie('roomHash', ret.roomHash);
-          $.cookie('date', ret.date);
+        console.log(data);
+        if (data.response === 'create-success') {
+          // $.cookie('roomName', data.roomName),
+          // $.cookie('creator', data.creator),
+          // $.cookie('roomHash', data.roomHash);
+          sessionStorage.setItem('roomName', data.roomName),
+          sessionStorage.setItem('creator', data.creator),
+          sessionStorage.setItem('roomHash', data.roomHash);
           window.location.href = '/chat';
         }
         else {
-          alert(ret.response);
+          console.log(data.response);
         }
       }
     });
   });
+  $('#join-room-btn').click(function() {
+    var roomName = $('#join-room-name').val(),
+        host = $('#join-room-host').val();
+    
+    $.ajax({
+      url:'/home/join-room',
+      type: 'POST',
+      contentType:'application/json',
+      dataType: 'json',
+      data: JSON.stringify({
+        request: 'join-room',
+        roomName: roomName,
+        host: host
+      }),
+      success: function (data) {
+        if (data.response === 'join-success') {
+          sessionStorage.setItem('roomName', data.roomName),
+          sessionStorage.setItem('creator', data.creator),
+          sessionStorage.setItem('roomHash', data.roomHash);
+          window.location.href = '/chat';
+        }
+        else {
+          console.log(data.response);
+        }
+      }
+    });
+  })
+
 });
 </script>
 
@@ -69,7 +100,7 @@ $(document).ready(function() {
 	        <ul class="bmenu">
 	            <li><a data-toggle="modal" data-target="#createModal" class="home-link">Create Room</a></li>
 	            <li><a data-toggle="modal" data-target="#joinModal" class="home-link">Join Room</a></li>
-	            <li><a href="/history" class="home-link">Query History</a></li>
+	            <li><a href="/history" class="home-link queryHistory">Query History</a></li>
 	            <li><a href="#" class="home-link">About</a></li>
 	        </ul>
 	    </div>
@@ -87,19 +118,19 @@ $(document).ready(function() {
 
 			<form class="form-horizontal" role="form">
 			<div class="form-group">
-				<label for="creatorName" class="col-sm-2 control-label">Creator"s name</label>
+				<label for="creatorName" class="col-sm-2 control-label">Creator's name</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="creatorName" placeholder="Creator s name">
+					<input type="text" class="form-control" id="join-room-host" placeholder="Creator s name">
 				</div>
 			</div>
 			<div class="form-group">
-			<label for="roomName" class="col-sm-2 control-label">Room"s name</label>
+			<label for="roomName" class="col-sm-2 control-label">Room's name</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="roomName" placeholder="Room s name">
+					<input type="text" class="form-control" id="join-room-name" placeholder="Room s name">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="key" class="col-sm-2 control-label">Room"s key</label>
+				<label for="key" class="col-sm-2 control-label">Room's key</label>
 					<div class="col-sm-10">
 						<input type="password" class="form-control" id="key" placeholder="Room s key">
 					</div>
@@ -109,13 +140,13 @@ $(document).ready(function() {
       </div>
       <div class="modal-footer">
 		<button class="btn btn-default col-md-offset-2" data-dismiss="modal">Close</button>
-		<button class="btn btn-primary col-md-offset-6">Join</button>
+		<button id="join-room-btn" class="btn btn-primary col-md-offset-6">Join</button>
       </div>
     </div>
   </div>
 </div>
 <!--======================query history=======================-->
-<!-- <div class="modal fade" id="queryModal">
+  <!-- <div class="modal fade" id="queryModal">
   <div class="modal-dialog" style="width: 730px;">
     <div class="modal-content">
       <div class="modal-header">
@@ -128,9 +159,10 @@ $(document).ready(function() {
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
+      </div>
     </div>
-  </div>
-</div> -->
+  </div> -->
+
 <!--==================== create room ==========================-->
 <div class="modal fade" id="createModal">
   <div class="modal-dialog" style="width: 730px;">
@@ -151,28 +183,29 @@ $(document).ready(function() {
 					<div class="form-group create-room-input">
 					    <div class="input-group">
 					      <div class="input-group-addon">ROOM NAME</div>
-					      <input class="form-control" type="text" placeholder="Enter the name of the room">
-					    </div>
-					</div>
-					<div class="form-group create-room-input">
-					    <div class="input-group">
-					      <div class="input-group-addon">ROOM KEY</div>
-					      <input class="form-control" type="text" placeholder="Enter the key of the room">
+					      <input id="create-room-name" class="form-control" type="text" placeholder="Enter the name of the room">
 					    </div>
 					</div>
 					<div class="form-group create-room-input invite-input">
 					    <div class="input-group">
 					      <div class="input-group-addon">INVITE USER</div>
-					      <input class="form-control" id="user-input" type="text" placeholder="Enter the name of other users"> 
+					      <input class="form-control user-input" type="text" placeholder="Enter the name of other users"> 
 					    </div>
 					</div>
-					<button type="button" class="btn btn-primary" id="add-user">add</button>
+					<button type="button" class="btn btn-primary add-user">add</button>
+          <div class="form-group create-room-input">
+              <div class="input-group">
+                <div class="input-group-addon">ROOM KEY</div>
+                <input class="form-control" type="text" placeholder="Enter the key of the room">
+              </div>
+          </div>
 				</div>
+
 			</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      	<button id="create-room-btn" type="button" class="btn btn-primary">Create</button>
+      	<button type="button" id="create-room-btn" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>
@@ -183,11 +216,13 @@ $(document).ready(function() {
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#add-user").click(function(){
-		var username = $("#user-input").val();
-		var str = '<li class="list-group-item">' + username + '<span class="glyphicon glyphicon-remove" id="' + username + '" style="float:right;"></span></li>'
-		$(".list-group").append(str);
-		$("#user-input").val("");
+	$(".add-user").click(function(){
+		var username = $(".user-input").val();
+    if (username != "") {
+  		var str = '<li class="list-group-item">' + username + '<span class="glyphicon glyphicon-remove" id="' + username + '" style="float:right;"></span></li>'
+  		$(".list-group").append(str);
+      $(".user-input").val("");
+    }
 		$("#"+ username).click(function(){
 			var obj = $("#" + username).parent();
 			obj.remove();

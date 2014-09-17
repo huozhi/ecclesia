@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ecclesia Query History</title>
+<title>ecclesia [query history]</title>
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,6 +27,28 @@ body {
   background-size: auto, cover;
 	font-family: 'Josefin Slab', Arial, sans-serif;
 }
+img:hover{
+	box-shadow: 0px 0px 35px 4px #292929;
+}
+td {
+	font-size: 20px;
+	overflow: hidden;
+	word-break:break-all
+}
+h1{
+	margin:0px;
+	padding:20px;
+	font-size:42px;
+	color:#fff;
+	text-align:left;
+	font-weight:400;
+  text-align:left;
+}
+h1 span{
+	font-size:22px;
+	color:#ddd;
+	padding-top:10px;
+}
 .header{
 	font-family:'Arial Narrow', Arial, sans-serif;
 	line-height: 24px;
@@ -49,20 +71,6 @@ body {
 }
 .header a:hover{
 	color: #fff;
-}
-h1{
-	margin:0px;
-	padding:20px;
-	font-size:42px;
-	color:#fff;
-	text-align:left;
-	font-weight:400;
-  text-align:left;
-}
-h1 span{
-	font-size:22px;
-	color:#ddd;
-	padding-top:10px;
 }
 .head-title {
 	float: left;
@@ -93,6 +101,7 @@ h1 span{
 	display: inline-block;
 	width: 280px;
 	height: 170px;
+	overflow: hidden;
 	background-color: #fff;
 	border-radius: 3px;
 	cursor: pointer;
@@ -129,7 +138,7 @@ h1 span{
 	background-color: #848174;
 }
 </style>
-<body>
+<body onload="loadInfo()">
 	<div class="header">
     <a href="###">
         <strong>Log out</strong>
@@ -143,80 +152,25 @@ h1 span{
 			<img style="position:relative;top:275px;" src="img/flag.png"/>
 		</div>
 
-			<div class="div-container">
-				<div id="div1" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room name:</td>
-							<td>sbsbsb</td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td>sb</td>
-						</tr>
-							<td>Date:</td>
-							<td>2014/9/13</td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td>sb,amy</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="div-container">
-				<div id="div2" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room name:</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td></td>
-						</tr>
-							<td>Date:</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="div-container">
-
-				<div id="div3" class="index"  onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);">
-					<table style="color:#000;" class="table table-striped">
-						<tr>
-							<td>Room name:</td>
-							<td>testRoom</td>
-						</tr>
-						<tr>
-							<td>Host:</td>
-							<td>toy</td>
-						</tr>
-							<td>Date:</td>
-							<td>2014/09/12</td>
-						</tr>
-						<tr>
-							<td>Users:</td>
-							<td>amy</td>
-						</tr>
-					</table>
-				</div>
-			</div>
 	</div>
 
 </body>
 
 <script type="text/javascript">
-
-function sendReq(obj){
-	var tableArr = document.getElementById(objId).firstChild.nextSibling.getElementsByTagName('tr');
-	// $(objId).get(0).next('tr');
+function loadInfo(){
+	$.post("/history/history-preview",
+		function(data){
+			data.forEach(
+					function(value,index){
+						$(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
+					}
+				);
+	},"json");
+}
+function sendReq(objId){
+	var tableArr = document.getElementById(objId).firstChild.firstChild.getElementsByTagName('tr');
 	var postJson = {
+		request : 's',
 		"roomName" : tableArr[0].children[1].innerHTML,
 		"host": tableArr[1].children[1].innerHTML,
 		"date" : tableArr[2].children[1].innerHTML,
@@ -251,7 +205,7 @@ function biging(obj){
   divH=scale*divH;
   $("#"+obj).css('width',divW);
   $("#"+obj).css('height',divH);
-  if(divW <= 300){
+  if(divW <= 305){
     t = setTimeout("biging(objId);",1);
   }
   else

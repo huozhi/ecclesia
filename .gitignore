@@ -8,3 +8,4 @@ public/rtc/node_modules
 *.sublime-workspace
 *.md
 *.log
+test/*

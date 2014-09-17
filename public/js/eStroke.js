@@ -28,8 +28,9 @@
             point.key = true;
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
-
           }
+          if($.cookie('sketchChanged') == 'false')
+            $.cookie('sketchChanged',true);
           break;
         case 'mousemove':
           if (keyDown == true) {
@@ -43,14 +44,14 @@
         case 'mouseout':
           $(this).data('keyDown', false);
           ctx.stroke();
-          ctx.closePath();
+          // ctx.closePath();
       }
       // if (typeof cb == 'function')
       return cb(point);
     });
   }
   $.fn.syncStroke = function(point, color) {
-    console.log('got sync signal');
+    // console.log('got sync signal');
     var ctx = $(this).get(0).getContext('2d');
     ctx.lineJoin  = 'round';
     ctx.lineCap   = 'round';
@@ -73,7 +74,7 @@
         case 'mouseleave':
         case 'mouseout':
           ctx.stroke();
-          ctx.closePath();
+          // ctx.closePath();
           break;
     }
     return $(this);

@@ -45,10 +45,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
                 return callback(err);
               }else{
                 mongodb.close();
-                Meeting.initMdTemp(mdTempdoc, function(err){
-                  if(!err)
-                    callback(err, meeting);
-                });
+                return callback(null, meeting[0]);
               }
             });
 
@@ -58,7 +55,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
   });
 }
 
-Meeting.queryConference = function(roomname, host, date, callback){
+Meeting.queryConference = function(roomname, host, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
@@ -67,7 +64,7 @@ Meeting.queryConference = function(roomname, host, date, callback){
         if(err){
           mongodb.close();return callback(err);
         }else{
-          collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
+          collection.findOne({roomName:roomname, host:host},function(err, result){
             if(err){
               mongodb.close();return callback(err);
             }
@@ -169,7 +166,7 @@ Meeting.archiveImg = function (archiveObj, callback){
             if(err){
               mongodb.close();return callback(err);
             }
-            if(archiveObj.listName === 'ChartList'){
+            if(archiveObj.listName === 'chart'){
               var chartWrapper = {
                 range : archiveObj.page,
                 id : archiveObj.id,
@@ -181,7 +178,7 @@ Meeting.archiveImg = function (archiveObj, callback){
                 mongodb.close();return callback(err, result);
               });
             }
-            if(archiveObj.listName === 'SketchList'){
+            if(archiveObj.listName === 'sketch'){
               var sketchWrapper = {
                 range : archiveObj.page,
                 id : archiveObj.id,
@@ -217,26 +214,63 @@ Meeting.queryImg = function (imgId, callback){
         });
       });
     }
-  })
+  });
 };
 
 
-Meeting.saveMarkdown = function saveMarkdown(roomname, host, wrappedmd, callback){
+Meeting.saveMarkdown = function saveMarkdown(roomname, host, author, callback){
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();return callback(err);
     }else{
-          db.collection('Meetings', function(err, collection){
-            if(err){
-              mongodb.close();return callback(err);
-            }
-            collection.update({roomName:roomname, host:host},{$push:{MarkdownList : wrappedmd}}, function(err, result){
-              if(err){
-                mongodb.close();return callback(err);
-              }
-              mongodb.close();return callback(err, result);
-            });
+      db.collection('MdTemp', function (err, mdCollection){
+
+        if(!err){
+          mdCollection.find({author : author}).toArray(function (err, docs){
+            if(!err){
+
+              mdCollection.remove({author : author}, {safe : true}, function (err, rmcount){
+                if(err){
+                  mongodb.close();return callback(err);
+                }else{
+                  // console.log(rmcount);
+                }
+              }); 
+              db.collection('Meetings', function (err, meetingCollection){
+                if(err){
+                  mongodb.close();return callback(err);
+                }else{
+                  meetingCollection.findOne({roomName:roomname, host:host}, function (err, meeting){
+                    if(err){
+                      mongodb.close();return callback(err);
+                    }else{
+                      var mdArr = [];
+                      var len = meeting.MarkdownList.length;
+                      for (i = 0; i < docs.length; i++){
+                        var mdDoc = {
+                          range : i+len+1,
+                          data : docs[i],
+                        };
+
+                        mdArr.push(mdDoc);
+                      }
+
+                      meetingCollection.update({roomName:roomname, host:host},
+                        {$push :{MarkdownList : {$each : mdArr}}},
+                        function (err, updateCount){
+                          if(!err){
+                            mongodb.close();return callback(null, updateCount); 
+                          }
+                        });
+                    }
+                  })
+                }
+              });
+
+            }            
           });
+        }
+      });
     }
   });
 }
@@ -264,7 +298,10 @@ Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   });
 }
 
-Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callback){ 
+Meeting.saveMdTemp = function saveMdTemp(author, markdowns,callback){
+  
+  var objIdArr = []; 
+  var tempDocs = [];
   mongodb.open(function(err, db){
     if(err){
       mongodb.close();
@@ -277,35 +314,34 @@ Meeting.saveMdTemp = function saveMdTemp(rooname, host, author, markdowns,callba
           mongodb.close();
           return callback(err);
         }else{
-            db.collection('MdTemp',function(err,collection){
+            db.collection('MdTemp', function(err,collection){
             if(err){
               mongodb.close();
               return callback(err);
             }else{
-                collection.ensureIndex({"markdowns.author":1},{unique:true},function(err){
+              console.log(markdowns.length);
+              for(i = 0; i < markdowns.length; i++){
+                var newTemp = {
+                  author : author,
+                  upload : markdowns[i],
+                };
+
+                tempDocs.push(newTemp);           
+              }
+//              console.log(tempDocs);
+              collection.insert(tempDocs,  function (err, result){
                   if(err){
-                    mongodb.close();
-                    return callback(err);
-                  }
-                });
-                var newmdtemp = {
-                  author:author,
-                  upload:markdowns
-                }
-                collection.update(
-                  {'roomName':rooname,'host':host},
-                  {$push : {"markdowns":newmdtemp}}, //找到时候匹配同一个人的全部多个upload[]
-                  {upsert: true}, 
-                  function(err,docCount){
-                  if(err){
-                    mongodb.close();
-                    return callback(err);
+                    console.log(err);
+                    mongodb.close();return callback(err, result);
                   }else{
-                    mongodb.close();
-                    console.log('insert success', docCount);
-                    return callback(null, docCount);
+                    // if(result){
+                    //   result.forEach(function (newmd){
+                    //     objIdArr.push(newmd._id);
+                    //   });
+                    // }
+                    return callback(null, result);
                   }
-              });
+                });              
             }
           });
         }

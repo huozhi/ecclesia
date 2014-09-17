@@ -1,7 +1,7 @@
 function lzw_compress(s) {
     var dict = {};
     var data = (s + "").split("");
-    console.log(data);
+    // console.log(data);
     var out = [];
     var currChar;
     var phrase = data[0];
@@ -23,7 +23,7 @@ function lzw_compress(s) {
     for (var i=0; i<out.length; i++) {
         out[i] = String.fromCharCode(out[i]);
     }
-    console.log(dict);
+    // console.log(dict);
     return out.join("");
 }
  
@@ -54,3 +54,6 @@ function lzw_uncompress(s) {
     }
     return out.join("");
 }
+
+exports.compress = lzw_compress;
+exports.uncompress = lzw_uncompress;

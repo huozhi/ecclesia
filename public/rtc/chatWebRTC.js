@@ -7,12 +7,22 @@ WebRTC and Reveal.js initialized
 function enableWebRTC (mediaContrains) {
 
 // var room = location.search && location.search.split('?')[1];
-var room = $.cookie('roomName');
+var room = sessionStorage.getItem('roomName') || 'roomTest';
+var roomHash = sessionStorage.getItem('roomHash') 
+    || location.search && location.search.split('?')[1]
+    || 'roomURL';
+  
+console.log('roomName:',room);
+console.log('roomHash:',roomHash);
+console.log('host',sessionStorage.getItem('creator'));
 
+
+var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
-  // url: "http://localhost:8888",
+  url: "https://223.3.90.4:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
+  username: uname,
   media: mediaContrains || {
     video: true, audio: true
   },
@@ -22,27 +32,46 @@ var webrtc = new SimpleWebRTC({
   autoAdjustMic: false
 });
 
+
 webrtc.on('readyToCall', function() {
-  if (room) webrtc.joinRoom(room);
+  if (room) {
+    webrtc.joinRoom(roomHash);
+    console.log('join room');
+  }
 });
 
+
+
 webrtc.on('videoAdded', function (video, peer) {
-  var remotes = $('.sidebar');
+  console.log(peer);
+  addVideoContainer(video, peer);
+  addPreviewContainer(peer);
+});
+
+function addPreviewContainer(peer) {
+  var remotes = $('.right-sidebar');
+  var addPeer = $(document.createElement('div')).addClass('container-frame');
+  addPeer.attr('id', 'preview_' + peer.username);
+  remotes.append(addPeer);
+}
+
+function addVideoContainer(video, peer) {
+  var remotes = $('.left-sidebar');
   var addPeer = $(document.createElement('div'));
   var volBar  = $(document.createElement('div'));
   volBar.addClass('vol-var');
   addPeer.append(volBar);
-  addPeer.addClass('video-frame');
-  addPeer.attr('id', 'video_' + webrtc.getDomId(peer));
+  addPeer.addClass('container-frame');
+  addPeer.attr('id', 'video_' + webrtc.getUserName(peer));
   addPeer.append(video);
   remotes.append(addPeer);
-});
+}
 
-webrtc.on('videoRemoved', function (video, pper) {
-  var remotes = $('.sidebar');
-  var leavePeer = $('#video_' + webrtc.getDomId(peer));
+webrtc.on('videoRemoved', function (video, peer) {
+  var remotes = $('.left-sidebar');
+  var leavePeer = $('#video_' + webrtc.getUserName(peer));
   if (remotes && leavePeer) {
-    leavePeer.remove();
+    leavePeer.fadeOut().remove();
   }
 })
 
@@ -58,26 +87,98 @@ webrtc.on('volumeChange', function (volume, threshold) {
   }
 });
 
+
+if (!room) {
+  console.log('get err, create room now');
+  var roomUrl;
+  webrtc.createRoom(roomHash, function (err, name) {
+    // name equal roomHash equal roomUrl splited by '?'
+    roomUrl = location.pathname + '?' + room;
+    if (!err) {
+      history.replaceState({ roomHash: roomHash }, null, roomUrl);
+    }
+  });
+} else {
+  roomUrl = location.pathname + '?' + room;
+  history.replaceState({ roomHash: roomHash }, null, roomUrl);
+}
+
+/* ============= new event ============== */
 webrtc.on('rtcSyncStroke', function (point) {
-  // console.log('syncStroke event');
   $('.sketch-present').syncStroke(point);
 });
 
-if (!room) {
-  // $('#create-room-btn').click(function () {
-    // use uuid to create room, pass null to first arg
-  var roomHash = $.cookie('roomHash') || 'hash123';
-  
-  webrtc.createRoom(roomHash, function (err, name) {
-    var roomUrl = location.pathname + '?' + name;
-    if (!err) {
-      history.replaceState({ roomHash: $.cookie('roomHash') }, null, roomUrl);
-    }
+webrtc.on('rtcSyncChart', function (chartData) {
+  // console.log('webrtc.on rtcSyncChart');
+  $.ajax({
+    url: '/chat/query-img',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-chart',
+      objectId: chartData.objectId
+    }),
+    success: function (data) {
+      
+      var base64code = lzw_uncompress(data.image.img);
+      // console.log(base64code);
+      var $singleChart = $(document.createElement('div'))
+                        .addClass('single-chart')
+                        .append('<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>');
+      var addContent =
+      '<div class="single-chart">' +
+        '<canvas class="chart" width="180" height="180"></canvas>' +
+        '<button class="btn btn-default btn-xs rm-chart"><span class="glyphicon glyphicon-remove"></span></button>' +
+      '</div>';
+      var $createCanvas = $(document.createElement('canvas'))
+                    .addClass('chart').attr({width:"180",height:"180"});
+      var chartContext = $createCanvas.get(0).getContext('2d');
+      var canvasImg = new Image();
+      canvasImg.src = base64code;
+      canvasImg.onload = function() {
+        chartContext.drawImage(canvasImg, 0, 0);
+        $singleChart.prepend($createCanvas);
+        $('#charts').append($singleChart);
+      };
+      $('.rm-chart').click(function() {
+        $(this).parent().remove();
+      });
+
+    },
+    error: function (err) { alert(err); }
   });
-  // })
-} else {
-  console.log('already in a room');
-}
+});
+
+webrtc.on('rtcSyncImpress', function (impressData) {
+  $.ajax({
+    url: '/chat/query-markdown',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      request: 'get-markdown',
+      objectId: impressData.objectId
+    }),
+    success: function (data) {
+      // the server return value and 
+      // database structure should be fixed
+      var $mdScript = $("<script />", {
+        html: splitedMdArr,
+        type: "text/template"
+      });
+      var $text = $('<section data-markdown></section>').append($mdScript);
+      // console.log($impressText);
+      $('#reveal > .slides').append($text);
+      while (!Reveal.isLastSlide()) Reveal.next();
+      RevealMarkdown.reinit();
+    },
+    error: function (err) { alert(err); }
+  })
+});
+
+/* ============= end new event ============== */
+
 
 
 
@@ -103,8 +204,12 @@ Reveal.initialize({
     // { src: 'js/plugin/math/math.js', async: true }
     ]  
 });
-
-Reveal.addEventListener( 'ready', function( event ) {
+//---------- lsn -----------
+/*$(".navigate-left").click(function(){
+  Reveal.
+});*/
+//--------------------------
+Reveal.addEventListener('ready', function (event) {
   var present = $('section.present');
   if (present.children('canvas').length != 0) {
     console.log('has canvas')
@@ -121,10 +226,27 @@ Reveal.addEventListener( 'ready', function( event ) {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
-
+    
+    $(".navigate-left").click(function(){
+      if($.cookie('sketchChanged')=='true'){
+        var $currSlide  = $(Reveal.getCurrentSlide()),
+            $currSkect  = $currSlide.find('canvas');
+        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged',false);
+      }
+    });
+    $(".navigate-right").click(function(){
+      if($.cookie('sketchChanged')=='true'){
+        var $currSlide  = $(Reveal.getCurrentSlide()),
+            $currSkect  = $currSlide.find('canvas');
+        saveImage($currSkect, 'sketch', Reveal.getIndices().h);
+        $.cookie('sketchChanged',false);
+      }
+    });
 });
 
-Reveal.addEventListener( 'slidechanged', function( event ) {
+Reveal.addEventListener('slidechanged', function (event) {
+  // dynamically manage sketch borad class
   $('.sketch-present').removeClass('sketch-present');
   var present = $('.slides > section.present');
   if (present.children('canvas').length != 0) {
@@ -141,6 +263,15 @@ Reveal.addEventListener( 'slidechanged', function( event ) {
     $('.sketch-present').Stroke(function (point) {
       webrtc.sendSketchPointData(point);
     });
+
+    // if is the last one, save the previous one
+    /*var $prevSlide  = $(Reveal.getPreviousSlide()),
+        $prevSkect  = $prevSlide.find('canvas');
+        
+    saveImage($prevSkect, 'sketch', Reveal.getIndices().h);*/
 });
+
+// load chartInit.js script
+enableChartPreview(webrtc);
 
 }

@@ -17,6 +17,7 @@ function SimpleWebRTC(opts) {
             debug: false,
             localVideoEl: '',
             remoteVideosEl: '',
+            username: '',
             enableDataChannels: true,
             autoRequestMedia: false,
             autoRemoveVideos: true,
@@ -82,6 +83,7 @@ function SimpleWebRTC(opts) {
                 peer = self.webrtc.createPeer({
                     id: message.from,
                     type: message.roomType,
+                    username: message.username,
                     enableDataChannels: self.config.enableDataChannels && message.roomType !== 'screen',
                     sharemyscreen: message.roomType === 'screen' && !message.broadcaster,
                     broadcaster: message.roomType === 'screen' && !message.broadcaster ? self.connection.socket.sessionid : null
@@ -101,10 +103,21 @@ function SimpleWebRTC(opts) {
         }
     });
 
+    /* ================= new socket.io event listener ============== */
     connection.on('syncStroke', function (point) {
-        // console.log('emit rtcSycnStroke event');
         self.emit('rtcSyncStroke', point);
     });
+
+    connection.on('syncChart', function (chartData) {
+        console.log('connection.on syncChart');
+        self.emit('rtcSyncChart', chartData);
+    });
+
+    connection.on('syncImpress', function (impressData) {
+        self.emit('rtcSyncImpress', impressData);
+    });
+
+    /* ================= end new socket.io event listener ============== */
 
     // instantiate our main WebRTC helper
     // using same logger from logic here
@@ -198,6 +211,7 @@ function SimpleWebRTC(opts) {
             if (existingPeer.type === 'video') {
                 peer = self.webrtc.createPeer({
                     id: existingPeer.id,
+                    username: existingPeer.username,
                     type: 'screen',
                     sharemyscreen: true,
                     enableDataChannels: false,
@@ -261,6 +275,8 @@ SimpleWebRTC.prototype.handlePeerStreamAdded = function (peer) {
 
     // store video element as part of peer for easy removal
     peer.videoEl = video;
+    // console.log('this.username:',this.config['username']);
+    // peer.username = this.config['username'];
     video.id = this.getDomId(peer);
 
     if (container) container.appendChild(video);
@@ -294,6 +310,10 @@ SimpleWebRTC.prototype.getDomId = function (peer) {
     return [peer.id, peer.type, peer.broadcaster ? 'broadcasting' : 'incoming'].join('_');
 };
 
+SimpleWebRTC.prototype.getUserName = function (peer) {
+    return peer.username;
+}
+
 // set volume on video tag for all peers takse a value between 0 and 1
 SimpleWebRTC.prototype.setVolumeForAll = function (volume) {
     this.webrtc.peers.forEach(function (peer) {
@@ -318,6 +338,7 @@ SimpleWebRTC.prototype.joinRoom = function (name, cb) {
                     if (client[type]) {
                         peer = self.webrtc.createPeer({
                             id: id,
+                            username: self.config.username, // KEY POINT!!! HACK THIS!
                             type: type,
                             enableDataChannels: self.config.enableDataChannels && type !== 'screen',
                             receiveMedia: {
@@ -438,6 +459,15 @@ SimpleWebRTC.prototype.sendFile = function () {
 /* this is the socket io part of boardcast sketch graph */
 SimpleWebRTC.prototype.sendSketchPointData = function (point) {
     this.connection.emit('sendStroke', point);
+}
+
+SimpleWebRTC.prototype.signalSyncChart = function (chartData) {
+    console.log('this.connection.emit signalSyncChart');
+    this.connection.emit('signalSyncChart', chartData);
+}
+
+SimpleWebRTC.prototype.signalSyncImpress = function (impressData) {
+    this.connection.emit('signalSyncImpress', impressData);
 }
 
 module.exports = SimpleWebRTC;

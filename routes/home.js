@@ -6,6 +6,7 @@ var crypto = require('crypto');
 
 router.get('/', function (req, res) {
   if(req.session.username){
+      console.log(req.session.username);
       res.render('home');
   }else{
     res.redirect('/');
@@ -25,40 +26,49 @@ router.get('/logout', function (req, res) {
 })
 
 router.post('/join-room', function(req, res){
-  var roomname = req.body.roomName;
+  var roomName = req.body.roomName;
   var host = req.body.host;
   var username = req.session.username;
-  var date = req.session.date;
+  var date = "";
 
   req.session.host = host;
-  var cryptor = crypto.createHash('sha1');
-  var raw = host + roomname + date;
-  var roomHash = cryptor.update(raw).digest('hex');
+  
 
-  Meeting.addParticipant (roomname, host, username, function (err, addRe){
+  Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
-      var conference  = {
-        roomName : roomname,
-        host : host,
-        date : date,
-      };
-      User.archive(username, conference, function (err, archiveRe){
+      date = result.date;
+      console.log('date',result.date);
+      var cryptor = crypto.createHash('sha1');
+      var raw = host + roomName + date;
+      var roomHash = cryptor.update(raw).digest('hex');
+      console.log('hash',roomHash);
+      Meeting.addParticipant (roomName, host, username, function (err, addRe){
         if(!err){
-          res.json({response : "join-success", roomHash :roomHash} );
+          var conference  = {
+            roomName : roomName,
+            host : host,
+            date : date,
+          };
+          User.archive(username, conference, function (err, archiveRe){
+            if(!err){
+              return res.json({response : "join-success", roomName : roomName, creator : host, roomHash :roomHash} );
+            }
+          });
         }
       });
     }
-  });
+  });    
 });
 
-router.get('/create-room', function (req, res) {
+router.post('/create-room', function (req, res) {
   // deal with post json data 
   // { request:'create-room' username:'..', roomname:'..' }
   // ... code here
+  console.log(req.body, req.session.username);
   var resInfo = "";
-  if (req.body.roomName === 'undefined'){
+  if (req.body.roomName === undefined){
     resInfo = "create-failed";
-    res.json({response: resInfo});
+    return res.json({response: resInfo});
   }else{
     req.session.roomName = req.body.roomName;
     var date = new Date();
@@ -66,23 +76,28 @@ router.get('/create-room', function (req, res) {
     var  newMeeting = {
       roomName : req.body.roomName,
       date : date.toDateString(),
-      host : req.body.username,
+      host : req.session.username,
       userList : [],
       ChartList:[],
       MarkdownList:[],
       SketchList:[]
     };
-
     var raw = newMeeting.host + newMeeting.roomName + newMeeting.date;
+    var cryptor = crypto.createHash('sha1');
     var roomHash = cryptor.update(raw).digest('hex');
+    console.log('hash:',roomHash);
 
     Meeting.createRoom(newMeeting, function (err, meeting){
       if(!err){
         resInfo = "create-success";
-        res.json({response:resInfo, roomName:meeting.roomName, creater: meeting.host, roomHash : roomHash});
+        
+        return res.json({response:resInfo, roomName:meeting.roomName, creator: meeting.host, roomHash : roomHash});
       }
-    })
-
-    }
+      else {
+        console.log(err);
+        return res.json({response: resInfo});
+      }
+    });
+  }
 });
 module.exports = router;
