@@ -37,6 +37,9 @@ router.post('/join-room', function(req, res){
   }
   Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
+      if (!result) {
+        return res.json({response: 'join-failed'});
+      }
       date = result.date;
       console.log('date',result.date);
       var cryptor = crypto.createHash('sha1');

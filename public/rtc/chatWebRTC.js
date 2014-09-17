@@ -51,7 +51,7 @@ webrtc.on('videoAdded', function (video, peer) {
 function addPreviewContainer(peer) {
   var remotes = $('.right-sidebar');
   var addPeer = $(document.createElement('div')).addClass('container-frame');
-  addPeer.attr('id', 'preview_' + peer.username);
+  addPeer.attr('id', 'preview_' + webrtc.getUserName(peer));
   remotes.append(addPeer);
 }
 
@@ -69,9 +69,11 @@ function addVideoContainer(video, peer) {
 
 webrtc.on('videoRemoved', function (video, peer) {
   var remotes = $('.left-sidebar');
+  var leavePreview = $('#preview_' + webrtc.getUserName(peer));
   var leavePeer = $('#video_' + webrtc.getUserName(peer));
   if (remotes && leavePeer) {
-    leavePeer.fadeOut().remove();
+    leavePeer.remove();
+    leavePreview.remove();
   }
 })
 

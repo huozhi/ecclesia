@@ -10,11 +10,11 @@ $(document).ready(function() {
 
   // sync charts in loading page
   // sync impress in loading page
-  syncCharts();
+  syncPreview();
   $(".btn-refresh").click(function(){
+    syncCharts();
   
     // syncImpress();
-      syncPreview();
   });
 });
 
