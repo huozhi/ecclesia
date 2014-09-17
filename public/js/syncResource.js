@@ -29,8 +29,8 @@ function syncImpress() {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
-      if (!data.mdAdd) return;
-      var markdownArr = data.mdAdd;
+      if (!data.mdArr) return;
+      var markdownArr = data.mdArr;
       createImpress(markdownArr);
     },
     error: function (data, status, err) { alert(err); }
@@ -90,7 +90,7 @@ function syncCharts() {
     dataType: 'json',
     data:requestJson,
     success: function (data, status){
-      if (!data.SketchList) return;
+      if (!data.SketchList || !data.ChartList) return;
        // console.log(JSON.stringify(data.ChartList));
       data.ChartList.forEach(function(value,index){
         var chart = {

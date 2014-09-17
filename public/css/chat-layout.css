@@ -131,14 +131,22 @@ div.single-chart > button {
 }
 
 .center {
-    text-align:center;
+  text-align:center;
 }
 
 .center form {
-    display:inline-block;
+  display:inline-block;
+}
+
+.body-conatiner {
+  position: relative;
+  top: 1px;
+  margin-top: 1px;
 }
 
 .sidebar {
+  position: relative;
+  top: 0;
   padding: 10px;
 }
 .right-sidebar {

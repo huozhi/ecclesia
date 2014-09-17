@@ -8,24 +8,31 @@ var compresser = require('../modules/compresser.js');
 
 
 router.get('/', function (req, res) {
-  var uname = req.session.username || 'test';
-  res.render('chat', {
+  if (!req.session.username) {
+    return res.redirect('/');
+  }
+
+  return res.render('chat', {
     session: req.session,
-    username: uname,
-    isHost: uname === req.session.host
+    username: req.session.username,
+    isHost: req.session.username === req.session.host
   });
 });
 
 router.post('/upload-markdown', function (req, res) {
   var t = req.body.text;
   var markdowns = t.split(/\+{6,}/);
-  var author = req.body.username;
+  var author = req.session.username;
   var roomName = req.session.roomName;
   var host = req.session.host;
   
+  console.log(markdowns);
+  console.log(author, roomName, host);
   Meeting.seveMdTemp(roomName, host, author, markdown, function (err, newMds){
     if(!err){
-      res.json({response : "upload-markdown-success", mdArr : newMds});
+      return res.json({response : "upload-markdown-success", mdArr : newMds});
+    } else {
+      return res.json({response: 'upload-markdown-failed'});
     }
   });
 });
@@ -37,7 +44,17 @@ router.post('/query-preview-markdown', function (req, res){
     return res.json({response:"query-markdown-success", previewDict: null});
   }
   Meeting.queryMdPreview(roomName, host, function (err, previewDict){
-      return res.json({response:"query-markdown-success", previewDict : previewDict});
+    if (!err) {
+      if (previewDict.length) {
+        return res.json({response:"query-markdown-success", previewDict : previewDict});
+      } else {
+        return res.json({response:"query-markdown-success", previewDict : null});
+      }
+    } else {
+      console.log(err);
+      return res.json({response:'query-markdown-failed', previewDict: null});
+    }
+
   });
 
 })
@@ -45,7 +62,7 @@ router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
   if (!roomName || !host) {
-    return res.json({response:"query-markdown-success", mdArr: null});
+    return res.rendirect('/home');
   }
   Meeting.queryMdTemp(roomName, host, function (err, result){
     if(!err){
@@ -106,23 +123,29 @@ router.post('/refresh-img', function (req, res){
   if (!type || !roomName || !host || !data) {
     return res.json({response : "refresh-success", SketchList : null});
   }
-  Meeting.queryHistory("world cup", "heale", "2014/9/13", function (err, conference){
+  Meeting.queryHistory(roomName, host, date, function (err, conference){
     if(!err){
       var resList = [];
       console.log(conference.ChartList);
       if(type === "chart"){
+        if (conference.ChartList.length == 0) {
+          return res.json({response: 'refresh-success', ChartList: null});
+        }
         resList = conference.ChartList;
         console.log('chart type');
         return res.json({response : "refresh-success", ChartList : resList});
       }
       else if(type === "sketch"){
+        if (conference.SketchList.length == 0) {
+          return res.json({response: 'refresh-success', SketchList: null});
+        }
         resList = conference.SketchList;
         console.log('sketch type');
         return res.json({response : "refresh-success", SketchList : resList});
       }
       else {
         console.log('err type');
-
+        return res.json({response: "refresh-failed", SketchList: null});
       }
     }
   });

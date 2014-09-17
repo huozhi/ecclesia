@@ -48,6 +48,7 @@ $(document).ready(function () {
         contentType: 'application/json',
         dataType: 'json',
         success: function (data) {
+          console.log(data.response);
           // the server return value and 
           // database structure should be fixed          
           var splitedMdArr = data.markdowns;
