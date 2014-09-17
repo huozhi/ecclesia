@@ -445,18 +445,21 @@ Meeting.saveMdTemp = function saveMdTemp(roomName, host, author, markdowns, call
                     mongodb.close();
                     return callback(err);
                   }else{
+
+                    mongodb.close();
+                    return callback(null, result);
                     // if(result){
                     //   result.forEach(function (newmd){
                     //     objIdArr.push(newmd._id);
                     //   });
                     // }
-                    var previewName = roomName + host + "Preview";
-                    // mongodb.close();
-                    Meeting.saveMdPreview("MdPreview", prev, function (err, prevArr){
-                      if(!err)
-                        mongodb.close();
-                        return callback(null, result);
-                    });
+                    // var previewName = roomName + host + "Preview";
+                    // // mongodb.close();
+                    // Meeting.saveMdPreview("MdPreview", prev, function (err, prevArr){
+                    //   if(!err)
+                    //     mongodb.close();
+                    //     return callback(null, result);
+                    // });
                   }
                 });              
             }
