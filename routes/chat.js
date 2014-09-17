@@ -36,7 +36,7 @@ router.post('/query-preview', function (req, res){
   Meeting.queryMdPreview(roomName, host, function (err, mdArr){
       return res.json({response:"query-markdown-success", mdArr : mdArr});
     }
-  });
+  );
 
 })
 router.post('/query-meeting-markdown', function (req, res){
