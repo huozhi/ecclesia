@@ -10,7 +10,7 @@ var compresser = require('../modules/compresser.js');
 router.get('/', function (req, res) {
   if (!req.session.username) {
     return res.redirect('/');
-    // return res.render('chat');
+    return res.render('chat');
   } else {
 
     return res.render('chat', {
