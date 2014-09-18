@@ -37,7 +37,8 @@ h1,h2,h3,h4,h5,h6 {
 .sign-up-bgimage {
 	position: relative;
 	padding: 100px 50px 0px 50px;
-	height:500px;
+	height: 500px;
+	min-width: 700px;	
 	background: url(/img/pattern3.png) repeat center center;
 }
 .sign-up-form .huge-title {
@@ -48,19 +49,21 @@ h1,h2,h3,h4,h5,h6 {
 
 }
 .sign-up-form{
+	min-width: 300px;
 	float: right;
 	position: relative;
 	right:5%;
 	/*top:150px;*/
 }
 .huge-title {
+	min-width: 300px;
+
 	position: relative;
 	float: left;
 	left: 50px;
 	font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:white;
-	width:600px;
 }
 .welcome-form{
 	/*font-family:"Open Sans","Josefin Slab", "Helvetica Neue",Helvetica,Arial,sans-serif,Arial, sans-serif;*/
