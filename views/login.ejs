@@ -22,20 +22,14 @@
   .sign-up-container {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));
     height:500px;
-    padding: 50px 50px 0px 50px;
     position: relative;
   }
-  .sign-up-container:after{
-    content:none;
-    display:block;
-    position:relative;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
-    background: url(img/pattern3.png) repeat center center;
-    opacity: .2;
-  }
+  .sign-up-bgimage {
+  position: relative;
+  padding: 100px 50px 0px 50px;
+  height:500px;
+  background: url(/img/pattern3.png) repeat center center;
+}
   .head-container {
     background-color: #130c0e;
     height:50px;
@@ -77,6 +71,7 @@
 </div>
 
 <div class="sign-up-container">
+  <div class="sign-up-bgimage">
   <p class="title">Ecclesia Login</p>
   <div class="sign-in-form">
     <div>
@@ -91,6 +86,7 @@
       Sign in
     </button>
   </div>
+</div>
 </div>
 
 

@@ -33,22 +33,16 @@ h1,h2,h3,h4,h5,h6 {
 	background-color: #130c0e;
 	height:50px;
 }
-.sign-up-container {
+.sign-up-container {	
+	position: relative;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));
 	height:500px;
-	padding: 100px 50px 0px 50px;
-	position: relative;
 }
-.sign-up-container:after{
-	content: none;
-	display: block;
+.sign-up-bgimage {
 	position: relative;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
+	padding: 100px 50px 0px 50px;
+	height:500px;
 	background: url(/img/pattern3.png) repeat center center;
-	opacity: .2;
 }
 .sign-up-form .huge-title {
 	
@@ -123,6 +117,7 @@ h1,h2,h3,h4,h5,h6 {
 	</div>
 
 	<div class="sign-up-container">
+		<div class="sign-up-bgimage">
 		<!-- left part: introduction -->
 		<div class=" huge-title">
 			<p><font class="join-form">Welcome&nbsp; to </font><font class="welcome-form">&nbsp;Ecclesia</font></p>
@@ -164,6 +159,7 @@ h1,h2,h3,h4,h5,h6 {
 				Sign up for Ecclesia
 			</button>
 		</div>
+	</div>
 	</div>
 
 

@@ -59,6 +59,7 @@ router.post('/upload-and-save', function (req, res){
 router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
+
   if (!roomName || !host) {
     return res.rendirect('/home');
   }

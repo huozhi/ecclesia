@@ -4,147 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>ecclesia [query history]</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/history.css">
 <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/reveal.js"></script>
 <script type="text/javascript" src="/js/lib/js/head.min.js"></script>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/history.js"></script>
 </head>
 
-<style>
-body {
-	background-image: url(/img/pattern2.png), url(/img/background.jpg);
-	width: 100%;
-	overflow-x: hidden;
-	background-color: transparent;
-  background-repeat: repeat, no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  -webkit-background-size: auto, cover;
-  -moz-background-size: auto, cover;
-  -o-background-size: auto, cover;
-  background-size: auto, cover;
-	/*font-family: 'Josefin Slab', Arial, sans-serif;*/
-}
-@font-face {
-  font-family: 'Open Sans';
-  src: url('/fonts/open-sans.light.ttf');
-}
-* {
-  font-family: 'Open Sans';  
-}
-img:hover{
-	box-shadow: 0px 0px 35px 4px #292929;
-}
-td {
-	font-size: 20px;
-	overflow: hidden;
-	word-break:break-all
-}
-h1{
-	margin:0px;
-	padding:20px;
-	font-size:42px;
-	color:#fff;
-	text-align:left;
-	font-weight:400;
-  text-align:left;
-}
-h1 span{
-	font-size:22px;
-	color:#ddd;
-	padding-top:10px;
-}
-.header{
-	font-family:'Arial Narrow', Arial, sans-serif;
-	line-height: 24px;
-	font-size: 11px;
-	background: #000;
-	opacity: 0.9;
-	text-transform: uppercase;
-	z-index: 9999;
-	position: relative;
-	-webkit-box-shadow: 1px 0px 2px #000;
-	box-shadow: 1px 0px 2px #000;
-}
-.header a{
-	position: relative;
-	left: 90%;
-	padding: 0px 10px;
-	letter-spacing: 1px;
-	color: #ddd;
-	display: block;
-}
-.header a:hover{
-	color: #fff;
-}
-.head-title {
-	float: left;
-	width: 620px;
-	height: 400px;
-	margin: 10px;
-	border: #7d7d7d solid 1px;
-	text-align: center;
-	background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
-}
-.div-container {
-	float: left;
-	width:300px;
-	height:190px;
-	margin: 10px;
-	display:-moz-box;
-	-moz-box-pack:center;
-	-moz-box-align:center;
-	display:-webkit-box;
-	-webkit-box-pack:center;
-	-webkit-box-align:center;
-	display:box;
-	box-pack:center;
-	box-align:center;
-	border: #7d7d7d solid 1px;
-}
-.index {
-	display: inline-block;
-	width: 280px;
-	height: 170px;
-	overflow: hidden;
-	background-color: #fff;
-	border-radius: 3px;
-	cursor: pointer;
-}
-.index:hover {
-	box-shadow: 0px 0px 35px 4px #292929;
-}
-.his-container {
-	position: absolute;
-	display: inline-block;
-	width: 1280px;
-	top: 120px;
-	left: 50%;
-	margin-left: -640px;
-	margin-bottom: 50px;
-	color:#fff;
-}
-.btn-home {
-	position: relative;
-	top: 250px;
-	width:120px;
-	height:36px;
-	background-color:#aeab9c;
-	border-radius:100em;
-	font-size: 20px;
-	line-height: 1.8em;
-	color: #fff;
-	display: inline-block;
-	text-decoration: none;
-}
-.btn-home:hover{
-	color: #fff;
-	text-decoration: none;
-	background-color: #848174;
-}
-</style>
 <body onload="loadInfo()">
 	<div class="header">
     <strong><a href="/home/logout">
@@ -162,69 +31,5 @@ h1 span{
 	</div>
 
 </body>
-
-<script type="text/javascript">
-function loadInfo(){
-	$.post("/history/history-preview",
-		function(data){
-			data.forEach(
-					function(value,index){
-						$(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
-					}
-				);
-	},"json");
-}
-function sendReq(objId){
-	var tableArr = document.getElementById(objId).firstChild.firstChild.getElementsByTagName('tr');
-	var postJson = {
-		request : 's',
-		"roomName" : tableArr[0].children[1].innerHTML,
-		"host": tableArr[1].children[1].innerHTML,
-		"date" : tableArr[2].children[1].innerHTML,
-	};
-	var postStr = JSON.stringify(postJson);
-	$.ajax({
-		url:'/history/query-history',
-		type:'POST',
-		contentType : 'application/json',
-		dataType: 'json',
-		data:postStr,
-		success: function (data, status){
-			console.log(data);
-	  	$.cookie("ChartList",JSON.stringify(data.ChartList));
-	  	$.cookie("SketchList",JSON.stringify(data.SketchList));
-	  	$.cookie("MarkdownList",JSON.stringify(data.MarkdownList));
-	  	window.location.href = "/history/history-detail";
-		},
-		error: function (data, status, e){
-			console.log(e);
-		}
-	});
-}
-
-var t;
-var divW=$('.index').width();
-var divH=$('.index').height();
-var scale=1.01;
-var objId;
-function biging(obj){
-	objId = obj;
-  divW=scale*divW;
-  divH=scale*divH;
-  $("#"+obj).css('width',divW);
-  $("#"+obj).css('height',divH);
-  if(divW <= 305){
-    t = setTimeout("biging(objId);",1);
-  }
-  else
-    clearTimeout(t);
-}
-function smalling(obj){
-  divW=280;
-  divH=170;
-  $("#"+obj).css('width',divW);
-  $("#"+obj).css('height',divH);
-}
-</script>
 
 </html>
