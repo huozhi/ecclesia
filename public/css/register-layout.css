@@ -12,11 +12,6 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
-body {
-	width: 100%;
-	overflow-x: hidden;
-}
 @font-face {
   font-family: 'Open Sans';
   src: url('/fonts/open-sans.light.ttf');
@@ -28,6 +23,7 @@ h1,h2,h3,h4,h5,h6 {
 .head-container {
 	background-color: #130c0e;
 	height:50px;
+	width: 100%;
 }
 .sign-up-container {	
 	position: relative;
@@ -36,6 +32,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 .sign-up-bgimage {
 	position: relative;
+	width: 100%;
 	height:500px;
 	background: url(/img/pattern3.png) repeat center center;
 	white-space: nowrap;
