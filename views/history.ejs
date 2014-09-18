@@ -16,17 +16,29 @@
 
 <body onload="loadInfo()">
 	<div class="header">
-    <strong><a href="/home/logout">
-        Log out
-    </a></strong>
+    <a href="/home">back</a>
+    <a href="/home/logout">Log out</a>
   </div>
 	<h1>Ecclesia Home <span>welcome to use Ecclesia</span></h1>
 	<div class="his-container">
 		<div class="head-title">
 			<!-- <h1 style="">Query history </h1> -->
-			<a class="btn-home" href="/home" target='_top' >Home</a>
-			<img style="position:relative;top:275px;" src="img/flag.png"/>
+      <img class="query-icon" src="/img/query-history.png">
+			<!-- <a class="btn-home" href="/home" target='_top' >Home</a> -->
+			<img class="query-flag" style="position:relative;" src="/img/flag.png"/>
 		</div>
+
+    <!-- history records -->
+    <div class="div-container">
+      <div class="list-group index">
+        <a class="list-group-item list-group-item-success active">
+          Meeting Index N
+        </a>
+        <a class="list-group-item">Meeting Room Name: xxx</a>
+        <a class="list-group-item">Host: xxx</a>
+        <a class="list-group-item">Date: xxx</a>
+      </div>
+    </div>
 
 	</div>
 

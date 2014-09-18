@@ -12,7 +12,7 @@ body {
   background-size: auto, cover;
   font-family: 'Josefin Slab', Arial, sans-serif;
 }
-img:hover{
+.query-flag:hover{
   box-shadow: 0px 0px 35px 4px #292929;
 }
 td {
@@ -48,11 +48,10 @@ h1 span{
 }
 .header a{
   position: relative;
-  left: 90%;
+  left: 85%;
   padding: 0px 10px;
   letter-spacing: 1px;
   color: #ddd;
-  display: block;
 }
 .header a:hover{
   color: #fff;
@@ -106,7 +105,7 @@ h1 span{
 }
 .btn-home {
   position: relative;
-  top: 250px;
+  /*top: 250px;*/
   width:120px;
   height:36px;
   background-color:#aeab9c;
@@ -122,3 +121,13 @@ h1 span{
   text-decoration: none;
   background-color: #848174;
 }
+
+.query-icon {
+  position: relative;
+  top: 25%;
+  left: 0%;
+  /*margin-left: -100px;*/
+  width: 200px;
+  height: 200px;
+}
+

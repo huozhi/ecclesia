@@ -3,7 +3,14 @@ function loadInfo(){
     function(data){
       data.forEach(
           function(value,index){
-            $(".his-container").append('<div class="div-container"><div id="history-'+index+'" class="index" onmouseenter="biging(this.id);" onmouseleave="smalling(this.id);" onclick="sendReq(this.id);"><table style="color:#000;" class="table table-striped"><tr><td>Room name:</td><td>'+value.roomName+'</td></tr><tr><td>Host:</td><td>'+value.host+'</td></tr><td>Date:</td><td>'+value.date+'</td></tr></table></div></div>');
+            var $section = $('<div />').addClass('div-container');
+            var $historyNode = $('<div />').attr('id', 'history-' + index).addClass('index list-group');
+            $historyNode.append($('<a />').addClass('list-group-item list-group-item-success active').text('Meeting ' + index))
+              .append($('<a />').addClass('list-group-item').text('Room Name: ' + value.roomName))
+              .append($('<a />').addClass('list-group-item').text('Room Host: ' + value.host))
+              .append($('<a />').addClass('list-group-item').text('Date: ' + value.date));
+            $section.append($historyNode);
+            $('.his-container').append($section);
           }
         );
   },"json");
@@ -58,3 +65,10 @@ function smalling(obj){
   $("#"+obj).css('width',divW);
   $("#"+obj).css('height',divH);
 }
+
+$(document).ready(function() {
+  var username = sessionStorage.getItem('username');
+  if (!username) {
+    window.location.href = "/";
+  }
+});

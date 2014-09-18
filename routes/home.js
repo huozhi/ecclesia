@@ -14,13 +14,11 @@ router.get('/', function (req, res) {
 })
 
 router.get('/logout', function (req, res) {
-  if(req.session.username){
+  if(req.session && req.session.username){
     req.session.destroy(function(err){
-        if(!err){
-          res.redirect('/');
-        }
+      res.redirect('/');
     });
-  }else{
+  } else {
     res.redirect('/');
   }
 })
