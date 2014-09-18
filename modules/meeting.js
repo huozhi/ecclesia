@@ -357,7 +357,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                           function (err, updateCount){
                             if(!err){
                               db.close();
-                              return callback(null, updateCount); 
+                              return callback(null, mdArr); 
                             }
                           });
                       }
@@ -373,6 +373,47 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
   });
 }
 
+Meeting.saveMdDirect = function (roomName, host, markdowns, callback){
+  MongoClient.connect ("mongodb://localhost:27017/ecclesia", {native_parser :true}, function (err, db){
+    if(err){
+      mongodb.close();
+      return callback(err, null);
+    }
+    db.collection ('Meetings', function (err, meetingCollection){
+      if(err){
+        db.close();
+        return callback(err, null);
+      }else{
+       meetingCollection.findOne({roomName:roomName, host:host}, function (err, meeting){
+          if(err){
+            db.close();
+            return callback(err);
+          }else{
+            var mdArr = [];
+            var len = meeting.MarkdownList.length;
+            for (i = 0; i < markdowns.length; i++){
+              var mdDoc = {
+                range : i+len+1,
+                data : markdowns[i],
+              };
+
+              mdArr.push(mdDoc);
+            }
+
+            meetingCollection.update({roomName:roomName, host:host},
+              {$push :{MarkdownList : {$each : mdArr}}},
+              function (err, updateCount){
+                if(!err){
+                  db.close();
+                  return callback(null, updateCount); 
+                }
+              });
+          }
+        });//end findOne meeting        
+      }
+    });
+  });
+}
 Meeting.initMdTemp = function initMdTemp(tempdoc, callback){
   mongodb.open(function(err, db){
     if(err){

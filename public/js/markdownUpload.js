@@ -41,41 +41,79 @@ $(document).ready(function () {
     var _text;
     fileReader.onload = function(e) {
       _text = fileReader.result;      
-      $.ajax({
-        url: '/chat/upload-markdown',
-        type: 'POST',
-        data: JSON.stringify({ text: _text }),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function (data) {
-          console.log(data.response);
-          // the server return value and 
-          // database structure should be fixed          
-          var splitedMdArr = data.mdArr;
-          var $mdScript = $("<script />", {
-            html: splitedMdArr[0].splitMd,
-            type: "text/template"
-          });
-          var $section = $('<section data-markdown></section>');
-          $section.append($mdScript);
-          $('#local-preview').append($section);
-          RevealMarkdown.reinit();
+      // $.ajax({
+      //   url: '/chat/upload-markdown',
+      //   type: 'POST',
+      //   data: JSON.stringify({ text: _text }),
+      //   contentType: 'application/json',
+      //   dataType: 'json',
+      //   success: function (data) {
+      //     console.log(data.response);
+      //     // the server return value and 
+      //     // database structure should be fixed          
+      //     var splitedMdArr = data.mdArr;
+      //     var $mdScript = $("<script />", {
+      //       html: splitedMdArr[0].splitMd,
+      //       type: "text/template"
+      //     });
+      //     var $section = $('<section data-markdown></section>');
+      //     $section.append($mdScript);
+      //     $('#local-preview').append($section);
+      //     RevealMarkdown.reinit();
           
-          // console.log($impressText);
-          // while (!Reveal.isLastSlide()) Reveal.next();
-          // send preview to all
-          var username = sessionStorage.getItem('username');
-          webrtcRef.signalSyncPreview({
-            username: username,
-            preview: splitedMdArr[0].splitMd
-          });
+      //     // console.log($impressText);
+      //     // while (!Reveal.isLastSlide()) Reveal.next();
+      //     // send preview to all
+      //     var username = sessionStorage.getItem('username');
+      //     webrtcRef.signalSyncPreview({
+      //       username: username,
+      //       preview: splitedMdArr[0].splitMd
+      //     });
           
-        },
-        error: function (err) {
-          alert(err);
-        }
-      });
+      //   },
+      //   error: function (err) {
+      //     alert(err);
+      //   }
+      // });
+    $.ajax({
+      url: '/chat//upload-and-save',
+      type: 'POST',
+      data: JSON.stringify({ text: _text }),
+      contentType: 'application/json',
+      dataType: 'json',
+      success: function (data) {
+        console.log(data.response);
+        // the server return value and 
+        // database structure should be fixed          
+        var splitedMdArr = data.mdArr;
+        var $mdScript = $("<script />", {
+          html: splitedMdArr[0].data,
+          type: "text/template"
+        });
+        var $section = $('<section data-markdown></section>');
+        $section.append($mdScript);
+        $('#local-preview').append($section);
+        webrtcRef.signalSyncImpress();
+        
+        // console.log($impressText);
+        // while (!Reveal.isLastSlide()) Reveal.next();
+        // send preview to all
+        var username = sessionStorage.getItem('username');
+        webrtcRef.signalSyncPreview({
+          username: username,
+          preview: splitedMdArr[0].splitMd
+        });
+        RevealMarkdown.reinit();
+        
+      },
+      error: function (err) {
+        alert(err);
+      }
+    });
     };
+
+    // save directly
+
     fileReader.readAsText(upfile);
     $('#add-impress-modal').modal('toggle');
   });
