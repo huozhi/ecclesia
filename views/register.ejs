@@ -17,10 +17,6 @@
 </head>
 
 <style>
-body {
-	width: 100%;
-	overflow-x: hidden;
-}
 @font-face {
   font-family: 'Open Sans';
   src: url('/fonts/open-sans.light.ttf');
@@ -40,31 +36,32 @@ h1,h2,h3,h4,h5,h6 {
 }
 .sign-up-bgimage {
 	position: relative;
-	padding: 100px 50px 0px 50px;
 	height:500px;
 	background: url(/img/pattern3.png) repeat center center;
+	white-space: nowrap;
 }
 .sign-up-form .huge-title {
 	
 	position: relative;
 	height: 500px;
-	display: inline-block;
 
 }
 .sign-up-form{
-	float: right;
 	position: relative;
-	right:5%;
-	/*top:150px;*/
+	width: 400px;
+	left: 300px;
+	top: 80px;
+	display: inline-block;
 }
 .huge-title {
 	position: relative;
-	float: left;
-	left: 50px;
+	display: inline-block;
+	top: -20px;
+	left: 100px;
+	width:600px;
 	font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:white;
-	width:600px;
 }
 .welcome-form{
 	/*font-family:"Open Sans","Josefin Slab", "Helvetica Neue",Helvetica,Arial,sans-serif,Arial, sans-serif;*/
@@ -83,7 +80,7 @@ h1,h2,h3,h4,h5,h6 {
 	color: white;
 }
 .sign-up-form,.sign-up-container:before{
-	display: table;
+	/*display: table;*/
 	content: "";
 }
 .sign-up-container,.sign-up-form:after{
@@ -118,48 +115,48 @@ h1,h2,h3,h4,h5,h6 {
 
 	<div class="sign-up-container">
 		<div class="sign-up-bgimage">
-		<!-- left part: introduction -->
-		<div class=" huge-title">
-			<p><font class="join-form">Welcome&nbsp; to </font><font class="welcome-form">&nbsp;Ecclesia</font></p>
-			<p style="line-height:90%">
-				<font class="content-form">
-					This is an application which simulates a real-time meeting online.
-					<br>
-					Several functions are provided to help you hold the meeting.
-					<br>
-					Enjoy the convenience brought by Ecclesia!
-				</font>
-			</p>
-		</div>
-		<!-- right part: sign in part -->
-		<div class="sign-up-form">
-			<div>
-				<input id="useremail" type="text" class="form-control" placeholder="Your email required">
+			<!-- left part: introduction -->
+			<div class=" huge-title">
+				<p><font class="join-form">Welcome&nbsp; to </font><font class="welcome-form">&nbsp;Ecclesia</font></p>
+				<p style="line-height:90%">
+					<font class="content-form">
+						This is an application which simulates a real-time meeting online.
+						<br>
+						Several functions are provided to help you hold the meeting.
+						<br>
+						Enjoy the convenience brought by Ecclesia!
+					</font>
+				</p>
 			</div>
-			<br>
-			<div>
-				<input id="username" type="text" class="form-control" placeholder="Pick a username">
-			</div>
-			<br>
-			<div>
-				<input id="password" type="password" class="form-control" placeholder="Create a password">
-			</div>
-			<br>
+			<!-- right part: sign in part -->
+			<div class="sign-up-form">
+				<div>
+					<input id="useremail" type="text" class="form-control" placeholder="Your email required">
+				</div>
+				<br>
+				<div>
+					<input id="username" type="text" class="form-control" placeholder="Pick a username">
+				</div>
+				<br>
+				<div>
+					<input id="password" type="password" class="form-control" placeholder="Create a password">
+				</div>
+				<br>
 
-			<div>
-				<input id="repeatpwd" type="password" class="form-control" placeholder="Repeat your password">
-			</div>
-			<br>
-			<div class="text-muted">
-				<p><font color="white">Use letters, umerals and characters as your username or password</p>
-			</div>
-			<br>
+				<div>
+					<input id="repeatpwd" type="password" class="form-control" placeholder="Repeat your password">
+				</div>
+				<br>
+				<div class="text-muted">
+					<p><font color="white">Use letters, umerals and characters as your username or password</p>
+				</div>
+				<br>
 
-			<button type="button" id="sign-up-btn" class="btn btn-lg btn-success btn-block" >
-				Sign up for Ecclesia
-			</button>
+				<button type="button" id="sign-up-btn" class="btn btn-lg btn-success btn-block" >
+					Sign up for Ecclesia
+				</button>
+			</div>
 		</div>
-	</div>
 	</div>
 
 
