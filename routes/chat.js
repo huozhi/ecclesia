@@ -40,6 +40,22 @@ router.post('/upload-markdown', function (req, res) {
   });
 });
 
+router.post('/upload-and-save', function (req, res){
+  var t = req.body.text;
+  var markdowns = t.split(/\+{6,}/);
+  var author = req.session.username;
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+
+  Meeting.saveMdDirect(roomName, host, markdowns, function (err, result){
+    if(err){
+      return res.json({response: 'upSave-markdown-failed'});
+    }else{
+      return res.json({response: 'upSave-markdown-success'});
+    }
+  })
+})
+
 router.post('/query-meeting-markdown', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
