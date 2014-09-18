@@ -208,5 +208,19 @@ router.post('/query-img', function (req, res){
   });
 });
 
+router.post('/query-outline', function (req, res){
+  console.log("get outline");
+
+  var roomName = req.session.roomName;
+  var host = req.session.host;
+
+  Meeting.queryConference(roomName, host, function (err, meeting){
+    if(err){
+      return res.json({response:"query-outline-failed"});
+    }else{
+      return res.json({response:"query-outline-success", outline: meeting.Outline});
+    }
+  });
+});
 
 module.exports = router;

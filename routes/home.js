@@ -82,6 +82,7 @@ router.post('/create-room', function (req, res) {
     return res.json({response: resInfo});
   }else{
     req.session.roomName = req.body.roomName;
+    var outline = req.body.outline;
     var date = new Date();
     req.session.date = date.toDateString();
     var  newMeeting = {
@@ -89,6 +90,7 @@ router.post('/create-room', function (req, res) {
       date : date.toDateString(),
       host : req.session.username,
       userList : [],
+      Outline: outline,
       ChartList:[],
       MarkdownList:[],
       SketchList:[]
