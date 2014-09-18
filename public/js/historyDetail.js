@@ -1,67 +1,44 @@
-function lzw_uncompress(s) {
-    var dict = {};
-    var data = (s + "").split("");
-    // console.log(data);
-    var currChar = data[0];
-    var oldPhrase = currChar;
-    var out = [currChar];
-    var code = 256;
-    var phrase;
-    for (var i=1; i<data.length; i++) {
-        var currCode = data[i].charCodeAt(0);
-        if (currCode < 256) {
-            phrase = data[i];
-        }
-        else {
-            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
-            // case (oldPhrase + currChart) for utf-8 character encode in two integers
-        }
-        out.push(phrase);
-        currChar = phrase.charAt(0);
-        dict[code] = oldPhrase + currChar;
-        code++;
-        oldPhrase = phrase;
-    }
-    return out.join("");
-}
-
 function loadData(){
   var chartlist = JSON.parse($.cookie('ChartList'));
   console.log(chartlist);
-  if (!chartlist || !chartlist.length) return;
-  chartlist.forEach(
-    function(value,index){
-      var chart = {
-        request : 'chart',
-        id : value.id,
-      }
-      var postData = JSON.stringify(chart);
-      $.ajax({
-        url:'/history/history-detail',
-        type:'POST',
-        contentType : 'application/json',
-        dataType: 'json',
-        data:postData,
-        success: function (data, status){
-          console.log(data);
-          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + data.image.img +'"/></div>');
-        },
-        error: function (data, status, e){
-          // alert(e);
-          console.log(e);
+  // if (!chartlist || !chartlist.length) {}
+  if (chartlist !== undefined) {
+    chartlist.forEach(
+      function(value,index){
+        var chart = {
+          request : 'chart',
+          id : value.id,
         }
-      });
-    }
-  );
+        var postData = JSON.stringify(chart);
+        $.ajax({
+          url:'/history/history-detail',
+          type:'POST',
+          contentType : 'application/json',
+          dataType: 'json',
+          data:postData,
+          success: function (data, status){
+            console.log(data);
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + data.image.img +'"/></div>');
+          },
+          error: function (data, status, e){
+            // alert(e);
+            console.log(e);
+          }
+        });
+      }
+    );
+  }
 
   var mdlist = JSON.parse($.cookie('MarkdownList'));
+  console.log(mdlist);
   mdlist.forEach(
       function(value,index){
-        $(".slides").append('<section data-markdown><script type="text/template">'+ mdlist[0].data + '</'+'script></section>');       
+        $(".slides").append('<section data-markdown><script type="text/template">'+ mdlist[index].data + '</'+'script></section>');       
       }
     );
 
-  if ($.cookie('ImpressList')) {
+  if (typeof mdlist !== undefined) {
+    // console.log('initialize aaa');
     Reveal.initialize({
       width: 900,
       height: 540,
@@ -110,8 +87,38 @@ function loadData(){
 
 }
 
+function lzw_uncompress(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    // console.log(data);
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i=1; i<data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        }
+        else {
+            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+            // case (oldPhrase + currChart) for utf-8 character encode in two integers
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
+
+
 $(document).ready(function(){
-   loadData();
+  loadData();
+
   var btnStatus = true;
   $(".btn-close").click(function(){
     if (btnStatus) {
@@ -127,7 +134,6 @@ $(document).ready(function(){
   $(".btn-back").click(function(){
     window.location.href = "/history";
   });
-});
 
   //chart slide
 var mySwiper = new Swiper('.swiper-container',{
@@ -135,4 +141,5 @@ var mySwiper = new Swiper('.swiper-container',{
     paginationClickable: true,
     mode: 'vertical',
     freeMode: true,
-  })
+  });
+});

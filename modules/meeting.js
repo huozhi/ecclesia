@@ -24,7 +24,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
     markdowns:[]
   };
 
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true},function(err, db){
     if(err){
       mongodb.close();
 
@@ -32,24 +32,24 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
     }
     db.createCollection('Meetings', function(err, collection){
       if(err){
-        mongodb.close();
+        db.close();
 
         return callback(err, null);
       }else{
         db.collection('Meetings', {strict : true}, function(err, collection){
           if(err){
-            mongodb.close();
+            db.close();
 
             return callback(err, null);
           }
 
           collection.insert(newMeeting, {safe:true}, function(err, meeting){
             if(err){
-              mongodb.close();
+              db.close();
 
               return callback(err, null);
             }else{
-              mongodb.close();
+              db.close();
 
               return callback(null, meeting[0]);
             }
@@ -62,7 +62,7 @@ Meeting.createRoom = function createRoom(newMeeting, callback){
 
 Meeting.queryConference = function(roomName, host, callback){
   // console.log('AAAAAAAAAA');
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true},function(err, db){
     if(err){
       console.log('open err');
       mongodb.close();
@@ -72,17 +72,17 @@ Meeting.queryConference = function(roomName, host, callback){
       db.collection("Meetings",function(err, collection){
         if(err){
           console.log('!Meetings',err);
-          mongodb.close();
+          db.close();
           return callback(err, null);
         }else{
           console.log('findOne queryConference');
           collection.findOne({roomName:roomName, host:host},function(err, result){
             if(err){
               console.log('!findOne',err);
-              mongodb.close();
+              db.close();
               return callback(err,null);
             } else {
-              mongodb.close();
+              db.close();
 
               console.log('db result',result);
               return callback(null, result);
@@ -95,7 +95,7 @@ Meeting.queryConference = function(roomName, host, callback){
 }
 
 Meeting.queryHistory = function(roomname, host, date, callback){
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true},function(err, db){
     if(err){
       console.log('open:',err);
       mongodb.close();
@@ -105,18 +105,18 @@ Meeting.queryHistory = function(roomname, host, date, callback){
         console.log('Meetings here');
         if(err){
           console.log('collection:',err);
-          mongodb.close();
+          db.close();
           return callback(err, null);
         }else{
           collection.findOne({roomName:roomname, host:host, date:date},function(err, result){
             console.log('queryHistory empty');
             if(err){
               console.log('find',err);
-              mongodb.close();
+              db.close();
               return callback(err, null);
             } else {
               console.log('find');
-              mongodb.close();
+              db.close();
 
               return callback(null, result);
             }
@@ -129,7 +129,7 @@ Meeting.queryHistory = function(roomname, host, date, callback){
 
 Meeting.addParticipant = function(roomname, host, participant, callback){
   
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true},function(err, db){
     if(err){
       mongodb.close();
 
@@ -137,17 +137,17 @@ Meeting.addParticipant = function(roomname, host, participant, callback){
     }else{
       db.collection('Meetings', {strict:true}, function(err, collection){
         if(err){
-          mongodb.close();
+          db.close();
 
           return callback(err, null);
         }else{
           collection.update({roomName: roomname,host:host}, {$push:{"userList": participant}}, function(err, doc){
             if(err){
-              mongodb.close();
+              db.close();
 
               return callback(err, null);
             }else{
-              mongodb.close();
+              db.close();
 
               if(doc){
                 console.log(doc);
@@ -357,7 +357,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                           function (err, updateCount){
                             if(!err){
                               db.close();
-                              return callback(null, mdArr); 
+                              return callback(null, updateCount); 
                             }
                           });
                       }
@@ -405,7 +405,7 @@ Meeting.saveMdDirect = function (roomName, host, markdowns, callback){
               function (err, updateCount){
                 if(!err){
                   db.close();
-                  return callback(null, updateCount); 
+                  return callback(null, mdArr); 
                 }
               });
           }

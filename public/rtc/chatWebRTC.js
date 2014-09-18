@@ -8,9 +8,7 @@ function enableWebRTC (mediaContrains) {
 
 // var room = location.search && location.search.split('?')[1];
 var room = sessionStorage.getItem('roomName') || 'roomTest';
-var roomHash = sessionStorage.getItem('roomHash') 
-    || location.search && location.search.split('?')[1]
-    || 'roomURL';
+var roomHash = sessionStorage.getItem('roomHash');
   
 console.log('roomName:',room);
 console.log('roomHash:',roomHash);
@@ -19,7 +17,7 @@ console.log('host',sessionStorage.getItem('creator'));
 
 var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
-  url: "https://223.3.90.4:8888",
+  url: "https://ipp.cloudapp.net:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
   username: uname,
@@ -154,7 +152,19 @@ webrtc.on('rtcSyncChart', function (chartData) {
 });
 
 webrtc.on('rtcSyncImpress', function (impressData) {
-  syncImperss();
+  console.log('client sync impress');
+  impressData.forEach(function(markdown, index) {
+    var $section = $('<section data-markdown></section>');
+    var $mdScript = $('<script />', {
+      html: markdown,
+      type: 'text/template'
+    })
+    $section.append($mdScript);
+    $('.slides').append($section);
+  });
+  RevealMarkdown.reinit();
+  Reveal.next();
+  Reveal.prev();
 });
 
 webrtc.on('rtcSyncPreview', function (previewData) {

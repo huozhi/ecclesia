@@ -83,27 +83,33 @@ $(document).ready(function () {
       dataType: 'json',
       success: function (data) {
         console.log(data.response);
+        console.log(data);
         // the server return value and 
         // database structure should be fixed          
         var splitedMdArr = data.mdArr;
-        var $mdScript = $("<script />", {
-          html: splitedMdArr[0].data,
-          type: "text/template"
+        var markdownData = [];
+        splitedMdArr.forEach(function(markdown, index) {
+          var $mdScript = $("<script />", {
+            html: splitedMdArr[index].data,
+            type: "text/template"
+          });
+          var $section = $('<section data-markdown></section>');
+          $section.append($mdScript);
+          $('.slides').append($section);
+          markdownData.push(splitedMdArr[index].data);
         });
-        var $section = $('<section data-markdown></section>');
-        $section.append($mdScript);
-        $('#local-preview').append($section);
-        webrtcRef.signalSyncImpress();
-        
+        webrtcRef.signalSyncImpress(markdownData);
         // console.log($impressText);
         // while (!Reveal.isLastSlide()) Reveal.next();
         // send preview to all
         var username = sessionStorage.getItem('username');
         webrtcRef.signalSyncPreview({
           username: username,
-          preview: splitedMdArr[0].splitMd
+          preview: splitedMdArr[0].data
         });
         RevealMarkdown.reinit();
+        Reveal.next();
+        Reveal.prev();
         
       },
       error: function (err) {
