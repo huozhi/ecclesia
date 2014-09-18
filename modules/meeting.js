@@ -357,7 +357,7 @@ Meeting.saveMarkdown = function saveMarkdown(roomName, host, author, callback){
                           function (err, updateCount){
                             if(!err){
                               db.close();
-                              return callback(null, updateCount); 
+                              return callback(null, mdArr); 
                             }
                           });
                       }

@@ -51,7 +51,7 @@ router.post('/upload-and-save', function (req, res){
     if(err){
       return res.json({response: 'upSave-markdown-failed'});
     }else{
-      return res.json({response: 'upSave-markdown-success'});
+      return res.json({response: 'upSave-markdown-success', mdArr : result});
     }
   })
 })

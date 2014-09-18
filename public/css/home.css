@@ -9,7 +9,7 @@ thead{
   background-color: #eeeeee;
 }
 body {
-  background-image: url(img/pattern.png), url(img/bd-1.jpg);
+  background-image: url(/img/pattern.png), url(/img/bd-1.jpg);
   width: 100%;
   overflow: hidden;
 }
@@ -25,7 +25,7 @@ body{
   -webkit-background-size: auto, cover;
   background-size: auto, cover;
 	/*font-family: 'Josefin Slab', Arial, sans-serif;*/
-	background-image: url(img/pattern.png), url(img/bd-1.jpg);
+	background-image: url(/img/pattern.png), url(/img/bd-1.jpg);
 	width: 100%;
 	overflow: hidden;
 }

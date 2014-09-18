@@ -46,6 +46,7 @@ function createImpress(markdownArr) {
               type: "text/template"
             });
     var $section = $('<section data-markdown></section>').append(mdScript);
+    slides.children().remove();
     slides.append($section);
   });
   RevealMarkdown.reinit();

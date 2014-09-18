@@ -153,7 +153,7 @@ webrtc.on('rtcSyncChart', function (chartData) {
   });
 });
 
-webrtc.on('rtcSYncImpress', function (impressData) {
+webrtc.on('rtcSyncImpress', function (impressData) {
   syncImperss();
 });
 
