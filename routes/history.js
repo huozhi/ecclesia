@@ -6,8 +6,12 @@ var compresser = require('../modules/compresser.js');
 var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
-  console.log(req.session.username);
-  res.render('history');
+  if (req.session.username) {
+    return res.render('/');
+  }
+  else {
+    res.render('history');
+  }
 });
 
 router.post('/history-preview', function (req, res){
@@ -39,7 +43,12 @@ router.post('/query-history', function (req, res){
 });
 
 router.get('/history-detail', function (req, res) {
-  return res.render('history-detail');
+  if (req.session.username) {
+    return res.render('/');
+  }
+  else {
+    return res.render('history-detail');
+  }
 });
 
 router.post('/history-detail', function (req, res) {

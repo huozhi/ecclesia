@@ -12,7 +12,15 @@ body {
   background-size: auto, cover;
   font-family: 'Josefin Slab', Arial, sans-serif;
 }
+
+.query-flag {
+  position: relative;
+  margin-top: 90px;
+  display: block;
+
+}
 .query-flag:hover{
+
   box-shadow: 0px 0px 35px 4px #292929;
 }
 td {
@@ -124,9 +132,10 @@ h1 span{
 
 .query-icon {
   position: relative;
-  top: 25%;
-  left: 0%;
-  /*margin-left: -100px;*/
+  display: block;
+  top: 15%;
+  left: 50%;
+  margin-left: -100px;
   width: 200px;
   height: 200px;
 }
