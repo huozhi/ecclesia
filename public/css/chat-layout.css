@@ -24,7 +24,7 @@ body {
 .affix-bar {
   position: relative;
   display: inline-block;
-  top: -450px;
+  top: 5px;
   width: 205px;
   height: 605px;
   border: #3B3B3B solid 1px;
@@ -145,11 +145,12 @@ div.single-chart > button {
   right: 0;
 }
 .container-frame {
-  position: relative;
+  float: left;
   width: 100%;
   height: 140px;
   overflow: hidden;
   margin: 0 auto;
+  margin-bottom: 10px;
   border: #a8a8a8 solid 1px;
   border-radius: 2px;
   background-color: #fff;
