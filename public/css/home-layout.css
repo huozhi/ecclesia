@@ -162,12 +162,12 @@ h1 span{
 	left: 50%;
 	margin-left: -350px;
 	width: 700px;
-	height: 250px;
+	height: 150px;
 }
 .user-list {
 	float: left;
 	width: 160px;
-	height: 250px;
+	height: 150px;
 	border: #e3e3e3 solid 1px;
 	border-radius: 0.5em;
 	background-color: #eeeeee;
@@ -175,7 +175,7 @@ h1 span{
 .user-list-right {
 	float: left;
 	width: 540px;
-	height: 250px;
+	height: 150px;
 }
 .invite-input {
 	float: left;
