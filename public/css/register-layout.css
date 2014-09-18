@@ -36,31 +36,29 @@ h1,h2,h3,h4,h5,h6 {
 }
 .sign-up-bgimage {
 	position: relative;
-	padding: 100px 50px 0px 50px;
-	height: 500px;
-	min-width: 700px;	
+	height:500px;
 	background: url(/img/pattern3.png) repeat center center;
+	white-space: nowrap;
 }
 .sign-up-form .huge-title {
 	
 	position: relative;
 	height: 500px;
-	display: inline-block;
 
 }
 .sign-up-form{
-	min-width: 300px;
-	float: right;
 	position: relative;
-	right:5%;
-	/*top:150px;*/
+	width: 400px;
+	left: 300px;
+	top: 80px;
+	display: inline-block;
 }
 .huge-title {
-	min-width: 300px;
-
 	position: relative;
-	float: left;
-	left: 50px;
+	display: inline-block;
+	top: -20px;
+	left: 100px;
+	width:600px;
 	font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:white;
@@ -82,7 +80,7 @@ h1,h2,h3,h4,h5,h6 {
 	color: white;
 }
 .sign-up-form,.sign-up-container:before{
-	display: table;
+	/*display: table;*/
 	content: "";
 }
 .sign-up-container,.sign-up-form:after{
