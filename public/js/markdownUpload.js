@@ -41,81 +41,83 @@ $(document).ready(function () {
     var _text;
     fileReader.onload = function(e) {
       _text = fileReader.result;      
-      // $.ajax({
-      //   url: '/chat/upload-markdown',
-      //   type: 'POST',
-      //   data: JSON.stringify({ text: _text }),
-      //   contentType: 'application/json',
-      //   dataType: 'json',
-      //   success: function (data) {
-      //     console.log(data.response);
-      //     // the server return value and 
-      //     // database structure should be fixed          
-      //     var splitedMdArr = data.mdArr;
-      //     var $mdScript = $("<script />", {
-      //       html: splitedMdArr[0].splitMd,
-      //       type: "text/template"
-      //     });
-      //     var $section = $('<section data-markdown></section>');
-      //     $section.append($mdScript);
-      //     $('#local-preview').append($section);
-      //     RevealMarkdown.reinit();
-          
-      //     // console.log($impressText);
-      //     // while (!Reveal.isLastSlide()) Reveal.next();
-      //     // send preview to all
-      //     var username = sessionStorage.getItem('username');
-      //     webrtcRef.signalSyncPreview({
-      //       username: username,
-      //       preview: splitedMdArr[0].splitMd
-      //     });
-          
-      //   },
-      //   error: function (err) {
-      //     alert(err);
-      //   }
-      // });
-    $.ajax({
-      url: '/chat//upload-and-save',
-      type: 'POST',
-      data: JSON.stringify({ text: _text }),
-      contentType: 'application/json',
-      dataType: 'json',
-      success: function (data) {
-        console.log(data.response);
-        console.log(data);
-        // the server return value and 
-        // database structure should be fixed          
-        var splitedMdArr = data.mdArr;
-        var markdownData = [];
-        splitedMdArr.forEach(function(markdown, index) {
+      $.ajax({
+        url: '/chat/upload-markdown',
+        type: 'POST',
+        data: JSON.stringify({ text: _text }),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (data) {
+          console.log(data.response);
+          // the server return value and 
+          // database structure should be fixed          
+          var splitedMdArr = data.mdArr;
           var $mdScript = $("<script />", {
-            html: splitedMdArr[index].data,
+            html: splitedMdArr[0].splitMd,
             type: "text/template"
           });
           var $section = $('<section data-markdown></section>');
           $section.append($mdScript);
-          $('.slides').append($section);
-          markdownData.push(splitedMdArr[index].data);
-        });
-        webrtcRef.signalSyncImpress(markdownData);
-        // console.log($impressText);
-        // while (!Reveal.isLastSlide()) Reveal.next();
-        // send preview to all
-        var username = sessionStorage.getItem('username');
-        webrtcRef.signalSyncPreview({
-          username: username,
-          preview: splitedMdArr[0].data
-        });
-        RevealMarkdown.reinit();
-        Reveal.next();
-        Reveal.prev();
-        
-      },
-      error: function (err) {
-        alert(err);
-      }
-    });
+          $('#local-preview').append($section);
+          RevealMarkdown.reinit();
+          
+          // console.log($impressText);
+          // while (!Reveal.isLastSlide()) Reveal.next();
+          // send preview to all
+          var username = sessionStorage.getItem('username');
+          webrtcRef.signalSyncPreview({
+            username: username,
+            preview: splitedMdArr[0].splitMd
+          });
+          
+        },
+        error: function (err) {
+          alert(err);
+        }
+      });
+
+      // save directly
+      $.ajax({
+        url: '/chat//upload-and-save',
+        type: 'POST',
+        data: JSON.stringify({ text: _text }),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (data) {
+          console.log(data.response);
+          console.log(data);
+          // the server return value and 
+          // database structure should be fixed          
+          var splitedMdArr = data.mdArr;
+          var markdownData = [];
+          splitedMdArr.forEach(function(markdown, index) {
+            var $mdScript = $("<script />", {
+              html: splitedMdArr[index].data,
+              type: "text/template"
+            });
+            var $section = $('<section data-markdown></section>');
+            $section.append($mdScript);
+            $('.slides').append($section);
+            markdownData.push(splitedMdArr[index].data);
+          });
+          webrtcRef.signalSyncImpress(markdownData);
+          // console.log($impressText);
+          // while (!Reveal.isLastSlide()) Reveal.next();
+          // send preview to all
+          var username = sessionStorage.getItem('username');
+          webrtcRef.signalSyncPreview({
+            username: username,
+            preview: splitedMdArr[0].data
+          });
+          RevealMarkdown.reinit();
+          Reveal.next();
+          Reveal.prev();
+          
+        },
+        error: function (err) {
+          alert(err);
+        }
+      });
     };
 
     // save directly

@@ -15,7 +15,11 @@ router.post('/history-preview', function (req, res){
   console.log(user);
   User.get(user, function (err, result){
     if(!err){
-      res.json(result.conferences);
+      if (!result) {
+        return res.json(null);
+      } else {
+        return res.json(result.conferences);
+      }
     }
   })
 })
@@ -26,10 +30,10 @@ router.post('/query-history', function (req, res){
   var host = req.body.host;
   var date = req.body.date;
   Meeting.queryHistory(roomName, host, date, function (err, result){
-    if(!err){
-      return res.json(result);
-    } else {
+    if(err || !result){
       return res.json(null);
+    } else {
+      return res.json(result);
     }
   });
 });

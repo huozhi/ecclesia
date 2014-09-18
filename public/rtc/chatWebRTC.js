@@ -34,7 +34,7 @@ var webrtc = new SimpleWebRTC({
 webrtc.on('readyToCall', function() {
   if (room) {
     webrtc.joinRoom(roomHash);
-    console.log('join room');
+    // console.log('join room');
   }
 });
 
@@ -182,30 +182,6 @@ webrtc.on('rtcSyncPreview', function (previewData) {
     );
   $(previewCntrId).append($section);
   RevealMarkdown.reinit();
-  // $.ajax({
-  //   url: '/chat/query-preview-markdown',
-  //   type: 'POST',
-  //   contentType: 'application/json',
-  //   dataType: 'json',
-  //   data: JSON.stringify({
-  //     request: 'get-markdown',
-  //     objectId: impressData.objectId
-  //   }),
-  //   success: function (data) {
-  //     // the server return value and 
-  //     // database structure should be fixed
-  //     var $mdScript = $("<script />", {
-  //       html: splitedMdArr,
-  //       type: "text/template"
-  //     });
-  //     var $text = $('<section data-markdown></section>').append($mdScript);
-  //     // console.log($impressText);
-  //     $('#reveal > .slides').append($text);
-  //     while (!Reveal.isLastSlide()) Reveal.next();
-  //     RevealMarkdown.reinit();
-  //   },
-  //   error: function (err) { alert(err); }
-  // })
 });
 
 // share rtc object with markdownUpload.js
@@ -214,7 +190,7 @@ markdownUpload_setWebRTCRef(webrtc);
 /* ============= end new event ============== */
 
 
-
+if ($('.slides').children().length) {
 
 Reveal.initialize({
   width: 800,
@@ -304,7 +280,7 @@ Reveal.addEventListener('slidechanged', function (event) {
         
     saveImage($prevSkect, 'sketch', Reveal.getIndices().h);*/
 });
-
+}
 // load chartInit.js script
 enableChartPreview(webrtc);
 

@@ -10,6 +10,7 @@
 
 * 调整chat.ejs界面布局：chat-layout.css
 
+++++++
 
 #9-15
 
@@ -22,6 +23,7 @@
   增加响应script，history的post已经测试成功
   historyDetail界面数据渲染没有测试过
   historyDetail中图和markdown没有实现同步
+++++++
 
 #9-11
 
@@ -35,6 +37,7 @@
   修改了index.js【加了测试用，有问题】
 * 历史界面
   删去detail板块，script还没有来得及修改
+++++++
 
 #9-10
 
@@ -43,6 +46,7 @@
 * home界面
   修改home.css部分内容
   修改home.ejs部分细节
+++++++
 
 #9-9
 
