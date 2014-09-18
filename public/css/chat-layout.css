@@ -8,19 +8,8 @@ body {
   background: url(/img/triangles-bg-big.png);
   /*background: url(/img/bg-struck.png);*/
 }
-.big-block {
-  position: relative;
-  width: 1300px;
-  max-height: 620px;
-  top: -25px;
-  left: 50%;
-  margin-left: -650px;  
-  overflow: hidden;
-  white-space:nowrap;
-}
-.container-fluid {
-  padding: 0;
-}
+
+
 .affix-bar {
   position: relative;
   display: inline-block;
@@ -35,16 +24,18 @@ body {
 .main {
   position: relative;
   display: inline-block;
-  width: 880px;
-  height: 620px;
+  width: 900px;
+  height: 600px;
   padding: 10px;
 }
 
 .board {
   position: relative;
-  margin: 0 auto;
-  width: 820px;
+  left: 50%;
+  margin-left: -400px;
+  width: 800px;
   height: 400px;
+
   border: #a8a8a8 solid 1px;
   border-radius: 5px;  
 }
@@ -61,7 +52,7 @@ body {
 .swiper-container {
   position: relative;
   top: 5px;
-  width: 820px;
+  width: 800px;
   height: 200px;
   background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
   border: #3B3B3B solid 1px;
@@ -131,15 +122,32 @@ div.single-chart > button {
 }
 
 .center {
-    text-align:center;
+  text-align:center;
 }
 
 .center form {
-    display:inline-block;
+  display:inline-block;
 }
 
+nav {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1px;
+}
+
+/*.body-conatiner {
+  position: relative;
+  top: 1px;
+  margin-top: 1px;
+}*/
+
 .sidebar {
+  position: relative;
+  top: 0;
   padding: 10px;
+}
+.left-sidebar {
+  left: 0;
 }
 .right-sidebar {
   right: 0;
@@ -184,13 +192,6 @@ div.single-chart > button {
   background-color: #12acef;
 }
 
-#scan-file {
-  position: relative;
-  left: 497px;
-  top: 10px;
-  width: 71px;
-}
-
 .cert-right {
   position: relative;
   float: right;
@@ -204,6 +205,7 @@ ul.dropdown-menu {
 .pagination {
   position: absolute;
 }
+
 .btn-refresh {
   position: absolute;
   z-index: 10;

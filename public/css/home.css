@@ -1,3 +1,22 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/open-sans.light.ttf');
+}
+* {
+  font-family: 'Open Sans';  
+}
+thead{
+  background-color: #eeeeee;
+}
+body {
+  background-image: url(img/pattern.png), url(img/bd-1.jpg);
+  width: 100%;
+  overflow: hidden;
+}
+a.home-link {
+  text-decoration: none;
+  line-height: 1.8em;
+}
 body{
 	background-color: transparent;
   background-repeat: repeat, no-repeat;
@@ -5,7 +24,7 @@ body{
   background-attachment: fixed;
   -webkit-background-size: auto, cover;
   background-size: auto, cover;
-	font-family: 'Josefin Slab', Arial, sans-serif;
+	/*font-family: 'Josefin Slab', Arial, sans-serif;*/
 	background-image: url(img/pattern.png), url(img/bd-1.jpg);
 	width: 100%;
 	overflow: hidden;
@@ -36,7 +55,7 @@ h1 span{
 }
 /* Header Style */
 .header{
-	font-family:'Arial Narrow', Arial, sans-serif;
+	/*font-family:'Arial Narrow', Arial, sans-serif;*/
 	line-height: 24px;
 	height: 23px;
 	font-size: 11px;
@@ -66,7 +85,7 @@ h1 span{
 	padding:50px 0px 30px 20px;
 	height:30px;
 	clear:both;
-	font-family: 'Arial Narrow', Arial, sans-serif;
+	/*font-family: 'Arial Narrow', Arial, sans-serif;*/
 	width:830px;
 	margin:0 auto;
     color:#fff;

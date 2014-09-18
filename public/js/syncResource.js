@@ -9,12 +9,13 @@ $(document).ready(function() {
   }).click();
 
   // sync charts in loading page
-  syncCharts();
   // sync impress in loading page
-  syncImpress();
   syncPreview();
-  // $(".btn-refresh").click(function(){
-  // });
+  $(".btn-refresh").click(function(){
+    syncCharts();
+  
+    // syncImpress();
+  });
 });
 
 
@@ -29,11 +30,11 @@ function syncImpress() {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
-      if (!data.mdAdd) return;
-      var markdownArr = data.mdAdd;
+      if (!data.mdArr) return;
+      var markdownArr = data.mdArr;
       createImpress(markdownArr);
     },
-    error: function (data, status, err) { alert(err); }
+    error: function (data, status, err) { console.log(err); }
   });
 }
 
@@ -61,12 +62,16 @@ function syncPreview() {
     dataType: 'json',
     data: JSON.stringify(syncReq),
     success: function (data) {
-      if (!data.previewDict) return;
+      console.log(data);
+      if (!data.previewDict || data.previewDict.length) {
+        console.log('none preview');
+        return;
+      }
       var dict = data.previewDict;
       dict.forEach(function (userPreview, index) {
-        var previewCntrId = 'preview_' + userPreview.author;
+        var previewCntrId = 'preview_' + userPreview.username;
         var $mdScript = $('<script />', {
-                html: userPreview,
+                html: userPreview.preview,
                 type: 'text/template'
         });
         var $section = $('<section data-markdown></section>').append($mdScript);
@@ -90,7 +95,7 @@ function syncCharts() {
     dataType: 'json',
     data:requestJson,
     success: function (data, status){
-      if (!data.SketchList) return;
+      if (!data.SketchList || !data.ChartList) return;
        // console.log(JSON.stringify(data.ChartList));
       data.ChartList.forEach(function(value,index){
         var chart = {

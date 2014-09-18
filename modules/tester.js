@@ -86,6 +86,14 @@ var newMeeting = {
   SketchList:[]
 }
 
+// Meeting.queryMdTemp("nidd", "nima", function (err, result){
+//   if(err){
+//     console.log(err);
+//   }else{
+//     console.log(result);
+//   }
+// })
+
 // var cryptor  = crypto.createHash('sha512');
 // var rawKey = newMeeting.roomName + newMeeting.host + newMeeting.date;
 // newMeeting.roomKey = cryptor.update(rawKey).digest('hex');
@@ -172,7 +180,7 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // var ObjectID = require('mongodb').ObjectID;
 // var objid = new ObjectID("54140ab79d982a0413769efd");
 // Meeting.queryImg(objid, function(err, result){
-//           console.log("img" + result);
+//           console.log("img" + result._id);
 // });
 
 //save wrapped md test
@@ -188,7 +196,7 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 
 // var markdowns = spliter(file);
 
-//console.log(markdowns);
+// console.log(markdowns);
 
 // Meeting.saveMdTemp("sbsbsb", "sb", "author", markdowns, function (err, idArr){
 //   if(!err){
@@ -221,3 +229,20 @@ fs.readFile('../test/14.jpg', 'base64', function(err, data){
 // console.log(raw);
 
 /***************************************************************/
+
+
+/*****************************500 fucking test**************************/
+
+// Meeting.queryMdPreview("sbsbsb", "sb", function (err, re){
+//   if(!err){
+//     console.log(re);
+//   }
+// })
+
+
+// var s = "dagggeafasfsadfsadfertefsdfasrfea";
+
+// var down = s.split(".");
+// console.log(down);
+
+

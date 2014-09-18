@@ -1,7 +1,5 @@
 $(document).ready(function() {
-  $("#sign-up-btn").click(function(){
-    window.location.href = "/";
-  });
+  
 
   $("#sign-in-btn").click(function(){
     var name = $("#inputUsername").val();
@@ -13,7 +11,7 @@ $(document).ready(function() {
           sessionStorage.setItem('username', name);
           window.location.href = "/home";
         }else{
-          alert('login failed');
+          window.location.href = "/login";
         }
     });
   });

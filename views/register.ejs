@@ -155,7 +155,7 @@ h1,h2,h3,h4,h5,h6 {
 			</div>
 			<br>
 
-			<button type="button" id="sign-up-button" class="btn btn-lg btn-success btn-block" >
+			<button type="button" id="sign-up-btn" class="btn btn-lg btn-success btn-block" >
 				Sign up for Ecclesia
 			</button>
 		</div>
@@ -167,6 +167,23 @@ h1,h2,h3,h4,h5,h6 {
 
 	<% include introduction.ejs %>
 
-
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#sign-up-btn").click(function(){
+    var name = $('#username').val(),
+        pwd = $('#password').val(),
+        pwdrpt = $('#repeatpwd').val(),
+        email = $('#useremail').val();
+        $.post('/register', {username: name, userPwd: pwd}, function(result) {
+          if (result == 'true') {
+            window.location.href = "/home";
+          } else {
+            window.location.href = "/";
+          }
+        });
+  });
+});
+</script>
 </body>
+
 </html>        

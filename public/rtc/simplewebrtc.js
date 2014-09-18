@@ -114,6 +114,7 @@ function SimpleWebRTC(opts) {
     });
 
     connection.on('syncPreview', function (previewData) {
+        console.log('client got syncPreview, and signal rtcsyncPreview');
         self.emit('rtcSyncPreview', previewData);
     });
 
@@ -215,7 +216,7 @@ function SimpleWebRTC(opts) {
             if (existingPeer.type === 'video') {
                 peer = self.webrtc.createPeer({
                     id: existingPeer.id,
-                    username: existingPeer.username,
+                    // username: existingPeer.username,
                     type: 'screen',
                     sharemyscreen: true,
                     enableDataChannels: false,
@@ -471,6 +472,7 @@ SimpleWebRTC.prototype.signalSyncChart = function (chartData) {
 }
 
 SimpleWebRTC.prototype.signalSyncPreview = function (previewData) {
+    console.log('signalSyncPreview');
     this.connection.emit('signalSyncPreview', previewData);
 }
 

@@ -27,23 +27,30 @@ router.post('/query-history', function (req, res){
   var date = req.body.date;
   Meeting.queryHistory(roomName, host, date, function (err, result){
     if(!err){
-      res.json(result);
+      return res.json(result);
+    } else {
+      return res.json(null);
     }
   });
 });
 
 router.get('/history-detail', function (req, res) {
-  res.render('history-detail');
+  return res.render('history-detail');
 });
 
 router.post('/history-detail', function (req, res) {
   //console.log(req.body);
-  var objId = new ObjectID(req.body.id);
+  var objId = new ObjectID(req.body.id.toString());
   console.log(objId.toString());
+  // console.log(req.body.id);
   Meeting.queryImg(objId, function (err, result){
     if(!err){
-      result.img = compresser.compress(result.img);
-      res.json({response : "query-detail-success", image : result});      
+      // result.img = compresser.compress(result.img);
+      console.log('no err');
+      return res.json({response : "query-detail-success", image : result});      
+    } else {
+      console.log('err in queryImg');
+      return res.json({response: "query-detail-failed", image: null});
     }
   });
 })

@@ -1,5 +1,5 @@
 var mongodb = require('./db');
-
+var MongoClient = require('mongodb').MongoClient;
 function User(user){
   this.username = user.username;
   this.userPwd = user.userPwd;
@@ -75,32 +75,32 @@ User.loginCheck = function(name, pwd, callback){
 
 
 User.get = function get(username, callback){
-    mongodb.open(function(err, db){
+    MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true}, function(err, db){
       if(err){
-        mongodb.close();
+        db.close();
         return callback(err);
       }
 
       db.createCollection('Users', function(err, collecion){
         if(err){
-          mongodb.close();
+          db.close();
           console.log('no creation');
           return callback(err);
         }else{
             db.collection('Users', {strict : true}, function(err, collection){
               if(err){
-                mongodb.close();
+                db.close();
                 return callback(err);
               }
 
               collection.findOne({username : username}, function(err, doc) {
-                mongodb.close();
+                db.close();
 
                 if(doc){
                   var user = new User(doc);
                   return callback(err, user);
                 }else{
-                  mongodb.close();
+                  db.close();
                   return callback(err, null);
                 }
               });
@@ -118,24 +118,24 @@ User.get = function get(username, callback){
 //   date : date,
 // }
 User.archive = function archive(username, conference, callback){
-  mongodb.open(function(err, db){
+  MongoClient.connect("mongodb://localhost:27017/ecclesia", {native_parser:true}, function(err, db){
     if(err){
-      mongodb.close();
+      db.close();
       return callback(err);
     }
     db.collection('Users', function(err, collection){
       if(err){
-        mongodb.close();
+        db.close();
         return callback(err);
       }
 
       //console.log(username+' '+conference.name);
       collection.update( {username : username}, {$push : {"conferences" : conference} }, function(err, doc){
         if(err){
-          mongodb.close();
+          db.close();
           return callback(err);
         }
-        mongodb.close();
+        db.close();
         if(doc){
           console.log("update a conference");
           callback(err, doc);        

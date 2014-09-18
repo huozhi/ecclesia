@@ -27,10 +27,12 @@ function lzw_uncompress(s) {
 
 function loadData(){
   var chartlist = JSON.parse($.cookie('ChartList'));
+  console.log(chartlist);
+  if (!chartlist || !chartlist.length) return;
   chartlist.forEach(
     function(value,index){
       var chart = {
-        request : 's',
+        request : 'chart',
         id : value.id,
       }
       var postData = JSON.stringify(chart);
@@ -41,10 +43,12 @@ function loadData(){
         dataType: 'json',
         data:postData,
         success: function (data, status){
-          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="data:image/png;base64,' + lzw_uncompress(data.image.img) +'"/></div>');
+          console.log(data);
+          $(".swiper-wrapper").append('<div class="swiper-slide"><img src="' + data.image.img +'"/></div>');
         },
         error: function (data, status, e){
-          alert(e);
+          // alert(e);
+          console.log(e);
         }
       });
     }
@@ -56,24 +60,27 @@ function loadData(){
         $(".slides").append('<section data-markdown><script type="text/template">'+ mdlist[0].data + '</'+'script></section>');       
       }
     );
-  Reveal.initialize({
-    width: 900,
-    height: 540,
-    margin: 0.5,
-    minScale: 1.0,
-    maxScale: 1.0,
-    center: true,
-    transition: 'liner',
-    transitionSpeed: 'fast',
-    backgroundTransition: 'slide',
 
-    dependencies: [
-      { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-      ]  
-  });
+  if ($.cookie('ImpressList')) {
+    Reveal.initialize({
+      width: 900,
+      height: 540,
+      margin: 0.5,
+      minScale: 1.0,
+      maxScale: 1.0,
+      center: true,
+      transition: 'liner',
+      transitionSpeed: 'fast',
+      backgroundTransition: 'slide',
+
+      dependencies: [
+        { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        ]  
+    });
+  }
 
   var sketchlist = JSON.parse($.cookie('SketchList'));  
   var childrenList = $(".slides").children();
@@ -91,7 +98,8 @@ function loadData(){
           dataType: 'json',
           data:postData,
           success: function (data, status){
-            $(childrenList[index]).append('<img class="sketch-cover" src="data:image/png;base64,'+ lzw_uncompress(data.image.img) + '"/>');
+            $(childrenList[index]).append('<img class="sketch-cover" src="'+ 
+              lzw_uncompress(data.image.img) + '"/>');
           },
           error: function (data, status, e){
             alert(e);
@@ -103,6 +111,7 @@ function loadData(){
 }
 
 $(document).ready(function(){
+   loadData();
   var btnStatus = true;
   $(".btn-close").click(function(){
     if (btnStatus) {

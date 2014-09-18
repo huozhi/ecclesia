@@ -29,13 +29,17 @@ router.post('/join-room', function(req, res){
   var roomName = req.body.roomName;
   var host = req.body.host;
   var username = req.session.username;
-  var date = "";
+  var date;
 
-  req.session.host = host;
-  
-
+  if (!roomName || !host || !username) {
+    console.log(roomName, host, username);
+    return res.json({response: 'join-failed'});
+  }
   Meeting.queryConference(roomName, host, function (err, result){
     if(!err){
+      if (!result) {
+        return res.json({response: 'join-failed'});
+      }
       date = result.date;
       console.log('date',result.date);
       var cryptor = crypto.createHash('sha1');
@@ -43,15 +47,22 @@ router.post('/join-room', function(req, res){
       var roomHash = cryptor.update(raw).digest('hex');
       console.log('hash',roomHash);
       Meeting.addParticipant (roomName, host, username, function (err, addRe){
-        if(!err){
+        if(!err) {
           var conference  = {
             roomName : roomName,
             host : host,
             date : date,
           };
+          // ensure session values
+          req.session.roomName = roomName;
+          req.session.host = host;
+          req.session.date = date;
           User.archive(username, conference, function (err, archiveRe){
             if(!err){
               return res.json({response : "join-success", roomName : roomName, creator : host, roomHash :roomHash} );
+            } else {
+              console.log(err);
+              return res.json({response: 'join-failed'});
             }
           });
         }
@@ -90,12 +101,24 @@ router.post('/create-room', function (req, res) {
     Meeting.createRoom(newMeeting, function (err, meeting){
       if(!err){
         resInfo = "create-success";
-        
-        return res.json({response:resInfo, roomName:meeting.roomName, creator: meeting.host, roomHash : roomHash});
+        req.session.host = req.session.username;
+        var conference  = {
+            roomName : req.body.roomName,
+            host : req.session.username,
+            date : req.session.date,
+          };
+        var username = req.session.username;
+          User.archive(username, conference, function (err, archiveRe){
+            if(!err){
+              return res.json({response : "create-success", roomName : conference.roomName, creator : conference.host, roomHash :roomHash} );
+            } else {
+              console.log(err);
+              return res.json({response: 'create-failed'});
+            }
+          });
       }
       else {
-        console.log(err);
-        return res.json({response: resInfo});
+        return res.json({response: 'create-failed'});        
       }
     });
   }

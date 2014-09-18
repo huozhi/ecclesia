@@ -11,97 +11,20 @@
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
 </head>
 <style>
-@font-face {
-  font-family: 'Open Sans';
-  src: url('/fonts/open-sans.light.ttf');
-}
-* {
-  font-family: 'Open Sans';  
-}
-thead{
-	background-color: #eeeeee;
-}
-body {
-	background-image: url(img/pattern.png), url(img/bd-1.jpg);
-	width: 100%;
-	overflow: hidden;
-}
-a.home-link {
-  text-decoration: none;
-  line-height: 1.8em;
-}
+
 
 </style>
 
 <script type="text/javascript">
-$(document).ready(function() {
-  $("#create-room-btn").click(function() {
-    var roomName = $('#create-room-name').val();
-    
-    $.ajax({
-      url:'/home/create-room',
-      type: 'POST',
-      contentType:'application/json',
-      dataType: 'json',
-      data: JSON.stringify({
-        request: 'create-room',
-        roomName: roomName
-      }),
-      success: function (data) {
-        console.log(data);
-        if (data.response === 'create-success') {
-          var username = sessionStorage.getItem('username');
-          sessionStorage.setItem('roomName', data.roomName),
-          sessionStorage.setItem('creator', data.creator),
-          sessionStorage.setItem('roomHash', data.roomHash);
-          sessionStorage.setItem('isHost', data.creator === username);
-          window.location.href = '/chat';
-        }
-        else {
-          console.log(data.response);
-        }
-      }
-    });
-  });
-  $('#join-room-btn').click(function() {
-    var roomName = $('#join-room-name').val(),
-        host = $('#join-room-host').val();
-    
-    $.ajax({
-      url:'/home/join-room',
-      type: 'POST',
-      contentType:'application/json',
-      dataType: 'json',
-      data: JSON.stringify({
-        request: 'join-room',
-        roomName: roomName,
-        host: host
-      }),
-      success: function (data) {
-        if (data.response === 'join-success') {
-          sessionStorage.setItem('roomName', data.roomName),
-          sessionStorage.setItem('creator', data.creator),
-          sessionStorage.setItem('roomHash', data.roomHash);
-          var username = sessionStorage.getItem('username');
-          sessionStorage.setItem('isHost', data.creator === username);
-          window.location.href = '/chat';
-        }
-        else {
-          console.log(data.response);
-        }
-      }
-    });
-  })
 
-});
 </script>
 
 <body>
 	<div>
 	    <div class="header">
-        <a href="/home/logout">
-            <strong>Log out</strong>
-        </a>
+       <strong><a href="/home/logout">
+            Log out
+        </a></strong>
 	    </div>
 	    <h1>Ecclesia Home <span>welcome to use Ecclesia</span></h1>
 	    <div class="content menu-block">
@@ -137,12 +60,12 @@ $(document).ready(function() {
 					<input type="text" class="form-control" id="join-room-name" placeholder="Room s name">
 				</div>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="key" class="col-sm-2 control-label">Room's key</label>
 					<div class="col-sm-10">
 						<input type="password" class="form-control" id="key" placeholder="Room s key">
 					</div>
-			</div>
+			</div> -->
 			</form>
 
       </div>
@@ -153,25 +76,7 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
-<!--======================query history=======================-->
-  <!-- <div class="modal fade" id="queryModal">
-  <div class="modal-dialog" style="width: 730px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Query history</h4>
-      </div>
-      <div class="modal-body">
-			<iframe class="history-frame" src="file:///C:/Users/Administrator/Desktop/Query%20History.html" seamless></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      </div>
-    </div>
-  </div> -->
 
-<!--==================== create room ==========================-->
 <div class="modal fade" id="createModal">
   <div class="modal-dialog" style="width: 730px;">
     <div class="modal-content">
@@ -201,12 +106,12 @@ $(document).ready(function() {
 					    </div>
 					</div>
 					<button type="button" class="btn btn-primary add-user">add</button>
-          <div class="form-group create-room-input">
+          <!-- <div class="form-group create-room-input">
               <div class="input-group">
                 <div class="input-group-addon">ROOM KEY</div>
                 <input class="form-control" type="text" placeholder="Enter the key of the room">
               </div>
-          </div>
+          </div> -->
 				</div>
 
 			</div>
@@ -222,21 +127,6 @@ $(document).ready(function() {
 
 </body>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".add-user").click(function(){
-		var username = $(".user-input").val();
-    if (username != "") {
-  		var str = '<li class="list-group-item">' + username + '<span class="glyphicon glyphicon-remove" id="' + username + '" style="float:right;"></span></li>'
-  		$(".list-group").append(str);
-      $(".user-input").val("");
-    }
-		$("#"+ username).click(function(){
-			var obj = $("#" + username).parent();
-			obj.remove();
-		});
-	});
-});
-</script>
+<script type="text/javascript" src="/js/homeOperation.js"></script>
 
 </html>
