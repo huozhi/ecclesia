@@ -9,7 +9,18 @@ body {
   /*background: url(/img/bg-struck.png);*/
 }
 
-
+.big-block {
+  position: relative;
+  top: 0;
+  left: 50%;
+  margin-left: -640px;
+  width: 1280px;
+  height: 620px;
+}
+.navbar {
+  margin-top: -5px;
+  margin-bottom: 0;
+}
 .affix-bar {
   position: relative;
   display: inline-block;
@@ -24,7 +35,7 @@ body {
 .main {
   position: relative;
   display: inline-block;
-  width: 900px;
+  width: 860px;
   height: 600px;
   padding: 10px;
 }
@@ -35,7 +46,6 @@ body {
   margin-left: -400px;
   width: 800px;
   height: 400px;
-
   border: #a8a8a8 solid 1px;
   border-radius: 5px;  
 }
@@ -68,7 +78,6 @@ body {
   width: 200px;
   height: 200px;
   float: left;
-  border: red solid 1px;
 }
 .chart {
   position: relative;
@@ -134,12 +143,6 @@ nav {
   width: 100%;
   margin-bottom: 1px;
 }
-
-/*.body-conatiner {
-  position: relative;
-  top: 1px;
-  margin-top: 1px;
-}*/
 
 .sidebar {
   position: relative;
@@ -209,11 +212,15 @@ ul.dropdown-menu {
 .btn-refresh {
   position: absolute;
   z-index: 10;
-  left: 828px;
-  top: 420px;
+  left: 808px;
+  top: 418px;
   border: none;
   background-color: transparent;
   color: #686868;
+}
+.btn-refresh .btn-primary:active {
+  border: none;
+  background-color: transparent;
 }
 .btn-refresh:hover {
   border: none;
