@@ -256,7 +256,7 @@ Reveal.addEventListener('ready', function (event) {
       if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
         $.cookie('sketchChanged', 'false');
         alert('test');
       }
@@ -265,7 +265,7 @@ Reveal.addEventListener('ready', function (event) {
       if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
         $.cookie('sketchChanged','false');
       }
     });
