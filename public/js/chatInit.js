@@ -105,7 +105,7 @@ function initOutlineClickEvent(webrtc) {
   $(".list-group-item").click(function(){
     var outlineText = $(this).text();
     // webrtc send
-
+    webrtc.sendOutlineText(outlineText);
 
     $(".list-group").children("li").css("background-color","#fff");
     $(".list-group").children("li").css("color","#000");
