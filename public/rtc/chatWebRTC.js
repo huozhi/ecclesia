@@ -109,8 +109,10 @@ webrtc.on('rtcSyncStroke', function (point) {
 });
 
 function getOutlineFoucs(recvOutlineText) {
-  $('.list-group').each(function() {
+  console.log('getOutlineFoucs');
+  $('.list-group').children().each(function() {
     if ($(this).text() == recvOutlineText) {
+      console.log($(this), $(this).text());
       $(".list-group").children("li").css("background-color","#fff");
       $(".list-group").children("li").css("color","#000");
       $(this).css("background-color","#a8a8a8");
@@ -120,6 +122,7 @@ function getOutlineFoucs(recvOutlineText) {
 }
 
 webrtc.on('rtcSyncOutlineText', function (outlineText) {
+  console.log('rtcSyncOutlineText');
   getOutlineFoucs(outlineText);
 });
 
