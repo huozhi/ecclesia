@@ -8,13 +8,29 @@
         $(this).data('keyDown', false);
         keyDown = false;
       }
-      
-      point = {
-        x:    event.pageX - $(this).offset().left,
-        y:    event.pageY - $(this).offset().top,
-        type: event.type,
-        key: keyDown
-      };
+
+      if($.cookie("zoom") < 0.8){
+        point = {
+          x:    event.pageX/$.cookie("zoom") - $(this).offset().left,
+          y:    event.pageY/$.cookie("zoom") - $(this).offset().top,
+          type: event.type,
+          key: keyDown
+        };
+      }
+      else {
+        point = {
+          x:    event.pageX - $(this).offset().left,
+          y:    event.pageY - $(this).offset().top,
+          type: event.type,
+          key: keyDown
+        };
+      }
+      var sendPoint = {
+          x:    event.pageX - $(this).offset().left,
+          y:    event.pageY - $(this).offset().top,
+          type: event.type,
+          key: keyDown
+        };
       ctx = $(this).get(0).getContext('2d');
 
       ctx.lineJoin = 'round';
@@ -47,11 +63,15 @@
           // ctx.closePath();
       }
       // if (typeof cb == 'function')
-      return cb(point);
+      return cb(sendPoint);
     });
   }
   $.fn.syncStroke = function(point, color) {
     // console.log('got sync signal');
+    if($.cookie("zoom") < 0.9){
+      point.x = point.x/$.cookie("zoom") - $(this).offset().left;
+      point.y = point.y/$.cookie("zoom") - $(this).offset().left;
+    }
     var ctx = $(this).get(0).getContext('2d');
     ctx.lineJoin  = 'round';
     ctx.lineCap   = 'round';

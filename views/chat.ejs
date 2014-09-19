@@ -114,8 +114,11 @@
 <script type="text/javascript">
 //可以都放在ready里
 if(document.body.offsetWidth < 1320){
+   $.cookie("zoom",document.body.offsetWidth/1320);
    $("body").css("zoom",document.body.offsetWidth/1320);
 }
+else
+  $.cookie("zoom",1);
 
 </script>
 </body>

@@ -1,5 +1,6 @@
 body {
   width: 100%;
+  overflow-x: scroll;
   background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
 }
 .bodyBlock {
