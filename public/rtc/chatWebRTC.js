@@ -108,6 +108,21 @@ webrtc.on('rtcSyncStroke', function (point) {
   $('.sketch-present').syncStroke(point);
 });
 
+function getOutlineFoucs(recvOutlineText) {
+  $('.list-group').each(function() {
+    if ($(this).text() == recvOutlineText) {
+      $(".list-group").children("li").css("background-color","#fff");
+      $(".list-group").children("li").css("color","#000");
+      $(this).css("background-color","#a8a8a8");
+      $(this).css("color","#fff");
+    }
+  });
+}
+
+webrtc.on('rtcSyncOutlineText', function (outlineText) {
+  getOutlineFoucs(outlineText);
+});
+
 webrtc.on('rtcSyncChart', function (chartData) {
 
   console.log('webrtc.on rtcSyncChart');
@@ -241,7 +256,7 @@ Reveal.addEventListener('ready', function (event) {
       if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
         $.cookie('sketchChanged', 'false');
         alert('test');
       }
@@ -250,7 +265,7 @@ Reveal.addEventListener('ready', function (event) {
       if($.cookie('sketchChanged') == 'true'){
         var $currSlide  = $(Reveal.getCurrentSlide()),
             $currSkect  = $currSlide.find('canvas');
-        saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
+        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
         $.cookie('sketchChanged','false');
       }
     });

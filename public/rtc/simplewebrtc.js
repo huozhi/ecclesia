@@ -121,6 +121,10 @@ function SimpleWebRTC(opts) {
     connection.on('syncImpress', function (impressData) {
         console.log('recv server impress hahahaha');
         self.emit('rtcSyncImpress', impressData);
+    });
+
+    connection.on('syncOutlineText', function (outlineText) {
+        self.emit('rtcSyncOutlineText', outlineText);
     })
 
     /* ================= end new socket.io event listener ============== */
@@ -480,6 +484,11 @@ SimpleWebRTC.prototype.signalSyncPreview = function (previewData) {
 SimpleWebRTC.prototype.signalSyncImpress = function (impressData) {
     console.log('signal impress to others');
     this.connection.emit('signalSyncImpress', impressData);
+}
+
+SimpleWebRTC.prototype.sendOutlineText = function (outlineText) {
+    console.log('outlineText', outlineText);
+    this.connection.emit('sendOutlineText', outlineText);
 }
 
 module.exports = SimpleWebRTC;

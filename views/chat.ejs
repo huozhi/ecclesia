@@ -106,56 +106,18 @@
 
 </div><!--end big block-->
 </div>
-<script type="text/javascript">
-//可以都放在ready里
-if (document.body.offsetWidth < 1320) {
-    $("body").css("zoom",document.body.offsetWidth/1320);
-  }
-$(".list-group-item").click(function(){
-  $(".list-group").children("li").css("background-color","#fff");
-  $(".list-group").children("li").css("color","#000");
-  $(this).css("background-color","#a8a8a8");
-  $(this).css("color","#fff");
-});
-
-$(".preview").click(function(){
-  $(".preview-block").slideDown();
-  $(".tools-block").slideUp();
-  $(".outline-block").slideUp();
-});
-$(".tools").click(function(){
-  $(".preview-block").slideUp();
-  $(".tools-block").slideDown();
-  $(".outline-block").slideUp();
-});
-$(".outline").click(function(){
-  $(".preview-block").slideUp();
-  $(".tools-block").slideUp();
-  $(".outline-block").slideDown();
-});
-$(".glyphicon-trash").click(clearSketch);
-$(".glyphicon-ban-circle").click(binSketch);
-$(".glyphicon-pencil").click(enableSketch);
-function clearSketch(){
-  var currSlide  = $(Reveal.getCurrentSlide()),
-      currSkect  = currSlide.find('canvas');
-  currSkect[0].width = 0;
-  currSkect[0].height = 0;
-  currSkect[0].width = 800;
-  currSkect[0].height = 400;
-}
-function binSketch(){
-  $("section").append('<div class="bin-sketch" width="800" height="400"></div>');
-}
-function enableSketch(){
-  $(".bin-sketch").remove();
-}
-
-</script>
 <script type="text/javascript" src="/js/saveResource.js"></script>
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>
 <script type="text/javascript" src="/js/syncResource.js"></script>
 <script type="text/javascript" src="/js/chatInit.js"></script>
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
+<script type="text/javascript">
+//可以都放在ready里
+if(document.body.offsetWidth > 1290){
+  $(".big-block").css("left",document.body.offsetWidth/2 - 645 + "px");
+  $(".navbar").css("width",document.body.offsetWidth);
+}
+
+</script>
 </body>
 </html>
