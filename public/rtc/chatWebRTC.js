@@ -17,7 +17,7 @@ console.log('host',sessionStorage.getItem('creator'));
 
 var uname = $('#userName').text();
 var webrtc = new SimpleWebRTC({
-  url: "https://223.3.90.4:8888",
+  url: "https://ipp.cloudapp.net:8888",
   localVideoEl: 'local-video',
   remoteVideoEl: 'all-videos',
   username: uname,
