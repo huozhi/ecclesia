@@ -12,29 +12,29 @@ body {
 .big-block {
   position: relative;
   top: 0;
-  left: 50%;
-  margin-left: -640px;
-  width: 1280px;
+  left: 0;
+  min-width: 1290px;
   height: 620px;
+  padding:0 10px 0 10px;
+  white-space: nowrap;
 }
 .navbar {
-  width: 100%;
+  width: 1290px;
   margin-top: -5px;
   margin-bottom: 0;
 }
-.affix-bar {
-  position: relative;
+.affix-bar {  
+  float: left;
   display: inline-block;
-  top: 5px;
+  margin-top: 10px;
   width: 205px;
   height: 605px;
   border: #3B3B3B solid 1px;
   border-radius: 5px;
   background:rgba(0, 0, 0, 0.2) none repeat scroll 0 0 !important;
 }
-
 .main {
-  position: relative;
+  float: left;
   display: inline-block;
   width: 860px;
   height: 600px;
@@ -148,7 +148,7 @@ nav {
 .sidebar {
   position: relative;
   top: 0;
-  padding: 10px;
+  padding: 0 10px 0 10px;
 }
 .left-sidebar {
   left: 0;
@@ -162,7 +162,7 @@ nav {
   height: 140px;
   overflow: hidden;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-top: 10px;
   border: #a8a8a8 solid 1px;
   border-radius: 2px;
   background-color: #fff;
@@ -209,22 +209,61 @@ ul.dropdown-menu {
 .pagination {
   position: absolute;
 }
-
-.btn-refresh {
+.nav-right {
+  height: 43px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.nav-active {
+  width: 71px;
+}
+.unactive {
+  width: 66px;
+  text-align: center;
+}
+.nav-right>li>a {
+  padding: 10px 10px 10px 10px !important;
+  margin: 0 auto;
+}
+.preview-block {
   position: absolute;
-  z-index: 10;
-  left: 808px;
-  top: 418px;
-  border: none;
-  background-color: transparent;
-  color: #686868;
+  display: block;
+  top: 43px;
+  width: 203px;
+  height: 560px;
+  border-radius: 5px;
+  padding-top: 10px; 
 }
-.btn-refresh .btn-primary:active {
-  border: none;
-  background-color: transparent;
+.tools-block {
+  position: absolute;
+  display: none;
+  top: 43px;
+  width: 203px;
+  height: 560px;
+  border-radius: 5px;
 }
-.btn-refresh:hover {
-  border: none;
-  background-color: transparent;
+.tools-icon{
+  position: relative;
+  top: 50px;
+  display: block;
+  width: 43px;
+  height: 43px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  font-size: 40px;
+  color: #777;
+}
+.tools-icon:hover{
   color: #a8a8a8;
+}
+.outline-block {
+  position: absolute;
+  display: none;
+  top: 43px;
+  width: 203px;
+  height: 560px;
+  border-radius: 5px;
+}
+.list-group-item {
+  cursor: pointer;
 }
