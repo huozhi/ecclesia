@@ -1,6 +1,5 @@
 body {
   width: 100%;
-  overflow-x: scroll;
   background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
 }
 .bodyBlock {
@@ -12,14 +11,17 @@ body {
 .big-block {
   position: relative;
   top: 0;
-  left: 0;
+  left: 15px;
   min-width: 1290px;
   height: 620px;
   padding:0 10px 0 10px;
   white-space: nowrap;
 }
+.container-fluid {
+  width: 100%;
+}
 .navbar {
-  width: 1290px;
+  width: 1320px;
   margin-top: -5px;
   margin-bottom: 0;
 }
@@ -224,15 +226,17 @@ ul.dropdown-menu {
   position: absolute;
 }
 .nav-right {
-  height: 43px;
+  height: 45px;
   background-color: #fff;
   border-radius: 5px;
 }
 .nav-active {
-  width: 71px;
+  width: 70px;
+  height: 43px;
 }
 .unactive {
   width: 66px;
+  height: 44px;
   text-align: center;
 }
 .nav-right>li>a {
@@ -277,6 +281,9 @@ ul.dropdown-menu {
   width: 203px;
   height: 560px;
   border-radius: 5px;
+}
+.list-group {
+  margin-top: 12px; 
 }
 .list-group-item {
   cursor: pointer;

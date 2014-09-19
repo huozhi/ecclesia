@@ -95,7 +95,12 @@ $(document).ready(function() {
           }
         });
   });
-  $("body").css("width",document.body.offsetWidth);
+  if (document.body.offsetWidth < 1320) {
+  	$("body").css("zoom",document.body.offsetWidth/1320);
+  	/*$("body").css("width","1320px");*/
+	}
+	else
+		$("body").css("width",document.body.offsetWidth);
 });
 </script>
 </body>

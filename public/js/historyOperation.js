@@ -76,7 +76,7 @@ function biging(obj){
 function smalling(obj){
   divW=280;
   divH=170;
-  $("#"+obj).css('width',divW);
+  $("#"+obj).css('width',divW); 
   $("#"+obj).css('height',divH);
 }
 
@@ -85,5 +85,8 @@ $(document).ready(function() {
   var username = sessionStorage.getItem('username');
   if (!username) {
     window.location.href = "/";
+  }
+  if (document.body.offsetWidth < 1320) {
+    $("body").css("zoom",document.body.offsetWidth/1320);
   }
 });
