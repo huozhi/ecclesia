@@ -243,7 +243,6 @@ body {
 
 .reveal .controls {
 	display: none;
-	position: fixed;
 	width: 110px;
 	height: 110px;
 	z-index: 30;
@@ -254,7 +253,7 @@ body {
 }
 
 .reveal .controls div {
-	position: absolute;
+	position: relative;
 	opacity: 0.05;
 	width: 0;
 	height: 0;
@@ -278,10 +277,10 @@ body {
 }
 
 .navigate-left .navigate-right {
-	position: absolute;
+	position: relative;
 }
 	.reveal .controls div.navigate-left {
-		top: 200px;
+		top: 190px;
 		left: -40px;
 		border-right-width: 22px;
 		border-right-color: #000;
@@ -292,7 +291,7 @@ body {
 
 	.reveal .controls div.navigate-right {
 		left: 802px;
-		top: 200px;
+		top: 170px;
 
 		border-left-width: 22px;
 		border-left-color: #000;
