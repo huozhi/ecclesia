@@ -9,11 +9,9 @@ var compresser = require('../modules/compresser.js');
 
 router.get('/', function (req, res) {
   if (!req.session.username) {
-    return res.redirect('/');
-    return res.render('chat');
+    res.redirect('/');
   } else {
-
-    return res.render('chat', {
+    res.render('chat', {
       session: req.session,
       username: req.session.username,
       isHost: req.session.username === req.session.host
@@ -61,7 +59,7 @@ router.post('/query-meeting-markdown', function (req, res){
   var host = req.session.host;
 
   if (!roomName || !host) {
-    return res.rendirect('/home');
+    res.rendirect('/home');
   }
   console.log('query-meeting-markdown:',roomName,host);
   Meeting.queryConference(roomName, host, function (err, meeting){
