@@ -118,7 +118,9 @@ function lzw_uncompress(s) {
 
 $(document).ready(function(){
   loadData();
-
+  if (document.body.offsetWidth < 1320) {
+    $("body").css("zoom",document.body.offsetWidth/1320);
+  }
   var btnStatus = true;
   $(".btn-close").click(function(){
     if (btnStatus) {

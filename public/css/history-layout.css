@@ -14,8 +14,9 @@ body {
 }
 
 .query-flag {
-  position: relative;
-  top: 48%;
+  position: absolute;
+  z-index: 5;
+  top: 300px;
   display: block;
 
 }
@@ -72,7 +73,6 @@ h1 span{
   border: #7d7d7d solid 1px;
   text-align: center;
   /*background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;*/
-  background-image: url(/img/history2-3.jpg);
   background-repeat: none;
 }
 .div-container {
@@ -138,10 +138,9 @@ h1 span{
 .query-icon {
   position: relative;
   display: block;
-  top: 15%;
-  left: 50%;
-  margin-left: -100px;
-  width: 200px;
-  height: 200px;
+  top: 20px;
+  margin: 0 auto;
+  width: 580px;
+  height: 360px;
 }
 
