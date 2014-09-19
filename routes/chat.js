@@ -212,7 +212,7 @@ router.post('/query-outline', function (req, res){
   var roomName = req.session.roomName;
   var host = req.session.host;
   var date = req.session.date;
-  Meeting.queryHistory(roomName, host, date function (err, meeting){
+  Meeting.queryHistory(roomName, host, date, function (err, meeting){
     if(err){
       return res.json({response:"query-outline-failed"});
     }else{

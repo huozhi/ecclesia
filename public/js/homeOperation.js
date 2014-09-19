@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('.outline-list > ul > li').each(function() {
       outline.push( $(this).text() );
     });
-    // console.log(outline);
+    
     $.ajax({
       url:'/home/create-room',
       type: 'POST',

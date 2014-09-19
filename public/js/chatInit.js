@@ -69,21 +69,88 @@ function requestOutline() {
       creator: creator,
       date: date, 
     }),
-    success: function (outline) {
-      sessionStorage.setItem('outline', outline);
-      outline.forEach(function (topics, index) {
-        if ($('outline-block > ul').children()) {
-          $('outline-block > ul').children().remove();
-        }
-        $('outline-block > ul').append('<li class="list-group-item">'+topics+'</li>');
+    success: function (data) {
+      console.log(data);
+      sessionStorage.setItem('outline', data.outline);
+      data.outline.forEach(function (topics, index) {
+        $('.outline-block > ul').append('<li class="list-group-item">'+topics+'</li>');
       });
-    }
+      manageTools(); // for every one
+      var isHost = sessionStorage.getItem('isHost');
+      console.log('isHost',isHost);
+      if (isHost === 'true') {
+        initOutlineClickEvent(webrtc);
+      }
+    },
     error: function (data, status, err) {
       console.log(err);
     }
   });
 }
 
+function getOutlineFoucs(recvOutlineText) {
+  $('.list-group').each(function() {
+    if ($(this).text() == recvOutlineText) {
+      $(".list-group").children("li").css("background-color","#fff");
+      $(".list-group").children("li").css("color","#000");
+      $(this).css("background-color","#a8a8a8");
+      $(this).css("color","#fff");
+    }
+  });
+}
+
+/* initOutlineClickEvent */
+function initOutlineClickEvent(webrtc) {
+  $(".list-group-item").click(function(){
+    var outlineText = $(this).text();
+    // webrtc send
+
+
+    $(".list-group").children("li").css("background-color","#fff");
+    $(".list-group").children("li").css("color","#000");
+    $(this).css("background-color","#a8a8a8");
+    $(this).css("color","#fff");
+  });
+}
+
+function manageTools() {
+  $(".preview").click(function(){
+    $(".preview-block").slideDown();
+    $(".tools-block").slideUp();
+    $(".outline-block").slideUp();
+  });
+  $(".tools").click(function(){
+    $(".preview-block").slideUp();
+    $(".tools-block").slideDown();
+    $(".outline-block").slideUp();
+  });
+  $(".outline").click(function(){
+    $(".preview-block").slideUp();
+    $(".tools-block").slideUp();
+    $(".outline-block").slideDown();
+  });
+  $(".glyphicon-trash").click(clearSketch);
+  $(".glyphicon-ban-circle").click(binSketch);
+  $(".glyphicon-pencil").click(enableSketch);
+}
+
+/* manageSketch */
+function clearSketch(){
+  var currSlide  = $(Reveal.getCurrentSlide()),
+      currSkect  = currSlide.find('canvas');
+  currSkect[0].width = 0;
+  currSkect[0].height = 0;
+  currSkect[0].width = 800;
+  currSkect[0].height = 400;
+}
+function binSketch(){
+  $("section").append('<div class="bin-sketch" width="800" height="400"></div>');
+}
+function enableSketch(){
+  $(".bin-sketch").remove();
+}
+
+/* end initOutlineClickEvent */
 
 function PreviewChart(labels, chart_t) {
   this.angularChartColors = [

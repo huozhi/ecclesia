@@ -16,7 +16,7 @@ router.post('/loginCheck', function(req, res){
           req.session.username = name;
           res.send(result);
         }else{
-          res.send("login failed");
+          res.send(null);
         }        
       }
   });
