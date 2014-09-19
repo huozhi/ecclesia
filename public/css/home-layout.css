@@ -164,7 +164,7 @@ h1 span{
 	width: 700px;
 	height: 150px;
 }
-.user-list {
+.outline-list {
 	float: left;
 	width: 160px;
 	height: 150px;
@@ -172,7 +172,7 @@ h1 span{
 	border-radius: 0.5em;
 	background-color: #eeeeee;
 }
-.user-list-right {
+.room-form {
 	float: left;
 	width: 540px;
 	height: 150px;
@@ -186,9 +186,7 @@ h1 span{
 	padding-left: 20px;
 	padding-right: 20px;
 }
-#add-user {
-	margin-left: 20px;
-}
+
 .menu-block {
 	top: 50px;
 }

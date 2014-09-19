@@ -88,7 +88,7 @@ router.post('/create-room', function (req, res) {
       date : date.toDateString(),
       host : req.session.username,
       userList : [],
-      Outline: outline,
+      Outline: outline || [],
       ChartList:[],
       MarkdownList:[],
       SketchList:[]

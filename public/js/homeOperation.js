@@ -1,7 +1,11 @@
 $(document).ready(function() {
   $("#create-room-btn").click(function() {
     var roomName = $('#create-room-name').val();
-    
+    var outline = [];
+    $('.outline-list > ul > li').each(function() {
+      outline.push( $(this).text() );
+    });
+    // console.log(outline);
     $.ajax({
       url:'/home/create-room',
       type: 'POST',
@@ -9,7 +13,8 @@ $(document).ready(function() {
       dataType: 'json',
       data: JSON.stringify({
         request: 'create-room',
-        roomName: roomName
+        roomName: roomName,
+        outline: outline
       }),
       success: function (data) {
         console.log(data);
