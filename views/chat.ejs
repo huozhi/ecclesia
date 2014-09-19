@@ -135,6 +135,23 @@ $(".outline").click(function(){
   $(".tools-block").slideUp();
   $(".outline-block").slideDown();
 });
+$(".glyphicon-trash").click(clearSketch);
+$(".glyphicon-ban-circle").click(binSketch);
+$(".glyphicon-pencil").click(enableSketch);
+function clearSketch(){
+  var currSlide  = $(Reveal.getCurrentSlide()),
+      currSkect  = currSlide.find('canvas');
+  currSkect[0].width = 0;
+  currSkect[0].height = 0;
+  currSkect[0].width = 800;
+  currSkect[0].height = 400;
+}
+function binSketch(){
+  $("section").append('<div class="bin-sketch" width="800" height="400"></div>');
+}
+function enableSketch(){
+  $(".bin-sketch").remove();
+}
 </script>
 <script type="text/javascript" src="/js/saveResource.js"></script>
 <script type="text/javascript" src="/rtc/chatWebRTC.js"></script>

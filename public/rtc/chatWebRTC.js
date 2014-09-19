@@ -243,6 +243,7 @@ Reveal.addEventListener('ready', function (event) {
             $currSkect  = $currSlide.find('canvas');
         saveImage($currSkect.toDataURL(), 'sketch', Reveal.getIndices().h);
         $.cookie('sketchChanged', 'false');
+        alert('test');
       }
     });
     $(".navigate-right").click(function(){

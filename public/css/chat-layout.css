@@ -60,6 +60,17 @@ body {
   z-index: 2;
   background-color: rgba(255,255,255,0);
 }
+.bin-sketch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 400px;
+  padding: 0px;
+  border: #a8a8a8 solid 0px;
+  border-radius: 5px;
+  z-index: 4;
+}
 .swiper-container {
   position: relative;
   top: 5px;
@@ -97,11 +108,14 @@ body {
   border: #a8a8a8 solid 1px;
   width: 800px;
   height: 400px;
+  white-space: normal;
   z-index: 1;
   zoom: 1;
 }
 .reveal > .slides > section {
   height: 400px;
+  overflow-y: scroll; 
+  overflow-x: hidden; 
 }
 .lazy {
   width: 100px;
