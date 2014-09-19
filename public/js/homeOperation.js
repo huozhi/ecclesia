@@ -16,18 +16,19 @@ $(document).ready(function() {
         roomName: roomName,
         outline: outline
       }),
-      success: function (data) {
-        console.log(data);
-        if (data.response === 'create-success') {
+      success: function (conference) {
+        console.log(conference);
+        if (conference.response === 'create-success') {
           var username = sessionStorage.getItem('username');
-          sessionStorage.setItem('roomName', data.roomName),
-          sessionStorage.setItem('creator', data.creator),
-          sessionStorage.setItem('roomHash', data.roomHash);
-          sessionStorage.setItem('isHost', data.creator === username);
+          sessionStorage.setItem('roomName', conference.roomName),
+          sessionStorage.setItem('creator', conference.creator),
+          sessionStorage.setItem('roomHash', conference.roomHash);
+          sessionStorage.setItem('date', conference.date);
+          sessionStorage.setItem('isHost', conference.creator === username);
           window.location.href = '/chat';
         }
         else {
-          console.log(data.response);
+          console.log(conference.response);
         }
       }
     });

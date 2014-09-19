@@ -1,7 +1,7 @@
 var genChart, prvwChart, genChartData;
 
 
-function enableChartPreview (webrtc) {
+function chatInitialize (webrtc) {
 
 $(document).ready(function() {
   $.fn.carousel.Constructor.prototype.keydown = function() { };
@@ -50,7 +50,39 @@ $(document).ready(function() {
   listenChartDataInput();
   InsertGenChart();
 
+  requestOutline();
 });
+
+function requestOutline() {
+  var roomName, creator, date;
+  roomName = sessionStorage.getItem('roomName');
+  creator  = sessionStorage.getItem('creator');
+  date     = sessionStorage.getItem('date');
+
+  $.ajax({
+    url: '/chat/query-outline',
+    type: 'POST',
+    contentType: 'application/json',
+    dataType: 'json',
+    data: JSON.stringify({
+      roomName: roomName,
+      creator: creator,
+      date: date, 
+    }),
+    success: function (outline) {
+      sessionStorage.setItem('outline', outline);
+      outline.forEach(function (topics, index) {
+        if ($('outline-block > ul').children()) {
+          $('outline-block > ul').children().remove();
+        }
+        $('outline-block > ul').append('<li class="list-group-item">'+topics+'</li>');
+      });
+    }
+    error: function (data, status, err) {
+      console.log(err);
+    }
+  });
+}
 
 
 function PreviewChart(labels, chart_t) {

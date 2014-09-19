@@ -110,7 +110,7 @@ router.post('/create-room', function (req, res) {
         var username = req.session.username;
           User.archive(username, conference, function (err, archiveRe){
             if(!err){
-              return res.json({response : "create-success", roomName : conference.roomName, creator : conference.host, roomHash :roomHash} );
+              return res.json({response : "create-success", roomName : conference.roomName, creator : conference.host, roomHash :roomHash, date: conference.date });
             } else {
               console.log(err);
               return res.json({response: 'create-failed'});
