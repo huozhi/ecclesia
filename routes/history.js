@@ -6,8 +6,10 @@ var compresser = require('../modules/compresser.js');
 var ObjectID = require('mongodb').ObjectID;
 
 router.get('/', function (req, res) {
-  if (req.session.username) {
-    return res.render('/');
+  console.log(req.session);
+  console.log(req.session.username);
+  if (!req.session.username) {
+    res.render('/');
   }
   else {
     res.render('history');
@@ -34,7 +36,8 @@ router.post('/query-history', function (req, res){
   var host = req.body.host;
   var date = req.body.date;
   Meeting.queryHistory(roomName, host, date, function (err, result){
-    if(err || !result){
+    if(err){
+      console.log(err);
       return res.json(null);
     } else {
       return res.json(result);
@@ -43,11 +46,11 @@ router.post('/query-history', function (req, res){
 });
 
 router.get('/history-detail', function (req, res) {
-  if (req.session.username) {
-    return res.render('/');
+  if (!req.session.username) {
+    res.redirect('/');
   }
   else {
-    return res.render('history-detail');
+    res.render('history-detail');
   }
 });
 

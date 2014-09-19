@@ -57,15 +57,16 @@ $(document).ready(function() {
     });
   });
 
-  $(".add-user").click(function(){
-    var username = $(".user-input").val();
-    if (username != "") {
-      var str = '<li class="list-group-item">' + username + '<span class="glyphicon glyphicon-remove" id="' + username + '" style="float:right;"></span></li>'
-      $(".list-group").append(str);
-      $(".user-input").val("");
+  $(".add-outline").click(function(){
+    var outline = $(".outline-input").val();
+    if (outline != "") {
+      var outlineItem = '<li class="list-group-item">' + outline + '<span class="glyphicon glyphicon-remove" id="' 
+      + outline + '" style="float:right;"></span></li>'
+      $(".list-group").append(outlineItem);
+      $(".outline-input").val("");
     }
-    $("#"+ username).click(function(){
-      var obj = $("#" + username).parent();
+    $("#"+ outline).click(function(){
+      var obj = $("#" + outline).parent();
       obj.remove();
     });
   });

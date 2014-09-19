@@ -2,7 +2,7 @@ function loadData(){
   var chartlist = JSON.parse($.cookie('ChartList'));
   console.log(chartlist);
   // if (!chartlist || !chartlist.length) {}
-  if (chartlist !== undefined) {
+  if (chartlist!==undefined || !chartlist.length) {
     chartlist.forEach(
       function(value,index){
         var chart = {
@@ -37,7 +37,7 @@ function loadData(){
       }
     );
 
-  if (typeof mdlist !== undefined) {
+  if (mdlist!==undefined && mdlist.length) {
     // console.log('initialize aaa');
     Reveal.initialize({
       width: 900,
@@ -51,10 +51,10 @@ function loadData(){
       backgroundTransition: 'slide',
 
       dependencies: [
-        { src: '../js/lib/../js/classList.js', condition: function() { return !document.body.classList; } },
-        { src: '../js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '../js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '../js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: '/js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: '/js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '/js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: '/js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         ]  
     });
   }
