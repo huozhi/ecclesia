@@ -5,7 +5,7 @@ function chatInitialize (webrtc) {
 
 $(document).ready(function() {
   $.fn.carousel.Constructor.prototype.keydown = function() { };
-  $('slides').attr('zoom','1.0');
+  $('slides').attr('zoom',document.body.offsetWidth/1320);
 
   $('.carousel').carousel({
     interval: false

@@ -113,9 +113,8 @@
 <script type="text/javascript" src="/js/markdownUpload.js"></script>
 <script type="text/javascript">
 //可以都放在ready里
-if(document.body.offsetWidth > 1290){
-  $(".big-block").css("left",document.body.offsetWidth/2 - 645 + "px");
-  $(".navbar").css("width",document.body.offsetWidth);
+if(document.body.offsetWidth < 1320){
+   $("body").css("zoom",document.body.offsetWidth/1320);
 }
 
 </script>
