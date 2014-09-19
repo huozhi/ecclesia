@@ -283,6 +283,6 @@ Reveal.addEventListener('slidechanged', function (event) {
 });
 }
 // load chartInit.js script
-enableChartPreview(webrtc);
+chatInitialize(webrtc);
 
 }
