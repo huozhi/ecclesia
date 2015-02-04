@@ -1,0 +1,10 @@
+node_modules
+spm_modules
+bower_compoents
+modules/*.md
+modules/*.jpg
+modules/*.png
+*.sublime-project
+*.sublime-workspace
+*.log
+test*

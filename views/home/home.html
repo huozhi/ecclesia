@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ecclesia Home</title>
+<link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
+<link href="/css/home_layout.css"  rel="stylesheet"/>
+<script src="/js/vendors/jquery-1.10.2.min.js"></script>
+<script src="/js/plugins/jquery.postJSON.js"></script>
+<script src="/js/vendors/bootstrap.min.js"></script>
+<script src="/js/vendors/jquery.cookie.js"></script>
+</head>
+
+<body>
+
+<div class="head-container">
+  <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+    <div class="navbar-header" >
+      <a class="navbar-brand">Ecclesia</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">logout</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="container">
+  <h2>Username, <small>welcome to ecclesia !</small></h2>
+</div>
+<div class="container-fluid">
+  <ul class="bmenu col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+    <li><a data-toggle="modal" data-target="#createModal" class="home-link">Create Room</a></li>
+    <li><a data-toggle="modal" data-target="#joinModal" class="home-link">Join Room</a></li>
+    <li><a href="/history" class="home-link queryHistory">History</a></li>
+  </ul>
+</div>
+
+{% include "create-modal.html" %}
+{% include "join-modal.html" %}
+
+
+</body>
+
+<script type="text/javascript" src="/js/utils/home.js"></script>
+
+</html>
