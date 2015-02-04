@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ecclesia History</title>
+<link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
+<link href="/css/history_layout.css" rel="stylesheet">
+<script type="text/javascript" src="/js/vendors/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/vendors/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/vendors/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/vendors/reveal/lib/js/head.min.js"></script>
+<script type="text/javascript" src="/js/vendors/reveal/reveal.js"></script>
+</head>
+
+<body>
+
+  <div class="conatiner-fluid">
+    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+      <div class="navbar-header" >
+        <a class="navbar-brand">Ecclesia</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/home">Home</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container">
+    <div class="page-header text-center">
+      <p class="header">Ecclesia Meeting History Records</p>
+    </div>
+    <div class="row"></div>
+  </div>
+
+    
+
+  </div>
+<script type="text/javascript" src="/js/utils/history_oper.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+var a = '<div class="col-sm-6 col-md-4 col-lg-3">' +
+  '<div class="thumbnail">' +
+      '<img data-src="holder.js/100%x200" alt="100%x200" src="/img/c3po.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">' + 
+      '<div class="caption">' +
+        '<h3>Meeting Record</h3>' +
+        '<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta</p>' +
+        '<p><a href="#" class="btn btn-primary" role="button">View</a> <a href="#" class="btn btn-default" role="button">Download Docs</a></p></div></div></div>';
+
+var b = '<div class="list-group index col-sm-6 col-md-4 col-lg-3">' +
+        '<a class="list-group-item active">' +
+          'Meeting Index N'+
+        '</a>'+
+        '<a class="list-group-item">Meeting Room Name: xxx</a>'+
+        '<a class="list-group-item">Host: xxx</a>'+
+        '<a class="list-group-item">Date: xxx</a>' +
+      '</div>';
+
+  for (var i = 0; i < 20; i++) {
+    $('.row').append(a)
+    
+  }
+})
+
+</script>
+</body>
+
+</html>

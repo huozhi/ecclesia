@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<head>
+<title>Ecclesia</title>
+<link href="/css/vendors/bootstrap.min.css" rel="stylesheet"/>
+<link href="/css/reg_layout.css" rel="stylesheet"/>
+
+<script src="/js/vendors/jquery-1.10.2.min.js"></script>
+<script src="/js/vendors/jquery.cookie.js"></script>
+<script src="/js/vendors/jquery.pjax.js"></script>
+<script src="/js/plugins/jquery.postJSON.js"></script>
+<script src="/js/vendors/bootstrap.min.js"></script>
+<script src="/js/utils/auth.js"></script>
+</head>
+
+<body>
+  <!-- <div class="head-container"> -->
+    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+      <div class="navbar-header" >
+        <a class="navbar-brand">Ecclesia</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/">Sign up</a></li>
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+  <!-- </div> -->
+
+  <div class="container-fluid main">
+    <div class="huge-title col-lg-5 col-md-5 col-lg-offset-1 col-md-offset-1">
+      <p class="join-form">Welcome&nbsp; to Ecclesia</p>
+        <p class="content-form">
+          This is an application which simulates a real-time meeting online.
+          
+          Several features are provided to help you hold the meeting.
+          
+          Enjoy the convenience brought by Ecclesia!
+        </p>
+    </div>
+
+    <div class="user-form col-lg-5 col-md-5" id="user-form">
+      {% include user_form %}
+    </div>
+    
+  </div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $(document).pjax('a', '#user-form');
+  var action = window.location.href.split('/').pop();
+  ((action === 'login') ? $('li[name="login"]') : $('li[name="reg"]').first()).click();
+  
+  $('li').click(function () {
+    $(this).addClass('active').siblings().removeClass('active');
+  });
+});
+
+</script>
+</body>
+
+</html>        

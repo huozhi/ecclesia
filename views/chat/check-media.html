@@ -1,0 +1,38 @@
+
+<!-- Check media modal -->
+<div class="modal fade" id="check-media-modal" tabindex="-1" role="dialog" aria-labelledby="check-media-modalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <!-- <span aria-hidden="true" class="media-check-close">&times;</span> -->
+          <span aria-hidden="true" class="media-check-close-test-btn">&times;</span>
+        </button>
+        <h4 class="modal-title" id="check-media-modal-label">Media settings inspection</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="iten-div">
+      <div class="dropdown available-camera">
+        <button class="btn btn-default dropdown-toggle btn-group btn-group-justified" type="button" id="select-camera" data-toggle="dropdown">
+          <!-- Available Cameras<span class="caret"></span> -->
+        </button>
+        <ul class="dropdown-menu camera-menu" role="menu" aria-labelledby="select-camera"></ul>
+      </div>
+      <br>
+      <div class="dropdown available-audio">
+        <button class="btn btn-default dropdown-toggle btn-group btn-group-justified" type="button" id="select-audio" data-toggle="dropdown">
+          <!-- Available Audios<span class="caret"></span> -->
+        </button>
+        <ul class="dropdown-menu audio-menu" role="menu" aria-labelledby="select-audio"></ul>
+      </div>
+    </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default media-check-close" data-dismiss="modal">Close</button>
+        <button type="button" id="enter-room-btn" class="btn btn-primary"  data-dismiss="modal">Enter Room</button>
+      </div>
+    </div>
+  </div>
+</div>

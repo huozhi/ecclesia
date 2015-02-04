@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
+
+<title>Ecclesia Chat</title>
+<link href="/css/vendors/reveal.css" rel="stylesheet">
+<!-- <link href="/css/vendors/bootstrap.min.css?ver=1.0" rel="stylesheet"> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/vendors/idangerous.swiper.css?ver=1.0" rel="stylesheet">
+<link href="/css/chat_layout.css?ver=1.0" rel="stylesheet">
+
+<script src="/js/vendors/jquery-1.10.2.min.js"></script>
+<script src="/js/vendors/jquery.cookie.js"></script>
+<script src="/js/vendors/bootstrap.min.js"></script>
+<script src="/js/vendors/reveal/lib/js/head.min.js"></script>
+<script src="/js/vendors/reveal/reveal.js"></script>
+<script src="/js/plugins/jquery.estroke.js"></script>
+<script src="/js/vendors/Chart.min.js"></script>
+<script src="/rtc/socket.io-0.9.16.js"></script>
+<script src="/rtc/simplewebrtc.bundle.js"></script>
+<script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse " role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
+        <span class="sr-only">navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Tool Box</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="tool-bar">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="#" data-toggle="modal" data-target="#add-chart-modal">
+            <span class="glyphicon glyphicon-stats"></span> Insert Chart</a>
+        </li>
+        <li>
+          <a href="#" data-toggle="modal" data-target="#add-impress-modal">
+            <span class="glyphicon glyphicon-file"></span> Insert Impress</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a id="userName"><span class="glyphicon glyphicon-user"></span>username</a>
+          
+        </li>
+        <li>
+          <a id="leave-room-btn" href="/home/logout">
+            <span class="glyphicon glyphicon-off"></span> Leave Room</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid main">
+  {% include "chart-modal.html" %}
+
+  {% include "impress-modal.html" %}
+
+  <!-- Check media trigger modal -->
+  <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal"></button>
+
+  {% include "check-media.html" %}
+
+  <div class="affix-bar col-lg-2 col-md-2 col-sm-12">
+    <div id="all-videos" class="sidebar left-sidebar">
+      <div id="local-video" class="container-frame ">
+        <div id="localVolBar" class="vol-bar" ></div>
+      </div>
+      <div  class="container-frame col-md-12">
+        <div  class="vol-bar" ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen col-lg-10 col-md-10 col-sm-12">
+
+    <div class="board">
+      <div id="reveal" class="reveal impress">
+        <div class="slides col-lg-12 col-md-12">
+          <section data-markdown>
+            #Welcome to Ecclesia
+            ###you can sketch graph here :)
+          </section>
+        </div>
+      </div>
+    </div>
+
+  
+  </div>
+  
+  
+
+</div>
+
+
+<script src="/js/utils/lzw_compress.js"></script>
+<script src="/js/plugins/jquery.check_media.js"></script>
+<script src="/rtc/chat_webrtc.js"></script>
+<script src="/js/utils/chat_tools_init.js"></script>
+<script src="/js/utils/upload.js"></script>
+<script src="/js/utils/sync.js"></script>
+</body>
+</html>
