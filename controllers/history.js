@@ -1,13 +1,7 @@
-var express = require('express');
-var router = express.Router();
-// var Meeting = require('../modules/meeting');
-// var User = require('../modules/user');
-var ObjectID = require('mongodb').ObjectID;
-
 var User = require('../proxy').User;
 var Discuss = require('../proxy').Discuss;
 
-exports.index = function (req, res) {
+exports.index = function (req, res, next) {
   var username = req.session.user;
   User.findDiscussesByUserName(
     username,
@@ -15,44 +9,31 @@ exports.index = function (req, res) {
       if (err) {
         console.log(err);
         // unhandled query history error
-        return;
+        return next(err);
       }
-      res.render('history/panel',
+      return res.render(
+        'history/panel',
         discussess: discussess
       );
   });
 };
 
 
-router.get('/history', index);
-
-
-router.post('/query', function (req, res){
-  var room = req.body.room;
-  var host = req.body.host;
-  var date = req.body.date;
-  Meeting.queryHistory(room, host, date, function (err, result){
-    if(err){
+exports.getDiscussDetail = function (req, res, next) {
+  var query = {
+    room: req.params.room,
+    host: req.params.host,
+    date: req.params.date;
+  };  
+  Discuss.findDiscussByQuery(query, {}, function (err, discuss) {
+    if (err) {
       console.log(err);
-      return res.json(null);
-    } else {
-      return res.json(result);
+      return next(err);
     }
+    return res.render(
+      'history/details',
+      discuss: discuss
+    );
   });
 });
 
-router.post('/details', function (req, res) {
-  res.render('history/details');
-});
-
-router.post('/details', function (req, res) {
-  var objId = new ObjectID(req.body.id.toString());
-  Meeting.queryImg(objId, function (err, result){
-    if(err){
-      return res.json({response: false, image: null});
-    
-    return res.json({response : false, image : result});      
-  });
-});
-
-module.exports = router;
