@@ -9,21 +9,33 @@ body {
 }
 
 .navbar {
-  position: relative;
+  /*position: relative;*/
   border-radius: 0px;
   border: 0px;
+}
+
+.tools-bar {
+  position: relative;
+  bottom: 50px;
+  width: 100%;
+  margin-bottom: 0px;
+  z-index: 999;
 }
 
 .nav-tabs {
   border-bottom: 1px transparent; 
 }
 
+.reveal .slides {
+  position: relative;
+
+}
 
 .affix-bar {
   padding: 0 0 0 0;
-  min-height: 500px;
-  max-height: 90%;
+  height: 100%;
   
+  bottom: 0px;
   border: #3B3B3B solid 1px;
   border-radius: 2px;
   background-color:rgba(0, 0, 0, 0.2);
@@ -36,7 +48,8 @@ body {
   position: relative;
   padding-left: 10px;
   padding-right: 10px;
-  height: 500px;
+  height: 100%;
+  
   border: #3B3B3B solid 1px;
   border-radius: 2px;
 }
@@ -44,10 +57,9 @@ body {
 
 .main {
   position: relative;
-  bottom: 0px;
-  height: 90%;
-  max-height: 450px;
-  padding-bottom: 20px;
+  padding-top: 2px;
+  padding-bottom: 52px;
+  height: 100%;
 }
 
 
@@ -181,7 +193,7 @@ div.single-chart > button {
   position: relative;
   top: 0;
   max-height: 90%;
-  min-height: 500px;
+  min-height: 90%;
   padding: 0px 0px 0 0px;
 }
 
@@ -212,7 +224,7 @@ div.single-chart > button {
 }
 
 .container-frame > video {
-  /*margin: 5px 5px 5px 5px;*/
+  margin: 5px 5px 5px 5px;
   position: relative;
   max-width: 190px;
   height: 190px;

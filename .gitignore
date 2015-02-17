@@ -8,3 +8,4 @@ modules/*.png
 *.sublime-workspace
 *.log
 test*
+test.*
