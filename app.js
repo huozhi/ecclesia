@@ -49,12 +49,6 @@ app.use(pjax());
 
 app.use(routes.webroutes);
 
-// app.use('/', controllers.authRouter);
-// app.use('/home', controllers.homeRouter);
-app.use('/history', controllers.historyRouter);
-app.use('/chat', controllers.chatRouter);
-
-
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
   console.log(err);

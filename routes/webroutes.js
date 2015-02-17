@@ -22,6 +22,13 @@ router.get('/history', history.index);
 router.get('/history/detail/:room/:host/:date', history.getDiscussDetail);
 
 // chat views
+router.get('/test', chat.test);
 router.get('/chat', chat.index);
+router.post('/chat/upload/:type', chat.upload);
+
+
+// router.post('/query-img', );
+// router.post('/room/outline', );
+
 
 module.exports = router;

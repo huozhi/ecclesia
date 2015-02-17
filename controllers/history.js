@@ -13,7 +13,7 @@ exports.index = function (req, res, next) {
       }
       return res.render(
         'history/panel',
-        discussess: discussess
+        { discussess: discussess }
       );
   });
 };
@@ -23,17 +23,16 @@ exports.getDiscussDetail = function (req, res, next) {
   var query = {
     room: req.params.room,
     host: req.params.host,
-    date: req.params.date;
+    date: req.params.date
   };  
   Discuss.findDiscussByQuery(query, {}, function (err, discuss) {
     if (err) {
-      console.log(err);
-      return next(err);
+      console.log(err); return next(err);
     }
     return res.render(
       'history/details',
-      discuss: discuss
+      { discuss: discuss }
     );
   });
-});
+};
 
