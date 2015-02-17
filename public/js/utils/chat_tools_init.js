@@ -46,22 +46,11 @@ function saveImage(base64code, _eleType, _page, callback) {
 // function chatInitialize () {
 
 $(document).ready(function() {
-  enableWebRTC();
-  // $("#check-media-modal").checkMedia(function () {
-    // $('#enter-room-btn').click(function() {
-    // });
-  // });
-  // $("#media-check-btn").click(function(){
-  // }).click();
+  // enableWebRTC();
+  
 
 
-
-  // $.fn.carousel.Constructor.prototype.keydown = function() { };
-
-  // $('.carousel').carousel({
-  //   interval: false
-  // });
-
+  
   // go to page fill blanks of chart data
   $('.add-opt').click(function() {
     var chart_t = $(this).attr('title');

@@ -24,7 +24,45 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse " role="navigation">
+
+
+<div class="container-fluid main">
+  {% include "chart-modal.html" %}
+
+  {% include "impress-modal.html" %}
+
+  <!-- Check media trigger modal -->
+  <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal"></button>
+
+  {% include "check-media.html" %}
+
+  <div class="affix-bar col-lg-2 col-md-2 col-sm-12">
+    <div id="all-videos" class="sidebar left-sidebar">
+      <div id="local-video" class="container-frame ">
+        <div id="localVolBar" class="vol-bar" ></div>
+      </div>
+      <div  class="container-frame col-md-12">
+        <div  class="vol-bar" ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen col-lg-10 col-md-10 col-sm-12">
+    <div class="board">
+      <div id="reveal" class="reveal impress">
+        <div class="slides col-lg-12 col-md-12">
+          <section data-markdown>
+            #Welcome to Ecclesia
+            ###you can sketch graph here :)
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<nav class="navbar navbar-inverse tools-bar" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
@@ -49,58 +87,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a id="userName"><span class="glyphicon glyphicon-user"></span>username</a>
-          
+          <a id="userName"><span class="glyphicon glyphicon-list"></span> Topics</a>
         </li>
-        <li>
-          <a id="leave-room-btn" href="/home/logout">
-            <span class="glyphicon glyphicon-off"></span> Leave Room</a>
-        </li>
+        
       </ul>
     </div>
   </div>
 </nav>
-
-<div class="container-fluid main">
-  {% include "chart-modal.html" %}
-
-  {% include "impress-modal.html" %}
-
-  <!-- Check media trigger modal -->
-  <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal"></button>
-
-  {% include "check-media.html" %}
-
-  <div class="affix-bar col-lg-2 col-md-2 col-sm-12">
-    <div id="all-videos" class="sidebar left-sidebar">
-      <div id="local-video" class="container-frame ">
-        <div id="localVolBar" class="vol-bar" ></div>
-      </div>
-      <div  class="container-frame col-md-12">
-        <div  class="vol-bar" ></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="screen col-lg-10 col-md-10 col-sm-12">
-
-    <div class="board">
-      <div id="reveal" class="reveal impress">
-        <div class="slides col-lg-12 col-md-12">
-          <section data-markdown>
-            #Welcome to Ecclesia
-            ###you can sketch graph here :)
-          </section>
-        </div>
-      </div>
-    </div>
-
-  
-  </div>
-  
-  
-
-</div>
 
 
 <script src="/js/utils/lzw_compress.js"></script>
