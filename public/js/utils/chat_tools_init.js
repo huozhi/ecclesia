@@ -186,8 +186,8 @@ function manageTools() {
 
 /* manageSketch */
 function clearSketch() {
-  var currSlide  = $(Reveal.getCurrentSlide()),
-      currSkect  = currSlide.find('canvas');
+  // var currSlide  = $(Reveal.getCurrentSlide()),
+  //     currSkect  = currSlide.find('canvas');
   currSkect[0].width = 0;
   currSkect[0].height = 0;
   currSkect[0].width = 800;

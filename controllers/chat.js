@@ -25,8 +25,11 @@ exports.upload = function (req, res, next) {
     console.log(chart);
   }
   else if (type === 'impress') {
-    var impress = req.body.impress; // string array
-    console.log(impress);
+    //var impress = req.body || req.files; // string array
+    // var files = ;
+    console.log(req.files);
+    // console.log(impress);
+    res.send('hehe');
   }
   // then save to the discuss corrosponding to the specific title
 };

@@ -197,9 +197,9 @@ function enableWebRTC () {
       $section.append($mdScript);
       $('.slides').append($section);
     });
-    RevealMarkdown.reinit();
-    Reveal.next();
-    Reveal.prev();
+    // RevealMarkdown.reinit();
+    // Reveal.next();
+    // Reveal.prev();
   });
 
   webrtc.on('rtcSyncPreview', function (previewData) {
@@ -216,107 +216,8 @@ function enableWebRTC () {
         })
       );
     $(previewCntrId).append($section);
-    RevealMarkdown.reinit();
+    // RevealMarkdown.reinit();
   });
-
-
-  /* ============= end new event ============== */
-
-
-  if ($('.slides').children().length) {
-    initReval();
-  }
   
 }
 
-function initReval() {
-  Reveal.initialize({
-    width: 800,
-    height: 400,
-    margin: 0.5,
-    minScale: 1.0,
-    maxScale: 1.0,
-    center: true,
-    transition: 'liner',
-    transitionSpeed: 'fast',
-    backgroundTransition: 'slide',
-
-    dependencies: [
-      { src: '/js/vendors/reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: '/js/vendors/reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: '/js/vendors/reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: './js/vendors/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-      // { src: 'js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      // { src: 'js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
-      // { src: 'js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
-      // { src: 'js/plugin/math/math.js', async: true }
-      ]  
-  });
-  //---------- lsn -----------
-  /*$(".navigate-left").click(function(){
-    Reveal.
-  });*/
-  //--------------------------
-  Reveal.addEventListener('ready', function (event) {
-    $(".navigate-left").click(function(){
-      if($.cookie('sketchChanged') == 'true'){
-        var $currSlide  = $(Reveal.getCurrentSlide()),
-            $currSkect  = $currSlide.find('canvas');
-        // console.log('save image', $currSkect.get(0).toDataURL());
-        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
-        $.cookie('sketchChanged', 'false');
-      }
-    });
-    $(".navigate-right").click(function(){
-      if($.cookie('sketchChanged') == 'true'){
-        var $currSlide  = $(Reveal.getCurrentSlide()),
-            $currSkect  = $currSlide.find('canvas');
-        // console.log('save image', $currSkect.get(0).toDataURL());
-        saveImage($currSkect.get(0).toDataURL(), 'sketch', Reveal.getIndices().h);
-        $.cookie('sketchChanged','false');
-      }
-    });
-    var present = $('section.present');
-    if (present.children('canvas').length != 0) {
-      // console.log('has canvas')
-      var curCanvas = $('.present > canvas');
-      if (!curCanvas.hasClass('sketch-present')) {
-        // console.log('no active class')
-        curCanvas.addClass('sketch-present');
-      }
-    }
-    else {
-      present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
-    }
-
-      $('.sketch-present').Stroke(function (point) {
-        webrtc.sendSketchPointData(point);
-      });
-  });
-
-  Reveal.addEventListener('slidechanged', function (event) {
-    // dynamically manage sketch borad class
-    $('.sketch-present').removeClass('sketch-present');
-    var present = $('.slides > section.present');
-    if (present.children('canvas').length != 0) {
-      // console.log('has canvas')
-      var curCanvas = $('.present > canvas');
-      if (curCanvas.hasClass('sketch-present') == false) {
-        // console.log('no active class')
-        curCanvas.addClass('sketch-present');
-      }
-    }
-    else {
-      present.append('<canvas class="sketch sketch-present" width="800" height="400"></canvas>');
-    }
-      $('.sketch-present').Stroke(function (point) {
-        webrtc.sendSketchPointData(point);
-      });
-
-      // if is the last one, save the previous one
-      /*var $prevSlide  = $(Reveal.getPreviousSlide()),
-          $prevSkect  = $prevSlide.find('canvas');
-          
-      saveImage($prevSkect, 'sketch', Reveal.getIndices().h);*/
-  });
-}
