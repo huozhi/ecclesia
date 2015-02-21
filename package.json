@@ -19,6 +19,7 @@
     "mongodb": "1.4.9",
     "mongoose": "^3.8.20",
     "morgan": "~1.2.3",
+    "multer": "^0.1.8",
     "node-uuid": "^1.4.2",
     "serve-favicon": "~2.0.1",
     "socket.io": "0.9.16",
