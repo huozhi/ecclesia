@@ -33,8 +33,7 @@ function reg () {
       } else {
         window.location.href = '/';
       }
-    }
-  }, 'json');
+    }, 'json');
 }
 
 $(document).ready(function () {

@@ -26,10 +26,6 @@ body {
   border-bottom: 1px transparent; 
 }
 
-.reveal .slides {
-  position: relative;
-
-}
 
 .affix-bar {
   padding: 0 0 0 0;
@@ -123,6 +119,11 @@ body {
   float: left;
 }
 
+.vertical-center {
+  vertical-align: middle;
+  align-items: middle;
+}
+
 .chart {
   position: relative;
   margin: 10px;
@@ -138,12 +139,12 @@ body {
 }
 
 .slides {
-  border: #a8a8a8 solid 1px;
-  /*height: 400px;*/
-  height: 66.6666%;
+  /*border: #a8a8a8 solid 1px;*/
+  /*padding-top: 10px;
+  height: 100%;
   white-space: normal;
   z-index: 1;
-  zoom: 1;
+  zoom: 1;*/
 }
 
 .reveal > .slides > section {
