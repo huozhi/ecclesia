@@ -1,3 +1,4 @@
+var fs = require('fs');
 var Discuss = require('../proxy').Discuss;
 var User = require('../proxy').User;
 var Topic = require('../proxy').Topic;
@@ -25,11 +26,15 @@ exports.upload = function (req, res, next) {
     console.log(chart);
   }
   else if (type === 'impress') {
-    //var impress = req.body || req.files; // string array
-    // var files = ;
-    console.log(req.files);
-    // console.log(impress);
-    res.send('hehe');
+
+    var impress = req.files.impress;
+    console.log(impress.path);
+    fs.readFile(impress.path, 'utf-8', function (err, content) {
+      if (err) { res.send(false); return next(); }
+      console.log(content);
+      return res.send(true);
+    });
+    
   }
   // then save to the discuss corrosponding to the specific title
 };

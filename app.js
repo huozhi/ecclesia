@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var pjax = require('express-pjax-redirect');
 var swig = require('swig');
+var multer = require('multer');
 var debug = require('debug')('ecclesia');
 
 var routes = require('./routes');
@@ -36,6 +37,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(multer({
+  rename: function (fieldname, filename) {
+    return filename + Date.now();
+  },
+}));
 
 app.use(session({
   secret: config.cookieSecret,

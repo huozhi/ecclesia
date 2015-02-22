@@ -12,7 +12,8 @@ function validMarkdown () {
 }
 
 function sendFile (file) {
-  var fd = new FormData();
+  if (!file) return;
+  var fd = new FormData(file);
   fd.append('impress', file, file.name);
   $.ajax({
     url: '/chat/upload/impress',
@@ -23,13 +24,14 @@ function sendFile (file) {
     type: 'post',
     success: function(data){
       console.log(data);
+      file = null;
     }
   });
 }
 
 $(document).ready(function () {
   var $uploadFile = $('#upload-md-file');
-  var file = { msg: 'nothing' };
+  var file = null;
   $('#scan-btn').click(function () {
     $uploadFile.click();
   });
@@ -49,7 +51,7 @@ $(document).ready(function () {
   });
 
   $sendBtn = $('#upload-impress-btn');
-  $sendBtn.click( function() {
+  $sendBtn.click(function() {
     sendFile(file);
   });
 });
