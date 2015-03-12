@@ -1,4 +1,5 @@
 var fs = require('fs');
+var util = require('util');
 var path = require('path');
 var http = require('http');
 var https = require('https');
@@ -39,7 +40,7 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(multer({
   rename: function (fieldname, filename) {
-    return filename + Date.now();
+    return util.format('%s-%s', filename, Date.now());
   },
 }));
 
