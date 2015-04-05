@@ -14,13 +14,6 @@ body {
   border: 0px;
 }
 
-.tools-bar {
-  position: relative;
-  bottom: 50px;
-  width: 100%;
-  margin-bottom: 0px;
-  z-index: 999;
-}
 
 .nav-tabs {
   border-bottom: 1px transparent; 
@@ -29,8 +22,9 @@ body {
 
 .affix-bar {
   padding: 0 0 0 0;
-  height: 100%;
-  
+  /*height: 100%;*/
+  width: 100%;
+  height: 200px;
   bottom: 0px;
   border: #3B3B3B solid 1px;
   border-radius: 2px;
@@ -40,22 +34,49 @@ body {
   
 }
 
-.screen {
-  position: relative;
-  padding-left: 10px;
-  padding-right: 10px;
+.video-screen {
+  padding: 0 0 0 0;
+  min-width: 800px;
+  /*position: relative;*/
+  /*margin-top: 10px;*/
   height: 100%;
-  
-  border: #3B3B3B solid 1px;
-  border-radius: 2px;
 }
 
+.screen {
+  position: relative;
+  width: 94%;
+  min-height: 600px;
+  height: auto;/*100%;*/
+  /*float: left;*/
+  margin-right: 1px;
+  border: #3B3B3B solid 1px;  
+  padding-top: 100px;
+  border-radius: 2px;
+  /*padding-right: 52px;*/
+  display: inline-block;
+}
+
+.tools-bar {
+  position: absolute;
+  width: 6%;
+  /*width: auto;*/
+  height: 600px;
+  
+  /*80%;*/
+  border: 1px black solid;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px 2px;
+  
+}
 
 .main {
   position: relative;
   padding-top: 2px;
-  padding-bottom: 52px;
+  padding-bottom: 2px;
   height: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 
@@ -96,8 +117,7 @@ body {
 .swiper-container {
   position: relative;
   top: 5px;
-  max-height: 200px;
-  height: 100%;
+  height: 150px;
 
   background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
   border: #3B3B3B solid 1px;
@@ -138,24 +158,15 @@ body {
   border-radius: 2px;
 }
 
-.slides {
-  /*border: #a8a8a8 solid 1px;*/
-  /*padding-top: 10px;
-  height: 100%;
-  white-space: normal;
-  z-index: 1;
-  zoom: 1;*/
-}
+
 
 .reveal > .slides > section {
   position: relative;
   left: 0; top: 0;
-  /*height: 66.6666%;*/
   height: 100%;
   overflow: hidden;
 }
 .lazy {
-  /*height: 100px;*/
   height: 16.666666%;
 }
 .chart-label {
@@ -163,7 +174,6 @@ body {
 
 .oper-frame {
   position: relative;
-  /*height: 200px;*/
   height: 33.333333%;
 
 }
@@ -193,15 +203,17 @@ div.single-chart > button {
 .sidebar {
   position: relative;
   top: 0;
-  max-height: 90%;
-  min-height: 90%;
+  /*max-height: 90%;*/
+  /*min-height: 90%;*/
+  height: 100%;
   padding: 0px 0px 0 0px;
 }
 
 .container-frame {
   /*float: left;*/
   position: relative;
-  height: 190px;
+  height: 150px;
+  width: 150px;
   overflow: hidden;
   /*margin: 0 auto;*/
   /*margin-top: 10px;*/
@@ -215,7 +227,7 @@ div.single-chart > button {
   position: relative;
   left: 0; top: 0;
   /*height: 400px;*/
-
+  display: inline-block;
   height: 60.6666%;
   -webkit-transform: scale(0.8,0.7);
 }
@@ -227,32 +239,52 @@ div.single-chart > button {
 .container-frame > video {
   margin: 5px 5px 5px 5px;
   position: relative;
-  max-width: 190px;
-  height: 190px;
+  width: 160px;
+  height: 150px;
   border-radius: 2px;
 }
 
 
-@media (max-width: 992px) {
-  .affix-bar {
-    display: block;
-    position: relative;
-    height: 190px;
-    min-height: 190px;
-    width: 100%;
-  }
-  .sidebar {
-    position: relative;
-    height: 190px;
-    width: 100%;
-    padding: 0px 0px 0 0px;
-  }
-  .container-frame {
-    display: inline-block;
-  }
+
+.affix-bar {
+  display: block;
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+.sidebar {
+  position: relative;
+  height: 150px;
+  width: 100%;
+  padding: 0px 0px 0 0px;
+}
+.container-frame {
+  display: inline-block;
 }
 
 
+.topic::-webkit-input-placeholder {
+  color: black;
+}
+
+.topic {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -150px;
+  width: 300px;
+  height: 40px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px black solid;
+  padding: 4px 2px;
+  background-color: transparent;
+  color: black;
+}
+
+/*.topic:hover {
+  box-shadow: 2px;
+}*/
 
 .vol-bar {
   position: absolute;
@@ -260,7 +292,7 @@ div.single-chart > button {
   height: 0px;
   right: 0px;
   bottom: 10px;
-  max-height: 140px;
+  max-height: 150px;
   background-color: #12acef;
 }
 
@@ -307,8 +339,14 @@ ul.dropdown-menu {
 .tools-icon {
   position: relative;
   display: block;
-  height: 43px;
-  margin: 0 auto;
+  background-color: transparent;
+  /*max-width: 74px;*/
+  width: 66px;
+
+  height: 50px;
+  border-radius: 4px;
+  border: 1px black solid;
+  margin: 10px 4px;
   color: #777;
 }
 

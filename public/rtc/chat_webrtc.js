@@ -61,21 +61,21 @@ function enableWebRTC () {
 
   function addPreviewContainer(peer) {
     var remotes = $('.right-sidebar');
-    var addPeer = $(document.createElement('div')).addClass('container-frame');
-    addPeer.attr('id', 'preview_' + webrtc.getUserName(peer));
-    remotes.append(addPeer);
+    var peer = $(document.createElement('div')).addClass('container-frame');
+    peer.attr('id', 'preview_' + webrtc.getUserName(peer));
+    remotes.append(peer);
   }
 
   function addVideoContainer(video, peer) {
     var remotes = $('.left-sidebar');
-    var addPeer = $(document.createElement('div'));
+    var peer = $(document.createElement('div'));
     var volBar  = $(document.createElement('div'));
     volBar.addClass('vol-var');
-    addPeer.append(volBar);
-    addPeer.addClass('container-frame');
-    addPeer.attr('id', 'video_' + webrtc.getUserName(peer));
-    addPeer.append(video);
-    remotes.append(addPeer);
+    peer.append(volBar);
+    peer.addClass('container-frame');
+    peer.attr('id', 'video_' + webrtc.getUserName(peer));
+    peer.append(video);
+    remotes.append(peer);
   }
 
   webrtc.on('videoRemoved', function (video, peer) {
