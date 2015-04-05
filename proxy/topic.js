@@ -2,7 +2,7 @@ var models = require('../models');
 var Topic = models.Topic;
 var Discuss = require('./discuss');
 
-exports.findTopicsByIds = function (topicIds, callback) {
+exports.findByIds = function (topicIds, callback) {
   Topic.find({ '_id': { $in: topicIds } }, function (err, topics) {
     if (err) {
       console.log(err); return callback(err);
@@ -11,6 +11,14 @@ exports.findTopicsByIds = function (topicIds, callback) {
   });
 };
 
+exports.findByTitle = function (title, callback) {
+  Topic.findOne({ 'title': title }, function (err, topic) {
+    if (err) {
+      console.log(err); return callback(err);
+    }
+    callback(null, topic);
+  })
+}
 
 exports.insertCharts = function(tpoic, chart, callback) {
   Topic.findByIdAndUpdate(

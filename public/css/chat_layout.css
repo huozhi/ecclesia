@@ -45,8 +45,7 @@ body {
 .screen {
   position: relative;
   width: 94%;
-  min-height: 600px;
-  height: auto;/*100%;*/
+  height: 500px;
   /*float: left;*/
   margin-right: 1px;
   border: #3B3B3B solid 1px;  
@@ -60,7 +59,7 @@ body {
   position: absolute;
   width: 6%;
   /*width: auto;*/
-  height: 600px;
+  height: 500px;
   
   /*80%;*/
   border: 1px black solid;
