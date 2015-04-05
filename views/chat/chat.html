@@ -21,8 +21,6 @@
 </head>
 <body>
 
-
-
 <div class="container-fluid main">
   {% include "chart-modal.html" %}
 
@@ -33,66 +31,42 @@
 
   {% include "check-media.html" %}
 
-  <div class="affix-bar col-lg-2 col-md-2 col-sm-12">
+  <div class="affix-bar col-lg-12 col-md-12 col-sm-12">
     <div id="all-videos" class="sidebar left-sidebar">
       <div id="local-video" class="container-frame ">
         <div id="localVolBar" class="vol-bar" ></div>
       </div>
-      <div  class="container-frame col-md-12">
+      <div  class="container-frame ">
         <div  class="vol-bar" ></div>
       </div>
     </div>
   </div>
 
-  <div id="impress" class="carousel slide screen col-lg-10 col-md-10 col-sm-12" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#impress" data-slide-to="0" class="active"></li>
-      <li data-target="#impress" data-slide-to="1"></li>
-    </ol>
-    <div class=" carousel-inner text-center" role="listbox">
-      <div id="slide-1" class="item active"># Welcome to Ecclesia
-### you can sketch graph here :)
-      </div>  
-      <div id="slide-2" class="item"># Hehehe
-### you can sketch graph here :(
+  <div class="video-screen col-lg-12 col-md-12 col-sm-12">
+    
+    <div id="impress" class="carousel slide screen" data-ride="carousel">
+      <input class="topic form-control btn" type="text" value="topic">
+      <ol class="carousel-indicators">
+        <li data-target="#impress" data-slide-to="0" class="active"></li>
+        <li data-target="#impress" data-slide-to="1"></li>
+      </ol>
+      <div class=" carousel-inner text-center" role="listbox">
+        <div id="slide-1" class="item active"># Welcome to Ecclesia
+  ### you can sketch graph here :)
+        </div>  
+        <div id="slide-2" class="item"># Hehehe
+  ### you can sketch graph here :(
+        </div>
       </div>
     </div>
-  </div>
 
+    <div class="tools-bar">
+      <button class="tools-icon" data-toggle="modal" data-target="#add-impress-modal">Impress</button>
+      <button class="tools-icon" data-toggle="modal" data-target="#add-chart-modal">Chart</button>
+    </div>
+    
+  </div>
 </div>
-
-<nav class="navbar navbar-inverse tools-bar" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tool-bar">
-        <span class="sr-only">navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Tool Box</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="tool-bar">
-      <ul class="nav navbar-nav">
-        <li class="">
-          <a href="#" data-toggle="modal" data-target="#add-chart-modal">
-            <span class="glyphicon glyphicon-stats"></span> Insert Chart</a>
-        </li>
-        <li>
-          <a href="#" data-toggle="modal" data-target="#add-impress-modal">
-            <span class="glyphicon glyphicon-file"></span> Insert Impress</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a id="userName"><span class="glyphicon glyphicon-list"></span> Topics</a>
-        </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
 
 
 <script src="/js/utils/lzw_compress.js"></script>
