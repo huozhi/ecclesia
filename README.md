@@ -1,5 +1,15 @@
 # Ecclesia
 
+### Readme
+
+[中文](https://github.com/lavende/ecclesia/blob/master/README.zh-CN.md)
+[English](https://github.com/lavende/ecclesia/blob/master/README.md)
+
+### Update
+
+I wanna develop ecclesia as a meeting app for small developers' team, so the release
+is still in develop state.
+
 ### About
 
 A web meeting system for small team discussing. support sketching graphs, 
