@@ -4,12 +4,11 @@ html, body {
 
 
 body {
-  overflow-y: hidden;
+  overflow: hidden;
   background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
 }
 
 .navbar {
-  /*position: relative;*/
   border-radius: 0px;
   border: 0px;
 }
@@ -37,9 +36,10 @@ body {
 .video-screen {
   padding: 0 0 0 0;
   min-width: 800px;
-  /*position: relative;*/
-  /*margin-top: 10px;*/
-  height: 100%;
+  position: absolute;
+  top: 152px;
+  /*height: 100%;*/
+  bottom: 0px;
 }
 
 .screen {
@@ -53,6 +53,11 @@ body {
   border-radius: 2px;
   /*padding-right: 52px;*/
   display: inline-block;
+}
+
+.impress-panel {
+  max-width: 1000px;
+  min-width: 800px;
 }
 
 .tools-bar {

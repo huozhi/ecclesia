@@ -7,16 +7,8 @@
 <link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
 <link href="/css/vendors/idangerous.swiper.css" rel="stylesheet">
 <link href="/css/chat_layout.css" rel="stylesheet">
+<link href="/css/highlight.css" rel="stylesheet">
 
-<script src="/js/vendors/jquery-1.10.2.min.js"></script>
-<script src="/js/vendors/jquery.cookie.js"></script>
-<script src="/js/vendors/bootstrap.min.js"></script>
-<script src="/js/plugins/jquery.estroke.js"></script>
-<script src="/js/vendors/Chart.min.js"></script>
-<script src="/js/vendors/marked.min.js"></script>
-<script src="/rtc/socket.io-0.9.16.js"></script>
-<script src="/rtc/simplewebrtc.bundle.js"></script>
-<script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
 
 </head>
 <body>
@@ -43,16 +35,20 @@
   </div>
 
   <div class="video-screen col-lg-12 col-md-12 col-sm-12">
-    
     <div id="impress" class="carousel slide screen" data-ride="carousel">
       <input class="topic form-control btn" type="text" value="topic">
       <ol class="carousel-indicators">
         <li data-target="#impress" data-slide-to="0" class="active"></li>
         <li data-target="#impress" data-slide-to="1"></li>
       </ol>
-      <div class=" carousel-inner text-center" role="listbox">
+      <div class=" carousel-inner text-center impress-panel center-block" role="listbox">
         <div id="slide-1" class="item active"># Welcome to Ecclesia
   ### you can sketch graph here :)
+  ```py
+  def hello(self):
+    print 'wocao'
+    return 1
+  ```
         </div>  
         <div id="slide-2" class="item"># Hehehe
   ### you can sketch graph here :(
@@ -68,6 +64,16 @@
   </div>
 </div>
 
+<script src="/js/vendors/jquery-1.10.2.min.js"></script>
+<script src="/js/vendors/jquery.cookie.js"></script>
+<script src="/js/vendors/bootstrap.min.js"></script>
+<script src="/js/plugins/jquery.postJSON.js"></script>
+<script src="/js/plugins/jquery.estroke.js"></script>
+<script src="/js/vendors/Chart.min.js"></script>
+<script src="/js/vendors/marked.min.js"></script>
+<script src="/rtc/socket.io-0.9.16.js"></script>
+<script src="/rtc/simplewebrtc.bundle.js"></script>
+<script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
 
 <script src="/js/utils/lzw_compress.js"></script>
 <script src="/js/plugins/jquery.check_media.js"></script>
