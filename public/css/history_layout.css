@@ -3,6 +3,10 @@
                'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.caption {
+  height: 200px;
+}
+
 .page-header {
   display: block;
   position: relative;

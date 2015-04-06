@@ -3,7 +3,7 @@ var express = require('express');
 var crypto = require('crypto');
 var Render = require('../common/').Render;
 var User = require('../proxy').User;
-var eventproxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 
 exports.index = function (req, res, next) {
   return Render(req, res, 'index', 'auth/reg', {
@@ -52,7 +52,7 @@ exports.loginAction = function (req, res, next) {
     findUserMethod = User.findUserByName;
   }
 
-  var ep = new eventproxy();
+  var ep = new Eventproxy();
   ep.fail(next);
   ep.on('login_error', function (message) {
     res.json({ response: false, message: message });
