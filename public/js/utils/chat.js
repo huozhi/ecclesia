@@ -1,5 +1,61 @@
-var genChart, prvwChart, genChartData;
+function Chart(type, labels, values, selector) {
+  this.type = type;
+  this.labels = labels;
+  this.values = values;  
+  this.selector = selector;
+  this.source = null;
+}
 
+function Impress(content) {
+  this.content = content;
+}
+
+Chart.prototype.save = function () {
+  var chartData = {
+    type: this.type,
+    labels: this.labels,
+    values: this.values
+  };
+  $.postJSON('/chat/upload/chart',
+    chartData,
+    success: function (data) {
+      if (data.response) {
+        console.log('chart saved');
+      }
+    },
+    error: function (message) {
+      alert(message);
+    }
+  );
+}
+
+
+
+
+Chart.prototype.generate = function () {
+  if (this.source) {
+    this.source.clear();
+    // this.source.destroy();
+  }
+  // var chartData = data || this.collectAttrs();
+  var context = this.selector.get(0).getContext('2d');
+  this.source = new Chart(context)
+  switch (this.chart_t) {
+    case 'line':
+      this.source.Line(chartData);
+      break;
+    case 'bar':
+      this.source.Bar(chartData);
+      break;
+    case 'pie':
+      this.source.Pie(chartData);    
+      break;
+    default:
+      break;
+  }
+}
+
+var genChart, prvwChart, genChartData;
 
 function saveImage(base64code, _eleType, _page, callback) {
   // var $ele = _ele;
@@ -138,67 +194,7 @@ function getOutlines () {
   });
 }
 
-function getOutlineFoucs(recvOutlineText) {
-  $('.list-group').each(function() {
-    if ($(this).text() == recvOutlineText) {
-      $(".list-group").children("li").css("background-color","#fff");
-      $(".list-group").children("li").css("color","#000");
-      $(this).css("background-color","#a8a8a8");
-      $(this).css("color","#fff");
-    }
-  });
-}
 
-/* initOutlineClickEvent */
-function initOutlineClickEvent() {
-  $(".list-group-item").click(function(){
-    var outlineText = $(this).text();
-    // webrtc send
-    webrtc.sendOutlineText(outlineText);
-
-    $(".list-group").children("li").css("background-color","#fff");
-    $(".list-group").children("li").css("color","#000");
-    $(this).css("background-color","#a8a8a8");
-    $(this).css("color","#fff");
-  });
-}
-
-function manageTools() {
-  $(".preview").click(function(){
-    $(".preview-block").slideDown();
-    $(".tools-block").slideUp();
-    $(".outline-block").slideUp();
-  });
-  $(".tools").click(function(){
-    $(".preview-block").slideUp();
-    $(".tools-block").slideDown();
-    $(".outline-block").slideUp();
-  });
-  $(".outline").click(function(){
-    $(".preview-block").slideUp();
-    $(".tools-block").slideUp();
-    $(".outline-block").slideDown();
-  });
-  $(".glyphicon-trash").click(clearSketch);
-  $(".glyphicon-ban-circle").click(binSketch);
-  $(".glyphicon-pencil").click(enableSketch);
-}
-
-/* manageSketch */
-function clearSketch() {
-  // var currSlide  = $(Reveal.getCurrentSlide()),
-  //     currSkect  = currSlide.find('canvas');
-  currSkect[0].width = 0;
-  currSkect[0].height = 0;
-  currSkect[0].width = 800;
-  currSkect[0].height = 400;
-}
-function binSketch(){
-  $("section").append('<div class="bin-sketch" width="800" height="400"></div>');
-}
-function enableSketch(){
-  $(".bin-sketch").remove();
-}
 
 /* end initOutlineClickEvent */
 
@@ -232,46 +228,6 @@ function PreviewChart(labels, chart_t) {
   // this.datas   = datas   || [50];
 }
 
-PreviewChart.prototype.collectAttrs = function() {
-  var self = this,
-      chartData,
-      columnData;      
-  if (['line','bar','radar'].indexOf(self.chart_t) != -1) {
-    var values = [];
-    $('.chart-data-val').each(function(index, element) {
-      columnData = $(this).val().split(' ').map(Number);
-      
-      values.push({
-        fillColor : self.angularChartColors[index].fillColor,
-        strokeColor: self.angularChartColors[index].strokeColor,
-        pointColor: self.angularChartColors[index].pointColor,
-        pointStrokeColor : "#fff",
-        data: columnData
-      });
-    });
-    chartData = {
-      labels: self.labels,
-      datasets: values
-    };
-    // console.log('labels',self.labels);
-    // console.log('datasets',chartData.datasets.length);
-  } else {
-    chartData = [];
-    $('.chart-data-val').each(function(index, element) {
-      columnData = $(this).val().split(' ').map(Number);
-      columnData.forEach(function (data, i) {
-        chartData.push({
-          value : data,
-          color : self.roundChartColors[i],
-          label : self.labels[i],
-          labelColor : 'white',
-          labelFontSize : '24'
-        });
-      });
-    });
-  }
-  return chartData;
-}
 
 PreviewChart.prototype.sketchPreviewChart = function(selector, data, callback) {
   var chartData = data || this.collectAttrs();

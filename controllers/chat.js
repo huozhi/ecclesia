@@ -9,6 +9,7 @@ exports.test = function (req, res, next) {
   return res.render('test', {});
 };
 
+
 exports.index = function (req, res, next) {
   return res.render('chat/chat', {
     // session: req.session,
@@ -31,6 +32,7 @@ exports.upload = function (req, res, next) {
     }
     if (type === 'chart') {
       var chart = new ChartModel();
+      chart.type = req.body.type;
       chart.labels = req.body.labels;
       chart.values = req.body.values;
       topic.chart.push(chart);
