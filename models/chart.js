@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 
 var ChartSchema = new Schema({
+  type: { type : String },
   lables: [ { type: String } ],
   values: [ { type: Number } ],
 });

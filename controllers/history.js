@@ -2,14 +2,17 @@ var User = require('../proxy').User;
 var Discuss = require('../proxy').Discuss;
 var Eventproxy = require('eventproxy');
 
+var testHistoryMessage = [{
+  room: 'team discuss',
+  host: 'hz',
+  date: '2014-02-19',
+  participates: ['hz', 'dh', 'lsn']
+}];
+
 exports.index = function (req, res, next) {
   return res.render('history/panel', {
-    meetings: [{
-      room: 'team discuss',
-      host: 'hz',
-      date: '2014-02-19',
-      participates: ['hz', 'dh', 'lsn']
-    }]
+    // test
+    meetings: testHistoryMessage
   });
   var username = req.session.user;
   User.findDiscussesByUserName(
