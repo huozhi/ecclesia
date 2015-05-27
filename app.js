@@ -54,7 +54,7 @@ app.use(session({
 app.use(pjax());
 // app.use(middlewares.auth);
 
-app.use(routes.webroutes);
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function(err, req, res, next) {

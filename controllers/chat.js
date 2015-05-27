@@ -4,6 +4,8 @@ var User = require('../proxy').User;
 var Topic = require('../proxy').Topic;
 var ChartModel = require('../models').Chart;
 var TopicModel = require('../models').Topic;
+var handleError = require('../common').handleError;
+
 
 exports.test = function (req, res, next) {
   return res.render('test', {});
@@ -18,27 +20,41 @@ exports.index = function (req, res, next) {
   });  
 };
 
+exports.topics = function (req, res, next) {
+  // var query = req.body.info;
+  var discuss = req.body.discuss;
+  Discuss.findTopics(discuss._id, function (err, topics) {
+    handleError(err, next);
+    return res.json({
+      response: true,
+      topics: topics
+    });
+  });
+};
+
 exports.upload = function (req, res, next) {
   var type = req.params.type;
   var title = req.body.title;
   var topic;
-  Topic.findByTitle(title, function (err, result) {
+
+  Topic.findByIds(title._id, function (err, result) {
     if (err) {
       topic = new TopicModel();
-      topic.title = title;
+      topic.title = title.title;
     }
     else {
       topic = result;
     }
     if (type === 'chart') {
       var chart = new ChartModel();
-      chart.type = req.body.type;
-      chart.labels = req.body.labels;
-      chart.values = req.body.values;
+      var data = req.body.data;
+      chart.type = data.type;
+      chart.labels = data.labels;
+      chart.values = data.values;
       topic.chart.push(chart);
       console.log(chart);
       // no data send back to client, client use websocket to broadcast
-      return res.send({
+      return res.json({
         response: true
       });
     }
@@ -46,19 +62,20 @@ exports.upload = function (req, res, next) {
       var impress = req.files.impress;
       topic.impress.push(impress);
       console.log(impress.path);
-      fs.readFile(impress.path, 'utf-8', function (err, content) {
-        // split content into 10 pages, maximum
+      fs.readFile(impress.path, 'utf-8', function (err, source) {
+        // split source into 10 pages, maximum
         if (err) { res.send(false); return next(); }
-        var pages = content.split('/\+{6}/', 10);
+        var pages = source.split('/\+{6,}/', 10);
         console.log(pages);
-        return res.send({
+        return res.json({
           response: true,
           pages: pages
         });
       });
     }
-    topic.save();
+    
   });
+
 };
 
 
