@@ -21,14 +21,16 @@
           <div class="input-group">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-bookmark"></span></span>
-            <input class="form-control outline-input" type="text" placeholder="Topics of the Discuss">
+            <input name="topic" class="form-control" type="text" placeholder="Topics of the Discuss">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default add-outline">
+              <button id="addTopic" type="button" class="btn btn-default add-outline">
                 <span class="glyphicon glyphicon-plus"></span>
               </button>     
             </span>
           </div>
+          <br>
 
+          <div id="topics" class="list-group"></div>
         </div>
 
         <div class="input-group">
@@ -38,7 +40,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id="create-room-btn" class="btn btn-primary">Create</button>
+        <button type="button" id="createRoom" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>

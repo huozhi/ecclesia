@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../controllers').auth;
-var home = require('../controllers').home;
-var history = require('../controllers').history;
-var chat = require('../controllers').chat;
+var auth = require('./controllers').auth;
+var home = require('./controllers').home;
+var history = require('./controllers').history;
+var chat = require('./controllers').chat;
 
 // index
 router.get('/', auth.index);

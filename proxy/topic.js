@@ -1,34 +1,38 @@
 var models = require('../models');
 var Topic = models.Topic;
 var Discuss = require('./discuss');
+var handleError = require('../common').handleError;
+
+
+
+exports.findById = function (topicId, callback) {
+  Topic.findOne({ '_id': topicId }, function (err, topic) {
+    handleError(err, callback);
+    callback(null, topic);
+  });
+};
 
 exports.findByIds = function (topicIds, callback) {
   Topic.find({ '_id': { $in: topicIds } }, function (err, topics) {
-    if (err) {
-      console.log(err); return callback(err);
-    }
+    handleError(err, callback);
     callback(null, topics);
   });
 };
 
-exports.findByTitle = function (title, callback) {
-  Topic.findOne({ 'title': title }, function (err, topic) {
-    if (err) {
-      console.log(err); return callback(err);
-    }
-    callback(null, topic);
-  })
-}
+exports.findByQuery = function (query, opts, callback) {
+  Topic.find(query, '', opts, function (err, topics) {
+    handleError(err, callback);
+    callback(null, topics);
+  });
+};
 
-exports.insertCharts = function(tpoic, chart, callback) {
+exports.insertChart = function(tpoic, chart, callback) {
   Topic.findByIdAndUpdate(
     tpoic._id,
     { $push: { 'charts': chart } },
     { safe: true, upsert: true },
     function (err, topic) {
-      if (err) {
-        console.log(err); return callback(err);
-      }
+      handleError(err, callback);
       callback(null, topic);
     }
   );
@@ -40,13 +44,11 @@ exports.insertImpress = function (topic, impress, callback) {
     { $push: { 'impress': impress } },
     { safe: true, upsert: true },
     function (err, topic) {
-      if (err) {
-        console.log(err); return callback(err);
-      }
+      handleError(err, callback);
       callback(null, topic);
     }
   );
-}
+};
 
 
 exports.create = function (title, impress, charts, callback) {
@@ -56,3 +58,4 @@ exports.create = function (title, impress, charts, callback) {
   topic.charts = charts || [];
   topic.save(callback);
 };
+
