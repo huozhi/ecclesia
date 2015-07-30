@@ -1,3 +1,4 @@
+'use strict'
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -14,7 +15,9 @@ module.exports = function(grunt) {
     express: {
       options: {
         // Override defaults here
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 3000,
+        script: 'app.js',
+        debug: true
       },
       dev: {
         options: {
@@ -33,6 +36,11 @@ module.exports = function(grunt) {
           node_env: 'development'
         }
       }
+    },
+    open: {
+      server: {
+        url: 'https://localhost:3000',
+      },
     },
     concat: {
       options: {
@@ -99,8 +107,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-keepalive');
+  grunt.loadNpmTasks('grunt-open');
   // Default task.
-  grunt.registerTask('serve', ['jshint', 'qunit', 'concat', 'express']);
+  grunt.registerTask('serve', ['open', 'express:dev', 'keepalive']);
 
 };
