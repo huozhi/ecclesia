@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -17,11 +17,13 @@ module.exports = function(grunt) {
         // Override defaults here
         port: process.env.PORT || 3000,
         script: 'app.js',
-        debug: true
+        livereload: true
       },
       dev: {
         options: {
-          script: 'app.js'
+          script: 'app.js',
+          debug: true,
+          livereload: true,
         }
       },
       prod: {
@@ -90,13 +92,39 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     watch: {
+      options: {
+        livereload: {
+          port: 35728,
+          key: grunt.file.read('sslcert/privatekey.pem'),
+          cert: grunt.file.read('sslcert/certificate.pem'),
+        },
+      },
+      html: {
+        files: ['./views/**/*.html'],
+      },
+      css: {
+        files: ['*.css', '**/*.css'],
+      },
+      js: {
+        files: [
+          '{app|Gruntfile|routes|signaling}.js',
+          '{public|models|controllers|middlewares|config|common}/**/*.js'
+        ],
+      },
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
+        // tasks: ['jshint:gruntfile']
       },
       lib_test: {
         files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
+        // tasks: ['jshint:lib_test', 'qunit']
+      },
+      express: {
+        files: ['**/*.js', 'views/**/*.html', '**/*.html', '**/*.css'],
+        tasks: ['express:dev'],
+        options: {
+          spawn: false
+        }
       }
     }
   });
@@ -108,10 +136,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
-  grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-keepalive');
   grunt.loadNpmTasks('grunt-open');
   // Default task.
-  grunt.registerTask('serve', ['open', 'express:dev', 'keepalive']);
 
+  grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
 };

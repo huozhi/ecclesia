@@ -5,7 +5,10 @@ function User(name, pass, email) {
 }
 
 User.prototype.login = function () {
-  var user = { this.username, this.pass };
+  var user = { 
+    username: this.username,
+    password: this.password
+  };
   $.postJSON('/login',
     user,
     function(data, textStatus, jqXHR) {
@@ -23,11 +26,11 @@ User.prototype.login = function () {
 
 User.prototype.register = function () {
   var user = {
-      username: this.username,
-      password: this.password,
-      passrept: passrept,
-      email: this.email
-    },
+    username: this.username,
+    password: this.password,
+    passrept: passrept,
+    email: this.email   
+  };
   $.postJSON('/register', 
     function (data) {
       if (data.result === true) {

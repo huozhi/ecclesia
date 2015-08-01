@@ -6,19 +6,15 @@
 body {
   overflow: hidden;
 }
+
+
 .sign-up-container {
-  /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2b4490), color-stop(1,#000));*/
-  position: relative;
-  /*height:500px;*/
-  max-height: 60%;
+  position: relative;  
 }
 .sign-up-bgimage {
   position: relative;
   padding: 50px 50px 0px 50px;
-  /*height:500px;*/
   max-height: 60%;
-
-  /*background: url(/img/pattern3.png) repeat center center;*/
 }
 .head-container {
   background-color: #130c0e;

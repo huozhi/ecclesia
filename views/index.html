@@ -7,6 +7,7 @@
 <title>Ecclesia</title>
 <link href="/css/vendors/bootstrap.min.css" rel="stylesheet"/>
 <link href="/css/reg_layout.css" rel="stylesheet"/>
+<link href="/css/app.css" rel="stylesheet"/>
 
 <script src="/js/vendors/jquery-1.10.2.min.js"></script>
 <script src="/js/vendors/jquery.cookie.js"></script>
@@ -17,8 +18,8 @@
 </head>
 
 <body>
-  <!-- <div class="head-container"> -->
-    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+  <div class="head-container">
+    <nav class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header" >
         <a class="navbar-brand">Ecclesia</a>
       </div>
@@ -31,24 +32,23 @@
     </nav>
   <!-- </div> -->
 
-  <div class="container-fluid main">
-    <div class="huge-title col-lg-5 col-md-5 col-lg-offset-1 col-md-offset-1">
-      <p class="join-form">Welcome&nbsp; to Ecclesia</p>
-        <p class="content-form">
-          This is an application which simulates a real-time meeting online.
-          
-          Several features are provided to help you hold the meeting.
-          
-          Enjoy the convenience brought by Ecclesia!
-        </p>
+  <div class="major-container">
+    <div class="main-container">
+      <div class="pull-right" id="user-form">
+        {% include user_form %}
+      </div>  
+      <h1 class="join-form">Welcome&nbsp; to Ecclesia</h1>
+      <br>
+      <p class="content-form">
+        This is an application which simulates a real-time meeting online.
+        
+        Several features are provided to help you hold the meeting.
+        
+        Enjoy the convenience brought by Ecclesia!
+      </p>
     </div>
-
-    <div class="user-form col-lg-5 col-md-5" id="user-form">
-      {% include user_form %}
-    </div>
-    
   </div>
-
+  
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -62,6 +62,7 @@ $(document).ready(function() {
 });
 
 </script>
+<script src="https://localhost:35728/livereload.js"></script>
 </body>
 
-</html>        
+</html>

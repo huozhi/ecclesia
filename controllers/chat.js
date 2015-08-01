@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var Discuss = require('../proxy').Discuss;
 var User = require('../proxy').User;
@@ -7,12 +9,12 @@ var TopicModel = require('../models').Topic;
 var handleError = require('../common').handleError;
 
 
-exports.test = function (req, res, next) {
+var test = function (req, res, next) {
   return res.render('test', {});
 };
 
 
-exports.index = function (req, res, next) {
+var index = function (req, res, next) {
   return res.render('chat/chat', {
     // session: req.session,
     // username: req.session.user,
@@ -20,7 +22,7 @@ exports.index = function (req, res, next) {
   });  
 };
 
-exports.topics = function (req, res, next) {
+var topics = function (req, res, next) {
   // var query = req.body.info;
   var discuss = req.body.discuss;
   Discuss.findTopics(discuss._id, function (err, topics) {
@@ -32,7 +34,7 @@ exports.topics = function (req, res, next) {
   });
 };
 
-exports.upload = function (req, res, next) {
+var upload = function (req, res, next) {
   var type = req.params.type;
   var title = req.body.title;
   var topic;
@@ -78,5 +80,10 @@ exports.upload = function (req, res, next) {
 
 };
 
+
+exports.index = index;
+exports.test = test;
+exports.topics = topics;
+exports.upload = upload;
 
 
