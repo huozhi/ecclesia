@@ -1,6 +1,6 @@
 node_modules
 spm_modules
-bower_compoents
+bower_components
 modules/*.md
 modules/*.jpg
 modules/*.png

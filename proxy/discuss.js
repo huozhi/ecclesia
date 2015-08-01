@@ -4,7 +4,7 @@ var User = require('./user');
 var handleError = require('../common').handleError;
 
 
-exports.findByQuery = function (query, opts, callback) {
+exports.findDiscussByQuery = function (query, opts, callback) {
   Discuss.find(query, '', opts, function (err, discusses) {
     if (err) {
       return callback(err);

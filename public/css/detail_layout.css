@@ -5,7 +5,7 @@ html, body {
 
 body {
   overflow: hidden;
-  background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
+  /*background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);*/
 }
 
 .navbar {

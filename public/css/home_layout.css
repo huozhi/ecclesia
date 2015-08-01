@@ -10,7 +10,10 @@ body {
 
 .home-menu {
   width: 980px;
+}
 
+.user-opers {
+  padding-top: 3.5em;
 }
 
 a.home-link {
