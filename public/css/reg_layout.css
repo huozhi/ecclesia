@@ -33,14 +33,11 @@ h1,h2,h3,h4,h5,h6,p {
   position: relative;
   word-wrap: break-word; 
   word-break: normal;
-  font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 
 .welcome-form {
-  font: normal normal 300 36px/54px 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size:36px;
   /*color: white;*/
 }

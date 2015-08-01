@@ -1,0 +1,19 @@
+body {
+  word-wrap: break-word;
+}
+
+.navbar {
+  border: none;
+}
+.major-container {
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+.main-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 980px;  
+}
+
