@@ -1,16 +1,19 @@
 html, body {
   height: 100%;
+  overflow: hidden;
 }
 
 
-body {
-  overflow: hidden;
-  background:  -webkit-radial-gradient(bottom left, circle, #000 1%,#fcffe0 95%);
+.site-container {
+  height: 100%;
+  padding-top: 0 !important;
+  padding-bottom: 65px !important;
 }
 
 .navbar {
   border-radius: 0px;
   border: 0px;
+  margin-bottom: 0px;
 }
 
 
@@ -18,69 +21,25 @@ body {
   border-bottom: 1px transparent; 
 }
 
-
-.affix-bar {
-  padding: 0 0 0 0;
-  /*height: 100%;*/
-  width: 100%;
-  height: 200px;
-  bottom: 0px;
-  border: #3B3B3B solid 1px;
-  border-radius: 2px;
-  background-color:rgba(0, 0, 0, 0.2);
-  background-repeat: no-repeat important;
-  background-size: cover important;
-  
-}
-
 .video-screen {
-  padding: 0 0 0 0;
-  min-width: 800px;
-  position: absolute;
-  top: 152px;
-  /*height: 100%;*/
-  bottom: 0px;
+  padding: 15px 15px 0px 0px;
+  min-width: 980px;
+  height: 100%;
 }
 
 .screen {
   position: relative;
-  width: 94%;
-  height: 500px;
-  /*float: left;*/
-  margin-right: 1px;
-  border: #3B3B3B solid 1px;  
-  padding-top: 100px;
-  border-radius: 2px;
-  /*padding-right: 52px;*/
-  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border: #666 solid 1px;
+  border-radius: 0px;
+  background-color: #049dbf;
+  color: #fff;
 }
 
 .impress-panel {
   max-width: 1000px;
   min-width: 800px;
-}
-
-.tools-bar {
-  position: absolute;
-  width: 6%;
-  /*width: auto;*/
-  height: 500px;
-  
-  /*80%;*/
-  border: 1px black solid;
-  border-radius: 4px;
-  display: inline-block;
-  padding: 2px 2px;
-  
-}
-
-.main {
-  position: relative;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  height: 100%;
-  padding-left: 2px;
-  padding-right: 2px;
 }
 
 
@@ -96,10 +55,10 @@ body {
   top: 0;
   left: 0;
   padding: 0px;
-  border: #a8a8a8 solid 0px;
+  border: #666 solid 1px;
   border-radius: 2px;
   z-index: 2;
-  background-color: rgba(255,255,255,0);
+  /*background-color: rgba(255,255,255,0);*/
 }
 
 .bin-sketch {
@@ -109,7 +68,7 @@ body {
   min-height: 66.666666%;
   /*height: 400px;*/
   padding: 0px;
-  border: #a8a8a8 solid 0px;
+  border: #666 solid 0px;
   border-radius: 2px;
   z-index: 4;
 }
@@ -123,8 +82,8 @@ body {
   top: 5px;
   height: 150px;
 
-  background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;
-  border: #3B3B3B solid 1px;
+  /*background:rgba(0, 0, 0, 0.3) none repeat scroll 0 0 !important;*/
+  border: #666 solid 1px;
   border-radius: 2px;
 }
 
@@ -140,7 +99,7 @@ body {
   width: 200px;
   /*height: 200px;*/
   height: 33.3333%;
-  float: left;
+  /*float: left;*/
 }
 
 .vertical-center {
@@ -157,8 +116,8 @@ body {
 .impress {
   position: relative;
   margin: 0px;
-  border: #a8a8a8 solid 1px;
-  background:rgba(255, 255, 255, 0.3) none repeat scroll 0 0 !important;
+  border: #666 solid 1px;
+  /*background:rgba(255, 255, 255, 0.3) none repeat scroll 0 0 !important;*/
   border-radius: 2px;
 }
 
@@ -184,7 +143,7 @@ body {
 
 .single-chart {
   position: relative;
-  float: left;
+  /*float: left;*/
   /*height: 200px;*/
   height: 66.6666%;
   padding: 5px;
@@ -204,72 +163,37 @@ div.single-chart > button {
   display:inline-block;
 }
 
-.sidebar {
-  position: relative;
-  top: 0;
-  /*max-height: 90%;*/
-  /*min-height: 90%;*/
-  height: 100%;
-  padding: 0px 0px 0 0px;
+.video-source {
+  width: 100%;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  border: 1px solid #666;
 }
-
-.container-frame {
-  /*float: left;*/
-  position: relative;
-  height: 150px;
-  width: 150px;
-  overflow: hidden;
-  /*margin: 0 auto;*/
-  /*margin-top: 10px;*/
-  /*margin-left: 10px;*/
-  border: #a8a8a8 solid 1px;
-  border-radius: 2px;
-  /*background-color: #fff;*/
-}
-
-.container-frame > section {
-  position: relative;
-  left: 0; top: 0;
-  /*height: 400px;*/
-  display: inline-block;
-  height: 60.6666%;
-  -webkit-transform: scale(0.8,0.7);
-}
-
-.container-frame > section:hover {
-  -webkit-transform: scale(1.0,1.0);
-}
-
-.container-frame > video {
-  margin: 5px 5px 5px 5px;
-  position: relative;
-  width: 160px;
-  height: 150px;
-  border-radius: 2px;
-}
-
 
 
 .affix-bar {
-  display: block;
-  position: relative;
-  height: 150px;
-  width: 100%;
+  height: 100%;
+  padding-top: 15px;
+  bottom: 0px;
+  /*border: #666 solid 1px;*/
+  border-radius: 0px;
+  /*background-color:rgba(0, 0, 0, 0.2);*/
+  background-repeat: no-repeat important;
+  background-size: cover important;
 }
+
 .sidebar {
   position: relative;
-  height: 150px;
-  width: 100%;
-  padding: 0px 0px 0 0px;
+  height: 100%;
+  
+  padding: 0px 0px 0px 0px;
 }
 .container-frame {
   display: inline-block;
 }
 
-
-.topic::-webkit-input-placeholder {
-  color: black;
-}
 
 .topic {
   position: absolute;
@@ -280,15 +204,19 @@ div.single-chart > button {
   height: 40px;
   text-align: center;
   border-radius: 4px;
-  border: 1px black solid;
+  border: 2px #fff dashed;
   padding: 4px 2px;
   background-color: transparent;
-  color: black;
+  color: #fff;
 }
 
-/*.topic:hover {
-  box-shadow: 2px;
-}*/
+.topic::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.topic:hover {
+  color: #eee;
+}
 
 .vol-bar {
   position: absolute;
@@ -296,8 +224,8 @@ div.single-chart > button {
   height: 0px;
   right: 0px;
   bottom: 10px;
-  max-height: 150px;
-  background-color: #12acef;
+  max-height: 200px;
+  /*background-color: #12acef;*/
 }
 
 .cert-right {
@@ -316,7 +244,7 @@ ul.dropdown-menu {
 
 .nav-right {
   height: 45px;
-  background-color: #fff;
+  /*background-color: #fff;*/
   border-radius: 2px;
 }
 

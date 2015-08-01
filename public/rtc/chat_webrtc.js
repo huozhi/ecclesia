@@ -31,8 +31,8 @@ function enableWebRTC () {
   // console.log(rtcUrl);
   window.webrtc = new SimpleWebRTC({
     url: rtcUrl,
-    localVideoEl: 'local-video',
-    remoteVideoEl: 'all-videos',
+    localVideoEl: 'localVideo',
+    remoteVideoEl: 'allVideos',
     username: uname,
     media: window.constraints || {
       video: true, audio: true

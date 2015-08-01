@@ -7,36 +7,44 @@
 <link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
 <link href="/css/vendors/idangerous.swiper.css" rel="stylesheet">
 <link href="/css/chat_layout.css" rel="stylesheet">
-<link href="/css/highlight.css" rel="stylesheet">
+<link href="/css/app.css" rel="stylesheet">
 
 
 </head>
 <body>
 
-<div class="container-fluid main">
+<div class="hidden-modals">
   {% include "chart-modal.html" %}
-
   {% include "impress-modal.html" %}
-
-  <!-- Check media trigger modal -->
-  <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal"></button>
-
   {% include "check-media.html" %}
+</div>
 
-  <div class="affix-bar col-lg-12 col-md-12 col-sm-12">
-    <div id="all-videos" class="sidebar left-sidebar">
-      <div id="local-video" class="container-frame ">
-        <div id="localVolBar" class="vol-bar" ></div>
-      </div>
-      <div  class="container-frame ">
-        <div  class="vol-bar" ></div>
-      </div>
+<div class="head-container">
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header" >
+      <a class="navbar-brand">Ecclesia</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-impress-modal">Impress</button>
+      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">Chart</button>
+      <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal">Media Check</button>
+    </div>
+  </nav>
+</div>
+  
+
+<div class="site-container">
+  <div id="allVidoes" class="affix-bar col-lg-2 col-md-2 col-sm-12">
+    <div id="localVideo" class="video-source">
+      <div id="localVolBar" class="vol-bar"></div>
+    </div>
+    <div class="video-source">
+      <div class="vol-bar"></div>
     </div>
   </div>
 
-  <div class="video-screen col-lg-12 col-md-12 col-sm-12">
+  <div class="video-screen col-lg-10 col-md-10 col-sm-12">
     <div id="impress" class="carousel slide screen" data-ride="carousel">
-      <input class="topic form-control btn" type="text" value="topic">
       <ol class="carousel-indicators">
         <li data-target="#impress" data-slide-to="0" class="active"></li>
         <li data-target="#impress" data-slide-to="1"></li>
@@ -56,11 +64,7 @@
       </div>
     </div>
 
-    <div class="tools-bar">
-      <button class="tools-icon" data-toggle="modal" data-target="#add-impress-modal">Impress</button>
-      <button class="tools-icon" data-toggle="modal" data-target="#add-chart-modal">Chart</button>
-    </div>
-    
+  
   </div>
 </div>
 
