@@ -1,5 +1,9 @@
-/*@import url('//fonts.googleapis.com/css?family=Open+Sans:300');*/
-
+body {
+  background-image: url(/img/index_bg_2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 
 
 @font-face {
@@ -13,43 +17,12 @@
   font-style: normal;
 }
 
-
-h1,h2,h3,h4,h5,h6,p {
-  font-family: 'Open Sans';
-  font-weight: 300;
+.sign-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 980px;
 }
 
-.main {
-  padding-top: 80px;
-}
-
-.head-container {
-  background-color: #130c0e;
-  height:50px;
-  width: 100%;
-}
-
-.huge-title {
-  position: relative;
-  word-wrap: break-word; 
-  word-break: normal;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-
-.welcome-form {
-  font-size:36px;
-  /*color: white;*/
-}
-
-.content-form {
-  font-family: 'Open Sans', 'Josefin Slab', Arial, sans-serif;
-  font-size:20px;
-  /*color: white;*/
-}
-.sign-up-form,.sign-up-container:before {
-  content: "";
-}
-.sign-up-container,.sign-up-form:after {
-  clear:both;
+.user-form {
+  min-width: 420px;
 }
