@@ -1,38 +1,7 @@
-/*@import url('//fonts.googleapis.com/css?family=Open+Sans:300');*/
-
-* {
-  font-family: 'Open Sans';
-}
 body {
-  overflow: hidden;
+  background-image: url(/img/home_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-
-.sign-up-container {
-  position: relative;  
-}
-.sign-up-bgimage {
-  position: relative;
-  padding: 50px 50px 0px 50px;
-  max-height: 60%;
-}
-.head-container {
-  background-color: #130c0e;
-  height:50px;
-}
-.sign-in-form {
-  float: center;
-  position: relative;
-  left: 50%;
-  margin-left: -185px;
-  top: 10%;
-  width: 370px;
-}
-.title {
-  position:relative;
-  left:50%;
-  margin-left: -140px;
-  /*color:white;*/
-  font-size: 45px;
-  top: 0;
-}

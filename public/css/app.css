@@ -2,18 +2,33 @@ body {
   word-wrap: break-word;
 }
 
+h1, h2, h3, h4, h5, h6, p, span {
+  font-family: 'Open Sans';
+  font-weight: 300;
+}
+
 .navbar {
-  border: none;
-}
-.major-container {
-  padding-top: 80px;
-  padding-left: 20px;
-  padding-right: 20px;
-
-}
-.main-container {
-  margin-left: auto;
-  margin-right: auto;
-  width: 980px;  
+  border: 0px;
+  border-radius: 0px;
 }
 
+.huge-title {
+  position: relative;
+  word-wrap: break-word; 
+  word-break: normal;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff;
+}
+
+.site-container {
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
+}
+
+.main {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  width: 100%;
+}
