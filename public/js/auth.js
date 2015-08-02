@@ -1,92 +1,95 @@
-function User(name, pass, email) {
-  this.username = name;
-  this.password = pass;
-  this.email = email;
+'use strict'
+
+var user = function(name, pass, email) {
+  this.username = name
+  this.password = pass
+  this.email = email
 }
 
-User.prototype.login = function () {
-  var user = { 
+user.login = function () {
+  var userInfo = { 
     username: this.username,
     password: this.password
-  };
+  }
   $.postJSON('/login',
-    user,
+    userInfo,
     function(data, textStatus, jqXHR) {
-      if (data.response) {
-        $.cookie('username', data.username);
-        sessionStorage.setItem('username', data.username);
-        window.location.href = "/home";
+      if (data.status === "ok") {
+        $.cookie('username', data.username)
+        sessionStorage.setItem('username', data.username)
+        window.location.href = "/home"
       }
       else {
-        alert(data.message);
-        // window.location.href = "/login";
+        alert(data.message)
+        // window.location.href = "/login"
       }
-    }, 'json');
+    }, 'json')
 }
 
-User.prototype.register = function () {
-  var user = {
-    username: this.username,
-    password: this.password,
-    passrept: passrept,
-    email: this.email   
-  };
-  $.postJSON('/register', 
+user.register = function () {
+  $.postJSON('/register', {
+      username: this.username,
+      password: this.password,
+      passrept: $('#repeatpwd').val(),
+      email: this.email   
+    },
     function (data) {
-      if (data.result === true) {
-        window.location.href = '/home';
+      if (data.status === "ok") {
+        window.location.href = '/home'
       }
       else {
-        alert(data.message);
-        // window.location.href = '/';
+        alert(data.message)
+        // window.location.href = '/'
       }
-    }, 'json');
+    }, 'json')
 }
 
-User.prototype.set = function (name, pass, email) {
-  this.username = name;
-  this.password = pass;
-  this.email = email;
+user.set = function (name, pass, email) {
+  this.username = name
+  this.password = pass
+  this.email = email
 }
 
-User.prototype.valid = function () {
-  // var password = $('#password').val(),
-  var passrept = $('#repeatpwd').val();
-  return this.password === passrept;
+user.valid = function () {
+  var passrept = $('#repeatpwd').val()
+  return this.password === passrept
 }
 
 
 $(document).ready(function () {
-  var user = new User();
-  var name, pass, rept, email;
+  var name, pass, rept, email
 
   // login
-  $('#login-btn').click(function () {
-    name = $('#username').val();
-    pass = $("#password").val();
-    user.set(name, pass);
-    user.login();
-  });
+  $('#login').click(function () {
+    name = $('#username').val()
+    pass = $("#password").val()
+    user.set(name, pass)
+    user.login()
+  })
 
   // registration
-  $('#sign-up-btn').click(function () {
-    name = $('#username').val();
-    pass = $('#password').val();
-    // rept = $('#repeatpwd').val();
-    email = $('#useremail').val();
+  $('#signup').click(function() {
+    console.log('registing...')
+    name = $('#username').val()
+    pass = $('#password').val()
+    email = $('#useremail').val()
+    user.set(name, pass, email)
     if (user.valid()) {
-      user.set(name, pass, email);
-      user.register();
+      user.register()
+      console.log('posting data...', user.name, user.password)
     }
-  });
+    else {
+      console.log('reg error')
+    }
+  })
 
   // keyboard binding
   $('input').keypress(function (e) {
-    var key = e.which;
+    var key = e.which
     if (key === 13) {
-      $('button').trigger('click');
+      $('button').trigger('click')
     }
-  });
-});
+  })
+})
 
 
