@@ -4,7 +4,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
 
 <title>Ecclesia Chat</title>
-<link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
+<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
 <link href="/css/vendors/idangerous.swiper.css" rel="stylesheet">
 <link href="/css/chat_layout.css" rel="stylesheet">
 <link href="/css/app.css" rel="stylesheet">
@@ -20,14 +23,23 @@
 </div>
 
 <div class="head-container">
-  <nav class="navbar navbar-inverse" role="navigation">
-    <div class="navbar-header" >
-      <a class="navbar-brand">Ecclesia</a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-impress-modal">Impress</button>
-      <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">Chart</button>
-      <button id="media-check-btn" class="btn btn-primary btn-lg sr-only" data-toggle="modal" data-target="#check-media-modal">Media Check</button>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">Ecclesia</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <div class="nav navbar-nav navbar-right">
+          <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-impress-modal">
+            <span class="glyphicon glyphicon-plus"></span> Impress
+          </button>
+          <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
+            <span class="glyphicon glyphicon-plus"></span> Chart
+          </button>
+          <button id="media-check-btn" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">Media Check</button>
+        </div>
+        
+      </div>
     </div>
   </nav>
 </div>
@@ -44,12 +56,11 @@
   </div>
 
   <div class="video-screen col-lg-10 col-md-10 col-sm-12">
-    <div id="impress" class="carousel slide screen" data-ride="carousel">
+    <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
       <ol class="carousel-indicators">
         <li data-target="#impress" data-slide-to="0" class="active"></li>
-        <li data-target="#impress" data-slide-to="1"></li>
       </ol>
-      <div class=" carousel-inner text-center impress-panel center-block" role="listbox">
+      <div class="carousel-inner impress-panel text-center center-block" role="listbox">
         <div id="slide-1" class="item active"># Welcome to Ecclesia
   ### you can sketch graph here :)
   ```py
@@ -57,10 +68,11 @@
     print 'wocao'
     return 1
   ```
-        </div>  
-        <div id="slide-2" class="item"># Hehehe
-  ### you can sketch graph here :(
         </div>
+        <button class="btn btn-default btn-xs edit">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <div class="cover-board"></div>
       </div>
     </div>
 
@@ -88,11 +100,24 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-  var $mark = $('.item');
+  var $mark = $('.item')
   $mark.each(function (index, ele) {
-    var $this = $(ele);
-    var text = marked($this.text()).trim();
+    var $this = $(ele)
+    var text = marked($this.text()).trim()
     $this.html(text)
+  })
+
+  $('.edit').click(function () {
+    var $self = $(this)
+    var $board = $self.next('.cover-board');
+    console.log($board)
+    if ($board.css('display') === 'none') {
+      $board.css('display', 'block')
+    }
+    else {
+      $board.css('display', 'none')
+
+    }
   })
 })
 </script>

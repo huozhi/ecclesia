@@ -3,6 +3,10 @@ html, body {
   overflow: hidden;
 }
 
+.carousel-inner > * > * {
+  border-radius: 0px;
+  border: 0px;
+}
 
 .site-container {
   height: 100%;
@@ -16,6 +20,9 @@ html, body {
   margin-bottom: 0px;
 }
 
+.navbar-btn {
+  border-radius: 2px;
+}
 
 .nav-tabs {
   border-bottom: 1px transparent; 
@@ -31,17 +38,35 @@ html, body {
   position: relative;
   width: 100%;
   height: 100%;
-  border: #666 solid 1px;
-  border-radius: 0px;
-  background-color: #049dbf;
+  border: #bbb solid 1px;
+  border-radius: 2px;
+  background-color: #0099ff;
   color: #fff;
 }
 
 .impress-panel {
-  max-width: 1000px;
   min-width: 800px;
+  height: 100%;
 }
 
+
+.impress-panel button.edit {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  border: 0;
+  z-index: 2;
+}
+
+.impress-panel .cover-board {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: transparent;
+  z-index: 1;
+  display: none;
+}
 
 .board {
   position: relative;
@@ -57,21 +82,9 @@ html, body {
   padding: 0px;
   border: #666 solid 1px;
   border-radius: 2px;
-  z-index: 2;
   /*background-color: rgba(255,255,255,0);*/
 }
 
-.bin-sketch {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-height: 66.666666%;
-  /*height: 400px;*/
-  padding: 0px;
-  border: #666 solid 0px;
-  border-radius: 2px;
-  z-index: 4;
-}
 
 .charts {
   position: relative;
@@ -115,10 +128,12 @@ html, body {
 
 .impress {
   position: relative;
+  height: 100%;
   margin: 0px;
   border: #666 solid 1px;
   /*background:rgba(255, 255, 255, 0.3) none repeat scroll 0 0 !important;*/
   border-radius: 2px;
+  z-index: 2;
 }
 
 
@@ -169,7 +184,8 @@ div.single-chart > button {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 15px;
-  border: 1px solid #666;
+  border: 1px solid #bbb;
+  border-radius: 2px;
 }
 
 
@@ -177,45 +193,15 @@ div.single-chart > button {
   height: 100%;
   padding-top: 15px;
   bottom: 0px;
-  /*border: #666 solid 1px;*/
-  border-radius: 0px;
-  /*background-color:rgba(0, 0, 0, 0.2);*/
-  background-repeat: no-repeat important;
-  background-size: cover important;
 }
 
 .sidebar {
   position: relative;
   height: 100%;
-  
   padding: 0px 0px 0px 0px;
 }
 .container-frame {
   display: inline-block;
-}
-
-
-.topic {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  margin-left: -150px;
-  width: 300px;
-  height: 40px;
-  text-align: center;
-  border-radius: 4px;
-  border: 2px #fff dashed;
-  padding: 4px 2px;
-  background-color: transparent;
-  color: #fff;
-}
-
-.topic::-webkit-input-placeholder {
-  color: #fff;
-}
-
-.topic:hover {
-  color: #eee;
 }
 
 .vol-bar {

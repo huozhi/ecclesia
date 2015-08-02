@@ -19,7 +19,7 @@ router.post('/home/join', home.joinRoom);
 
 // history views
 router.get('/history', history.index);
-router.get('/history/detail/:room/:host/:date', history.getDiscussDetail);
+router.get('/history/detail', history.getDiscussDetail);
 
 // chat views
 router.get('/test', chat.test);

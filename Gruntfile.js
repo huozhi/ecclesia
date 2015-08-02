@@ -107,8 +107,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: [
-          '{app|Gruntfile|routes|signaling}.js',
-          '{public|models|controllers|middlewares|config|common}/**/*.js'
+          '**/*.js', '!**/node_modules/**', '!**/bower_components/**'
         ],
       },
       gruntfile: {
@@ -120,7 +119,13 @@ module.exports = function(grunt) {
         // tasks: ['jshint:lib_test', 'qunit']
       },
       express: {
-        files: ['**/*.js', 'views/**/*.html', '**/*.html', '**/*.css'],
+        files: [
+          '**/*.js',
+          '!**/node_modules/**',
+          '!**/bower_components/**',
+          '**/*.html',
+          '**/*.css',
+        ],
         tasks: ['express:dev'],
         options: {
           spawn: false
