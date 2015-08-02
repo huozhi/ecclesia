@@ -1,23 +1,39 @@
+'use strict'
+
 /**
  * data structure will used defination
  * Discuss, Chart, Impress
  */
 
-function Discuss(room, date, host, participants, topics) {
-  this.room = room;
-  this.date = date;
-  this.host = host;
-  this.participants = participants;
-  this.topics = topics;
+var Discuss = function(room, host, date, participants, topics) {
+  this.room = room
+  this.host = host
+  this.date = date || new Date()
+  this.participants = participants || []
+  this.topics = topics || []
 }
+
+var Impress = function(srouce) {
+  this.content = source
+}
+
+var Chart = function(type, labels, values) {
+  this.type = type
+  this.labels = labels
+  this.values = values
+  this.source = null
+}
+
 
 Discuss.prototype.info = function () {
   return {
     room: this.room,
     date: this.date,
     host: this.host
-  };
-};
+  }
+}
+
+
 
 Discuss.prototype.sync = function () {
   $.postJSON('/chat/',
@@ -25,18 +41,6 @@ Discuss.prototype.sync = function () {
     function (data) {
 
     }, 'json')
-};
-
-function Chart(type, labels, values, selector) {
-  this.type = type;
-  this.labels = labels;
-  this.values = values;  
-  this.selector = selector;
-  this.source = null;
-}
-
-function Impress(srouce) {
-  this.content = source.split('/\+{6,}/', 10);;
 }
 
 
@@ -45,45 +49,42 @@ Chart.prototype.save = function () {
     { data: this.data() },
     function (data) {
       if (data.response) {
-        console.log('chart saved');
+        console.log('chart saved')
       }
-    }, 'json');
-};
+    }, 'json')
+}
 
 Chart.prototype.data = function () {
   return {
     type: this.type,
     labels: this.labels,
     values: this.values
-  };
-};
+  }
+}
 
 
 Chart.prototype.generate = function () {
   if (this.source) {
-    this.source.clear();
-    // this.source.destroy();
+    this.source.clear()
+    // this.source.destroy()
   }
-  // var chartData = data || this.collectAttrs();
-  var context = this.selector.get(0).getContext('2d');
+  // var chartData = data || this.collectAttrs()
+  var context = this.selector.get(0).getContext('2d')
   this.source = new Chart(context)
   switch (this.chart_t) {
     case 'line':
-      this.source.Line(chartData);
-      break;
+      this.source.Line(chartData)
+      break
     case 'bar':
-      this.source.Bar(chartData);
-      break;
+      this.source.Bar(chartData)
+      break
     case 'pie':
-      this.source.Pie(chartData);    
-      break;
+      this.source.Pie(chartData)    
+      break
     default:
-      break;
+      break
   }
 }
-
-// unimplemented
-Chart.prototype.preview = function () { }
 
 
 Chart.prototype.angularChartColors = [
@@ -102,19 +103,14 @@ Chart.prototype.angularChartColors = [
     strokeColor: 'rgba(0,0,51,1)',
     pointColor: 'rgba(0,0,102,1)',
   }
-];
+]
 
 Chart.prototype.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
-  '#E2EAE9','#D4CCC5','#949FB1','#4D5360'];
-
-
-
-
-
+  '#E2EAE9','#D4CCC5','#949FB1','#4D5360']
 
 
 
 $(document).ready(function() {
-  // enableWebRTC();
+  // RtcController.enableWebRTC()
   
-});
+})

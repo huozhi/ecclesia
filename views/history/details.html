@@ -6,34 +6,35 @@
 <title>Ecclesia History Detail</title>
 <link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
 <link href="/css/vendors/idangerous.swiper.css" rel="stylesheet">
+<link href="/css/chat_layout.css" rel="stylesheet">
 <link href="/css/detail_layout.css" rel="stylesheet">
-
+<link href="/css/app.css" rel="stylesheet">
 </head>
 
-<body>  
-  <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed"
-      data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand">Ecclesia</a>
-    </div>
-  
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/history">All History</a></li>
-      </ul>
+<body>
+
+
+<div class="head-container">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">Ecclesia</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/history">All History</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
-
-  {% include "present.html" %}
+</div>
+  
+{% include "present.html" %}
 
 <script src="/js/vendors/jquery-1.10.2.min.js"></script>
 <script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
 <script src="/js/vendors/jquery.cookie.js"></script>
+<script src="/js/vendors/marked.min.js"></script>
 <script src="/js/history.js"></script>
 
 </body>
