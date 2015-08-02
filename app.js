@@ -16,7 +16,7 @@ var debug = require('debug')('ecclesia');
 
 var routes = require('./routes');
 var config = require('./config');
-var middlewares = require('./middlewares');
+var auth = require('./middlewares/auth');
 var controllers = require('./controllers');
 var app = express();
 
@@ -34,7 +34,7 @@ app.set('view engine', 'html');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -52,7 +52,7 @@ app.use(session({
 }));
 
 app.use(pjax());
-// app.use(middlewares.auth);
+app.use(auth.auth);
 
 app.use(routes);
 
