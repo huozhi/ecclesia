@@ -13,7 +13,7 @@ exports.index = function (req, res, next) {
   var authToken
   if (!req.session.user) {
     authToken = req.cookies.authToken
-    console.log('authToken', authToken)
+    console.log('reload authToken', authToken)
     if (authToken) {
       req.session.user = UserModel({
         _id: req.cookies.authToken

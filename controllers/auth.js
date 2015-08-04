@@ -73,12 +73,10 @@ exports.loginAction = function (req, res, next) {
       return next(err)
     }
     if (user && user.username === username && user.password === password) {
-      var user = {
-        username: username,
-        password: password,
-      }
-      req.session.user = UserModel(user)
       authMiddleware.genSession(res, user)
+      req.session.user = user
+      console.log('login', req.session.user)
+      console.log('authToken', req.cookies.authToken)
       res.json({ status: "ok" })
     }
     else {

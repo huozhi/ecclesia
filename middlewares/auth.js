@@ -12,5 +12,6 @@ exports.genSession = function (res, user) {
     maxAge: 1000 * 60 * 60 * 24 * 30,
     signed: true
   };
+  console.log('genSession', authToken)
   res.cookie('authToken', authToken)
 }
