@@ -56,25 +56,34 @@
           </a>
         </div>
       </div>
-      <ul class="bmenu col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
     </div>
-
-  </div>    
+  </div>
+  <div class="center-block type-form">
+    <input type="text" class="form-control" placeholder="Room name">
+    <br>
+    <input type="text" class="form-control" placeholder="Topics">
+    <br>
+    <div class="text-center btn-group btn-group-justified">
+      <a class="btn btn-success">Sure</a>
+      <a class="btn btn-default">Cancel</a>      
+    </div>
+  </div>
 </div>
 
 
-<div class="hide-modal">
+<div class="hide-modal sr-only">
   {% include "create-modal.html" %}
   {% include "join-modal.html" %}
 </div>
 
 
-</body>
 
 <script type="text/javascript" src="/js/home.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
 
+  
+})  
+</script>
+</body>
 </html>

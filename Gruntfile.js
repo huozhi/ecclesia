@@ -3,6 +3,7 @@
 module.exports = function(grunt) {
 
   // Project configuration.
+  require('jit-grunt')(grunt);
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
@@ -93,6 +94,7 @@ module.exports = function(grunt) {
     },
     watch: {
       options: {
+        nospawn: true,
         livereload: {
           port: 35728,
           key: grunt.file.read('sslcert/privatekey.pem'),
