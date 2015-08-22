@@ -31,6 +31,7 @@ a:hover {
 .type-form {
   margin-top: 20px;
   width: 450px;
+  /*left: 0px;*/
 }
 
 .type-form input {

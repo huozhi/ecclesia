@@ -15,13 +15,11 @@ user.login = function () {
     userInfo,
     function(data, textStatus, jqXHR) {
       if (data.status === "ok") {
-        $.cookie('username', data.username)
         sessionStorage.setItem('username', data.username)
         window.location.href = "/home"
       }
       else {
         alert(data.message)
-        // window.location.href = "/login"
       }
     }, 'json')
 }

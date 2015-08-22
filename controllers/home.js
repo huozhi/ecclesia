@@ -1,31 +1,32 @@
 var express = require('express')
-var router = express.Router()
+var mongoose = require('mongoose')
+var ObjectId = mongoose.Types.ObjectId
 var Disscuss = require('../proxy').Disscuss
 var User = require('../proxy').User
 var UserModel = require('../models').User
-// var Meeting = require('../modules/meeting')
-// var User = require('../modules/user')
-// var crypto = require('crypto')
+
+var router = express.Router()
 
 
 exports.index = function (req, res, next) {
   console.log('home', req.session.user)
-  var authToken
-  if (!req.session.user) {
+  var authToken, user
+  if (!req.session.user || !req.session.user.username) {
     authToken = req.cookies.authToken
-    console.log('reload authToken', authToken)
+    console.log('reload authToken', typeof authToken, authToken)
     if (authToken) {
-      req.session.user = UserModel({
-        _id: req.cookies.authToken
+      UserModel.findById(authToken, function (err, user) {
+        console.log('query user', user)
+        req.session.user = user
+        if (req.session.user) {
+          return res.render('home/home', {
+            user: req.session.user,
+          })
+        } else {
+          return next()
+        }
       })
     }
-  }
-  if (req.session.user) {
-    return res.render('home/home', {
-      user: req.session.user,
-    })
-  } else {
-    return next()
   }
 }
 
