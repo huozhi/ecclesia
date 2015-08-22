@@ -24,7 +24,7 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/">logout</a></li>
+        <li><a href="/">sign out</a></li>
       </ul>
     </div>
   </nav>
@@ -38,13 +38,13 @@
       <h1 class="huge-title">Welcome to Ecclesia, {{ user.username }}</h1>
       <div class="user-opers">
         <div class="col-md-4 text-center white-text">
-          <a data-toggle="modal" data-target="#createModal" class="home-link">
+          <a id="createRoom" class="home-link">
             <i class="fa fa-bar-chart fa-5x"></i>
             <h2>Create a meeting</h2>
           </a>
         </div>
         <div class="col-md-4 text-center white-text">
-          <a data-toggle="modal" data-target="#joinModal" class="home-link">
+          <a id="joinRoom" class="home-link">
             <i class="fa fa-users fa-5x"></i>
             <h2>Join a meeting</h2>
           </a>
@@ -58,7 +58,8 @@
       </div>
     </div>
   </div>
-  <div class="center-block type-form">
+  
+  <div class="type-form center-block" id="create">
     <input type="text" class="form-control" placeholder="Room name">
     <br>
     <input type="text" class="form-control" placeholder="Topics">
@@ -68,6 +69,18 @@
       <a class="btn btn-default">Cancel</a>      
     </div>
   </div>
+
+  <div class="type-form hide" id="join">
+    <input type="text" class="form-control" placeholder="Room name">
+    <br>
+    <input type="text" class="form-control" placeholder="Meeting Host">
+    <br>
+    <div class="text-center btn-group btn-group-justified">
+      <a class="btn btn-success">Join</a>
+      <a class="btn btn-default">Nonono...</a>      
+    </div>
+  </div>
+
 </div>
 
 
@@ -81,8 +94,11 @@
 <script type="text/javascript" src="/js/home.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
   
+  $('#createRoom').click(function() {
+    $('.hide').hide()
+    $('#create').show()    
+  })  
 })  
 </script>
 </body>
