@@ -20,6 +20,13 @@ Ecclesia这款应用就是为小团队讨论而设计的. 支持线上画图(同
 1. 2,0版本DEMO基本建立完成, 完成了许多基础内容
 2. 在将它转为一个可以用户自定义的工具
 
+
+### 截屏
+
+![login](http://lavende.github.io/img/2015/ecclesia/login.jpg)
+![home](http://lavende.github.io/img/2015/ecclesia/home.jpg)
+
+
 ### 支持
 
 WebRTC, NodeJS and Mongodb

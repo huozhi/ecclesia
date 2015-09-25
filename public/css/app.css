@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6, p, span {
 .main {
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
-  padding-top: 40px;
+  padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
 }

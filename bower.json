@@ -7,11 +7,11 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
-    "public/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "font-awesome": "~4.4.0"
+  }
 }

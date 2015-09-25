@@ -3,14 +3,14 @@
 var express = require('express')
 
 var crypto = require('crypto')
-var Render = require('../common/').Render
+var common = require('../common')
 var User = require('../proxy').User
 var UserModel = require('../models').User
 var Eventproxy = require('eventproxy')
 var authMiddleware = require('../middlewares/auth')
 
 exports.index = function (req, res, next) {
-  return Render(req, res, 'index', 'auth/reg', {
+  return common.renderPjax(req, res, 'index', 'auth/reg', {
     user_form: 'auth/reg.html'
   })
 }
@@ -23,13 +23,13 @@ exports.registerAction = function (req, res, next) {
   var email    = req.body.email
 
   if (passrept !== password) {
-    console.log('password repeate not matched')
-    return index(req, res, next)
+    // console.log('password repeate not matched')
+    // return index(req, res, next)
+    return common.errors[400](res, 'password not matched in repeating')
   }
   User.register(username, password, email, function (err, newuser) {
     if(err) {
-      res.status(500)
-      return res.json({ status: "internal server error" })
+      return common.errors[500](res, err)
     }
     var user = {
       username: username,
@@ -37,12 +37,12 @@ exports.registerAction = function (req, res, next) {
       email: email
     }
     req.session.user = UserModel(user)
-    return res.json({ status: "ok", username: username })
+    return res.send(common.successResult())
   })
 }
 
 exports.loginView = function (req, res, next) {
-  return Render(req, res, 'index', 'auth/login', {
+  return common.renderPjax(req, res, 'index', 'auth/login', {
     user_form: 'auth/login.html'
   })
 }
@@ -63,24 +63,23 @@ exports.loginAction = function (req, res, next) {
 
   var ep = new Eventproxy()
   ep.fail(next)
-  ep.on('login_error', function (message) {
-    res.json({ status: "ok", message: message })
+  ep.on('err', function (err) {
+    return common.erros[500](res, err)
   })
 
   User.findUserByName(username, function (err, user) {
     if (err) {
-      console.log(err)
-      return next(err)
+      return ep.emit('err', err)
     }
     if (user && user.username === username && user.password === password) {
       authMiddleware.genSession(res, user)
       req.session.user = user
-      console.log('login', req.session.user)
-      console.log('authToken', req.cookies.authToken)
-      res.json({ status: "ok" })
+      // console.log('login', req.session.user)
+      // console.log('authToken', req.cookies.authToken)
+      return res.send(common.successResult())
     }
     else {
-      ep.emit('login_error', 'dont know')
+      return ep.emit('err', 'user not matched')
     }  
   })
 }
