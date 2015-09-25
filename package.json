@@ -14,7 +14,6 @@
     "express": "~4.8.6",
     "express-pjax-redirect": "0.0.2",
     "express-session": "1.8.1",
-    "less-middleware": "1.0.x",
     "lodash": "^2.4.1",
     "mongodb": "1.4.9",
     "mongoose": "^4.1.0",

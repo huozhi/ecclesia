@@ -31,20 +31,19 @@
 </div>
 
 
-
 <div class="site-container">
   <div class="main">
     <div class="home-menu center-block">
       <h1 class="huge-title">Welcome to Ecclesia, {{ user.username }}</h1>
       <div class="user-opers">
         <div class="col-md-4 text-center white-text">
-          <a id="createRoom" class="home-link">
+          <a id="create" class="home-link">
             <i class="fa fa-bar-chart fa-5x"></i>
             <h2>Create a meeting</h2>
           </a>
         </div>
         <div class="col-md-4 text-center white-text">
-          <a id="joinRoom" class="home-link">
+          <a id="join" class="home-link">
             <i class="fa fa-users fa-5x"></i>
             <h2>Join a meeting</h2>
           </a>
@@ -58,48 +57,26 @@
       </div>
     </div>
   </div>
-  
-  <div class="type-form center-block" id="create">
-    <input type="text" class="form-control" placeholder="Room name">
-    <br>
-    <input type="text" class="form-control" placeholder="Topics">
-    <br>
-    <div class="text-center btn-group btn-group-justified">
-      <a class="btn btn-success">Sure</a>
-      <a class="btn btn-default">Cancel</a>      
+
+  <div class="container-fluid">
+    <div class="type-form center-block">
+      <div>
+        <input id="room" type="text" class="form-control" placeholder="Room name">
+        <br>
+      </div>
+      <div>
+        <input id="host" type="text" class="form-control" placeholder="Room Host">
+        <br>
+      </div>
+      <div class="text-center btn-group btn-group-justified">
+        <a class="btn btn-success" id="sure">Sure</a>
+      </div>
     </div>
   </div>
-
-  <div class="type-form hide" id="join">
-    <input type="text" class="form-control" placeholder="Room name">
-    <br>
-    <input type="text" class="form-control" placeholder="Meeting Host">
-    <br>
-    <div class="text-center btn-group btn-group-justified">
-      <a class="btn btn-success">Join</a>
-      <a class="btn btn-default">Nonono...</a>      
-    </div>
-  </div>
-
 </div>
-
-
-<div class="hide-modal sr-only">
-  {% include "create-modal.html" %}
-  {% include "join-modal.html" %}
-</div>
-
 
 
 <script type="text/javascript" src="/js/home.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-  
-  $('#createRoom').click(function() {
-    $('.hide').hide()
-    $('#create').show()    
-  })  
-})  
-</script>
+
 </body>
 </html>

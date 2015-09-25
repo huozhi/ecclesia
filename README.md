@@ -23,6 +23,12 @@ make meeting more conveniently and easily.
 2. Change it to a customized tool for small teams or groups.
 
 
+### Screenshots
+
+![login](http://lavende.github.io/img/2015/ecclesia/login.jpg)
+![home](http://lavende.github.io/img/2015/ecclesia/home.jpg)
+
+
 ### Powered By
 
 WebRTC, NodeJS and Mongodb

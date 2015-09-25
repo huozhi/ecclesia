@@ -31,17 +31,7 @@ a:hover {
 .type-form {
   margin-top: 20px;
   width: 450px;
-  /*left: 0px;*/
+
 }
 
-.type-form input {
-  background-color: transparent;
-  border: 2px solid #fff;
-  border-right: 0px;
-  border-top: 0px;
-  color: #fff;
-}
-.type-form input::-webkit-input-placeholder {
-  color: #fff;
-}
 
