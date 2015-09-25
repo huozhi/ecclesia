@@ -25,7 +25,7 @@ var Chart = function(type, labels, values) {
 }
 
 
-Discuss.prototype.info = function () {
+Discuss.info = function () {
   return {
     room: this.room,
     date: this.date,
@@ -33,25 +33,47 @@ Discuss.prototype.info = function () {
   }
 }
 
+Discuss.init = function() {
+  var $mark = $('.item')
+  $mark.each(function (index, ele) {
+    var $this = $(ele)
+    var text = marked($this.text()).trim()
+    $this.html(text)
+  })
 
+  $('.edit').click(function () {
+    var $self = $(this)
+    var $cover = $self.next('.cover-board');
+    // console.log($cover)
+    if ($cover.css('display') === 'none') {
+      $cover.css('display', 'block')
+    }
+    else {
+      $cover.css('display', 'none')
 
-Discuss.prototype.sync = function () {
-  $.postJSON('/chat/',
+    }
+  })
+
+  $('#media-check-btn').click(function() {
+    MediaTool.check()
+  })
+}
+
+Discuss.sync = function () {
+  $.post('/chat/sync',
     { info: this.info() },
-    function (data) {
-
-    }, 'json')
+    function (response) {
+      console.log(response)
+    })
 }
 
 
 Chart.prototype.save = function () {
-  $.postJSON('/chat/upload/chart',
+  $.post('/chat/upload/chart',
     { data: this.data() },
-    function (data) {
-      if (data.response) {
-        console.log('chart saved')
-      }
-    }, 'json')
+    function (response) {
+      console.log(response)
+    })
 }
 
 Chart.prototype.data = function () {
@@ -110,7 +132,9 @@ Chart.prototype.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 
 
 
+
 $(document).ready(function() {
-  // RtcController.enableWebRTC()
+  Discuss.init()
+  RtcController.enableWebRTC()
   
 })

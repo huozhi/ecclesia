@@ -2,7 +2,7 @@
 
 var RtcController = function () { }
 
-RtcController.parseUrl = function(url) {
+var parseUrl = function(url) {
   var query = url || location.search
   var res = {}
   query.split('&').forEach(function (part) {

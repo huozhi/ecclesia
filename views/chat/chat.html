@@ -36,7 +36,7 @@
           <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
             <span class="glyphicon glyphicon-plus"></span> Chart
           </button>
-          <button id="media-check-btn" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">Media Check</button>
+          <button id="media-check-btn" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">Media</button>
         </div>
         
       </div>
@@ -98,29 +98,6 @@
 <script src="/js/upload.js"></script>
 <script src="/js/sync.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-  var $mark = $('.item')
-  $mark.each(function (index, ele) {
-    var $this = $(ele)
-    var text = marked($this.text()).trim()
-    $this.html(text)
-  })
-
-  $('.edit').click(function () {
-    var $self = $(this)
-    var $board = $self.next('.cover-board');
-    console.log($board)
-    if ($board.css('display') === 'none') {
-      $board.css('display', 'block')
-    }
-    else {
-      $board.css('display', 'none')
-
-    }
-  })
-})
-</script>
 
 </body>
 </html>
