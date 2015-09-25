@@ -1,6 +1,6 @@
 html, body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .carousel-inner > * > * {
@@ -186,6 +186,12 @@ div.single-chart > button {
   margin-bottom: 15px;
   border: 1px solid #bbb;
   border-radius: 2px;
+}
+
+.video-source > video {
+  height: 100%;
+  max-width: 100%;
+
 }
 
 
