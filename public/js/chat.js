@@ -9,6 +9,8 @@ var $slides = $('#slides')
 var $addSlide = $('#addSlide')
 var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
+var $editBoard = $('#editBoard')
+var $edit = $('#edit')
 
 var Discuss = function(room, host, date, participants, topics) {
   this.room = room
@@ -31,7 +33,7 @@ var Impress = {
 
     $addSlide.click(function() {
       var last = self.content.length
-      var text = '#hehe'
+      var text = '# new'
       self.content.push(text)
       self.append(last, text)
       self.render(last)
@@ -41,30 +43,17 @@ var Impress = {
   },
   render: function(pageId) {
     var $slide = $('div[data-id=' + pageId + ']')
-    console.log($slide.text())
-    $slide.html(marked($slide.text()))
+    // console.log($slide.text())
+    $slide.html(marked(this.content[pageId]))
   },
   renderAll: function() {
     var $mark = $('.item')
     $mark.each(function (index, ele) {
       var $this = $(ele)
-      console.log($this.text())
+      // console.log($this.text())
       var text = marked($this.text())
       $this.html(text)
     })
-
-    // $('.edit').click(function () {
-    //   var $self = $(this)
-    //   var $cover = $self.next('.cover-board');
-    //   // console.log($cover)
-    //   if ($cover.css('display') === 'none') {
-    //     $cover.css('display', 'block')
-    //   }
-    //   else {
-    //     $cover.css('display', 'none')
-
-    //   }
-    // })
   },
   append: function(idx, text) {
       // add navigator
@@ -85,8 +74,9 @@ var Impress = {
       
       // this.render(idx)
   },
-  edit: function(id) {
-
+  edit: function(pageId) {
+    // var $slide = $('div[data-id=' + pageId + ']')
+    $editBoard.val(this.content[pageId])
   }
 }
 
@@ -109,6 +99,25 @@ Discuss.info = function () {
 Discuss.init = function() {
   $('#mediaOpts').click(function() {
     MediaTool.check()
+  })
+
+  var shown, pageId, $li
+  $edit.click(function() {
+    shown = $editBoard.css('display')
+    $li = $slidesNav.children().filter('.active')
+    pageId = $li.data('slide-to')
+    if (shown === 'block') {
+      $editBoard.css('display', 'none')
+      Impress.content[pageId] = $editBoard.val()
+      // console.log(pageId, Impress.content[pageId], $editBoard.val())
+      Impress.render(pageId)
+    }
+    else {
+      $editBoard.css('display', 'block')
+      // console.log($li.data('slide-to'))
+      Impress.edit(pageId)
+
+    }
   })
 }
 
