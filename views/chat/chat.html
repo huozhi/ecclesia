@@ -22,7 +22,7 @@
   {% include "check-media.html" %}
 </div>
 
-<div class="head-container">
+<header class="head-container">
   <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -30,19 +30,21 @@
       </div>
       <div class="navbar-collapse collapse">
         <div class="nav navbar-nav navbar-right">
-          <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-impress-modal">
-            <span class="glyphicon glyphicon-plus"></span> Impress
+          <button id="addSlide" class="btn btn-default navbar-btn"  data-target="#add-impress-modal">
+            Slide <span class="glyphicon glyphicon-plus"></span>
           </button>
-          <button class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
-            <span class="glyphicon glyphicon-plus"></span> Chart
+          <button id="addChart" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
+            Chart <span class="glyphicon glyphicon-plus"></span> 
           </button>
-          <button id="media-check-btn" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">Media</button>
+          <button id="mediaOpts" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">
+            Media <span class="glyphicon glyphicon-wrench"></span>
+          </button>
         </div>
         
       </div>
     </div>
   </nav>
-</div>
+</header>
   
 
 <div class="site-container">
@@ -58,22 +60,18 @@
   <div class="video-screen col-lg-10 col-md-10 col-sm-12">
     <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
       <ol class="carousel-indicators">
-        <li data-target="#impress" data-slide-to="0" class="active"></li>
+<!--         <li data-target="#impress" data-slide-to="0" class="active"></li>
+        <li data-target="#impress" data-slide-to="1" class=""></li>
+ -->
       </ol>
-      <div class="carousel-inner impress-panel text-center center-block" role="listbox">
-        <div id="slide-1" class="item active"># Welcome to Ecclesia
-  ### you can sketch graph here :)
-  ```py
-  def hello(self):
-    print 'wocao'
-    return 1
-  ```
-        </div>
-        <button class="btn btn-default btn-xs edit">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </button>
-        <div class="cover-board"></div>
+      <div class="carousel-inner impress-panel text-center center-block" id="slides" role="listbox">
+<!--         <div id="slide-1" class="item active"></div>
+        <div id="slide-2" class="item"></div> -->
       </div>
+      <button class="btn btn-default btn-xs edit">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <div class="cover-board"></div>
     </div>
 
   
@@ -92,7 +90,6 @@
 <script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
 
 
-<script src="/js/plugins/jquery.check_media.js"></script>
 <script src="/rtc/chat_webrtc.js"></script>
 <script src="/js/chat.js"></script>
 <script src="/js/upload.js"></script>

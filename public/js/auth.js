@@ -11,35 +11,35 @@ user.login = function () {
     username: this.username,
     password: this.password
   }
-  $.postJSON('/login',
+  $.post('/login',
     userInfo,
-    function(data, textStatus, jqXHR) {
-      if (data.status === "ok") {
-        sessionStorage.setItem('username', data.username)
+    function(response) {
+      if (response.status === "success") {
+        // sessionStorage.setItem('username', response.username)
         window.location.href = "/home"
       }
       else {
-        alert(data.message)
+        console.log(response.message)
       }
-    }, 'json')
+    })
 }
 
 user.register = function () {
-  $.postJSON('/register', {
+  $.post('/register', {
       username: this.username,
       password: this.password,
       passrept: $('#repeatpwd').val(),
       email: this.email   
     },
-    function (data) {
-      if (data.status === "ok") {
+    function (response) {
+      if (response.status === "success") {
         window.location.href = '/home'
       }
       else {
-        alert(data.message)
+        console.log(response.message)
         // window.location.href = '/'
       }
-    }, 'json')
+    })
 }
 
 user.set = function (name, pass, email) {
