@@ -60,14 +60,20 @@ html, body {
 
 #editBoard {
   position: absolute;
+  padding-top: 20px;
   width: 100%;
   height: 100%;
   top: 0;
-  color: #666;
+  color: #fff;
   /*background-color: transparent;*/
   z-index: 10;
   display: none;
 }
+
+textarea {
+  max-width: 100%; 
+}
+
 
 .board {
   position: relative;

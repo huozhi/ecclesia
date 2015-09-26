@@ -12,30 +12,37 @@ var $slidesNav = $('#impress ol')
 var $editBoard = $('#editBoard')
 var $edit = $('#edit')
 
-var Discuss = function(room, host, date, participants, topics) {
-  this.room = room
-  this.host = host
-  this.date = date || new Date()
-  this.participants = participants || []
-  this.topics = topics || []
-}
+var $slideTitle = $('#slideTitle')
+var $slideContent = $('#slideContent')
+
+
+/******* SLIDES *******/
 
 var Impress = {
-  content: [
-    "# Welcome to Ecclesia",
-    "# slide 2",
+  slides: [
+    {
+      title: "Welcome to Ecclesia",
+      content: "you could edit your slides here... ", 
+    },
   ],
   init: function() {
+    $.fn.carousel.Constructor.prototype.keydown = function(){}
+
     var self = this
-    this.content.forEach(function(text, idx) {
-      self.append(idx, text)
+    this.slides.forEach(function(item, idx) {
+      self.append(idx, item)
     })
 
     $addSlide.click(function() {
-      var last = self.content.length
-      var text = '# new'
-      self.content.push(text)
-      self.append(last, text)
+      // var text = '# new'
+      if ($editBoard.css('display') === 'block')
+        return
+      self.slides.push({
+        title: "# new",
+        content: ''
+      })
+      var last = self.slides.length - 1
+      self.append(last, self.slides[last])
       self.render(last)
       $carousel.carousel(last)
     })
@@ -44,10 +51,15 @@ var Impress = {
   render: function(pageId) {
     var $slide = $('div[data-id=' + pageId + ']')
     // console.log($slide.text())
-    $slide.html(marked(this.content[pageId]))
+    // $content.html(marked(this.slides[pageId].content))
+    var slideObj = this.slides[pageId]
+    $slide.children('h1').text(slideObj.title)
+    $slide.children('.slide-content').html(
+      marked(slideObj.content)
+    )
   },
   renderAll: function() {
-    var $mark = $('.item')
+    var $mark = $('.slide-content')
     $mark.each(function (index, ele) {
       var $this = $(ele)
       // console.log($this.text())
@@ -55,7 +67,8 @@ var Impress = {
       $this.html(text)
     })
   },
-  append: function(idx, text) {
+  append: function(idx, slide) {
+
       // add navigator
       $('<li/>', {
         class: idx === 0 ? 'active' : ''
@@ -65,28 +78,59 @@ var Impress = {
       .appendTo($slidesNav)
 
       // add content
-      $('<div/>', {
+      var $slideItem = $('<div/>', {
         class: idx === 0 ? 'item active' : 'item'
       })
-      .text(text)
       .attr('data-id', idx)
       .appendTo($slides)
+
+      $('<h1/>')
+      .text(slide.title)
+      .appendTo($slideItem)
       
+      $('<div/>', {
+        class: 'container-fluid text-center center-block slide-content'
+      })
+      // .attr('data-id', idx)
+      .html(marked(slide.content))
+      .appendTo($slideItem)
       // this.render(idx)
   },
   edit: function(pageId) {
-    // var $slide = $('div[data-id=' + pageId + ']')
-    $editBoard.val(this.content[pageId])
+    var shown, pageId, $li
+    shown = $editBoard.css('display')
+    $li = $slidesNav.children().filter('.active')
+    pageId = $li.data('slide-to')
+    if (shown === 'none') {
+      $slides.hide()
+      $editBoard.show()
+      // assign text
+      var slide = Impress.slides[pageId]
+      $slideTitle.val(slide.title)
+      $slideContent.val(slide.content)
+    }
+    else {
+      $slides.show()
+      $editBoard.hide()
+      Impress.slides[pageId].title = $slideTitle.val()
+      Impress.slides[pageId].content = $slideContent.val()
+      Impress.render(pageId)
+    }
   }
 }
 
-var Chart = function(type, labels, values) {
-  this.type = type
-  this.labels = labels
-  this.values = values
-  this.source = null
-}
+/******* SLIDES *******/
 
+
+/******* DISCUSS *******/
+
+var Discuss = function(room, host, date, participants, topics) {
+  this.room = room
+  this.host = host
+  this.date = date || new Date()
+  this.participants = participants || []
+  this.topics = topics || []
+}
 
 Discuss.info = function () {
   return {
@@ -101,24 +145,7 @@ Discuss.init = function() {
     MediaTool.check()
   })
 
-  var shown, pageId, $li
-  $edit.click(function() {
-    shown = $editBoard.css('display')
-    $li = $slidesNav.children().filter('.active')
-    pageId = $li.data('slide-to')
-    if (shown === 'block') {
-      $editBoard.css('display', 'none')
-      Impress.content[pageId] = $editBoard.val()
-      // console.log(pageId, Impress.content[pageId], $editBoard.val())
-      Impress.render(pageId)
-    }
-    else {
-      $editBoard.css('display', 'block')
-      // console.log($li.data('slide-to'))
-      Impress.edit(pageId)
-
-    }
-  })
+  $edit.click(Impress.edit)
 }
 
 Discuss.sync = function () {
@@ -127,6 +154,19 @@ Discuss.sync = function () {
     function (response) {
       console.log(response)
     })
+}
+
+/******* DISCUSS *******/
+
+
+
+/******* CHART ********/
+
+var Chart = function(type, labels, values) {
+  this.type = type
+  this.labels = labels
+  this.values = values
+  this.source = null
 }
 
 
@@ -171,7 +211,7 @@ Chart.prototype.generate = function () {
 }
 
 
-Chart.prototype.angularChartColors = [
+Chart.angularChartColors = [
   {
     fillColor: 'rgba(220,220,220,0.5)',
     strokeColor: 'rgba(220,220,220,1)',
@@ -189,8 +229,11 @@ Chart.prototype.angularChartColors = [
   }
 ]
 
-Chart.prototype.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
+Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
   '#E2EAE9','#D4CCC5','#949FB1','#4D5360']
+
+
+/******* CHART ********/ 
 
 
 
