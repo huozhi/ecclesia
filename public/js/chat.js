@@ -7,6 +7,7 @@
 
 var $slides = $('#slides')
 var $addSlide = $('#addSlide')
+var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
 
 var Discuss = function(room, host, date, participants, topics) {
@@ -30,8 +31,11 @@ var Impress = {
 
     $addSlide.click(function() {
       var last = self.content.length
-      self.append(last, '#hehe')
+      var text = '#hehe'
+      self.content.push(text)
+      self.append(last, text)
       self.render(last)
+      $carousel.carousel(last)
     })
     self.renderAll()
   },
