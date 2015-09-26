@@ -5,6 +5,10 @@
  * Discuss, Chart, Impress
  */
 
+var $slides = $('#slides')
+var $addSlide = $('#addSlide')
+var $slidesNav = $('#impress ol')
+
 var Discuss = function(room, host, date, participants, topics) {
   this.room = room
   this.host = host
@@ -13,8 +17,73 @@ var Discuss = function(room, host, date, participants, topics) {
   this.topics = topics || []
 }
 
-var Impress = function(srouce) {
-  this.content = source
+var Impress = {
+  content: [
+    "# Welcome to Ecclesia",
+    "# slide 2",
+  ],
+  init: function() {
+    var self = this
+    this.content.forEach(function(text, idx) {
+      self.append(idx, text)
+    })
+
+    $addSlide.click(function() {
+      var last = self.content.length
+      self.append(last, '#hehe')
+      self.render(last)
+    })
+    self.renderAll()
+  },
+  render: function(pageId) {
+    var $slide = $('div[data-id=' + pageId + ']')
+    console.log($slide.text())
+    $slide.html(marked($slide.text()))
+  },
+  renderAll: function() {
+    var $mark = $('.item')
+    $mark.each(function (index, ele) {
+      var $this = $(ele)
+      console.log($this.text())
+      var text = marked($this.text())
+      $this.html(text)
+    })
+
+    // $('.edit').click(function () {
+    //   var $self = $(this)
+    //   var $cover = $self.next('.cover-board');
+    //   // console.log($cover)
+    //   if ($cover.css('display') === 'none') {
+    //     $cover.css('display', 'block')
+    //   }
+    //   else {
+    //     $cover.css('display', 'none')
+
+    //   }
+    // })
+  },
+  append: function(idx, text) {
+      // add navigator
+      $('<li/>', {
+        class: idx === 0 ? 'active' : ''
+      })
+      .attr('data-target', '#impress')
+      .attr('data-slide-to', idx)
+      .appendTo($slidesNav)
+
+      // add content
+      $('<div/>', {
+        class: idx === 0 ? 'item active' : 'item'
+      })
+      .text(text)
+      .attr('data-id', idx)
+      .appendTo($slides)
+      
+      // this.render(idx)
+  },
+  edit: function(id) {
+
+  }
 }
 
 var Chart = function(type, labels, values) {
@@ -34,27 +103,7 @@ Discuss.info = function () {
 }
 
 Discuss.init = function() {
-  var $mark = $('.item')
-  $mark.each(function (index, ele) {
-    var $this = $(ele)
-    var text = marked($this.text()).trim()
-    $this.html(text)
-  })
-
-  $('.edit').click(function () {
-    var $self = $(this)
-    var $cover = $self.next('.cover-board');
-    // console.log($cover)
-    if ($cover.css('display') === 'none') {
-      $cover.css('display', 'block')
-    }
-    else {
-      $cover.css('display', 'none')
-
-    }
-  })
-
-  $('#media-check-btn').click(function() {
+  $('#mediaOpts').click(function() {
     MediaTool.check()
   })
 }
@@ -134,7 +183,8 @@ Chart.prototype.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 
 
 $(document).ready(function() {
+  Impress.init()
   Discuss.init()
-  RtcController.enableWebRTC()
+  // RtcController.enableWebRTC()
   
 })
