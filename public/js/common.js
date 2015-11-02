@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var recieve = function(response, success, catch) {
   var status = response.status

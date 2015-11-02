@@ -1,32 +1,31 @@
 'use strict'
 
-var user = function(name, pass, email) {
-  this.username = name
-  this.password = pass
-  this.email = email
+var user = {
+  name: null,
+  pass: null,
+  email: null,
 }
 
 user.login = function () {
   var userInfo = { 
-    username: this.username,
+    name: this.name,
     password: this.password
   }
-  $.post('/login',
-    userInfo,
-    function(response) {
-      if (response.status === "success") {
-        // sessionStorage.setItem('username', response.username)
-        window.location.href = "/home"
-      }
-      else {
-        console.log(response.message)
-      }
-    })
+
+  $.post('/login', userInfo)
+  .done(function(response) {
+    // console.log(response)
+    location.href = '/home'
+  })
+  .fail(function(err) {
+    console.log(err.responseJSON)
+  })
+
 }
 
 user.register = function () {
   $.post('/register', {
-      username: this.username,
+      name: this.name,
       password: this.password,
       passrept: $('#repeatpwd').val(),
       email: this.email   
@@ -43,7 +42,7 @@ user.register = function () {
 }
 
 user.set = function (name, pass, email) {
-  this.username = name
+  this.name = name
   this.password = pass
   this.email = email
 }

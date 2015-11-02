@@ -1,32 +1,16 @@
+var common = require('../common')
 var User = require('../proxy').User
 var Discuss = require('../proxy').Discuss
 var Eventproxy = require('eventproxy')
 
-var testHistoryMessage = [{
-  room: 'team discuss',
-  host: 'hz',
-  date: '2014-02-19',
-  participates: ['hz', 'dh', 'lsn']
-}]
-
 exports.index = function (req, res, next) {
-  return res.render('history/panel', {
-    // test
-    meetings: testHistoryMessage
+  var user = req.session.user
+  var promise = Discuss.find().exec()
+  .then(function(discusses) {
+    return res.render('history/panel', { discusses: discusses });
   })
-  var username = req.session.user
-  User.findDiscussesByUserName(
-    username,
-    function (err, discussess) {
-      if (err) {
-        console.log(err)
-        // unhandled query history error
-        return next(err)
-      }
-      return res.render(
-        'history/panel',
-        { discussess: discussess }
-      )
+  .catch(function(err) {
+    return common.errors[500](res, err.message);
   })
 }
 

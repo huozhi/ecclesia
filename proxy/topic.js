@@ -4,29 +4,30 @@ var Discuss = require('./discuss');
 var handleError = require('../common').handleError;
 
 
+// exports.findById = Topic.findById;
 
-exports.findById = function (topicId, callback) {
-  Topic.findOne({ '_id': topicId }, function (err, topic) {
-    handleError(err, callback);
-    callback(null, topic);
-  });
-};
+// exports.findById = function (topicId, callback) {
+//   Topic.findOne({ '_id': topicId }, function (err, topic) {
+//     handleError(err, callback);
+//     callback(null, topic);
+//   });
+// };
 
-exports.findByIds = function (topicIds, callback) {
+Topic.findByIds = function (topicIds, callback) {
   Topic.find({ '_id': { $in: topicIds } }, function (err, topics) {
     handleError(err, callback);
     callback(null, topics);
   });
 };
 
-exports.findByQuery = function (query, opts, callback) {
+Topic.findByQuery = function (query, opts, callback) {
   Topic.find(query, '', opts, function (err, topics) {
     handleError(err, callback);
     callback(null, topics);
   });
 };
 
-exports.insertChart = function(tpoic, chart, callback) {
+Topic.insertChart = function(tpoic, chart, callback) {
   Topic.findByIdAndUpdate(
     tpoic._id,
     { $push: { 'charts': chart } },
@@ -38,7 +39,7 @@ exports.insertChart = function(tpoic, chart, callback) {
   );
 }
 
-exports.insertImpress = function (topic, impress, callback) {
+Topic.insertImpress = function (topic, impress, callback) {
   Topic.findByIdAndUpdate(
     tpoic._id,
     { $push: { 'impress': impress } },
@@ -51,11 +52,13 @@ exports.insertImpress = function (topic, impress, callback) {
 };
 
 
-exports.create = function (title, impress, charts, callback) {
+Topic.create = function (title, impress, charts, callback) {
   var topic = new Topic();
   topic.title = title;
   topic.impress = impress || [];
   topic.charts = charts || [];
   topic.save(callback);
 };
+
+module.exports = Topic;
 

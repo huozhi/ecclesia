@@ -31,7 +31,7 @@
         <h1>Meeting History Records</h1>
       </div>
       <div class="row container history-records">
-        {% for record in meetings %}
+        {% for record in discusses %}
         <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="thumbnail">
             <div class="caption">
@@ -43,7 +43,7 @@
                 <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %}
               {% endfor %}
               <p>
-                <a href="/history/detail?room={{ record.room }}&host={{ record.host }}&date={{ record.date }}" class="btn btn-primary" role="button">View</a>
+                <a href="/history/detail?room={{ record.room }}&host={{ record.host.toString() }}&date={{ record.date.toString() }}" class="btn btn-primary" role="button">View</a>
                 <a href class="btn btn-default" role="button">Download Docs</a>
               </p>
             </div>

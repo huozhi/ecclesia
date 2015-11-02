@@ -19,8 +19,7 @@ var $slideContent = $('#slideContent')
 /******* SLIDES *******/
 
 var Impress = {
-  slides: [
-    {
+  slides: [{
       title: "Welcome to Ecclesia",
       content: "you could edit your slides here... ", 
     },
