@@ -30,7 +30,6 @@ var topics = function (req, res, next) {
       return common.erros[500](res, err)
     }
     return res.send({
-      response: true,
       topics: topics
     })
   })
@@ -72,7 +71,6 @@ var upload = function (req, res, next) {
         var pages = source.split('/\+{6,}/', 10)
         console.log(pages)
         return res.json({
-          response: true,
           pages: pages
         })
       })

@@ -3,29 +3,29 @@ var Discuss = models.Discuss;
 var User = models.User;
 
 
-exports.findUserByAuth = function (username, password, callback) {
+User.findUserByAuth = function (name, password, callback) {
   User.findOne({
-    'usernmae': username, 
+    'name': name, 
     'password': password }, callback);
 };
 
-exports.findUserByName = function (username, callback) {
+User.findUserByName = function (name, callback) {
   User.findOne({
-    'username': username }, callback);
+    'name': name }, callback);
 };
 
-exports.findUsersByQuery = function (query, opts, callback) {
+User.findUsersByQuery = function (query, opts, callback) {
   User.find(query, '', opts, callback);
 };
 
-exports.findUserByMail = function (email, callback) {
+User.findUserByMail = function (email, callback) {
   User.findOne({
     'email': email
   }, callback);
 }
 
-exports.findDiscussesByUserName = function (username, callback) {
-  User.findUserByName(user.username, function (err, user) {
+User.findDiscussesByUserName = function (name, callback) {
+  User.findUserByName(user.name, function (err, user) {
     if (err) {
       console.log(err); callback(err);
     }
@@ -41,10 +41,12 @@ exports.findDiscussesByUserName = function (username, callback) {
 };
 
 
-exports.register = function (username, password, email, callback) {
+User.register = function (name, password, email, callback) {
   var user = new User();
-  user.username = username;
+  user.name = name;
   user.password = password;
   user.email    = email;
   user.save(callback);
 };
+
+module.exports = User

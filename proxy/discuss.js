@@ -4,7 +4,7 @@ var User = require('./user');
 var handleError = require('../common').handleError;
 
 
-exports.findDiscussByQuery = function (query, opts, callback) {
+Discuss.findDiscussByQuery = function (query, opts, callback) {
   Discuss.find(query, '', opts, function (err, discusses) {
     if (err) {
       return callback(err);
@@ -13,7 +13,7 @@ exports.findDiscussByQuery = function (query, opts, callback) {
   });
 };
 
-exports.search = function (info, callback) {
+Discuss.search = function (info, callback) {
   Discuss.findOne(info, function (err, discuss) {
     if (err) {
       return callback(err);
@@ -22,14 +22,14 @@ exports.search = function (info, callback) {
   });
 };
 
-exports.findById = function (discussId, callback) {
-  Discuss.findById(discussId, function (err, discuss) {
-    handleError(err, callback);
-    callback(null, discuss);
-  });
-};
+// Discuss.findById = function (discussId, callback) {
+//   Discuss.findById(discussId, function (err, discuss) {
+//     handleError(err, callback);
+//     callback(null, discuss);
+//   });
+// };
 
-exports.findByIds = function (discussIds, callback) {
+Discuss.findByIds = function (discussIds, callback) {
   Discuss.find({ '_id': { $in: discussIds } },
     function (err, discusses) {
       handleError(err, callback);
@@ -37,14 +37,14 @@ exports.findByIds = function (discussIds, callback) {
   });
 };
 
-exports.findTopics = function (discuss, callback) {
+Discuss.findTopics = function (discuss, callback) {
   this.findById(discuss._id, function (err, discuss) {
     handleError(err, callback);
     callback(null, discuss.topics);
   });
 };
 
-exports.insertTopic = function (discuss, newTopic, callback) {
+Discuss.insertTopic = function (discuss, newTopic, callback) {
   Discuss.findByIdAndUpdate(
     discuss._id,
     { $push: { "topics": newTopic } },
@@ -58,7 +58,7 @@ exports.insertTopic = function (discuss, newTopic, callback) {
   );
 };
 
-exports.addParticpant = function (disscuss, user, callback) {
+Discuss.addParticpant = function (disscuss, user, callback) {
   Discuss.findByIdAndUpdate(
     discuss._id,
     { $push: { 'participants': user._id } },
@@ -70,7 +70,7 @@ exports.addParticpant = function (disscuss, user, callback) {
   );
 };
 
-exports.create = function (room, host, topics, callback) {
+Discuss.create = function (room, host, topics, callback) {
   var discuss = new Discuss();
   discuss.room = room;
   discuss.host = host;
@@ -79,4 +79,4 @@ exports.create = function (room, host, topics, callback) {
   discuss.save(callback);
 };
 
-
+module.exports = Discuss;

@@ -7,7 +7,7 @@ var common = require('../common')
 var User = require('../proxy').User
 var UserModel = require('../models').User
 var Eventproxy = require('eventproxy')
-var authMiddleware = require('../middlewares/auth')
+var middlewares = require('../middlewares')
 
 exports.index = function (req, res, next) {
   return common.renderPjax(req, res, 'index', 'auth/reg', {
@@ -17,7 +17,7 @@ exports.index = function (req, res, next) {
 
 exports.registerAction = function (req, res, next) {
   console.log('registerAction', req.body)
-  var username = req.body.username
+  var name = req.body.name
   var password = req.body.password
   var passrept = req.body.passrept
   var email    = req.body.email
@@ -27,12 +27,12 @@ exports.registerAction = function (req, res, next) {
     // return index(req, res, next)
     return common.errors[400](res, 'password not matched in repeating')
   }
-  User.register(username, password, email, function (err, newuser) {
+  User.register(name, password, email, function (err, newuser) {
     if(err) {
       return common.errors[500](res, err)
     }
     var user = {
-      username: username,
+      name: name,
       password: password,
       email: email
     }
@@ -50,11 +50,11 @@ exports.loginView = function (req, res, next) {
 exports.loginAction = function (req, res, next) {
   console.log('recieve', req.get('Content-Type'))
   console.log('body', req.body)
-  var username = req.body.username
+  var name = req.body.name
   var password = req.body.password
   
   var findUserMethod
-  if (username.indexOf('@') !== -1) {
+  if (name.indexOf('@') !== -1) {
     findUserMethod = User.findUserByMail
   }
   else {
@@ -64,18 +64,16 @@ exports.loginAction = function (req, res, next) {
   var ep = new Eventproxy()
   ep.fail(next)
   ep.on('err', function (err) {
-    return common.erros[500](res, err)
+    return common.errors[400](res, err)
   })
 
-  User.findUserByName(username, function (err, user) {
+  User.findUserByName(name, function (err, user) {
     if (err) {
       return ep.emit('err', err)
     }
-    if (user && user.username === username && user.password === password) {
-      authMiddleware.genSession(res, user)
+    if (user && user.name === name && user.password === password) {
+      middlewares.genSession(res, user)
       req.session.user = user
-      // console.log('login', req.session.user)
-      // console.log('authToken', req.cookies.authToken)
       return res.send(common.successResult())
     }
     else {

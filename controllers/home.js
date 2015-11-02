@@ -24,7 +24,7 @@ exports.index = function (req, res, next) {
   })
 
   var authToken, user
-  if (!req.session.user || !req.session.user.username) {
+  if (!req.session.user) {
     authToken = req.cookies.authToken
     // console.log('reload authToken', typeof authToken, authToken)
     if (authToken) {
@@ -53,11 +53,11 @@ exports.logout = function (req, res, next) {
 }
 
 exports.createRoom = function (req, res, next) {
-  var room = req.body.room,
-      host = req.body.host,
-      topics = req.body.topics,
-      message = null
-
+  var room, host, topics, message
+  room = req.body.room
+  topics = req.body.topics
+  message = null
+  host = req.session.user._id
 
   return Discuss.create(room, host, topics, function (err, newDisscuss) {
     if (err) {
@@ -89,8 +89,8 @@ exports.joinRoom = function (req, res, next) {
     if (err) {
       return ep.emit('err', err)
     }
-    var username = req.session.user
-    User.findUserByName(username, function (err, user) {
+    var userId = req.session.user._id
+    User.findById(userId, function (err, user) {
       if (err) {
         console.log('find user failed\n%s', err)
         return ep.emit('err', err)

@@ -13,12 +13,22 @@ exports.errors = {
   400: function(res, message) {
     return res.status(400).send(response('bad request', message))
   },
+  403: function(req, message) {
+    return res.status(403).send(response('access denied', message))
+  },
   404: function(res, message) {
     return res.status(404).send(response('not found', message))
   },
   500: function(res, message) {
     return res.status(500).send(response('internal server error', message))
   },
+}
+
+exports.getAuthToken = function(req) {
+  if (!req.session.user) {
+    return req.cookies.authToken
+  }
+  return req.session.user.name
 }
 
 

@@ -16,7 +16,7 @@ var debug = require('debug')('ecclesia');
 
 var routes = require('./routes');
 var config = require('./config');
-var auth = require('./middlewares/auth');
+var middlewares = require('./middlewares');
 var controllers = require('./controllers');
 var app = express();
 
@@ -51,7 +51,7 @@ app.use(session({
 }));
 
 app.use(pjax());
-app.use(auth.auth);
+app.use(middlewares.auth);
 
 app.use(routes);
 
