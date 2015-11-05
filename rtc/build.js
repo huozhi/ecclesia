@@ -1,6 +1,6 @@
 var bundle = require('browserify')(),
-    fs = require('fs'),
-    request = require('request');
+    fs = require('fs');
+    // request = require('request');
     // uglify = require('uglify-js');
 
 bundle.add('./simplewebrtc');
