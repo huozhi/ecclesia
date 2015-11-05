@@ -1,6 +1,7 @@
 /*global console*/
 var uuid = require('node-uuid');
 var crypto = require('crypto');
+var logger = require('log4js').getLogger();
 // var config = require('getconfig'),
 // var port = parseInt(process.env.PORT || config.signalserver.port, 10);
 // var fs = require('fs');
@@ -10,42 +11,36 @@ var crypto = require('crypto');
     // port = 8888,
 // var io = require('socket.io').listen(port, { key:privateKey,cert:certificate,ca:cacert });
 
+function safeCb(cb) {
+    if (typeof cb === 'function') {
+        return cb;
+    } else {
+        return function () {};
+    }
+}
+
 module.exports = function (io) {
-    // console.log('pass io to socket.io');
     var config = require('./config');
     process.env.NODE_ENV = 'development'; // set env
 
     // if (config.logLevel) {
     //     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
-    //     io.set('log level', config.logLevel);
+    io.set('log level', 1);
     // }
 
     function describeRoom(name) {
         var clients = io.sockets.clients(name);
-        console.log('clients', clients);
         var result = {
             clients: {}
         };
         clients.forEach(function (client) {
             result.clients[client.id] = client.resources;
         });
+        logger.debug('clients', result.clients);
         return result;
     }
 
-    function safeCb(cb) {
-        if (typeof cb === 'function') {
-            return cb;
-        } else {
-            return function () {};
-        }
-    }
-
-    io.sockets.on('connection', function (client) {
-        // test case
-        
-        console.log('connection');
-        // console.log('rooms', io.sockets.adapter.rooms);
-         
+    io.sockets.on('connection', function (client) {         
         client.resources = {
             screen: false,
             video: true,
@@ -60,7 +55,7 @@ module.exports = function (io) {
             if (!otherClient) return;
 
             details.from = client.id;
-            console.log('details.username',details.username);
+            console.log('details.username', details.username);
             otherClient.emit('message', details);
         });
 
@@ -126,28 +121,28 @@ module.exports = function (io) {
 
         /* =================== new events ======================== */
         /* deal with sketch point data */
-        client.on('sendStroke', function (point) {
-            client.broadcast.to(client.roomId).emit('syncStroke', point);
-        });
+        // client.on('sendStroke', function (point) {
+        //     client.broadcast.to(client.roomId).emit('syncStroke', point);
+        // });
 
-        client.on('signalSyncChart', function (chartData) {
-            console.log('client.on signalSyncChart');
-            client.broadcast.to(client.roomId).emit('syncChart', chartData);
-        });
+        // client.on('signalSyncChart', function (chartData) {
+        //     console.log('client.on signalSyncChart');
+        //     client.broadcast.to(client.roomId).emit('syncChart', chartData);
+        // });
 
-        client.on('signalSyncPreview', function (previewData) {
-            console.log('server get signalSyncPreview');
-            client.broadcast.to(client.roomId).emit('syncPreview', previewData);
-        });
+        // client.on('signalSyncPreview', function (previewData) {
+        //     console.log('server get signalSyncPreview');
+        //     client.broadcast.to(client.roomId).emit('syncPreview', previewData);
+        // });
 
-        client.on('signalSyncImpress', function (impressData) {
-            console.log('server got your daibi impress');
-            client.broadcast.to(client.roomId).emit('syncImpress', impressData);
-        });
+        // client.on('signalSyncImpress', function (impressData) {
+        //     console.log('server got your daibi impress');
+        //     client.broadcast.to(client.roomId).emit('syncImpress', impressData);
+        // });
 
-        client.on('sendOutlineText', function (outlineText) {
-            client.broadcast.to(client.roomId).emit('syncOutlineText', sendOutlineText);
-        })
+        // client.on('sendOutlineText', function (outlineText) {
+        //     client.broadcast.to(client.roomId).emit('syncOutlineText', sendOutlineText);
+        // })
 
         /* ========================== end new events ======================= */
 
