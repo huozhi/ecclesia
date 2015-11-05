@@ -1,4 +1,8 @@
 'use strict';
+
+var bundle = require('browserify')();
+var fs = require('fs');
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -148,4 +152,24 @@ module.exports = function(grunt) {
   // Default task.
 
   grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
+
+  grunt.registerTask('build', 'build rtc dependency', function() {
+    console.log('building...')
+    var done = this.async();
+    var srcRoot = './rtc/';
+    var destRoot = './public/rtc/';
+    bundle.add(srcRoot + 'simplewebrtc');
+    bundle.bundle({standalone: 'SimpleWebRTC'}, function (err, source) {
+      if (err) {
+        return console.error(err);
+      }
+      var version = '0.9.16';
+      var socketIO = fs.readFileSync(srcRoot + 'socket.io-' + version + '.js').toString();
+      var content = '/*' + new Date().toString() + '*/';
+      console.log(content)
+      content = content + source + socketIO;
+      fs.writeFileSync(destRoot + 'simplewebrtc.bundle.js', content);
+      done();
+    });
+  });
 };

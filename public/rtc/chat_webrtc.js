@@ -58,14 +58,8 @@ RtcController.enableWebRTC = function() {
   webrtc.on('videoAdded', function (video, peer) {
     console.log('video added', peer)
     addVideoContainer(video, peer)
-    // addPreviewContainer(peer)
   })
 
-  function addPreviewContainer(peer) {
-    var peer = $('<div/>').addClass('video-source')
-    peer.attr('id', 'preview_' + webrtc.getDomId(peer))
-    remotes.append(peer)
-  }
 
   function addVideoContainer(video, peer) {
     var peer = $('<div/>')
@@ -79,11 +73,10 @@ RtcController.enableWebRTC = function() {
   }
 
   webrtc.on('videoRemoved', function (video, peer) {
-    // var leavePreview = $('#preview_' + webrtc.getDomId(peer))
+    console.log('videoRemoved')
     var leavePeer = $('#video_' + webrtc.getDomId(peer))
     if (remotes && leavePeer) {
       leavePeer.remove()
-      // leavePreview.remove()
     }
   })
 

@@ -29,6 +29,13 @@
     "node": ">= 0.10.0"
   },
   "devDependencies": {
+    "webrtcsupport": "^1.0.0",
+    "wildemitter": "1.x",
+    "socket.io-client": "0.9.16",
+    "attachmediastream": "1.0.1",
+    "webrtc": "1.11.x",
+    "mockconsole": "0.0.1",
+    "browserify": "2.22.0",
     "grunt": "^0.4.5",
     "jit-grunt": "^0.9.1",
     "grunt-contrib-concat": "~0.4.0",

@@ -21,7 +21,7 @@ function safeCb(cb) {
 
 module.exports = function (io) {
     var config = require('./config');
-    process.env.NODE_ENV = 'development'; // set env
+    process.env.NODE_ENV = 'production'; // set env
 
     // if (config.logLevel) {
     //     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
