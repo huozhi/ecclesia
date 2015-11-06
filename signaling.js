@@ -25,7 +25,7 @@ module.exports = function (io) {
 
     // if (config.logLevel) {
     //     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
-    io.set('log level', 1);
+    // io.set('log level', 1);
     // }
 
     function describeRoom(name) {
@@ -55,7 +55,6 @@ module.exports = function (io) {
             if (!otherClient) return;
 
             details.from = client.id;
-            console.log('details.username', details.username);
             otherClient.emit('message', details);
         });
 
@@ -119,34 +118,6 @@ module.exports = function (io) {
             }
         });
 
-        /* =================== new events ======================== */
-        /* deal with sketch point data */
-        // client.on('sendStroke', function (point) {
-        //     client.broadcast.to(client.roomId).emit('syncStroke', point);
-        // });
-
-        // client.on('signalSyncChart', function (chartData) {
-        //     console.log('client.on signalSyncChart');
-        //     client.broadcast.to(client.roomId).emit('syncChart', chartData);
-        // });
-
-        // client.on('signalSyncPreview', function (previewData) {
-        //     console.log('server get signalSyncPreview');
-        //     client.broadcast.to(client.roomId).emit('syncPreview', previewData);
-        // });
-
-        // client.on('signalSyncImpress', function (impressData) {
-        //     console.log('server got your daibi impress');
-        //     client.broadcast.to(client.roomId).emit('syncImpress', impressData);
-        // });
-
-        // client.on('sendOutlineText', function (outlineText) {
-        //     client.broadcast.to(client.roomId).emit('syncOutlineText', sendOutlineText);
-        // })
-
-        /* ========================== end new events ======================= */
-
-
         // tell client about stun and turn servers and generate nonces
         client.emit('stunservers', config.stunservers || []);
 
@@ -168,6 +139,6 @@ module.exports = function (io) {
     });
 
     if (config.uid) process.setuid(config.uid);
-    // console.log(yetify.logo() + ' -- signal master is running at: http://localhost:' + port);
+    // console.log(' -- signal master is running at: http://localhost:' + port);
 };
 
