@@ -156,9 +156,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build', 'build rtc dependency', function() {
     console.log('building...')
     var done = this.async();
-    var srcRoot = './rtc/';
+    var srcRoot = './public/rtc/';
     var destRoot = './public/rtc/';
-    bundle.add(srcRoot + 'simplewebrtc');
+    bundle.add('./rtc/simplewebrtc');
     bundle.bundle({standalone: 'SimpleWebRTC'}, function (err, source) {
       if (err) {
         return console.error(err);
