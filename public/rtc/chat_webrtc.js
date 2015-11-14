@@ -46,9 +46,20 @@ RtcController.enableWebRTC = function() {
     autoAdjustMic: false
   })
 
+  if (host == self) {
+    console.log(host, 'create room now')
+    var roomUrl
+    webrtc.createRoom(room, function (err, name) {
+      // name equal roomHash equal roomUrl splited by '?'
+      if (err) {
+        console.log(err)
+      }
+      console.log ('create room success', room)
+    })
+  }
 
   webrtc.on('readyToCall', function() {
-    if (discuss || host !== self) {
+    if (room) {
       webrtc.joinRoom(room)
     }
   })
@@ -62,21 +73,24 @@ RtcController.enableWebRTC = function() {
 
 
   function addVideoContainer(video, peer) {
-    var peer = $('<div/>')
-    var volBar  = $('<div/>')
-    volBar.addClass('vol-var')
-    peer.append(volBar)
-    peer.addClass('video-source')
-    peer.attr('id', 'video_' + webrtc.getDomId(peer))
-    peer.append(video)
-    remotes.append(peer)
+    var peerCntr = $('<div/>')
+    if (document.getElementById('remoteVideos')) {
+      var volBar  = $('<div/>')
+      volBar.addClass('vol-var')
+      peerCntr.append(volBar)
+      peerCntr.addClass('video-source')
+      peerCntr.attr('id', 'video_' + webrtc.getDomId(peer))
+      peerCntr.append(video)
+      remotes.append(peerCntr)
+    }
   }
 
   webrtc.on('videoRemoved', function (video, peer) {
     console.log('videoRemoved')
-    var leavePeer = $('#video_' + webrtc.getDomId(peer))
-    if (remotes && leavePeer) {
-      leavePeer.remove()
+    var remote = document.getElementById('remoteVideos')
+    var leavePeer = document.getElementById('video_' + webrtc.getDomId(peer))
+    if (remote && leavePeer) {
+      remote.removeChild(leavePeer)
     }
   })
 
@@ -100,24 +114,5 @@ RtcController.enableWebRTC = function() {
     }
   })
 
-
-  if (!discuss && host === self) {
-    console.log(host, 'create room now')
-    var roomUrl
-    webrtc.createRoom(room, function (err, name) {
-      // name equal roomHash equal roomUrl splited by '?'
-      if (err) {
-        console.error(err)
-      } else {
-        roomUrl = location.pathname + '?' + room
-        // history.replaceState({ room: room }, null, roomUrl)
-      }
-    })
-  }
-  // else {
-    // console.log('join room')
-    // roomUrl = location.pathname + '?' + room
-    // history.replaceState({ room: room }, null, roomUrl)
-  // }
 }
 
