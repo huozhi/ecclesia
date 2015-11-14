@@ -14,10 +14,7 @@ bower_install()
 
 init_env()
 {
-  cd ../
-  npm_install
-  cd ./public/
-  bower_install
+  npm_install && bower_install
 }
 
 STATUS=0
