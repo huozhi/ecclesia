@@ -8,12 +8,9 @@ var SocketIoConnection = require('./socketioconnection');
 function SimpleWebRTC(opts) {
     var self = this;
     var options = opts || {};
-    var server_port = 3000;
-    var server_host = window.location.protocol + '//' + window.location.hostname;
-    
     var config = this.config = {
-            url: server_host + ":" + server_port,
-            socketio: { 'force new connection':true},
+            url: 'https://signaling.simplewebrtc.com:443/',
+            socketio: {/* 'force new connection':true*/},
             connection: null,
             debug: false,
             localVideoEl: '',

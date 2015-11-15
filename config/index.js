@@ -2,6 +2,7 @@
  * configs
  */
 
+var fs = require('fs');
 var path = require('path');
 
 var config = {
@@ -35,7 +36,15 @@ var config = {
     },
 
     /* signal server config */
-    
+    signal: {
+        port: 8888,
+        opts: {
+            key: fs.readFileSync('sslcert/key.pem').toString(),
+            cert: fs.readFileSync('sslcert/cert.pem').toString(),
+            // cacert = fs.readFileSync('sslcert/cacert.pem').toString(),
+            passphrase: null,
+        },
+    },
 
     stunservers: [
         { url: "stun:stun.l.google.com:19302" }
