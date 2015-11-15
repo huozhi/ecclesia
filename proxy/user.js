@@ -25,7 +25,7 @@ User.findUserByMail = function (email, callback) {
 }
 
 User.findDiscussesByUserName = function (name, callback) {
-  User.findUserByName(user.name, function (err, user) {
+  User.findUserByName(name, function (err, user) {
     if (err) {
       console.log(err); callback(err);
     }
@@ -45,7 +45,7 @@ User.register = function (name, password, email, callback) {
   var user = new User();
   user.name = name;
   user.password = password;
-  user.email    = email;
+  user.email = email;
   user.save(callback);
 };
 

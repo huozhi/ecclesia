@@ -36,10 +36,10 @@
           <div class="thumbnail">
             <div class="caption">
               <h3>{{ record.room }}</h3>
-              <p>host: {{ record.host }}</p>
-              <p>date: {{ record.date }}</p>
-              <p>participates:
-              {% for user in record.participates %}
+              <p>host: {{ record.host.toString() }}</p>
+              <p>date: {{ record.date.toLocaleDateString() }}</p>
+              <p>participants:
+              {% for user in record.participants %}
                 <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %}
               {% endfor %}
               <p>

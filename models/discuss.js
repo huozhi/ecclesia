@@ -7,7 +7,7 @@ var DiscussSchema = new Schema({
   room: { type: String },
   date: { type: Date, default: Date.now },
   host: { type: ObjectId, ref: 'User' },
-  participants: [ { type: ObjectId, ref: 'User' } ],
+  participants: [ { type: String } ],
   topics: [ { type: ObjectId, ref: 'Topic' } ]
 },{
   collection: 'Discusses'

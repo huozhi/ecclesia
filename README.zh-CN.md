@@ -25,6 +25,8 @@ Ecclesia这款应用就是为小团队讨论而设计的. 支持线上画图(同
 
 ![login](http://lavende.github.io/img/2015/ecclesia/login.jpg)
 ![home](http://lavende.github.io/img/2015/ecclesia/home.jpg)
+![history](http://lavende.github.io/img/2015/ecclesia/history.jpg)
+![chat](http://lavende.github.io/img/2015/ecclesia/chat.jpg)
 
 
 ### 支持

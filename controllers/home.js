@@ -20,7 +20,7 @@ exports.index = function (req, res, next) {
     })
   })
   ep.on('err', function(err) {
-    return common.erros[500](res, err)
+    return common.errors[500](res, err)
   })
 
   var authToken, user
@@ -57,31 +57,38 @@ exports.createRoom = function (req, res, next) {
   room = req.body.room
   topics = req.body.topics
   message = null
-  host = req.session.user._id
+  host = req.session.user
 
   return Discuss.create(room, host, topics, function (err, newDisscuss) {
     if (err) {
       console.log('create failed\n%s', err)
-      return common.erros[500](res, err)
+      return common.errors[500](res, err)
     }
-    message = 'create new discuss success'
-    return res.send(common.successResult(message))
+    User.update({_id: host}, { $push: { discusses: newDisscuss._id } }).exec()
+    .then(function(user) {
+      console.log(user.discusses)
+      message = 'create new discuss success'
+      return res.send(common.successResult(message))
+    })
+    .catch(function(err) {
+      return common.errors[500](res, err)
+    })
   })
 }
 
 exports.joinRoom = function (req, res, next) {
-  var discussQuery = {
-    room: req.body.room,
-    host: req.body.host,
-  }
-  console.log('joinRoom:', discussQuery)
-  // find the newest discuss room created by the host
   var ep = new Eventproxy()
   ep.on('err', function(err) {
     return common.errors[500](res, err)
   })
   
+  var discussQuery = {
+    room: req.body.room,
+    host: req.body.host,
+  }
+  console.log('joinRoom:', discussQuery)
 
+  // find the newest discuss room created by the host
   return Discuss.findDiscussByQuery(
     discussQuery,
     { $sort: { 'date': -1 } },
