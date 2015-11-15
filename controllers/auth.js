@@ -29,14 +29,10 @@ exports.registerAction = function (req, res, next) {
   }
   User.register(name, password, email, function (err, newuser) {
     if(err) {
+      console.log(err)
       return common.errors[500](res, err)
     }
-    var user = {
-      name: name,
-      password: password,
-      email: email
-    }
-    req.session.user = UserModel(user)
+    middlewares.genSession(req, res, newuser)
     return res.send(common.successResult())
   })
 }
@@ -72,8 +68,7 @@ exports.loginAction = function (req, res, next) {
       return ep.emit('err', err)
     }
     if (user && user.name === name && user.password === password) {
-      middlewares.genSession(res, user)
-      req.session.user = user
+      middlewares.genSession(req, res, user)
       return res.send(common.successResult())
     }
     else {

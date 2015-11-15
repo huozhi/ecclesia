@@ -13,29 +13,11 @@ Discuss.findDiscussByQuery = function (query, opts, callback) {
   });
 };
 
-Discuss.search = function (info, callback) {
-  Discuss.findOne(info, function (err, discuss) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, discuss);
-  });
+
+Discuss.findByIds = function (idArray, callback) {
+  return Discuss.find({ _id: { $in: idArray } })
 };
 
-// Discuss.findById = function (discussId, callback) {
-//   Discuss.findById(discussId, function (err, discuss) {
-//     handleError(err, callback);
-//     callback(null, discuss);
-//   });
-// };
-
-Discuss.findByIds = function (discussIds, callback) {
-  Discuss.find({ '_id': { $in: discussIds } },
-    function (err, discusses) {
-      handleError(err, callback);
-      callback(null, discusses);
-  });
-};
 
 Discuss.findTopics = function (discuss, callback) {
   this.findById(discuss._id, function (err, discuss) {
@@ -59,9 +41,9 @@ Discuss.insertTopic = function (discuss, newTopic, callback) {
 };
 
 Discuss.addParticpant = function (disscuss, user, callback) {
-  Discuss.findByIdAndUpdate(
-    discuss._id,
-    { $push: { 'participants': user._id } },
+  Discuss.update(
+    { _id: discuss._id },
+    { $push: { 'participants': user.name } },
     { safe: true, upsert: true },
     function (err, discuss) {
       if (err) { console.log(err); return callback(err); }
@@ -73,8 +55,8 @@ Discuss.addParticpant = function (disscuss, user, callback) {
 Discuss.create = function (room, host, topics, callback) {
   var discuss = new Discuss();
   discuss.room = room;
-  discuss.host = host;
-  discuss.participants = [ host ];
+  discuss.host = host._id;
+  discuss.participants = [ host.name ];
   discuss.topics = topics || [];
   discuss.save(callback);
 };

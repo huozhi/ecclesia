@@ -151,7 +151,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-open');
   // Default task.
 
-  grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
+  grunt.registerTask('serve', ['express:dev', 'watch']);
 
   grunt.registerTask('build', 'build rtc dependency', function() {
     console.log('building...')

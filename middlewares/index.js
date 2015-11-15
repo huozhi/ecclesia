@@ -17,7 +17,7 @@ exports.auth = function (req, res, next) {
     next();
 };
 
-exports.genSession = function (res, user) {
+exports.genSession = function (req, res, user) {
   var authToken = user._id
   var opts = {
     path: '/',
@@ -25,5 +25,6 @@ exports.genSession = function (res, user) {
     signed: true
   };
   console.log('genSession', authToken)
+  req.session.user = user
   res.cookie('authToken', authToken)
 }
