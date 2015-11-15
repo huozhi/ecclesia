@@ -36,7 +36,7 @@ RtcController.enableWebRTC = function() {
     url: rtcUrl,
     socketio: { 'force new connection':true },
     localVideoEl: 'localVideo',
-    remoteVideosEl: 'remoteVideos',
+    remoteVideosEl: '',
     // userame: self,
     autoRequestMedia: true,
     debug: false,
@@ -51,11 +51,14 @@ RtcController.enableWebRTC = function() {
       if (host == self) {
         var roomUrl
         webrtc.createRoom(room, function (err, name) {
-          // name equal roomHash equal roomUrl splited by '?'
           if (err) {
+            // already created on socket server, join directly
             console.log(err)
+            webrtc.joinRoom(room)
           }
-          console.log ('create room success', room)
+          else {
+            console.log('create room success', room)
+          }
         })
       }
       else {
@@ -66,11 +69,10 @@ RtcController.enableWebRTC = function() {
   })
 
 
-  // var remotes = $('#remoteVideos')
 
   webrtc.on('videoAdded', function (video, peer) {
     console.log('video added', peer)
-    var remotes = document.getElementById('remoteVideos')
+    var remotes = document.getElementById('remotes')
     if (remotes) {
       var d = document.createElement('div');
       d.className = 'video-source videoContainer';
@@ -95,10 +97,10 @@ RtcController.enableWebRTC = function() {
 
   webrtc.on('videoRemoved', function (video, peer) {
     console.log('videoRemoved')
-    var remote = document.getElementById('remoteVideos')
+    var remotes = document.getElementById('remotes')
     var leavePeer = document.getElementById('container_' + webrtc.getDomId(peer))
-    if (remote && leavePeer) {
-      remote.removeChild(leavePeer)
+    if (remotes && leavePeer) {
+      remotes.removeChild(leavePeer)
     }
   })
 
@@ -123,4 +125,6 @@ RtcController.enableWebRTC = function() {
   })
 
 }
+
+RtcController.enableWebRTC()
 
