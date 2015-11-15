@@ -163,11 +163,11 @@ module.exports = function(grunt) {
       if (err) {
         return console.error(err);
       }
-      var version = '0.9.16';
-      var socketIO = fs.readFileSync(srcRoot + 'socket.io-' + version + '.js').toString();
-      var content = '/*' + new Date().toString() + '*/';
+      // var version = ;
+      // var socketIO = fs.readFileSync('./socket.io-0.9.16' + version + '.js').toString();
+      var content = '/*' + new Date().toString() + '*/\n';
       console.log(content)
-      content = content + source + socketIO;
+      content = content + source;
       fs.writeFileSync(destRoot + 'simplewebrtc.bundle.js', content);
       done();
     });

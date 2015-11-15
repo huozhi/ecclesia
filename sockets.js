@@ -1,6 +1,7 @@
 /*global console*/
 var uuid = require('node-uuid');
 var crypto = require('crypto');
+var socketIO = require('socket.io');
 var logger = require('log4js').getLogger();
 // var config = require('getconfig'),
 // var port = parseInt(process.env.PORT || config.signalserver.port, 10);
@@ -19,14 +20,16 @@ function safeCb(cb) {
     }
 }
 
-module.exports = function (io) {
-    var config = require('./config');
-    process.env.NODE_ENV = 'production'; // set env
+module.exports = function (server, config) {
+    var io = socketIO.listen(server);
+    
+    // process.env.NODE_ENV = 'production'; // set env
 
     // if (config.logLevel) {
     //     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
     // io.set('log level', 1);
     // }
+    // io.disable('heartbeats');
 
     function describeRoom(name) {
         var clients = io.sockets.clients(name);
@@ -44,7 +47,7 @@ module.exports = function (io) {
         client.resources = {
             screen: false,
             video: true,
-            audio: false
+            audio: true,
         };
 
         // pass a message to another id
@@ -116,6 +119,14 @@ module.exports = function (io) {
                 join(name);
                 safeCb(cb)(null, name);
             }
+        });
+
+        // support for logging full webrtc traces to stdout
+        // useful for large-scale error monitoring
+        client.on('trace', function (data) {
+            console.log('trace', JSON.stringify(
+            [data.type, data.session, data.prefix, data.peer, data.time, data.value]
+            ));
         });
 
         // tell client about stun and turn servers and generate nonces

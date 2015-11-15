@@ -9,3 +9,4 @@ modules/*.png
 *.log
 test*
 test.*
+*.pem

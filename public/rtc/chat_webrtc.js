@@ -30,65 +30,73 @@ RtcController.enableWebRTC = function() {
 
   var webrtc = this.webrtc
 
-  var port = 3000
+  var port = 8888
   var rtcUrl = window.location.protocol + '//' + window.location.hostname + ':' + port
   webrtc = new SimpleWebRTC({
     url: rtcUrl,
+    socketio: { 'force new connection':true },
     localVideoEl: 'localVideo',
     remoteVideosEl: 'remoteVideos',
-    userame: self,
-    media: this.constraints || {
-      video: true, audio: true
-    }, // need to be rewriten
+    // userame: self,
     autoRequestMedia: true,
     debug: false,
     detectSpeakingEvents: true,
-    autoAdjustMic: false
+    autoAdjustMic: false,
+    autoRemoveVideos: true,
   })
 
-  if (host == self) {
-    console.log(host, 'create room now')
-    var roomUrl
-    webrtc.createRoom(room, function (err, name) {
-      // name equal roomHash equal roomUrl splited by '?'
-      if (err) {
-        console.log(err)
-      }
-      console.log ('create room success', room)
-    })
-  }
 
   webrtc.on('readyToCall', function() {
     if (room) {
-      webrtc.joinRoom(room)
+      if (host == self) {
+        var roomUrl
+        webrtc.createRoom(room, function (err, name) {
+          // name equal roomHash equal roomUrl splited by '?'
+          if (err) {
+            console.log(err)
+          }
+          console.log ('create room success', room)
+        })
+      }
+      else {
+        console.log('join room', room)
+        webrtc.joinRoom(room)
+      }
     }
   })
 
-  var remotes = $('#remoteVideos')
+
+  // var remotes = $('#remoteVideos')
 
   webrtc.on('videoAdded', function (video, peer) {
     console.log('video added', peer)
-    addVideoContainer(video, peer)
+    var remotes = document.getElementById('remoteVideos')
+    if (remotes) {
+      var d = document.createElement('div');
+      d.className = 'video-source videoContainer';
+      d.id = 'container_' + webrtc.getDomId(peer);
+      d.appendChild(video);
+      var vol = document.createElement('div');
+      vol.id = 'volume_' + peer.id;
+      vol.className = 'volume_bar';
+      // video.onclick = function () {
+      //     video.style.width = video.videoWidth + 'px';
+      //     video.style.height = video.videoHeight + 'px';
+      // };
+      d.appendChild(vol);
+      remotes.appendChild(d);
+    }
   })
 
 
-  function addVideoContainer(video, peer) {
-    var peerCntr = $('<div/>')
-    if (document.getElementById('remoteVideos')) {
-      var volBar  = $('<div/>')
-      volBar.addClass('vol-var')
-      peerCntr.append(volBar)
-      peerCntr.addClass('video-source')
-      peerCntr.attr('id', 'video_' + webrtc.getDomId(peer))
-      peerCntr.append(video)
-      remotes.append(peerCntr)
-    }
-  }
+  // function addVideoContainer(video, peer) {
+  //   var peerCntr = $('<div/>')
+  // }
 
   webrtc.on('videoRemoved', function (video, peer) {
     console.log('videoRemoved')
     var remote = document.getElementById('remoteVideos')
-    var leavePeer = document.getElementById('video_' + webrtc.getDomId(peer))
+    var leavePeer = document.getElementById('container_' + webrtc.getDomId(peer))
     if (remote && leavePeer) {
       remote.removeChild(leavePeer)
     }

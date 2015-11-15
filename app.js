@@ -83,17 +83,8 @@ app.use(function(err, req, res, next) {
 });
 
 
-var privateKey = fs.readFileSync('sslcert/privatekey.pem').toString(),
-certificate = fs.readFileSync('sslcert/certificate.pem').toString(),
-cacert = fs.readFileSync('sslcert/cacert.pem').toString();
 
-var opts = {key: privateKey, cert: certificate, ca: cacert};
-var server = https.createServer(opts, app);
-
-var io = require('socket.io').listen(server);
-require('./signaling')(io);
-
-
+var server = https.createServer(config.signal.opts, app);
 server.listen(config.port || 3000);
 
 
