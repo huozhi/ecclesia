@@ -237,9 +237,8 @@ Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 
 
 
+
 $(document).ready(function() {
   Impress.init()
-  Discuss.init()
-  RtcController.enableWebRTC()
-  
+  Discuss.init()  
 })

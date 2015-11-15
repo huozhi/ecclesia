@@ -1,16 +1,7 @@
-/*global console*/
 var uuid = require('node-uuid');
 var crypto = require('crypto');
 var socketIO = require('socket.io');
 var logger = require('log4js').getLogger();
-// var config = require('getconfig'),
-// var port = parseInt(process.env.PORT || config.signalserver.port, 10);
-// var fs = require('fs');
-// var privateKey = fs.readFileSync('sslcert/privatekey.pem').toString(),
-//     certificate = fs.readFileSync('sslcert/certificate.pem').toString(),
-//     cacert = fs.readFileSync('sslcert/cacert.pem').toString();
-    // port = 8888,
-// var io = require('socket.io').listen(port, { key:privateKey,cert:certificate,ca:cacert });
 
 function safeCb(cb) {
     if (typeof cb === 'function') {
@@ -22,14 +13,10 @@ function safeCb(cb) {
 
 module.exports = function (server, config) {
     var io = socketIO.listen(server);
-    
-    // process.env.NODE_ENV = 'production'; // set env
 
-    // if (config.logLevel) {
-    //     // https://github.com/Automattic/socket.io/wiki/Configuring-Socket.IO
-    // io.set('log level', 1);
-    // }
-    // io.disable('heartbeats');
+    // process.env.NODE_ENV = 'production';
+    io.set('log level', 3);
+    
 
     function describeRoom(name) {
         var clients = io.sockets.clients(name);
@@ -47,7 +34,7 @@ module.exports = function (server, config) {
         client.resources = {
             screen: false,
             video: true,
-            audio: true,
+            audio: false,
         };
 
         // pass a message to another id
