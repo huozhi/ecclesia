@@ -4,76 +4,70 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia Home</title>
-
-<link href="/css/home.css" rel="stylesheet"/>
 <link href="/css/style.css" rel="stylesheet"/>
-
-<script src="/js/app.js"></script>
-
 </head>
 
 <body>
+<div class="home-page">
+  <div class="head-container">
+    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+      <div class="navbar-header" >
+        <a class="navbar-brand">Ecclesia</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout">logout</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 
-<div class="head-container">
-  <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
-    <div class="navbar-header" >
-      <a class="navbar-brand">Ecclesia</a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/logout">logout</a></li>
-      </ul>
-    </div>
-  </nav>
-</div>
-
-
-<div class="site-container">
-  <div class="main">
-    <div class="home-menu center-block">
-      <h1 class="huge-title">Welcome to Ecclesia, {{ user.name }}</h1>
-      <div class="user-opers">
-        <div class="col-md-4 text-center white-text">
-          <a id="create" class="home-link">
-            <i class="fa fa-bar-chart fa-5x"></i>
-            <h2>Create a meeting</h2>
-          </a>
+  <div class="site-container">
+    <div class="main">
+      <div class="home-menu center-block">
+        <h1 class="huge-title">Welcome to Ecclesia, {{ user.name }}</h1>
+        <div class="user-opers">
+          <div class="col-md-4 text-center white-text">
+            <a name="create" class="home-link">
+              <i class="fa fa-bar-chart fa-5x"></i>
+              <h2>Create a meeting</h2>
+            </a>
+          </div>
+          <div class="col-md-4 text-center white-text">
+            <a name="join" class="home-link">
+              <i class="fa fa-users fa-5x"></i>
+              <h2>Join a meeting</h2>
+            </a>
+          </div>
+          <div class="col-md-4 text-center white-text">
+            <a href="/history" class="home-link">
+              <i class="fa fa-folder-open-o fa-5x"></i>
+              <h2>View history</h2>
+            </a>
+          </div>
         </div>
-        <div class="col-md-4 text-center white-text">
-          <a id="join" class="home-link">
-            <i class="fa fa-users fa-5x"></i>
-            <h2>Join a meeting</h2>
-          </a>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="type-form center-block">
+        <div>
+          <input name="room" type="text" class="form-control" placeholder="Room name">
+          <br>
         </div>
-        <div class="col-md-4 text-center white-text">
-          <a href="/history" class="home-link">
-            <i class="fa fa-folder-open-o fa-5x"></i>
-            <h2>View history</h2>
-          </a>
+        <div>
+          <input name="host" type="text" class="form-control" placeholder="Room Host">
+          <br>
+        </div>
+        <div class="text-center btn-group btn-group-justified">
+          <a class="btn btn-success" id="sure">Sure</a>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="container-fluid">
-    <div class="type-form center-block">
-      <div>
-        <input id="room" type="text" class="form-control" placeholder="Room name">
-        <br>
-      </div>
-      <div>
-        <input id="host" type="text" class="form-control" placeholder="Room Host">
-        <br>
-      </div>
-      <div class="text-center btn-group btn-group-justified">
-        <a class="btn btn-success" id="sure">Sure</a>
-      </div>
-    </div>
-  </div>
 </div>
 
-
+<script src="/js/app.js"></script>
 <script type="text/javascript" src="/js/home.js"></script>
-
 </body>
 </html>

@@ -17,11 +17,10 @@ var $slideContent = $('#slideContent')
 
 
 /******* SLIDES *******/
-
 var Impress = {
   slides: [{
       title: "Welcome to Ecclesia",
-      content: "you could edit your slides here... ", 
+      content: "you could edit your slides here... ",
     },
   ],
   init: function() {
@@ -86,7 +85,7 @@ var Impress = {
       $('<h1/>')
       .text(slide.title)
       .appendTo($slideItem)
-      
+
       $('<div/>', {
         class: 'container-fluid text-center center-block slide-content'
       })
@@ -202,7 +201,7 @@ Chart.prototype.generate = function () {
       this.source.Bar(chartData)
       break
     case 'pie':
-      this.source.Pie(chartData)    
+      this.source.Pie(chartData)
       break
     default:
       break
@@ -232,7 +231,7 @@ Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
   '#E2EAE9','#D4CCC5','#949FB1','#4D5360']
 
 
-/******* CHART ********/ 
+/******* CHART ********/
 
 
 
@@ -240,5 +239,5 @@ Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 
 $(document).ready(function() {
   Impress.init()
-  Discuss.init()  
+  Discuss.init()
 })

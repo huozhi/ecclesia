@@ -1,7 +1,7 @@
-var $room = $('#room'),
-    $host = $('#host'),
-    $create = $('#create'),
-    $join = $('#join'),
+var $room = $('input[name="room"]'),
+    $host = $('input[name="host"]'),
+    $create = $('a[name="create"]'),
+    $join = $('a[name="join"]'),
     $sure = $('#sure')
 
 var HomeCtrl = {
