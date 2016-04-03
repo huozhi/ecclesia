@@ -29,14 +29,14 @@ HomeCtrl.init = function() {
       HomeCtrl.join()
     }
   })
-  
+
 }
 
 HomeCtrl.create = function() {
   $.post('/home/create', {
     room: $room.val()
   }, function (response) {
-    console.log('create', response)
+    // console.log('create', response)
   })
 }
 
@@ -45,11 +45,10 @@ HomeCtrl.join = function() {
     room: $room.val(),
     host: $host.val(),
   }, function (response) {
-    console.log('join', response)
+    // console.log('join', response)
   })
 }
 
 $(document).ready(function() {
   HomeCtrl.init()
 })
-

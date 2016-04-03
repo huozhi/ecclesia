@@ -1,78 +1,76 @@
-'use strict'
+const express = require('express')
+const crypto = require('crypto')
+const common = require('../common')
+const User = require('../proxy').User
+const UserModel = require('../models').User
+const Eventproxy = require('eventproxy')
+const genSession = require('../middlewares/session')
 
-var express = require('express')
-
-var crypto = require('crypto')
-var common = require('../common')
-var User = require('../proxy').User
-var UserModel = require('../models').User
-var Eventproxy = require('eventproxy')
-var middlewares = require('../middlewares')
-
-exports.index = function (req, res, next) {
-  return common.renderPjax(req, res, 'index', 'auth/reg', {
-    user_form: 'auth/reg.html'
-  })
+exports.index = function (req, res) {
+  if (req.session.user) {
+    console.log('has session, redirect')
+    res.redirect('/home', {
+      user: req.session.user
+    })
+  } else {
+    console.log('rendering...')
+    res.render('index')
+  }
 }
 
-exports.registerAction = function (req, res, next) {
-  console.log('registerAction', req.body)
-  var name = req.body.name
+
+exports.signup = function (req, res, next) {
+  console.log(req.body)
+  var account = req.body.account
   var password = req.body.password
   var passrept = req.body.passrept
   var email    = req.body.email
 
   if (passrept !== password) {
-    // console.log('password repeate not matched')
-    // return index(req, res, next)
     return common.errors[400](res, 'password not matched in repeating')
   }
-  User.register(name, password, email, function (err, newuser) {
-    if(err) {
-      console.log(err)
-      return common.errors[500](res, err)
-    }
-    middlewares.genSession(req, res, newuser)
+  // TODO: encrypt password
+  User.register(account, password, email)
+  .then(function(newUser) {
+    console.log(newUser)
+    genSession(req, res, newUser)
     return res.send(common.successResult())
   })
-}
-
-exports.loginView = function (req, res, next) {
-  return common.renderPjax(req, res, 'index', 'auth/login', {
-    user_form: 'auth/login.html'
+  .catch(function(err) {
+    console.error(err)
+    return common.errors[500](res, err)
   })
 }
 
-exports.loginAction = function (req, res, next) {
-  console.log('recieve', req.get('Content-Type'))
-  console.log('body', req.body)
-  var name = req.body.name
+
+exports.login = function (req, res, next) {
+  var account = req.body.account
   var password = req.body.password
-  
+
   var findUserMethod
-  if (name.indexOf('@') !== -1) {
+  if (~account.indexOf('@')) {
     findUserMethod = User.findUserByMail
   }
   else {
     findUserMethod = User.findUserByName
   }
 
-  var ep = new Eventproxy()
-  ep.fail(next)
-  ep.on('err', function (err) {
-    return common.errors[400](res, err)
+  findUserMethod(account)
+  .then(function(user) {
+    if (user.name === account && user.password === password) {
+      console.log(user)
+      genSession(req, res, user)
+    }
+    return res.send(common.successResult())
   })
+  .catch(function(err) {
+    common.errors[500](res, err)
+  })
+}
 
-  User.findUserByName(name, function (err, user) {
-    if (err) {
-      return ep.emit('err', err)
-    }
-    if (user && user.name === name && user.password === password) {
-      middlewares.genSession(req, res, user)
-      return res.send(common.successResult())
-    }
-    else {
-      return ep.emit('err', 'user not matched')
-    }  
-  })
+
+exports.logout = function(req, res) {
+  req.session.destroy()
+  res.clearCookie('c_u')
+  return res.redirect('/')
 }

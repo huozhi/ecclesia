@@ -12,44 +12,29 @@ var router = express.Router()
 
 
 exports.index = function (req, res, next) {
-  console.log('home', req.session.user)
   var ep = new Eventproxy()
   ep.on('success', function (user) {
     return res.render('home/home', {
       user: user
     })
   })
-  ep.on('err', function(err) {
+  ep.on('error', function(err) {
     return common.errors[500](res, err)
   })
 
-  var authToken, user
-  if (!req.session.user) {
-    authToken = req.cookies.authToken
-    // console.log('reload authToken', typeof authToken, authToken)
-    if (authToken) {
-      UserModel.findById(authToken, function (err, user) {
-        // console.log('query user', user)
-        if (err) { return ep.emit('err', err) }
-        req.session.user = user
-        if (req.session.user) {
-          // console.log 
-          ep.emit('success', req.session.user)
-        } else {
-          return next()
-        }
-      })
-    }
-  }
-  else {
+  if (req.session.user) {
     ep.emit('success', req.session.user)
+  } else {
+    var _token = req.cookies['c_u']
+    UserModel.findById(_token).exec()
+    .then(function(user) {
+      req.session.user = user
+      ep.emit('success', req.session.user)
+    })
+    .catch(function(err) {
+      ep.emit('error', err)
+    })
   }
-}
-
-exports.logout = function (req, res, next) {  
-  req.session.destroy(function (err) {
-    res.redirect('/')
-  })
 }
 
 exports.createRoom = function (req, res, next) {
@@ -61,12 +46,12 @@ exports.createRoom = function (req, res, next) {
 
   return Discuss.create(room, host, topics, function (err, newDisscuss) {
     if (err) {
-      console.log('create failed\n%s', err)
+      // console.log('create failed\n%s', err)
       return common.errors[500](res, err)
     }
     User.update({_id: host}, { $push: { discusses: newDisscuss._id } }).exec()
     .then(function(user) {
-      console.log(user.discusses)
+      // console.log(user.discusses)
       message = 'create new discuss success'
       return res.send(common.successResult(message))
     })
@@ -81,12 +66,12 @@ exports.joinRoom = function (req, res, next) {
   ep.on('err', function(err) {
     return common.errors[500](res, err)
   })
-  
+
   var discussQuery = {
     room: req.body.room,
     host: req.body.host,
   }
-  console.log('joinRoom:', discussQuery)
+  // console.log('joinRoom:', discussQuery)
 
   // find the newest discuss room created by the host
   return Discuss.findDiscussByQuery(
@@ -111,4 +96,3 @@ exports.joinRoom = function (req, res, next) {
     })
   })
 }
-

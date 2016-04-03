@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "font-awesome": "~4.4.0",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "jquery.cookie": "jquery-cookie#^1.4.1"
   }
 }
