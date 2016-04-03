@@ -4,73 +4,63 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia History</title>
-<link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
-<link href="/css/history_layout.css" rel="stylesheet">
-<link href="/css/app.css" rel="stylesheet">
-
+<link href="/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-
-  <div class="conatiner-fluid">
-    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
-      <div class="navbar-header" >
-        <a class="navbar-brand">Ecclesia</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/home">Home</a></li>
-        </ul>
+  <div class="page history-page">
+    <nav>
+      <div class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">Ecclesia</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/logout">logout</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
-  </div>
 
-  <div class="site-container">
-    <div class="main">
-      <div class="header text-center white-text">
-        <h1>Meeting History Records</h1>
-      </div>
-      <div class="row container history-records">
-        {% for record in discusses %}
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="thumbnail">
-            <div class="caption">
-              <h3>{{ record.room }}</h3>
-              <p>host: {{ record.host.toString() }}</p>
-              <p>date: {{ record.date.toLocaleDateString() }}</p>
-              <p>participants:
-              {% for user in record.participants %}
-                <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %}
-              {% endfor %}
-              <p>
-                <a href="/history/detail?room={{ record.room }}&host={{ record.host.toString() }}&date={{ record.date.toString() }}" class="btn btn-primary" role="button">View</a>
-                <a href class="btn btn-default" role="button">Download Docs</a>
-              </p>
+    <div class="site-container">
+      <div class="main">
+        <div class="header text-center white-text">
+          <h1>Meeting History Records</h1>
+        </div>
+        <div class="row container history-records">
+          {% for record in discusses %}
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>{{ record.room }}</h3>
+                <p>host: {{ record.host.toString() }}</p>
+                <p>date: {{ record.date.toLocaleDateString() }}</p>
+                <p>participants: {% for user in record.participants %}
+                  <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %} {% endfor %}
+                  <p>
+                    <a href="/history/detail?room={{ record.room }}&host={{ record.host.toString() }}&date={{ record.date.toString() }}" class="btn btn-primary" role="button">View</a>
+                    <a href class="btn btn-default" role="button">Download Docs</a>
+                  </p>
+              </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
   </div>
 
-    
-<script type="text/javascript" src="/js/vendors/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="/js/vendors/jquery.cookie.js"></script>
-<script type="text/javascript" src="/js/vendors/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="/js/history.js"></script>
-<script type="text/javascript">
-
-// test
-$(document).ready(function () {
-  var a = $('.row').children();
-  for (var i = 0; i < 8; i++) {
-    $('.row').append(a)
-  }
-})
-
-</script>
+  <script type="text/javascript" src="/js/app.js"></script>
+  <script type="text/javascript" src="/js/history.js"></script>
+  <script type="text/javascript">
+    // test
+    $(document).ready(function() {
+      var a = $('.row').children();
+      for (var i = 0; i < 8; i++) {
+        $('.row').append(a)
+      }
+    })
+  </script>
 </body>
 
 </html>

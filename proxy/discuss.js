@@ -1,64 +1,42 @@
-var models = require('../models');
-var Discuss = models.Discuss;
-var User = require('./user');
-var handleError = require('../common').handleError;
+const Discuss = require('../models').Discuss
+const User = require('./user')
 
 
-Discuss.findDiscussByQuery = function (query, opts, callback) {
-  Discuss.find(query, '', opts, function (err, discusses) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, discusses);
-  });
-};
+Discuss.findDiscussByQuery = function (query, opts) {
+  return Discuss.find(query, '', opts).exec()
+}
 
+Discuss.findByIds = function (ids) {
+  return Discuss.find({ _id: { $in: ids } }).exec()
+}
 
-Discuss.findByIds = function (idArray, callback) {
-  return Discuss.find({ _id: { $in: idArray } })
-};
-
-
-Discuss.findTopics = function (discuss, callback) {
-  this.findById(discuss._id, function (err, discuss) {
-    handleError(err, callback);
-    callback(null, discuss.topics);
-  });
-};
+Discuss.findTopics = function (discuss) {
+  this.findById(discuss._id).exec()
+}
 
 Discuss.insertTopic = function (discuss, newTopic, callback) {
-  Discuss.findByIdAndUpdate(
+  return Discuss.findByIdAndUpdate(
     discuss._id,
     { $push: { "topics": newTopic } },
-    { safe: true, upsert: true },
-    function (err, discuss) {
-      if (err) {
-        console.log (err); return callback(err);
-      }
-      callback(null, discuss);
-    }
-  );
-};
+    { safe: true, upsert: true }
+  ).exec()
+}
 
-Discuss.addParticpant = function (disscuss, user, callback) {
-  Discuss.update(
+Discuss.addParticipant = function (discuss, user) {
+  return Discuss.update(
     { _id: discuss._id },
     { $push: { 'participants': user.name } },
-    { safe: true, upsert: true },
-    function (err, discuss) {
-      if (err) { console.log(err); return callback(err); }
-      callback(null, discuss);
-    }
-  );
-};
+    { safe: true, upsert: true }
+  ).exec()
+}
 
-Discuss.create = function (room, host, topics, callback) {
-  var discuss = new Discuss();
-  discuss.room = room;
-  discuss.host = host._id;
-  discuss.participants = [ host.name ];
-  discuss.topics = topics || [];
-  discuss.save(callback);
-};
+Discuss.create = function (room, host, topics) {
+  var discuss = new Discuss()
+  discuss.room = room
+  discuss.host = host._id
+  discuss.participants = [ host.name ]
+  discuss.topics = topics || []
+  return discuss.save()
+}
 
-module.exports = Discuss;
+module.exports = Discuss

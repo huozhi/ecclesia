@@ -1,54 +1,31 @@
-var $room = $('input[name="room"]'),
-    $host = $('input[name="host"]'),
-    $create = $('a[name="create"]'),
-    $join = $('a[name="join"]'),
-    $sure = $('#sure')
+const $room = $('input[name="room"]'),
+      $host = $('input[name="host"]');
 
-var HomeCtrl = {
-  action: 'create'
-}
-
-HomeCtrl.init = function() {
-  // dynamic form
-  $host.parent().hide()
-  $create.click(function() {
-    $host.parent().hide()
-    HomeCtrl.action = 'create'
+$(document).ready(function () {
+  const $inputs = $('input')
+  const dangerColor = '#f2dede'
+  const warningColor = '#fcf8e3'
+  $('form').submit(function(e) {
+    e.preventDefault()
+    var form = $(this)
+    $.ajax({
+      type: form.attr('method'),
+      url: form.attr('action'),
+      data: form.serialize(),
+    })
+    .done(function(data) {
+      // console.log(data)
+      if (data.fail) {
+        $inputs.css('background-color', dangerColor)
+      } else {
+        window.location.href = data.next
+      }
+    })
+    .fail(function(err) {
+      $inputs.css('background-color', warningColor)
+    })
   })
-  $join.click(function() {
-    $host.parent().show()
-    HomeCtrl.action = 'join'
+  $inputs.on('focus', function() {
+    $(this).css('background-color', '')
   })
-
-  // post data
-  $sure.click(function() {
-    if (HomeCtrl.action === 'create') {
-      HomeCtrl.create()
-    }
-    else if (HomeCtrl.action === 'join') {
-      HomeCtrl.join()
-    }
-  })
-
-}
-
-HomeCtrl.create = function() {
-  $.post('/home/create', {
-    room: $room.val()
-  }, function (response) {
-    // console.log('create', response)
-  })
-}
-
-HomeCtrl.join = function() {
-  $.post('/home/join', {
-    room: $room.val(),
-    host: $host.val(),
-  }, function (response) {
-    // console.log('join', response)
-  })
-}
-
-$(document).ready(function() {
-  HomeCtrl.init()
 })

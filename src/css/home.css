@@ -1,10 +1,5 @@
 .home-page {
-  width: 100%;
-  overflow-x: hidden;
   background-image: url(/img/home_bg.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 .home-menu {

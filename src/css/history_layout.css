@@ -1,23 +1,7 @@
-* {
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-
-.caption {
-  /*height: 200px;*/
+.history-page {
+  background-image: url(/img/home_bg.jpg);
 }
 
 .history-records {
   padding-top: 40px;
 }
-
-body {
-  overflow-x: hidden;
-  background-image: url(/img/home_bg.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: auto, cover;
-}
-
-
-
