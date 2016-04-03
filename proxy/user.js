@@ -4,49 +4,45 @@ var User = models.User;
 
 
 User.findUserByAuth = function (name, password, callback) {
-  User.findOne({
-    'name': name, 
-    'password': password }, callback);
+  return User.findOne({
+    'name': name,
+    'password': password }, callback).exec()
 };
 
 User.findUserByName = function (name, callback) {
-  User.findOne({
-    'name': name }, callback);
+  return User.findOne({
+    'name': name }, callback).exec()
 };
 
 User.findUsersByQuery = function (query, opts, callback) {
-  User.find(query, '', opts, callback);
+  return User.find(query, '', opts, callback).exec()
 };
 
 User.findUserByMail = function (email, callback) {
   User.findOne({
     'email': email
-  }, callback);
+  }, callback).exec()
 }
 
+
+// TODO: change to promise
 User.findDiscussesByUserName = function (name, callback) {
-  User.findUserByName(name, function (err, user) {
-    if (err) {
-      console.log(err); callback(err);
-    }
-    Discuss.findDiscussByIds(
-      user.discusses,
-      function (err, discusses) {
-        if (err) {
-          console.log(err);
-          callback(null, discusses);
-        }
-    });
-  });
-};
+  User.findUserByName(name).exec()
+  .then(function(user) {
+    return Discuss.findDiscussByIds(user.discusses).exec()
+  })
+  .then(function(discusses) {
+    return callback(null, discusses)
+  })
+}
 
 
 User.register = function (name, password, email, callback) {
-  var user = new User();
-  user.name = name;
-  user.password = password;
-  user.email = email;
-  user.save(callback);
-};
+  var user = new User()
+  user.name = name
+  user.password = password
+  user.email = email
+  return user.save() // already a promise
+}
 
 module.exports = User

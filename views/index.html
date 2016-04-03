@@ -2,70 +2,84 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 <title>Ecclesia</title>
-<link href="/css/vendors/bootstrap.min.css" rel="stylesheet"/>
+<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="/css/reg_layout.css" rel="stylesheet"/>
 <link href="/css/app.css" rel="stylesheet"/>
 
-<script src="/js/vendors/jquery-1.10.2.min.js"></script>
-<script src="/js/vendors/jquery.cookie.js"></script>
-<script src="/js/vendors/jquery.pjax.js"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/jquery.cookie/jquery.cookie.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/js/plugins/jquery.postJSON.js"></script>
-<script src="/js/vendors/bootstrap.min.js"></script>
 <script src="/js/auth.js"></script>
 </head>
 
 <body>
-  <div class="head-container">
-    <nav class="navbar navbar-inverse" role="navigation">
-      <div class="navbar-header" >
-        <a class="navbar-brand">Ecclesia</a>
+  <nav class="head-container">
+    <div class="contain-fluid">
+      <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header" >
+          <a class="navbar-brand">Ecclesia</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+              <a href="#loginForm" role="tab" data-toggle="tab" aria-controls="login" aria-expanded="true">login in</a>
+            </li>
+            <li>
+              <a href="#signupForm" role="tab" data-toggle="tab" aria-controls="signup" aria-expanded="false">sign up</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/">sign up</a></li>
-          <li><a href="/login">sign in</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 
   <div class="site-container">
     <div class="main">
-      <div class="sign-form ">
-        <div class="pull-right col-md-6">
-          {% include user_form %}
-        </div>
-        <div class="pull-left col-md-6">
-          <h1 class="huge-title">Welcome&nbsp; to Ecclesia</h1>
-          <br>
-          <h3 class="huge-title">
-            This is an application which simulates a real-time meeting online.
-            
-            Several features are provided to help you hold the meeting.
-            
-            Enjoy the convenience brought by Ecclesia!
-          </h3>
-        </div>  
+      <div class="intro col-md-6">
+        <h1 class="huge-title">Welcome&nbsp; to Ecclesia</h1>
+        <br>
+        <h3 class="huge-title">
+          This is an application which simulates a real-time meeting online.<br>
+          Several features are provided to help you hold the meeting.<br>
+          Enjoy the convenience brought by Ecclesia!
+        </h3>
+      </div>
+
+      <div class="col-md-4 pull-right tab-content">
+        <form id="loginForm" action="/login" method="post" class="tab-pane active" role="tabpanel">
+          <div class="form-group">
+            <input name="account" type="text" class="form-control" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-success btn-block">Login</button>
+        </form>
+
+        <form id="signupForm" action="/signup" method="post" class="tab-pane" role="tabpanel">
+          <div class="form-group">
+            <input name="email" type="text" class="form-control" placeholder="Your email required">
+          </div>
+          <div class="form-group">
+            <input name="account" type="text" class="form-control" placeholder="Pick a username">
+          </div>
+          <div class="form-group">
+            <input name="password" type="password" class="form-control" placeholder="Create a password">
+          </div>
+          <div class="form-group">
+            <input name="passrept" type="password" class="form-control" placeholder="Repeat your password">
+          </div>
+          <div class="text-muted">
+            <p color="white">Use letters, umerals and characters as your username or password</p>
+          </div>
+          <button type="submit" class="btn btn-success btn-block">Sign up</button>
+        </form>
       </div>
     </div>
   </div>
-
-<script type="text/javascript">
-
-$(document).ready(function() {
-  $(document).pjax('a', '#user-form');
-  var action = window.location.href.split('/').pop();
-  ((action === 'login') ? $('li[name="login"]') : $('li[name="reg"]').first()).click();
-  
-  $('li').click(function () {
-    $(this).addClass('active').siblings().removeClass('active');
-  });
-});
-
-</script>
 </body>
-
 </html>

@@ -7,13 +7,12 @@ var chat = require('./controllers').chat
 
 // index
 router.get('/', auth.index)
-router.get('/login', auth.loginView)
-router.post('/register', auth.registerAction)
-router.post('/login', auth.loginAction)
+router.post('/signup', auth.signup)
+router.post('/login', auth.login)
+router.get('/logout', auth.logout)
 
 // home views
-router.get('/home/', home.index)
-router.get('/logout', home.logout)
+router.get('/home', home.index)
 router.post('/home/create', home.createRoom)
 router.post('/home/join', home.joinRoom)
 

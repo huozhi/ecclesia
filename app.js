@@ -1,24 +1,23 @@
-var fs = require('fs');
-var util = require('util');
-var path = require('path');
-var http = require('http');
-var https = require('https');
-var logger = require('morgan');
-var express = require('express');
-var favicon = require('serve-favicon');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var pjax = require('express-pjax-redirect');
-var swig = require('swig');
-var multer = require('multer');
-var debug = require('debug')('ecclesia');
+const fs = require('fs')
+const util = require('util')
+const path = require('path')
+const http = require('http')
+const https = require('https')
+const logger = require('morgan')
+const express = require('express')
+const favicon = require('serve-favicon')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const swig = require('swig')
+const multer = require('multer')
+const debug = require('debug')('ecclesia')
 
-var routes = require('./routes');
-var config = require('./config');
-var middlewares = require('./middlewares');
-var controllers = require('./controllers');
-var app = express();
+const routes = require('./routes')
+const config = require('./config')
+const authMiddleware = require('./middlewares/auth')
+const controllers = require('./controllers')
+const app = express()
 
 
 // env
@@ -28,7 +27,7 @@ app.set('env', 'development');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
-
+app.disable('x-powered-by')
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -50,8 +49,8 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(pjax());
-app.use(middlewares.auth);
+
+app.use(authMiddleware)
 
 app.use(routes);
 
