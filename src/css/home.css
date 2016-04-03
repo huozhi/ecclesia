@@ -5,7 +5,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-
 }
 
 .home-menu {
@@ -16,22 +15,8 @@ body {
   padding-top: 2em;
 }
 
-
-a {
-  color: #fff;
-  text-decoration: none;
-}
-
-a:hover {  
-  color: #ddd;
-  cursor: pointer;
-  text-decoration: none;
-}
-
 .type-form {
   margin-top: 20px;
   width: 450px;
 
 }
-
-

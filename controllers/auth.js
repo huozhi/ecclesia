@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express')
 const crypto = require('crypto')
 const common = require('../common')
@@ -9,9 +11,7 @@ const genSession = require('../middlewares/session')
 exports.index = function (req, res) {
   if (req.session.user) {
     console.log('has session, redirect')
-    res.redirect('/home', {
-      user: req.session.user
-    })
+    res.redirect('/home')
   } else {
     console.log('rendering...')
     res.render('index')
@@ -21,13 +21,13 @@ exports.index = function (req, res) {
 
 exports.signup = function (req, res, next) {
   console.log(req.body)
-  var account = req.body.account
-  var password = req.body.password
-  var passrept = req.body.passrept
-  var email    = req.body.email
+  const account = req.body.account
+  const password = req.body.password
+  const passrept = req.body.passrept
+  const email    = req.body.email
 
   if (passrept !== password) {
-    return common.errors[400](res, 'password not matched in repeating')
+    return common.errors(res, 400, 'password not matched in repeating')
   }
   // TODO: encrypt password
   User.register(account, password, email)
@@ -38,16 +38,23 @@ exports.signup = function (req, res, next) {
   })
   .catch(function(err) {
     console.error(err)
-    return common.errors[500](res, err)
+    return common.errors(res, 500, err)
   })
 }
 
 
 exports.login = function (req, res, next) {
-  var account = req.body.account
-  var password = req.body.password
+  const account = req.body.account
+  const password = req.body.password
+  const failMessage = {
+    fail: { password: 'Not Correct' }
+  }
 
-  var findUserMethod
+  if (!common.validParams(account, password)) {
+    common.errors(res, 400)
+  }
+
+  let findUserMethod
   if (~account.indexOf('@')) {
     findUserMethod = User.findUserByMail
   }
@@ -55,16 +62,19 @@ exports.login = function (req, res, next) {
     findUserMethod = User.findUserByName
   }
 
-  findUserMethod(account)
-  .then(function(user) {
-    if (user.name === account && user.password === password) {
+  findUserMethod(account).then(function(user) {
+    if (user &&
+        user.name === account &&
+        user.password === password) {
       console.log(user)
       genSession(req, res, user)
+    } else {
+      return res.send(failMessage)
     }
     return res.send(common.successResult())
   })
   .catch(function(err) {
-    common.errors[500](res, err)
+    return common.errors(res, 500, err)
   })
 }
 

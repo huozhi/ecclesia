@@ -24,8 +24,6 @@ User.findUserByMail = function (email, callback) {
   }, callback).exec()
 }
 
-
-// TODO: change to promise
 User.findDiscussesByUserName = function (name, callback) {
   User.findUserByName(name).exec()
   .then(function(user) {
@@ -35,7 +33,6 @@ User.findDiscussesByUserName = function (name, callback) {
     return callback(null, discusses)
   })
 }
-
 
 User.register = function (name, password, email, callback) {
   var user = new User()

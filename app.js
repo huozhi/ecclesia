@@ -3,7 +3,6 @@ const util = require('util')
 const path = require('path')
 const http = require('http')
 const https = require('https')
-const logger = require('morgan')
 const express = require('express')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
@@ -20,9 +19,6 @@ const controllers = require('./controllers')
 const app = express()
 
 
-// env
-app.set('env', 'development');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', swig.renderFile);
@@ -30,17 +26,16 @@ app.set('view engine', 'html');
 app.disable('x-powered-by')
 
 // uncomment after placing your favicon in /public
-app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use('/', express.static(path.join(__dirname, 'public')))
 app.use(multer({
   rename: function (fieldname, filename) {
-    return util.format('%s-%s', filename, Date.now());
+    return util.format('%s-%s', filename, Date.now())
   },
-}));
+}))
 
 app.use(session({
   secret: config.cookieSecret,

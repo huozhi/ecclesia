@@ -3,9 +3,9 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "dev": "nodemon -e js.html.css --debug app.js",
+    "dev": "nodemon -e js,html --ignore public/ --ignore src/ --debug app.js",
     "start": "node app.js",
-    "build": "grunt build"
+    "build": "gulp build"
   },
   "dependencies": {
     "body-parser": "~1.6.6",
@@ -32,21 +32,18 @@
     "attachmediastream": "1.0.1",
     "browserify": "2.22.0",
     "filetransfer": "^2.0.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-concat": "~0.4.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-qunit": "~0.5.2",
-    "grunt-contrib-uglify": "~0.5.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-express-server": "^0.5.1",
-    "grunt-keepalive": "0.0.1",
-    "grunt-open": "^0.2.3",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-filter": "^4.0.0",
+    "gulp-rename": "^1.2.2",
     "jit-grunt": "^0.9.1",
     "localmedia": "^1.0.2",
+    "main-bower-files": "^2.11.1",
     "mockconsole": "0.0.1",
     "nodemon": "^1.9.1",
     "rtcpeerconnection": "^3.0.6",
     "socket.io-client": "0.9.16",
+    "vinyl-source-stream": "^1.1.0",
     "webrtcsupport": "^1.0.0",
     "wildemitter": "1.x"
   }

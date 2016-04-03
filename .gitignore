@@ -32,5 +32,5 @@ node_modules
 npm-debug.log
 
 *.pem
-rtc/*.bundle.js
+public
 bower_components/
