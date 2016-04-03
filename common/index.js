@@ -1,27 +1,27 @@
-var response = function(status, result) {
+'use strict'
+
+const statusCodes = require('http').STATUS_CODES
+
+const response = function(message, data) {
   return {
-    status: status,
-    result: result
+    message: message,
+    data: data
   }
+}
+
+exports.validParams = function() {
+  for (let i = 0; i < arguments.length; i++) {
+    if (!arguments[i]) return false
+  }
+  return true
 }
 
 exports.successResult = function(data) {
   return response('success', data)
 }
 
-exports.errors = {
-  400: function(res, message) {
-    return res.status(400).send(response('bad request', message))
-  },
-  403: function(req, message) {
-    return res.status(403).send(response('access denied', message))
-  },
-  404: function(res, message) {
-    return res.status(404).send(response('not found', message))
-  },
-  500: function(res, message) {
-    return res.status(500).send(response('internal server error', message))
-  },
+exports.errors = function(res, code, err) {
+  return res.status(code).send(err || statusCodes[code])
 }
 
 exports.getAuthToken = function(req) {
@@ -29,21 +29,4 @@ exports.getAuthToken = function(req) {
     return req.cookies['c_u']
   }
   return req.session.user._id
-}
-
-
-exports.renderPjax = function (req, res, layout, partial, opts) {
-  opts = (typeof opts === 'undefined') ? {} : opts;
-  if (req.header('x-pjax')) {
-    res.renderPjax(partial, opts);
-  }
-  else {
-    res.render(layout, opts);
-  }
-}
-
-exports.handleError = function (err, callback) {
-  if (err) {
-    console.log(err); return callback(err)
-  }
 }
