@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6, p, span {
   width: 100%;
 }
 
-a {
+a, a:focus, a:visited {
   color: #fff;
   text-decoration: none;
 }

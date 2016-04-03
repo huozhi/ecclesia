@@ -8,18 +8,13 @@ const filter = require('gulp-filter')
 const rename = require('gulp-rename')
 const concat = require('gulp-concat')
 const source = require('vinyl-source-stream')
-
+const less = require('gulp-less')
+const sass = require('gulp-sass')
+const streamQueue = require('streamqueue')
 const bowerPath = 'src/bower_components'
 const destFolder = 'public'
 
-const mainBowerInstance = mainBowerFiles({
-  path: bowerPath
-  // {
-  //   bowerDirectory: bowerPath,
-  //   bowerrc: '.bowerrc',
-  //   bowerJson: 'bower.json',
-  // }
-})
+
 
 gulp.task('rtc', function() {
   const srcRoot = './src/rtc'
@@ -31,8 +26,10 @@ gulp.task('rtc', function() {
 
 gulp.task('js', function() {
   // bower bundle
-  gulp.src(mainBowerInstance)
-  .pipe(filter(['**/*.js']))
+  gulp.src(mainBowerFiles('*/**.js', {
+    path: bowerPath
+  }))
+  // .pipe(filter(['**/*.js']))
   .pipe(concat('app.js'))
   .pipe(gulp.dest(`${destFolder}/js`))
 
@@ -43,8 +40,20 @@ gulp.task('js', function() {
 })
 
 gulp.task('css', function() {
-  gulp.src(mainBowerInstance.concat(['src/css/app.css']))
-  .pipe(filter(['**/*.css']))
+  // .concat(['src/css/app.css'])
+  let lessStream, cssStream
+
+  lessStream = gulp.src(mainBowerFiles('**/*.less', {
+    path: bowerPath
+  }))
+  .pipe(less())
+
+  cssStream = gulp.src('src/css/*.css')
+
+  streamQueue({ objectMode: true },
+    lessStream,
+    cssStream
+  )
   .pipe(concat('style.css'))
   .pipe(gulp.dest(`${destFolder}/css/`))
 
@@ -54,10 +63,12 @@ gulp.task('css', function() {
 
 gulp.task('static', function() {
   // fonts
-  const bootstrapPath = `${bowerPath}/bootstrap/dist/fonts/*`
-  gulp.src(bootstrapPath)
+  gulp.src([
+    `${bowerPath}/bootstrap-sass/**/fonts/*`,
+    `${bowerPath}/font-awesome/fonts/*`,
+  ])
   .pipe(filter([
-    '*.eot', '*.woff', '*.woff2', '*.svg','*.tt'
+    '**/*.eot', '**/*.woff', '**/*.woff2', '**/*.svg', '**/*.tt'
   ]))
   .pipe(gulp.dest(`${destFolder}/fonts/`))
 
@@ -72,6 +83,12 @@ gulp.task('static', function() {
 
 gulp.task('watch', function() {
   gulp.watch('./src/**/*', ['base'])
+})
+
+gulp.task('test', function() {
+  console.log(mainBowerFiles('**/*.less', {
+    path: bowerPath
+  }))
 })
 
 gulp.task('base', ['css', 'js', 'static'])

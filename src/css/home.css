@@ -1,4 +1,4 @@
-body {
+.home-page {
   width: 100%;
   overflow-x: hidden;
   background-image: url(/img/home_bg.jpg);
@@ -18,5 +18,4 @@ body {
 .type-form {
   margin-top: 20px;
   width: 450px;
-
 }
