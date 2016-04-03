@@ -8,19 +8,19 @@
 </head>
 
 <body>
-<div class="home-page">
-  <div class="head-container">
-    <nav class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
+<div class="page home-page">
+  <nav>
+    <div class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
       <div class="navbar-header" >
-        <a class="navbar-brand">Ecclesia</a>
+        <a href="/" class="navbar-brand">Ecclesia</a>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/logout">logout</a></li>
         </ul>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 
   <div class="site-container">
     <div class="main">
@@ -28,13 +28,13 @@
         <h1 class="huge-title">Welcome to Ecclesia, {{ user.name }}</h1>
         <div class="user-opers">
           <div class="col-md-4 text-center white-text">
-            <a name="create" class="home-link">
+            <a href="#create" class="home-link" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
               <i class="fa fa-bar-chart fa-5x"></i>
               <h2>Create a meeting</h2>
             </a>
           </div>
           <div class="col-md-4 text-center white-text">
-            <a name="join" class="home-link">
+            <a href="#join" class="home-link" role="tab" data-toggle="tab" aria-controls="join" aria-expanded="false">
               <i class="fa fa-users fa-5x"></i>
               <h2>Join a meeting</h2>
             </a>
@@ -49,20 +49,28 @@
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="type-form center-block">
-        <div>
+
+    <div class="tab-content">
+      <form id="create" action="/home/create" method="post" class="type-form center-block tab-pane active">
+        <div class="form-group">
           <input name="room" type="text" class="form-control" placeholder="Room name">
-          <br>
         </div>
-        <div>
-          <input name="host" type="text" class="form-control" placeholder="Room Host">
-          <br>
+        <div class="text-center form-group">
+          <button class="btn btn-success" type="submit">Create Room</button>
         </div>
-        <div class="text-center btn-group btn-group-justified">
-          <a class="btn btn-success" id="sure">Sure</a>
+      </form>
+
+      <form id="join" action="/home/join" method="post" class="type-form center-block tab-pane">
+        <div class="form-group">
+          <input name="room" type="text" class="form-control" placeholder="Meeting name">
         </div>
-      </div>
+        <div class="form-group">
+          <input name="host" type="text" class="form-control" placeholder="Meeting Host">
+        </div>
+        <div class="text-center form-group">
+          <button class="btn btn-default" type="submit">Join Room</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

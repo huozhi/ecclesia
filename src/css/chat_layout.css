@@ -3,15 +3,9 @@ html, body {
   overflow-x: hidden;
 }
 
-.carousel-inner > * > * {
+.carousel-inner * {
   border-radius: 0px;
   border: 0px;
-}
-
-.site-container {
-  height: 100%;
-  padding-top: 0 !important;
-  padding-bottom: 65px !important;
 }
 
 .navbar {
@@ -25,7 +19,7 @@ html, body {
 }
 
 .nav-tabs {
-  border-bottom: 1px transparent; 
+  border-bottom: 1px transparent;
 }
 
 .video-screen {
@@ -71,7 +65,7 @@ html, body {
 }
 
 textarea {
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 
@@ -257,7 +251,7 @@ ul.dropdown-menu {
   /*height: 560px;*/
   height: 100%;
   border-radius: 2px;
-  padding: 0px 2px 0px 2px; 
+  padding: 0px 2px 0px 2px;
 }
 
 .tools-block {
@@ -295,7 +289,7 @@ ul.dropdown-menu {
 }
 
 .list-group {
-  margin-top: 12px; 
+  margin-top: 12px;
 }
 .list-group-item {
   cursor: pointer;

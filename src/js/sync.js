@@ -42,17 +42,17 @@ var MediaTool = {
       }
       var cameraMenu = $('.camera-menu');
       cameraList.forEach(function (ele, index) {
-        var cameraChoice = '<li role="presentation"><p class="camera-device-id sr-only">' + 
+        var cameraChoice = '<li role="presentation"><p class="camera-device-id sr-only">' +
         ele.id + '</p><a class="camera-item" role="menuitem" tabindex="-1">' + ele.label + '</a></li>';
         cameraMenu.append(cameraChoice);
       });
 
       var audioMenu = $('.audio-menu');
       audioList.forEach(function (ele) {
-        var audioChoice = '<li role="presentation">' + '<p class="audio-device-id sr-only">' + 
+        var audioChoice = '<li role="presentation">' + '<p class="audio-device-id sr-only">' +
         ele.id + '</p><a class="audio-item" role="menuitem" tabindex="-1">' + ele.label + '</a></li>';
         audioMenu.append(audioChoice);
-        
+
       });
       $('a.audio-item').click(function() {
         mr.audioSource = $(this).prev().text();
@@ -84,11 +84,3 @@ var MediaTool = {
     });
   }
 }
-
-$(document).ready(function() {
-  $.cookie('sketchChanged', false);
-
-
-});
-
-

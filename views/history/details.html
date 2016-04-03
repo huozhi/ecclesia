@@ -4,37 +4,31 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ecclesia History Detail</title>
-<link href="/css/vendors/bootstrap.min.css" rel="stylesheet">
-<link href="/css/vendors/idangerous.swiper.css" rel="stylesheet">
-<link href="/css/chat_layout.css" rel="stylesheet">
-<link href="/css/detail_layout.css" rel="stylesheet">
-<link href="/css/app.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-
-
-<div class="head-container">
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand">Ecclesia</a>
+  <div class="page history-page">
+    <nav>
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a href="/" class="navbar-brand">Ecclesia</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/history">histories</a></li>
+              <li><a href="/logout">logout</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/history">All History</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
-  
-{% include "present.html" %}
+    </nav>    
+    {% include "present.html" %}
+  </div>
 
-<script src="/js/vendors/jquery-1.10.2.min.js"></script>
-<script src="/js/vendors/idangerous.swiper-2.1.min.js"></script>
-<script src="/js/vendors/jquery.cookie.js"></script>
-<script src="/js/vendors/marked.min.js"></script>
+
+<script src="/js/app.js"></script>
 <script src="/js/history.js"></script>
 
 </body>

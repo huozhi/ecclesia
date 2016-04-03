@@ -1,7 +1,7 @@
 ;(function($) {
   $.fn.Stroke = function(cb, color) {
     $(this).on('mousedown mouseleave mouseup mouseout mousemove', function (event) {
-      
+
       var keyDown, point, ctx;
       keyDown = $(this).data('keyDown');
       if (keyDown == undefined) {
@@ -9,28 +9,13 @@
         keyDown = false;
       }
 
-      /*if($.cookie("zoom") < 0.8){
-        point = {
-          x:    event.pageX/$.cookie("zoom") - $(this).offset().left,
-          y:    event.pageY/$.cookie("zoom") - $(this).offset().top,
-          type: event.type,
-          key: keyDown
-        };
-      }
-      else {*/
         point = {
           x:    event.pageX - $(this).offset().left,
           y:    event.pageY - $(this).offset().top,
           type: event.type,
           key: keyDown
         };
-      //}
-      /*var sendPoint = {
-          x:    event.pageX/$.cookie("zoom") - $(this).offset().left,
-          y:    event.pageY/$.cookie("zoom") - $(this).offset().top,
-          type: event.type,
-          key: keyDown
-        };*/
+
       ctx = $(this).get(0).getContext('2d');
 
       ctx.lineJoin = 'round';
