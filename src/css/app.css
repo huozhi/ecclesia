@@ -40,15 +40,16 @@ h1, h2, h3, h4, h5, h6, p, span {
   width: 100%;
 }
 
-a, a:focus, a:visited {
-  color: #fff;
+a,
+a:hover,
+a:focus,
+a:visited {
   text-decoration: none;
 }
 
 a:hover {
   color: #ddd;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .page {
