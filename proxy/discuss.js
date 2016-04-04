@@ -1,13 +1,19 @@
+'use strict'
+
+const mongoose = require('mongoose')
+const logger = require('log4js').getLogger()
+const ObjectId = mongoose.Types.ObjectId
 const Discuss = require('../models').Discuss
 const User = require('./user')
 
 
 Discuss.findDiscussByQuery = function (query, opts) {
-  return Discuss.find(query, '', opts).exec()
+  return Discuss.findOne(query, '', opts).exec()
 }
 
-Discuss.findByIds = function (ids) {
-  return Discuss.find({ _id: { $in: ids } }).exec()
+Discuss.findByIds = function (ids, isLean) {
+  const query = Discuss.find({ _id: { $in: ids } })
+  return ((isLean) ? query.lean() : query).exec()
 }
 
 Discuss.findTopics = function (discuss) {
@@ -17,16 +23,16 @@ Discuss.findTopics = function (discuss) {
 Discuss.insertTopic = function (discuss, newTopic, callback) {
   return Discuss.findByIdAndUpdate(
     discuss._id,
-    { $push: { "topics": newTopic } },
+    { $push: { topics: newTopic } },
     { safe: true, upsert: true }
   ).exec()
 }
 
 Discuss.addParticipant = function (discuss, user) {
+  logger.debug('inner addParticipant', discuss, user.name)
   return Discuss.update(
     { _id: discuss._id },
-    { $push: { 'participants': user.name } },
-    { safe: true, upsert: true }
+    { $addToSet: { participants: user.name } }
   ).exec()
 }
 
