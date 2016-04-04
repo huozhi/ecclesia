@@ -2,10 +2,10 @@
 
 ### About
 
-Version 1.9.0
+Version 2.0.0
 
-A web meeting system for small team discussing. support sketching graphs, 
-making dynamic presentation and inserting dynamic charts. Our aim is to 
+A web meeting system for small team discussing. support sketching graphs,
+making dynamic presentation and inserting dynamic charts. Our aim is to
 make meeting more conveniently and easily.
 
 ### Readme
@@ -16,8 +16,19 @@ make meeting more conveniently and easily.
 
 ### Development
 
-1. Construct demostration and finish the fundemental features.
-2. Change it to a customized tool for small teams or groups.
+**build**
+
+```sh
+npm run build
+```
+
+**dev**
+
+```sh
+npm run web  # start the webserver
+npm run sock # start the signalmaster (websocket server)
+```
+
 
 ### Update
 
@@ -37,3 +48,4 @@ is still in develop state.
 
 WebRTC, NodeJS and Mongodb
 
+Node >= 4.0.0
