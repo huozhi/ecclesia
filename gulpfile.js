@@ -56,9 +56,6 @@ gulp.task('css', function() {
   )
   .pipe(concat('style.css'))
   .pipe(gulp.dest(`${destFolder}/css/`))
-
-  gulp.src(['src/css/**/*.css', '!src/css/app.css'])
-  .pipe(gulp.dest(`${destFolder}/css/`))
 })
 
 gulp.task('static', function() {

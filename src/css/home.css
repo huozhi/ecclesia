@@ -6,11 +6,20 @@
   width: 980px;
 }
 
+.home-link,
+.home-link:focus,
+.home-link:visited {
+  color: #fff;
+}
+.home-link:hover {
+  color: #ddd;
+}
+
 .user-opers {
   padding-top: 2em;
 }
 
 .type-form {
   margin-top: 20px;
-  width: 450px;
+  max-width: 450px;
 }
