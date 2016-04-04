@@ -3,9 +3,11 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "dev": "nodemon -e js,html --ignore public/ --ignore src/ --debug app.js",
+    "web": "nodemon -e js,html --ignore public/ --ignore src/ --debug app.js",
+    "sock": "nodemon --watch socket.js --debug=5859 signalmaster.js",
+    "build": "gulp",
     "start": "node app.js",
-    "build": "gulp build"
+    "clean": "rm -rf publi/*"
   },
   "dependencies": {
     "body-parser": "~1.6.6",

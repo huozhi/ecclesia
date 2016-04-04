@@ -1,7 +1,7 @@
-var uuid = require('node-uuid');
-var crypto = require('crypto');
-var socketIO = require('socket.io');
-var logger = require('log4js').getLogger();
+const uuid = require('node-uuid')
+const crypto = require('crypto')
+const socketIO = require('socket.io')
+const logger = require('log4js').getLogger()
 
 function safeCb(cb) {
     if (typeof cb === 'function') {
@@ -16,7 +16,7 @@ module.exports = function (server, config) {
 
     // process.env.NODE_ENV = 'production';
     io.set('log level', 3);
-    
+
 
     function describeRoom(name) {
         var clients = io.sockets.clients(name);
@@ -30,7 +30,7 @@ module.exports = function (server, config) {
         return result;
     }
 
-    io.sockets.on('connection', function (client) {         
+    io.sockets.on('connection', function (client) {
         client.resources = {
             screen: false,
             video: true,
@@ -139,4 +139,3 @@ module.exports = function (server, config) {
     if (config.uid) process.setuid(config.uid);
     // console.log(' -- signal master is running at: http://localhost:' + port);
 };
-
