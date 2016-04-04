@@ -14,7 +14,7 @@ $(document).ready(function () {
       data: form.serialize(),
     })
     .done(function(data) {
-      // console.log(data)
+      console.debug(data)
       if (data.fail) {
         $inputs.css('background-color', dangerColor)
       } else {
