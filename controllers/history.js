@@ -1,20 +1,21 @@
 'use strict'
 
-var common = require('../common')
-var User = require('../proxy').User
-var Discuss = require('../proxy').Discuss
-var Eventproxy = require('eventproxy')
-var mongoose = require('mongoose')
-var ObjectId = mongoose.Types.ObjectId
+const common = require('../common')
+const User = require('../proxy').User
+const Discuss = require('../proxy').Discuss
+const Eventproxy = require('eventproxy')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId
+const logger = require('log4js').getLogger()
 
 exports.index = function (req, res, next) {
-  var user = req.session.user
-  var ep = Eventproxy()
+  const user = req.session.user
+  const ep = Eventproxy()
   ep.all(['complete', 'info_all'], function(result, discusses) {
-    console.log('finall_dis', discusses.length)
+    logger.debug('history.index finall discusses', discusses.length)
     return res.render('history/panel', { discusses: discusses });
   })
-  var promise = Discuss.findByIds(user.discusses).lean().exec()
+  Discuss.findByIds(user.discusses, true)
   .then(function(discusses) {
     var len = discusses.length
     if (len === 0) {
@@ -23,19 +24,19 @@ exports.index = function (req, res, next) {
     discusses.forEach(function(discuss, dIdx, _discuesses) {
       // console.log('discuss', discuss)
       var participants = discuss.participants || []
-      console.log('participants', participants)
+      logger.debug('participants', participants)
 
       User.findById(discuss.host).exec()
       .then(function(user) {
-        console.log('username', user.name, _discuesses[dIdx].host)
+        logger.debug('username', user.name, _discuesses[dIdx].host)
         _discuesses[dIdx].host = user.name
 
-        console.log('_discuesses[dIdx].host', _discuesses[dIdx].host)
+        logger.debug('_discuesses[dIdx].host', _discuesses[dIdx].host)
         if (--len <= 0)
           ep.emit('info_all', _discuesses)
       })
       .catch(function(err) {
-        console.error(err)
+        logger.error('history.index', err)
       })
     })
     ep.emit('complete')

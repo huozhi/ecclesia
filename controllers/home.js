@@ -66,22 +66,24 @@ exports.joinRoom = function (req, res, next) {
   const user = req.session.user
   let hostId
 
+  logger.debug('joinRoom req.body', req.body)
   User.findByName(host)
   .then(function(hostUser) {
     hostId = hostUser._id
-    return Discuss.findDiscussByQuery({
-        room: room,
-        host: hostUser._id,
-      },
-      { $sort: { date: -1 } }
-    )
+    const query = {
+      room: room,
+      host: ObjectId(hostId),
+    }
+    logger.debug('home.joinRoom Discuss.findDiscussByQuery', query)
+    return Discuss.findDiscussByQuery(query, { $sort: { date: -1 } })
   })
   .then(function(discuss) {
-    logger.debug('home.joinRoom discuss', discuss._id)
+    logger.debug('session.user', user.name)
+    logger.debug('home.joinRoom Discuss.addParticipant', discuss, user.name)
     return Discuss.addParticipant(discuss, user)
   })
-  .then(function(discusses) {
-    logger.debug('Discuss.addParticipant', discusses)
+  .then(function(numAffected) {
+    logger.debug('home.joinRoom, updated', numAffected)
     req.session.room = room
     req.session.host = hostId
     const params = getChatParams(room, hostId, user._id)
