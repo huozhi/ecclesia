@@ -16,10 +16,9 @@ var sync = function (req, res, next) {
 
 var index = function (req, res, next) {
   return res.render('chat/chat', {
-    // session: req.session,
-    // username: req.session.user,
-    // host: req.session.user === req.session.host
-  })  
+    user: req.session.user,
+    room: req.session.room,
+  })
 }
 
 var topics = function (req, res, next) {
@@ -75,9 +74,7 @@ var upload = function (req, res, next) {
         })
       })
     }
-    
   })
-
 }
 
 
@@ -85,5 +82,3 @@ exports.index = index
 exports.sync = sync
 exports.topics = topics
 exports.upload = upload
-
-

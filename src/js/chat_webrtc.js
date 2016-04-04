@@ -37,7 +37,6 @@ RtcController.enableWebRTC = function() {
     socketio: { 'force new connection':true },
     localVideoEl: 'localVideo',
     remoteVideosEl: '',
-    // userame: self,
     autoRequestMedia: true,
     debug: false,
     detectSpeakingEvents: true,
@@ -127,4 +126,3 @@ RtcController.enableWebRTC = function() {
 }
 
 RtcController.enableWebRTC()
-

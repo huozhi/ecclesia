@@ -56,10 +56,10 @@ exports.login = function (req, res, next) {
 
   let findUserMethod
   if (~account.indexOf('@')) {
-    findUserMethod = User.findUserByMail
+    findUserMethod = User.findByMail
   }
   else {
-    findUserMethod = User.findUserByName
+    findUserMethod = User.findByName
   }
 
   findUserMethod(account).then(function(user) {

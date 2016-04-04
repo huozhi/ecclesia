@@ -10,11 +10,27 @@ const UserModel = require('../models').User
 const Eventproxy = require('eventproxy')
 const common = require('../common')
 
+const getChatParams = function(room, hostId, userId) {
+  const params = {
+    room: room,
+    host: hostId,
+    self: userId,
+  }
+  const arr = []
+  Object.keys(params).forEach(function(key) {
+    arr.push(`${key}=${params[key]}`)
+  })
+  return arr.join('&')
+}
 
 exports.index = function (req, res, next) {
-  return res.render('home/home', {
-    user: req.session.user
-  })
+  if (req.session.user) {
+    res.render('home/home', {
+      user: req.session.user
+    })
+  } else {
+    res.redirect('/')
+  }
 }
 
 exports.createRoom = function (req, res, next) {
@@ -24,45 +40,54 @@ exports.createRoom = function (req, res, next) {
 
   Discuss.create(room, host, topics)
   .then(function(newDisscuss) {
-    // console.log('newDisscuss', newDisscuss)
+    logger.debug('new disscuss', newDisscuss)
     req.session.room = newDisscuss
+    req.session.host = host._id
     return User.update({_id: host._id}, {
       $push: { discusses: newDisscuss._id }
     }).exec()
   })
   .then(function(oks) {
+    const params = getChatParams(room, host._id, host._id)
+    logger.debug('create room', `/chat?${params}`)
     return res.send({
-      next: '/chat',
+      next: `/chat?${params}`,
     })
   })
   .catch(function(err) {
+    logger.error('home.createRoom', err)
     return common.errors(re, 500, err)
   })
 }
 
 exports.joinRoom = function (req, res, next) {
-  const query = {
-    room: req.body.room,
-    host: ObjectId(req.body.host._id), 
-  }
+  const room = req.body.room
+  const host = req.body.host // type:string, user name
   const user = req.session.user
-  console.log('query', req.body, user)
-  // find the newest discuss room created by the host
-  let p = Discuss.findDiscussByQuery(
-    query,
-    { $sort: { date: -1 } }
-  )
+  let hostId
 
-  logger.debug('p', p)
-
-  p.then(function(discuss) {
-    logger.debug('discuss', discuss)
+  User.findByName(host)
+  .then(function(hostUser) {
+    hostId = hostUser._id
+    return Discuss.findDiscussByQuery({
+        room: room,
+        host: hostUser._id,
+      },
+      { $sort: { date: -1 } }
+    )
+  })
+  .then(function(discuss) {
+    logger.debug('home.joinRoom discuss', discuss._id)
     return Discuss.addParticipant(discuss, user)
   })
   .then(function(discusses) {
-    logger.debug('updated', discusses)
+    logger.debug('Discuss.addParticipant', discusses)
+    req.session.room = room
+    req.session.host = hostId
+    const params = getChatParams(room, hostId, user._id)
+    logger.debug('join room', `/chat?${params}`)
     return res.send({
-      next: '/chat',
+      next: `/chat?${params}`,
     })
   })
   .catch(function(err) {

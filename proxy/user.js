@@ -3,13 +3,13 @@ var Discuss = models.Discuss;
 var User = models.User;
 
 
-User.findUserByAuth = function (name, password, callback) {
+User.findByAuth = function (name, password, callback) {
   return User.findOne({
     'name': name,
     'password': password }, callback).exec()
 };
 
-User.findUserByName = function (name, callback) {
+User.findByName = function (name, callback) {
   return User.findOne({
     'name': name }, callback).exec()
 };
@@ -18,7 +18,7 @@ User.findUsersByQuery = function (query, opts, callback) {
   return User.find(query, '', opts, callback).exec()
 };
 
-User.findUserByMail = function (email, callback) {
+User.findByMail = function (email, callback) {
   User.findOne({
     'email': email
   }, callback).exec()
