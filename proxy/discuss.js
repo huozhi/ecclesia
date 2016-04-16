@@ -7,13 +7,15 @@ const Discuss = require('../models').Discuss
 const User = require('./user')
 
 
-Discuss.findDiscussByQuery = function (query, opts) {
-  return Discuss.findOne(query, '', opts).exec()
+Discuss.findByQuery = function (query, opts) {
+  return Discuss.find(query, '', opts).exec()
 }
 
 Discuss.findByIds = function (ids, isLean) {
   const query = Discuss.find({ _id: { $in: ids } })
-  return ((isLean) ? query.lean() : query).exec()
+  return ((isLean) ? query.lean() : query)
+         .sort({ date: -1 })
+         .exec()
 }
 
 Discuss.findTopics = function (discuss) {
@@ -39,6 +41,7 @@ Discuss.addParticipant = function (discuss, user) {
 Discuss.create = function (room, host, topics) {
   var discuss = new Discuss()
   discuss.room = room
+  discuss.date = new Date()
   discuss.host = host._id
   discuss.participants = [ host.name ]
   discuss.topics = topics || []

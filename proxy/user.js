@@ -25,7 +25,7 @@ User.findByMail = function (email, callback) {
 }
 
 User.findDiscussesByUserName = function (name, callback) {
-  User.findUserByName(name).exec()
+  User.findByName(name)
   .then(function(user) {
     return Discuss.findDiscussByIds(user.discusses).exec()
   })

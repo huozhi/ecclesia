@@ -9,8 +9,8 @@ var $slides = $('#slides')
 var $addSlide = $('#addSlide')
 var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
-var $editBoard = $('#editBoard')
-var $edit = $('#edit')
+var $editBoard = $('.edit-board')
+var $edit = $('.edit')
 
 var $slideTitle = $('#slideTitle')
 var $slideContent = $('#slideContent')
@@ -32,7 +32,6 @@ var Impress = {
     })
 
     $addSlide.click(function() {
-      // var text = '# new'
       if ($editBoard.css('display') === 'block')
         return
       self.slides.push({
@@ -87,7 +86,7 @@ var Impress = {
       .appendTo($slideItem)
 
       $('<div/>', {
-        class: 'container-fluid text-center center-block slide-content'
+        class: 'text-center center-block slide-content'
       })
       // .attr('data-id', idx)
       .html(marked(slide.content))

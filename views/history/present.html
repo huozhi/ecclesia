@@ -1,25 +1,21 @@
-<div class="site-container">
-  <div class="video-screen container-fluid">
-    <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
-      <ol class="carousel-indicators">
-        <li data-target="#impress" data-slide-to="0" class="active"></li>
-      </ol>
-      <div class="carousel-inner impress-panel text-center center-block" role="listbox">
-        <div id="slide-1" class="item active"># Welcome to Ecclesia
-  ### you can sketch graph here :)
-  ```py
-  def hello(self):
-    print 'wocao'
-    return 1
-  ```
+<div class="details-container">
+  <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
+    <ol class="carousel-indicators">
+      <li data-target="#impress" data-slide-to="0" class="active"></li>
+    </ol>
+    <div class="carousel-inner impress-panel text-center center-block" role="listbox">
+      {% for topic in discuss.topics %}
+      <div class="item">
+        <h1>{{ topic.title }}</h1>
+        <div class="text-center center-block slide-content">
+          <p>{{ topic.impress }}</p>
         </div>
-        <button class="btn btn-default btn-xs edit">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </button>
-        <div class="cover-board"></div>
       </div>
+      {% endfor %}
+      <button class="btn btn-default btn-xs edit">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <div class="cover-board"></div>
     </div>
-
-  
   </div>
 </div>

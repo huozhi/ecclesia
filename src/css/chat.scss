@@ -1,11 +1,22 @@
-html, body {
-  height: 100%;
-  overflow-x: hidden;
+.chat-page {
+  padding: 15px 0;
 }
 
 .carousel-inner * {
   border-radius: 0px;
   border: 0px;
+}
+
+.carousel-indicators {
+
+  li {
+    background-color: #aaa;
+  }
+
+  .active {
+    background-color: #ddd;
+  }
+
 }
 
 .navbar {
@@ -23,7 +34,6 @@ html, body {
 }
 
 .video-screen {
-  padding: 15px 15px 0px 0px;
   min-width: 720px;
   height: 100%;
 }
@@ -31,20 +41,22 @@ html, body {
 .screen {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 540px;
   border: #bbb solid 1px;
   border-radius: 2px;
-  background-color: #0099ff;
-  color: #fff;
+  background-color: #fff;
+  color: #666;
 }
 
 .impress-panel {
-  min-width: 800px;
   height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
 }
 
-
-#edit {
+.edit {
   position: absolute;
   right: 2px;
   top: 2px;
@@ -52,7 +64,7 @@ html, body {
   z-index: 12;
 }
 
-#editBoard {
+.edit-board {
   position: absolute;
   padding-top: 20px;
   width: 100%;
@@ -132,7 +144,6 @@ textarea {
   height: 100%;
   margin: 0px;
   border: #666 solid 1px;
-  /*background:rgba(255, 255, 255, 0.3) none repeat scroll 0 0 !important;*/
   border-radius: 2px;
   z-index: 2;
 }
@@ -159,8 +170,6 @@ textarea {
 
 .single-chart {
   position: relative;
-  /*float: left;*/
-  /*height: 200px;*/
   height: 66.6666%;
   padding: 5px;
   display: inline-block;
@@ -195,18 +204,11 @@ div.single-chart > button {
 
 }
 
-
 .affix-bar {
   height: 100%;
-  padding-top: 15px;
   bottom: 0px;
 }
 
-.sidebar {
-  position: relative;
-  height: 100%;
-  padding: 0px 0px 0px 0px;
-}
 .container-frame {
   display: inline-block;
 }
@@ -248,7 +250,6 @@ ul.dropdown-menu {
 .preview-block {
   position: relative;
   display: block;
-  /*height: 560px;*/
   height: 100%;
   border-radius: 2px;
   padding: 0px 2px 0px 2px;

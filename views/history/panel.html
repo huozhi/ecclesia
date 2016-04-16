@@ -1,66 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ecclesia History</title>
-<link href="/css/style.css" rel="stylesheet">
-</head>
+{% extends '../common/base.html' %}
 
-<body>
-  <div class="page history-page">
-    <nav>
-      <div class="navbar navbar-inverse" role="navigation" style="border-radius:0px;">
-        <div class="navbar-header">
-          <a href="/" class="navbar-brand">Ecclesia</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">logout</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+{% block title %} Ecclesia History {% endblock title %}
 
-    <div class="site-container">
-      <div class="main">
-        <div class="header text-center white-text">
-          <h1>Meeting History Records</h1>
-        </div>
-        <div class="row container history-records">
-          {% for record in discusses %}
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="thumbnail">
-              <div class="caption">
-                <h3>{{ record.room }}</h3>
-                <p>host: {{ record.host.toString() }}</p>
-                <p>date: {{ record.date.toLocaleDateString() }}</p>
-                <p>participants: {% for user in record.participants %}
-                  <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %} {% endfor %}
-                  <p>
-                    <a href="/history/detail?room={{ record.room }}&host={{ record.host.toString() }}&date={{ record.date.toString() }}" class="btn btn-primary" role="button">View</a>
-                    <a href class="btn btn-default" role="button">Download Docs</a>
-                  </p>
-              </div>
-            </div>
+{% block header %}
+<div class="navbar-header">
+  <a href="/" class="navbar-brand">Ecclesia</a>
+</div>
+<div class="navbar-collapse collapse">
+  <ul class="nav navbar-nav navbar-right">
+    <li><a href="/logout">logout</a></li>
+  </ul>
+</div>
+{% endblock header %}
+
+
+{% block content %}
+<div class="page history-page">
+  <div class="main">
+    <div class="header text-center white-text">
+      <h1>Meeting History Records</h1>
+    </div>
+    <div class="row container history-records">
+      {% for record in discusses %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>{{ record.room }}</h3>
+            <p>host: {{ record.host.toString() }}</p>
+            <p>date: {{ record.date.toISOString() }}</p>
+            <p>participants: {% for user in record.participants %}
+              <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %} {% endfor %}
+              <p>
+                <a href="/history/detail?{{ record.params }}" class="btn btn-info" role="button">View</a>
+                <a href class="btn btn-default" role="button">Download Docs</a>
+              </p>
           </div>
-          {% endfor %}
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
+</div>
+{% endblock content %}
 
-  <script type="text/javascript" src="/js/app.js"></script>
+{% block script %}
+  {% parent %}
   <script type="text/javascript" src="/js/history.js"></script>
-  <script type="text/javascript">
-    // test
-    $(document).ready(function() {
-      var a = $('.row').children();
-      for (var i = 0; i < 8; i++) {
-        $('.row').append(a)
-      }
-    })
-  </script>
-</body>
-
-</html>
+{% endblock script %}

@@ -1,35 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ecclesia History Detail</title>
-<link href="/css/style.css" rel="stylesheet">
-</head>
+{% extends '../common/base.html' %}
 
-<body>
+{% block title %} Ecclesia History Detail {% endblock title %}
+
+{% block header %}
+<div class="navbar-header">
+  <a href="/" class="navbar-brand">Ecclesia</a>
+</div>
+<div class="navbar-collapse collapse">
+  <ul class="nav navbar-nav navbar-right">
+    <li><a href="/history">histories</a></li>
+    <li><a href="/logout">logout</a></li>
+  </ul>
+</div>
+{% endblock header %}
+
+{% block content %}
   <div class="page history-page">
-    <nav>
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a href="/" class="navbar-brand">Ecclesia</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="/history">histories</a></li>
-              <li><a href="/logout">logout</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>    
     {% include "present.html" %}
   </div>
+{% endblock content %}
 
-
-<script src="/js/app.js"></script>
+{% block script %}
+{% parent %}
 <script src="/js/history.js"></script>
-
-</body>
-</html>
+{% endblock script %}

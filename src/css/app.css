@@ -1,7 +1,5 @@
 body {
-  word-wrap: break-word;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 h1, h2, h3, h4, h5, h6, p, span {
@@ -13,12 +11,12 @@ h1, h2, h3, h4, h5, h6, p, span {
   border-radius: 0px;
 }
 
-.btn, .navbar-btn {
+.btn {
   border-radius: 2px;
 }
 
-.white-text {
-  color: #fff;
+.navbar-btn {
+  margin-right: 4px;
 }
 
 .huge-title {
@@ -29,14 +27,13 @@ h1, h2, h3, h4, h5, h6, p, span {
 }
 
 .site-container {
-  padding-top: 2.5em;
-  padding-bottom: 2.5em;
+  overflow: auto;
 }
 
 .main {
   background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  padding: 20px 40px;
+  overflow: auto;
+  padding: 2em 4em;
   width: 100%;
 }
 
@@ -53,8 +50,9 @@ a:hover {
 }
 
 .page {
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  position: absolute;
+  width: 100%;
+  top: 50px;
+  left: 0;
+  bottom: 0;
 }

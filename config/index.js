@@ -9,8 +9,7 @@ var config = {
     /* web server config */
     debug: true,
 
-    
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 3000,
 
 
@@ -19,16 +18,8 @@ var config = {
 
     session_secret: 'ecclesia_session_secret',
     auth_cookie_name: 'ecclesia',
-    
+
     cookieSecret: 'ecclesiadatabase',
-    mail_opts: {
-        // host: '',
-        // port: ,
-        // auth: {
-            // user: '',
-            // pwd:  ''
-        // }
-    },
 
     upload: {
         path: path.join(__dirname, 'public/upload/'),
@@ -49,13 +40,13 @@ var config = {
     stunservers: [
         { url: "stun:stun.l.google.com:19302" }
     ],
-    
+
     turnservers: [
         /*
         { "url": "turn:localhost",
           "secret": "turnserversharedsecret",
           "expiry": 86400 }
-        */  
+        */
     ],
 
 };
