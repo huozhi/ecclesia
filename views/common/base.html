@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<title>{% block title %} Ecclesia {% endblock title %}</title>
+{% block style %}
+<link href="/css/style.css" rel="stylesheet"/>
+{% endblock style %}
+</head>
+<body>
+
+<!-- navbar header -->
+<nav>
+  <div class="contain-fluid">
+    <div class="navbar navbar-inverse" role="navigation">
+      {% block header %}{% endblock header %}
+    </div>
+  </div>
+</nav>
+
+<!-- body content -->
+{% block content %}{% endblock content %}
+
+<!-- after scripts  -->
+{% block script %}
+<script src="/js/bundle.js"></script>
+{% endblock script %}
+</body>
+</html>

@@ -25,7 +25,7 @@ const getChatParams = function(room, hostId, userId) {
 
 exports.index = function (req, res, next) {
   if (req.session.user) {
-    res.render('home/home', {
+    res.render('home', {
       user: req.session.user
     })
   } else {
@@ -74,8 +74,8 @@ exports.joinRoom = function (req, res, next) {
       room: room,
       host: ObjectId(hostId),
     }
-    logger.debug('home.joinRoom Discuss.findDiscussByQuery', query)
-    return Discuss.findDiscussByQuery(query, { $sort: { date: -1 } })
+    logger.debug('home.joinRoom', 'Discuss.findByQuery', query)
+    return Discuss.findByQuery(query, { $sort: { date: -1 } })
   })
   .then(function(discuss) {
     logger.debug('session.user', user.name)
@@ -93,7 +93,7 @@ exports.joinRoom = function (req, res, next) {
     })
   })
   .catch(function(err) {
-    logger.debug(err)
+    logger.error('joinRoom', err)
     return common.errors(res, 500, err)
   })
 }

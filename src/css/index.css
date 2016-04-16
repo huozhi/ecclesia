@@ -4,3 +4,7 @@
   background-size: cover;
   background-position: center;
 }
+
+.index-main {
+  min-height: 330px;
+}

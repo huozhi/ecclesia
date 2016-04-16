@@ -26,11 +26,10 @@ gulp.task('rtc', function() {
 
 gulp.task('js', function() {
   // bower bundle
-  gulp.src(mainBowerFiles('*/**.js', {
+  gulp.src(mainBowerFiles('**/*.js', {
     path: bowerPath
   }))
-  // .pipe(filter(['**/*.js']))
-  .pipe(concat('app.js'))
+  .pipe(concat('bundle.js'))
   .pipe(gulp.dest(`${destFolder}/js`))
 
   gulp.src('./src/js/**/*.js')
@@ -40,19 +39,22 @@ gulp.task('js', function() {
 })
 
 gulp.task('css', function() {
-  // .concat(['src/css/app.css'])
-  let lessStream, cssStream
+  let lessStream, sassStream
 
   lessStream = gulp.src(mainBowerFiles('**/*.less', {
     path: bowerPath
   }))
   .pipe(less())
 
-  cssStream = gulp.src('src/css/*.css')
+  sassStream = gulp.src([
+    'src/css/*.css',
+    'src/css/*.scss',
+  ])
+  .pipe(sass())
 
   streamQueue({ objectMode: true },
     lessStream,
-    cssStream
+    sassStream
   )
   .pipe(concat('style.css'))
   .pipe(gulp.dest(`${destFolder}/css/`))

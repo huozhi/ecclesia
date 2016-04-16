@@ -1,51 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="utf-8">
-<title>Ecclesia Chat</title>
-<link href="/css/style.css" rel="stylesheet">
-</head>
-<body>
+{% extends '../common/base.html' %}
 
-<div class="hidden-modals">
-  {% include "chart-modal.html" %}
-  {% include "impress-modal.html" %}
-  {% include "check-media.html" %}
-</div>
+{% block header %}
+  <div class="navbar-header">
+    <a href="/" class="navbar-brand">Ecclesia</a>
+  </div>
+  <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <button id="addSlide" class="btn btn-default navbar-btn" data-target="#add-impress-modal">
+          <span class="glyphicon glyphicon-plus"></span>&nbsp;Slide
+        </button>
+      </li>
+      <li>
+        <button id="addChart" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
+          <span class="glyphicon glyphicon-plus"></span>&nbsp;Chart
+        </button>
+      </li>
+      <li>
+        <button id="mediaOpts" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">
+          <span class="glyphicon glyphicon-wrench"></span>&nbsp;Media
+        </button>
+      </li>
+      <li><a href="/logout">logout</a></li>
+    </ul>
+  </div>
+{% endblock header %}
 
-<header class="head-container">
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a href="/" class="navbar-brand">Ecclesia</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <button id="addSlide" class="btn btn-default navbar-btn"  data-target="#add-impress-modal">
-            Slide <span class="glyphicon glyphicon-plus"></span>
-            </button>
-          </li>
-          <li>
-            <button id="addChart" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#add-chart-modal">
-              Chart <span class="glyphicon glyphicon-plus"></span>
-            </button>
-          </li>
-          <li>
-            <button id="mediaOpts" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">
-              Media <span class="glyphicon glyphicon-wrench"></span>
-            </button>
-          </li>
-          <li><a href="/logout">logout</a></li>
-        </ul>
-      </div>
-
-    </div>
-  </nav>
-</header>
-
-
-<div class="site-container">
+{% block content %}
+<div class="page chat-page">
   <div class="affix-bar col-lg-2 col-md-2 col-sm-12">
     <div id="localVideo" class="video-source">
       <div id="localVolBar" class="vol-bar"></div>
@@ -57,16 +39,15 @@
 
   <div class="video-screen col-lg-10 col-md-10 col-sm-12">
     <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
-      <ol class="carousel-indicators">
-
-      </ol>
-      <div class="carousel-inner impress-panel text-center center-block" id="slides" role="listbox">
-
+      <ol class="carousel-indicators"></ol>
+      <div class="carousel-inner impress-panel text-center center-block"
+           id="slides"
+           role="listbox">
       </div>
-      <button class="btn btn-default btn-xs" id="edit">
+      <button class="btn btn-default btn-xs edit" id="edit">
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
-      <div id="editBoard" class="container-fluid">
+      <div class="edit-board container-fluid">
         <form id="editForm">
           <div class="form-group">
             <label for="slideTitle">Slide Title</label>
@@ -79,18 +60,21 @@
         </form>
       </div>
     </div>
+  </div>
 
-
+  <div class="hidden-modals">
+    {% include "chart-modal.html" %}
+    {% include "impress-modal.html" %}
+    {% include "check-media.html" %}
   </div>
 </div>
+{% endblock content %}
 
-<script src="/js/app.js"></script>
+{% block script %}
+{% parent %}
 <script src="/js/rtc.js"></script>
 <script src="/js/chat_webrtc.js"></script>
 <script src="/js/chat.js"></script>
 <script src="/js/upload.js"></script>
 <script src="/js/sync.js"></script>
-
-
-</body>
-</html>
+{% endblock script %}

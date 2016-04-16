@@ -1,4 +1,7 @@
-.video-screen {
-  padding-left: 15px;
-  padding-right: 15px;
+.details-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  padding-top: 15px;
 }

@@ -78,8 +78,10 @@ app.use(function(err, req, res, next) {
 
 
 
-var server = https.createServer(config.signal.opts, app);
-server.listen(config.port || 3000);
+var server = https.createServer(config.signal.opts, app)
+server.listen(config.port || 3000, config.host, () => {
+  console.log(`Https server listen on https://${config.host}:${config.port}`)
+})
 
 
 module.exports = app;
