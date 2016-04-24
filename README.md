@@ -8,11 +8,6 @@ A web meeting system for small team discussing. support sketching graphs,
 making dynamic presentation and inserting dynamic charts. Our aim is to
 make meeting more conveniently and easily.
 
-### Readme
-
-[中文](https://github.com/lavende/ecclesia/blob/master/README.zh-CN.md)
-[English](https://github.com/lavende/ecclesia/blob/master/README.md)
-
 
 ### Development
 
@@ -38,10 +33,29 @@ is still in develop state.
 
 ### Screenshots
 
-![login](http://lavende.github.io/img/2015/ecclesia/login.jpg)
-![home](http://lavende.github.io/img/2015/ecclesia/home.jpg)
-![history](http://lavende.github.io/img/2015/ecclesia/history.jpg)
-![chat](http://lavende.github.io/img/2015/ecclesia/chat.jpg)
+#### unlogin page
+
+![index](http://lavende.github.io/img/2015/ecclesia/index.png)
+
+#### home page
+
+create, join a discuss. or view histories.
+
+![home](http://lavende.github.io/img/2015/ecclesia/home.png)
+
+#### chat page
+
+start chat
+
+![start-chat](http://lavende.github.io/img/2015/ecclesia/start-chat.png)
+
+edit a topic
+
+![edit](http://lavende.github.io/img/2015/ecclesia/edit.png)
+
+preview edition
+
+![preview](http://lavende.github.io/img/2015/ecclesia/preview.png)
 
 
 ### Powered By
