@@ -35,27 +35,27 @@ is still in develop state.
 
 #### unlogin page
 
-![index](http://lavende.github.io/img/2015/ecclesia/index.png)
+![index](http://huozhi.github.io/img/2015/ecclesia/index.png)
 
 #### home page
 
 create, join a discuss. or view histories.
 
-![home](http://lavende.github.io/img/2015/ecclesia/home.png)
+![home](http://huozhi.github.io/img/2015/ecclesia/home.png)
 
 #### chat page
 
 start chat
 
-![start-chat](http://lavende.github.io/img/2015/ecclesia/start-chat.png)
+![start-chat](http://huozhi.github.io/img/2015/ecclesia/start-chat.png)
 
 edit a topic
 
-![edit](http://lavende.github.io/img/2015/ecclesia/edit.png)
+![edit](http://huozhi.github.io/img/2015/ecclesia/edit.png)
 
 preview edition
 
-![preview](http://lavende.github.io/img/2015/ecclesia/preview.png)
+![preview](http://huozhi.github.io/img/2015/ecclesia/preview.png)
 
 
 ### Powered By
