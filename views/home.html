@@ -16,7 +16,7 @@
 <div class="page home-page">
   <div class="main">
     <div class="home-menu center-block">
-      <h1 class="huge-title">Welcome to Ecclesia, {{ user.name }}</h1>
+      <h1 class="huge-title">Welcome to Ecclesia, {{ user.account }}</h1>
       <div class="user-opers">
         <div class="col-md-4 text-center">
           <a href="#create" class="home-link" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
@@ -42,7 +42,7 @@
 
 
   <div class="tab-content">
-    <form id="create" action="/home/create" method="post" class="type-form center-block tab-pane active">
+    <form id="create" action="/create" method="post" class="type-form center-block tab-pane active">
       <div class="form-group">
         <input name="room" type="text" class="form-control" placeholder="Room name">
       </div>
@@ -51,7 +51,7 @@
       </div>
     </form>
 
-    <form id="join" action="/home/join" method="post" class="type-form center-block tab-pane">
+    <form id="join" action="/join" method="post" class="type-form center-block tab-pane">
       <div class="form-group">
         <input name="room" type="text" class="form-control" placeholder="Meeting name">
       </div>

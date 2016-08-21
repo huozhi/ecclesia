@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict'
 
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-var ChartSchema = new Schema({
+const Chart = new Schema({
   type: { type : String },
   lables: [ { type: String } ],
   values: [ { type: Number } ],
-});
+})
 
-mongoose.model('Chart', ChartSchema);
+module.exports = mongoose.model('Chart', Chart)

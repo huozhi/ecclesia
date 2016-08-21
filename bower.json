@@ -1,5 +1,5 @@
 {
-  "name": "public",
+  "name": "static",
   "version": "0.0.0",
   "homepage": "https://github.com/lavende/ecclesia",
   "authors": [
@@ -16,6 +16,7 @@
     "marked": "^0.3.5",
     "jquery": "^2.2.2",
     "Chart.js": "^1.1.0",
-    "font-awesome": "^4.5.0"
+    "font-awesome": "^4.5.0",
+    "bootstrap": "^3.3.7"
   }
 }

@@ -1,14 +1,9 @@
 body {
-  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font: 14px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 h1, h2, h3, h4, h5, h6, p, span {
   font-weight: 300;
-}
-
-.navbar {
-  border: 0px;
-  border-radius: 0px;
 }
 
 .btn {
@@ -55,4 +50,20 @@ a:hover {
   top: 50px;
   left: 0;
   bottom: 0;
+}
+
+.header {
+  h1 {
+    color: #fff;
+  }
+}
+
+.nav-header {
+  .navbar {
+    display: flex;
+    background-color: #fff;
+    color: #333;
+    border: 0;
+    border-radius: 0;
+  }
 }

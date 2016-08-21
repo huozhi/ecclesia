@@ -1,5 +1,3 @@
-#####=== Node ===#####
-
 # Logs
 logs
 *.log
@@ -15,9 +13,6 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
 # node-waf configuration
 .lock-wscript
 
@@ -31,6 +26,6 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
-*.pem
-public
+static
 bower_components/
+.DS_Store

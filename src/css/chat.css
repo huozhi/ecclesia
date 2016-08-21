@@ -8,7 +8,6 @@
 }
 
 .carousel-indicators {
-
   li {
     background-color: #aaa;
   }
@@ -16,7 +15,6 @@
   .active {
     background-color: #ddd;
   }
-
 }
 
 .navbar {
@@ -71,7 +69,6 @@
   height: 100%;
   top: 0;
   color: #fff;
-  /*background-color: transparent;*/
   z-index: 10;
   display: none;
 }

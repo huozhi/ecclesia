@@ -1,5 +1,3 @@
-'use strict'
-
 const statusCodes = require('http').STATUS_CODES
 
 const response = function(message, data) {
@@ -10,10 +8,7 @@ const response = function(message, data) {
 }
 
 exports.validParams = function() {
-  for (let i = 0; i < arguments.length; i++) {
-    if (!arguments[i]) return false
-  }
-  return true
+  return arguments.every(item => item != null)
 }
 
 exports.successResult = function(data) {
@@ -21,6 +16,7 @@ exports.successResult = function(data) {
 }
 
 exports.errors = function(res, code, err) {
+  console.error(err.stack)
   return res.status(code).send(err || statusCodes[code])
 }
 

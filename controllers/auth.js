@@ -1,86 +1,48 @@
-'use strict';
+'use strict'
 
 const express = require('express')
 const crypto = require('crypto')
+const passport = require('passport')
 const common = require('../common')
-const User = require('../proxy').User
-const UserModel = require('../models').User
-const Eventproxy = require('eventproxy')
-const genSession = require('../middlewares/session')
+const User = require('../models/user')
 
-exports.index = function (req, res) {
-  if (req.session.user) {
-    console.log('has session, redirect')
-    res.redirect('/home')
+exports.index = (req, res) => {
+  const {user} = req.session
+  if (user) {
+    res.render('home', {user})
   } else {
-    console.log('rendering...')
     res.render('index')
   }
 }
 
-
-exports.signup = function (req, res, next) {
-  console.log(req.body)
-  const account = req.body.account
-  const password = req.body.password
-  const passrept = req.body.passrept
-  const email    = req.body.email
-
-  if (passrept !== password) {
-    return common.errors(res, 400, 'password not matched in repeating')
-  }
-  // TODO: encrypt password
+exports.signup = (req, res, next) => {
+  const {account, password, email} = req.body
   User.register(account, password, email)
-  .then(function(newUser) {
-    console.log(newUser)
-    genSession(req, res, newUser)
-    return res.send(common.successResult())
+  .then(user => {
+    passport.authenticate('local', (error, user) => {
+      if (error) {
+        return common.errors(res, 500, err)
+      }
+      return res.send({ret: true})
+    })(req, res, next)
   })
-  .catch(function(err) {
-    console.error(err)
+  .catch(err => {
     return common.errors(res, 500, err)
   })
 }
 
-
-exports.login = function (req, res, next) {
-  const account = req.body.account
-  const password = req.body.password
-  const failMessage = {
-    fail: { password: 'Not Correct' }
-  }
-
-  if (!common.validParams(account, password)) {
-    common.errors(res, 400)
-  }
-
-  let findUserMethod
-  if (~account.indexOf('@')) {
-    findUserMethod = User.findByMail
-  }
-  else {
-    findUserMethod = User.findByName
-  }
-
-  findUserMethod(account).then(function(user) {
-    if (user &&
-        user.name === account &&
-        user.password === password) {
-      console.log(user)
-      genSession(req, res, user)
-    } else {
-      return res.send(failMessage)
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user) => {
+    if (err) { next(err) }
+    if (!user) {
+      return common.errors(res, 401, {message: 'Unauthorized'})
     }
-    return res.send(common.successResult())
-  })
-  .catch(function(err) {
-    return common.errors(res, 500, err)
-  })
+    return res.send({ret: true})
+  })(req, res, next)
 }
-
 
 exports.logout = function(req, res) {
+  req.logout()
   req.session.destroy()
-  res.clearCookie('c_u')
-  return res.redirect('/')
+  res.redirect('/')
 }

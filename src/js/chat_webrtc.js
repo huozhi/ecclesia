@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 var parseUrl = function(url) {
   var query = url || location.search

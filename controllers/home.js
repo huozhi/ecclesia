@@ -12,7 +12,7 @@ const common = require('../common')
 
 const getChatParams = function(room, hostId, userId) {
   const params = {
-    room: room,
+    room,
     host: hostId,
     self: userId,
   }
@@ -23,19 +23,8 @@ const getChatParams = function(room, hostId, userId) {
   return arr.join('&')
 }
 
-exports.index = function (req, res, next) {
-  if (req.session.user) {
-    res.render('home', {
-      user: req.session.user
-    })
-  } else {
-    res.redirect('/')
-  }
-}
-
 exports.createRoom = function (req, res, next) {
-  const room = req.body.room
-  const topics = req.body.topics
+  const {room, topics} = req.body
   const host = req.session.user
 
   Discuss.create(room, host, topics)
@@ -61,9 +50,8 @@ exports.createRoom = function (req, res, next) {
 }
 
 exports.joinRoom = function (req, res, next) {
-  const room = req.body.room
-  const host = req.body.host // type:string, user name
-  const user = req.session.user
+  const {room, host} = req.body
+  const {user} = req.session
   let hostId
 
   logger.debug('joinRoom req.body', req.body)
@@ -75,11 +63,11 @@ exports.joinRoom = function (req, res, next) {
       host: ObjectId(hostId),
     }
     logger.debug('home.joinRoom', 'Discuss.findByQuery', query)
-    return Discuss.findByQuery(query, { $sort: { date: -1 } })
+    return Discuss.findByQuery(query, {$sort: {date: -1}})
   })
   .then(function(discuss) {
-    logger.debug('session.user', user.name)
-    logger.debug('home.joinRoom Discuss.addParticipant', discuss, user.name)
+    logger.debug('session.user', user.account)
+    logger.debug('home.joinRoom Discuss.addParticipant', discuss, user.account)
     return Discuss.addParticipant(discuss, user)
   })
   .then(function(numAffected) {

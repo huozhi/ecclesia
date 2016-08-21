@@ -7,10 +7,10 @@
   <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
       <li class="active">
-        <a href="#loginForm" role="tab" data-toggle="tab" aria-controls="login" aria-expanded="true">login in</a>
+        <a href="#login" role="tab" data-toggle="tab" aria-controls="login" aria-expanded="true">login in</a>
       </li>
       <li>
-        <a href="#signupForm" role="tab" data-toggle="tab" aria-controls="signup" aria-expanded="false">sign up</a>
+        <a href="#signup" role="tab" data-toggle="tab" aria-controls="signup" aria-expanded="false">sign up</a>
       </li>
     </ul>
   </div>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="col-md-4 pull-right tab-content">
-        <form id="loginForm" action="/login" method="post" class="tab-pane active" role="tabpanel">
+        <form id="#login" action="/login" method="post" class="tab-pane active" role="tabpanel">
           <div class="form-group">
             <input name="account" type="text" class="form-control" placeholder="Username">
           </div>
@@ -40,7 +40,7 @@
           <button type="submit" class="btn btn-success btn-block">Login</button>
         </form>
 
-        <form id="signupForm" action="/signup" method="post" class="tab-pane" role="tabpanel">
+        <form id="signup" action="/signup" method="post" class="tab-pane" role="tabpanel">
           <div class="form-group">
             <input name="email" type="text" class="form-control" placeholder="Your email required">
           </div>
@@ -49,9 +49,6 @@
           </div>
           <div class="form-group">
             <input name="password" type="password" class="form-control" placeholder="Create a password">
-          </div>
-          <div class="form-group">
-            <input name="passrept" type="password" class="form-control" placeholder="Repeat your password">
           </div>
           <div class="text-muted">
             <p color="white">Use letters, umerals and characters as your username or password</p>
