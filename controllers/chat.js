@@ -1,30 +1,26 @@
 'use strict'
 
-var fs = require('fs')
-var Discuss = require('../proxy').Discuss
-var User = require('../proxy').User
-var Topic = require('../proxy').Topic
-var ChartModel = require('../models').Chart
-var TopicModel = require('../models').Topic
-var common = require('../common')
+const fs = require('fs')
+const Discuss = require('../proxy').Discuss
+const User = require('../proxy').User
+const Topic = require('../proxy').Topic
+const ChartModel = require('../models').Chart
+const TopicModel = require('../models').Topic
+const common = require('../common')
 
 
-var sync = function (req, res, next) {
+const sync = (req, res, next) => {
   return res.send(common.successResult())
 }
 
-
-var index = function (req, res, next) {
-  return res.render('chat/chat', {
-    user: req.session.user,
-    room: req.session.room,
-  })
+const index = (req, res, next) => {
+  const {user, room} = req.session
+  return res.render('chat/chat', {user, room})
 }
 
-var topics = function (req, res, next) {
-  // var query = req.body.info
-  var discuss = req.body.discuss
-  Discuss.findTopics(discuss._id, function (err, topics) {
+const topics = (req, res, next) => {
+  var {discuss} = req.body
+  Discuss.findTopics(discuss._id, (err, topics) => {
     if (err) {
       return common.erros[500](res, err)
     }
@@ -34,7 +30,7 @@ var topics = function (req, res, next) {
   })
 }
 
-var upload = function (req, res, next) {
+var upload = (req, res, next) => {
   var type = req.params.type
   var title = req.body.title
   var topic

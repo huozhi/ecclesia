@@ -1,16 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+'use strict'
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 
-var DiscussSchema = new Schema({
+const Discuss = new Schema({
   room: { type: String },
   date: { type: Date, default: new Date() },
   host: { type: ObjectId, ref: 'User' },
   participants: [ { type: String } ],
   topics: [ { type: ObjectId, ref: 'Topic' } ]
 },{
-  collection: 'Discusses'
+  collection: 'discusses'
 });
 
-mongoose.model('Discuss', DiscussSchema);
+
+module.exports = mongoose.model('Discuss', Discuss)

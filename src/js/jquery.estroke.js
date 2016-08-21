@@ -1,3 +1,5 @@
+'use strict'
+
 ;(function($) {
   $.fn.Stroke = function(cb, color) {
     $(this).on('mousedown mouseleave mouseup mouseout mousemove', function (event) {

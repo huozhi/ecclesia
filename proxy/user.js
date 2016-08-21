@@ -1,17 +1,14 @@
-var models = require('../models');
-var Discuss = models.Discuss;
-var User = models.User;
+'use strict'
 
+const Discuss = require('../models/discuss')
+const User = require('../models/user')
 
-User.findByAuth = function (name, password, callback) {
-  return User.findOne({
-    'name': name,
-    'password': password }, callback).exec()
+User.findByAuth = (account, password) => {
+  return User.findOne({account, password}).exec()
 };
 
-User.findByName = function (name, callback) {
-  return User.findOne({
-    'name': name }, callback).exec()
+User.findByName = (account) => {
+  return User.findOne({account}).exec()
 };
 
 User.findUsersByQuery = function (query, opts, callback) {
@@ -24,8 +21,8 @@ User.findByMail = function (email, callback) {
   }, callback).exec()
 }
 
-User.findDiscussesByUserName = function (name, callback) {
-  User.findByName(name)
+User.findDiscussesByUserName = (account, callback) => {
+  User.findByName(account)
   .then(function(user) {
     return Discuss.findDiscussByIds(user.discusses).exec()
   })
@@ -34,12 +31,12 @@ User.findDiscussesByUserName = function (name, callback) {
   })
 }
 
-User.register = function (name, password, email, callback) {
-  var user = new User()
-  user.name = name
+User.register = (account, password, email) => {
+  const user = new User()
+  user.account = account
   user.password = password
   user.email = email
-  return user.save() // already a promise
+  return user.save()
 }
 
 module.exports = User

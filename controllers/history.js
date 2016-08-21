@@ -3,58 +3,46 @@
 const querystring = require('querystring')
 const Eventproxy = require('eventproxy')
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
 const logger = require('log4js').getLogger()
 const common = require('../common')
-const User = require('../proxy').User
-const Discuss = require('../proxy').Discuss
+const User = require('../proxy/user')
+const Discuss = require('../proxy/discuss')
 
 exports.index = function (req, res, next) {
-  const user = req.session.user
-  const ep = Eventproxy()
-  ep.all(['complete', 'info_all'], function(result, discusses) {
-    discusses = discusses.map(discuss => {
-      discuss['params'] = querystring.stringify({
-        room: discuss.room,
-        host: discuss.host,
-        date: discuss.date.toISOString(),
-      })
-      return discuss
-    })
-    return res.render('history/panel', {
-      discusses: discusses
-    })
-  })
-  Discuss.findByIds(user.discusses, true)
-  .then(function(discusses) {
-    var len = discusses.length
-    if (len === 0) {
-      logger.debug('discuesses', discuesses)
-      ep.emit('info_all', discusses)
+  const {user} = req.session
+  Discuss.findByIds(user.discusses)
+  .then(results => {
+    if (!results || results.length === 0) {
+      return res.render('history/panel', {discusses: []})
     }
-    discusses.forEach(function(discuss, i, _self) {
-      var participants = discuss.participants || []
-      logger.debug('participants', participants)
-
-      User.findById(discuss.host).exec()
-      .then(function(user) {
-        _self[i].host = user.name
-        if (--len <= 0) {
-          ep.emit('info_all', _self)
-        }
-      })
-      .catch(function(err) {
-        logger.error('history.index', err)
-      })
+    const promises = results.map(result => {
+      return User.findById(result.host).exec()
+        .then(user => {
+          return Object.assign({}, result, {host: user.account})
+        })
     })
-    ep.emit('complete')
-
+    Promise.all(promises)
+    .then(discussArray => {
+      const discusses = discussArray.map(discuss => {
+        return Object.assign({}, discuss, {
+          params: querystring.stringify({
+            room: discuss.room,
+            host: discuss.host,
+            date: discuss.date.toISOString(),
+          })
+        })
+      })
+      res.render('history/panel', {discusses})
+    })
+    .catch(err => {
+      logger.error(err.stack)
+      return common.errors[500](res, err.message)
+    })
   })
   .catch(function(err) {
-    return common.errors[500](res, err.message);
+    return common.errors[500](res, err.message)
   })
 }
-
 
 exports.getDiscussDetail = function(req, res, next) {
   const hostName = req.query.host

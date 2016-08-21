@@ -1,5 +1,3 @@
-'use strict'
-
 const mongoose = require('mongoose')
 const logger = require('log4js').getLogger()
 const ObjectId = mongoose.Types.ObjectId
@@ -11,11 +9,9 @@ Discuss.findByQuery = function (query, opts) {
   return Discuss.find(query, '', opts).exec()
 }
 
-Discuss.findByIds = function (ids, isLean) {
-  const query = Discuss.find({ _id: { $in: ids } })
-  return ((isLean) ? query.lean() : query)
-         .sort({ date: -1 })
-         .exec()
+Discuss.findByIds = function (ids) {
+  const query = Discuss.find({_id: {$in: ids}})
+  return query.sort({date: -1}).lean().exec()
 }
 
 Discuss.findTopics = function (discuss) {
@@ -31,10 +27,10 @@ Discuss.insertTopic = function (discuss, newTopic, callback) {
 }
 
 Discuss.addParticipant = function (discuss, user) {
-  logger.debug('inner addParticipant', discuss, user.name)
+  logger.debug('inner addParticipant', discuss, user.account)
   return Discuss.update(
     { _id: discuss._id },
-    { $addToSet: { participants: user.name } }
+    { $addToSet: { participants: user.account } }
   ).exec()
 }
 
@@ -43,7 +39,7 @@ Discuss.create = function (room, host, topics) {
   discuss.room = room
   discuss.date = new Date()
   discuss.host = host._id
-  discuss.participants = [ host.name ]
+  discuss.participants = [host.account]
   discuss.topics = topics || []
   return discuss.save()
 }

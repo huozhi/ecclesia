@@ -1,49 +1,39 @@
-// user
 {
-    "username": "xxxx",
-    "password": "1234",
-    "passrept": "1234",
-    "email": "u123@163.com",
-    "discusses": [ {
-            "$db_reference": "discuss"
-        }
-    ]
+  "username": "xxxx",
+  "password": "1234",
+  "passrept": "1234",
+  "email": "u123@163.com",
+  "discusses": [{
+    "$db_reference": "discuss"
+  }]
 }
 
-
-// chart
 {
-    "labels": [ "labelx", "label2" ],
-    "values": [ 1, 2 ]
+  "labels": ["labelx", "label2"],
+  "values": [1, 2]
 }
 
-// topic
 {
-    "title": "topic title",
-    "impress": [
-        "mdstrx", "mdstry", "..."
-    ],
-    "charts": [ {
-            "$embeded": "chart"
-        }        
-    ]
+  "title": "topic title",
+  "impress": [
+    "mdstrx", "mdstry", "..."
+  ],
+  "charts": [{
+    "$embeded": "chart"
+  }]
 }
 
-// discuss 
 {
-    "room": "xxxx",
-    "date": "xxxx.xx.xx",
-    "host": {
-        "$db_reference": "user(ObjectId)"
-    },
-    "participants": [ {
-            "$db_reference": "user(ObjectId)"
-        }
-    ],
-    "topics": [ {
-            "$embeded": "topic"
-        }
-    ]
-    
-}
+  "room": "xxxx",
+  "date": "xxxx.xx.xx",
+  "host": {
+    "$db_reference": "user(ObjectId)"
+  },
+  "participants": [{
+    "$db_reference": "user(ObjectId)"
+  }],
+  "topics": [{
+    "$embeded": "topic"
+  }]
 
+}

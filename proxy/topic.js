@@ -1,31 +1,23 @@
-var models = require('../models');
-var Topic = models.Topic;
-var Discuss = require('./discuss');
-var handleError = require('../common').handleError;
+'use strict'
 
-
-// exports.findById = Topic.findById;
-
-// exports.findById = function (topicId, callback) {
-//   Topic.findOne({ '_id': topicId }, function (err, topic) {
-//     handleError(err, callback);
-//     callback(null, topic);
-//   });
-// };
+const models = require('../models')
+const Topic = models.Topic
+const Discuss = require('./discuss')
+const handleError = require('../common').handleError
 
 Topic.findByIds = function (topicIds, callback) {
   Topic.find({ '_id': { $in: topicIds } }, function (err, topics) {
-    handleError(err, callback);
-    callback(null, topics);
-  });
-};
+    handleError(err, callback)
+    callback(null, topics)
+  })
+}
 
 Topic.findByQuery = function (query, opts, callback) {
   Topic.find(query, '', opts, function (err, topics) {
-    handleError(err, callback);
-    callback(null, topics);
-  });
-};
+    handleError(err, callback)
+    callback(null, topics)
+  })
+}
 
 Topic.insertChart = function(tpoic, chart, callback) {
   Topic.findByIdAndUpdate(
@@ -33,10 +25,10 @@ Topic.insertChart = function(tpoic, chart, callback) {
     { $push: { 'charts': chart } },
     { safe: true, upsert: true },
     function (err, topic) {
-      handleError(err, callback);
-      callback(null, topic);
+      handleError(err, callback)
+      callback(null, topic)
     }
-  );
+  )
 }
 
 Topic.insertImpress = function (topic, impress, callback) {
@@ -45,20 +37,19 @@ Topic.insertImpress = function (topic, impress, callback) {
     { $push: { 'impress': impress } },
     { safe: true, upsert: true },
     function (err, topic) {
-      handleError(err, callback);
-      callback(null, topic);
+      handleError(err, callback)
+      callback(null, topic)
     }
-  );
-};
+  )
+}
 
 
 Topic.create = function (title, impress, charts, callback) {
-  var topic = new Topic();
-  topic.title = title;
-  topic.impress = impress || [];
-  topic.charts = charts || [];
-  topic.save(callback);
-};
+  var topic = new Topic()
+  topic.title = title
+  topic.impress = impress || []
+  topic.charts = charts || []
+  topic.save(callback)
+}
 
-module.exports = Topic;
-
+module.exports = Topic

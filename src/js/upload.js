@@ -1,3 +1,5 @@
+'use strict'
+
 function validMarkdown () {
   var markdown = $('#upload-md-file').get(0).files[0],
       fileName = markdown.name,

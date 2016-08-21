@@ -1,3 +1,5 @@
+'use strict'
+
 const $room = $('input[name="room"]'),
       $host = $('input[name="host"]');
 

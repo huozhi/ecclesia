@@ -1,15 +1,20 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
+'use strict'
 
-var UserSchema = new Schema({
-  name: { type: String, unique: true },
-  password: { type: String },
-  email: { type: String, unique: true },
-  accessToken: { type: String },
-  discusses: [ { type: ObjectId, ref: 'Discuss' } ]
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
+
+const User = new Schema({
+  account: {type: String, unique: true},
+  password: {type: String},
+  email: {type: String},
+  discusses: [{type: ObjectId, ref: 'Discuss'}],
 },{
-  collection: 'Users'
-});
+  collection: 'users',
+})
 
-mongoose.model('User', UserSchema);
+User.methods.validPassword = function(password) {
+  return password === this.password
+}
+
+module.exports = mongoose.model('User', User)

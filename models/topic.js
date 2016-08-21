@@ -1,13 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Chart = require('./chart');
+'use strict'
 
-var TopicSchema = new Schema({
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+const Chart = require('./chart')
+
+const Topic = new Schema({
   title: { type: String },
   impress: { type: String },
   charts: [ { type: Schema.Types.Mixed  } ]
 }, {
-  collection: 'Topics'
-});
+  collection: 'topics'
+})
 
-mongoose.model('Topic', TopicSchema);
+module.exports = mongoose.model('Topic', Topic)

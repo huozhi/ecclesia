@@ -1,3 +1,5 @@
+'use strict'
+
 var History = function() { }
 
 History.markedAll = function () {

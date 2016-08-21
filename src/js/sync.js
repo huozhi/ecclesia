@@ -1,6 +1,6 @@
-var Synchronize = {
+'use strict'
 
-}
+var Synchronize = {}
 
 var MediaTool = {
   Ready: function(asrc, vsrc, mready, cready) {

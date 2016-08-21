@@ -1,3 +1,1 @@
-var models = require('../models');
-var Chart = models.Chart;
-
+module.exports = require('../models/chart')

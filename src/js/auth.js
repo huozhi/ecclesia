@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
   const $inputs = $('input')
   const dangerColor = '#f2dede'
   const warningColor = '#fcf8e3'
@@ -10,15 +10,14 @@ $(document).ready(function () {
       url: form.attr('action'),
       data: form.serialize(),
     })
-    .done(function(data) {
-      // console.log(data)
-      if (data.fail) {
+    .done(response => {
+      if (!response.ret) {
         $inputs.css('background-color', dangerColor)
       } else {
         window.location.reload()
       }
     })
-    .fail(function(err) {
+    .fail(err => {
       $inputs.css('background-color', warningColor)
     })
   })

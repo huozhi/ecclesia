@@ -12,7 +12,7 @@ const less = require('gulp-less')
 const sass = require('gulp-sass')
 const streamQueue = require('streamqueue')
 const bowerPath = 'src/bower_components'
-const destFolder = 'public'
+const destFolder = 'static'
 
 
 
@@ -39,23 +39,18 @@ gulp.task('js', function() {
 })
 
 gulp.task('css', function() {
-  let lessStream, sassStream
+  let sassStream
+  let lessStream
 
   lessStream = gulp.src(mainBowerFiles('**/*.less', {
     path: bowerPath
   }))
   .pipe(less())
 
-  sassStream = gulp.src([
-    'src/css/*.css',
-    'src/css/*.scss',
-  ])
+  sassStream = gulp.src(['src/**/*.css'])
   .pipe(sass())
 
-  streamQueue({ objectMode: true },
-    lessStream,
-    sassStream
-  )
+  streamQueue.obj(lessStream, sassStream)
   .pipe(concat('style.css'))
   .pipe(gulp.dest(`${destFolder}/css/`))
 })
@@ -63,13 +58,14 @@ gulp.task('css', function() {
 gulp.task('static', function() {
   // fonts
   gulp.src([
-    `${bowerPath}/bootstrap-sass/**/fonts/*`,
+    `${bowerPath}/bootstrap/**/fonts/*`,
     `${bowerPath}/font-awesome/fonts/*`,
   ])
   .pipe(filter([
     '**/*.eot', '**/*.woff', '**/*.woff2', '**/*.svg', '**/*.tt'
   ]))
-  .pipe(gulp.dest(`${destFolder}/fonts/`))
+  .pipe(rename({dirname: ''}))
+  .pipe(gulp.dest(`${destFolder}/fonts`))
 
   // favicon
   gulp.src('./src/favicon.ico')
@@ -82,12 +78,6 @@ gulp.task('static', function() {
 
 gulp.task('watch', function() {
   gulp.watch('./src/**/*', ['base'])
-})
-
-gulp.task('test', function() {
-  console.log(mainBowerFiles('**/*.less', {
-    path: bowerPath
-  }))
 })
 
 gulp.task('base', ['css', 'js', 'static'])
