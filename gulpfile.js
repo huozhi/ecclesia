@@ -15,7 +15,6 @@ const bowerPath = 'src/bower_components'
 const destFolder = 'static'
 
 
-
 gulp.task('rtc', function() {
   const srcRoot = './src/rtc'
   return browserify(`${srcRoot}/simplewebrtc.js`)
@@ -47,11 +46,12 @@ gulp.task('css', function() {
   }))
   .pipe(less())
 
-  sassStream = gulp.src(['src/**/*.css'])
+  sassStream = gulp.src(['src/css/*.css'])
   .pipe(sass())
 
   streamQueue.obj(lessStream, sassStream)
   .pipe(concat('style.css'))
+  .pipe(require('gulp-clean-css')())
   .pipe(gulp.dest(`${destFolder}/css/`))
 })
 

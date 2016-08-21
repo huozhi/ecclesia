@@ -17,7 +17,14 @@ exports.index = (req, res) => {
 
 exports.signup = (req, res, next) => {
   const {account, password, email} = req.body
-  User.register(account, password, email)
+  User.findOne({account})
+  .then(exsitUser => {
+    if (exsitUser) {
+      return common.errors(res, 400, {ret: 'already exsited'})
+    } else {
+      return User.register(account, password, email)
+    }
+  })
   .then(user => {
     passport.authenticate('local', (error, user) => {
       if (error) {

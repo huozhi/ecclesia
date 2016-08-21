@@ -58,12 +58,34 @@ a:hover {
   }
 }
 
-.nav-header {
-  .navbar {
-    display: flex;
-    background-color: #fff;
+
+.navbar {
+  background-color: #fff;
+  color: #666;
+  border: 0;
+  border-radius: 0;
+
+  &:hover {
     color: #333;
-    border: 0;
-    border-radius: 0;
   }
+}
+
+.navbar-nav {
+  li {
+    a {
+      color: #333;
+      background-color: #fff;
+    }
+
+    &:hover {
+      a {
+        color: #666;
+        background-color: #eee;
+      }
+    }
+  }
+}
+
+.Sign-description {
+  color: #fff;
 }
