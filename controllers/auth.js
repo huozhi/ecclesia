@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
       if (error) {
         return common.errors(res, 500, err)
       }
-      return res.send({ret: true})
+      return res.send({next: '/'})
     })(req, res, next)
   })
   .catch(err => {
@@ -44,7 +44,7 @@ exports.login = (req, res, next) => {
     if (!user) {
       return common.errors(res, 401, {message: 'Unauthorized'})
     }
-    return res.send({ret: true})
+    return res.send({next: '/'})
   })(req, res, next)
 }
 

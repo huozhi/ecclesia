@@ -10,12 +10,8 @@ function FormController() {
       url: form.attr('action'),
       data: form.serialize(),
     })
-    .done(response => {
-      if (!response.ret) {
-        $inputs.css('background-color', dangerColor)
-      } else {
-        window.location.reload()
-      }
+    .done(data => {
+      window.location.href = (data && data.next) || '/'
     })
     .fail(err => {
       $inputs.css('background-color', warningColor)
@@ -26,4 +22,4 @@ function FormController() {
   })
 }
 
-window.addEventListener('load', FormController)
+module.exports = FormController

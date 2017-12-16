@@ -63,9 +63,10 @@ gulp.task('static', function() {
 })
 
 gulp.task('watch', function() {
+  gulp.start('base')
   gulp.watch('./src/**/*', ['base'])
 })
 
 gulp.task('base', ['css', 'js', 'static'])
 gulp.task('build', ['rtc', 'css', 'js', 'static'])
-gulp.task('default', ['build'])
+gulp.task('default', ['watch'])
