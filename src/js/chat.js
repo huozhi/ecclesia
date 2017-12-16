@@ -216,11 +216,9 @@ Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 
 /******* CHART ********/
 
-
-
-
-
-$(document).ready(function() {
+function ChartPageController() {
   Impress.init()
   Discuss.init()
-})
+}
+
+window.addEventListener('load', ChartPageController)

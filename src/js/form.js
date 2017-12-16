@@ -1,4 +1,4 @@
-$(document).ready(() => {
+function FormController() {
   const $inputs = $('input')
   const dangerColor = '#f2dede'
   const warningColor = '#fcf8e3'
@@ -10,12 +10,8 @@ $(document).ready(() => {
       url: form.attr('action'),
       data: form.serialize(),
     })
-    .done(response => {
-      if (!response.ret) {
-        $inputs.css('background-color', dangerColor)
-      } else {
-        window.location.reload()
-      }
+    .done(data => {
+      window.location.href = (data && data.next) || '/'
     })
     .fail(err => {
       $inputs.css('background-color', warningColor)
@@ -24,4 +20,6 @@ $(document).ready(() => {
   $inputs.on('focus', function() {
     $(this).css('background-color', '')
   })
-})
+}
+
+module.exports = FormController
