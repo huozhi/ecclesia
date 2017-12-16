@@ -1,4 +1,4 @@
-$(document).ready(() => {
+function FormController() {
   const $inputs = $('input')
   const dangerColor = '#f2dede'
   const warningColor = '#fcf8e3'
@@ -24,4 +24,6 @@ $(document).ready(() => {
   $inputs.on('focus', function() {
     $(this).css('background-color', '')
   })
-})
+}
+
+window.addEventListener('load', FormController)
