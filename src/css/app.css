@@ -86,6 +86,12 @@ a:hover {
   }
 }
 
-.Sign-description {
+.ecc-header {
+  a {
+    color: #666;
+  }
+}
+
+.ecc-sign-description {
   color: #fff;
 }

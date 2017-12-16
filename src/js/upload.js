@@ -8,7 +8,6 @@ function validMarkdown () {
     return true;
   }
   else {
-    console.log(fileType);
     return false;
   }
 }
@@ -25,7 +24,6 @@ function sendFile (file) {
     processData: false,
     type: 'post',
     success: function(data){
-      console.log(data);
       file = null;
     }
   });
@@ -40,7 +38,6 @@ $(document).ready(function () {
   $uploadFile.change(function() {
     $this = $(this);
     file = this.files[0];
-    console.log(file);
     if (true) {
       $('#md-file-path').val($this.val());
       $('#upload-message').removeClass('alert-danger').addClass('alert-success').text('file type accepted');
@@ -52,8 +49,7 @@ $(document).ready(function () {
     }
   });
 
-  $sendBtn = $('#upload-impress-btn');
-  $sendBtn.click(function() {
+  $('#upload-impress-btn').click(function() {
     sendFile(file);
   });
 });

@@ -26,8 +26,6 @@ RtcController.enableWebRTC = function() {
   var self = this.self = res['self']
   var discuss = null
 
-  console.log('host', host, 'room', room, 'self', self)
-
   var webrtc = this.webrtc
 
   var port = 8888
@@ -52,7 +50,7 @@ RtcController.enableWebRTC = function() {
         webrtc.createRoom(room, function (err, name) {
           if (err) {
             // already created on socket server, join directly
-            console.log(err)
+            console.error(err)
             webrtc.joinRoom(room)
           }
           else {

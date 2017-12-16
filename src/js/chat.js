@@ -4,7 +4,6 @@
  * data structure will used defination
  * Discuss, Chart, Impress
  */
-
 var $slides = $('#slides')
 var $addSlide = $('#addSlide')
 var $carousel = $('#impress')
@@ -47,8 +46,6 @@ var Impress = {
   },
   render: function(pageId) {
     var $slide = $('div[data-id=' + pageId + ']')
-    // console.log($slide.text())
-    // $content.html(marked(this.slides[pageId].content))
     var slideObj = this.slides[pageId]
     $slide.children('h1').text(slideObj.title)
     $slide.children('.slide-content').html(
@@ -59,7 +56,6 @@ var Impress = {
     var $mark = $('.slide-content')
     $mark.each(function (index, ele) {
       var $this = $(ele)
-      // console.log($this.text())
       var text = marked($this.text())
       $this.html(text)
     })
@@ -88,10 +84,8 @@ var Impress = {
       $('<div/>', {
         class: 'text-center center-block slide-content'
       })
-      // .attr('data-id', idx)
       .html(marked(slide.content))
       .appendTo($slideItem)
-      // this.render(idx)
   },
   edit: function(pageId) {
     var shown, pageId, $li
@@ -146,11 +140,7 @@ Discuss.init = function() {
 }
 
 Discuss.sync = function () {
-  $.post('/chat/sync',
-    { info: this.info() },
-    function (response) {
-      console.log(response)
-    })
+  $.post('/chat/sync', { info: this.info() })
 }
 
 /******* DISCUSS *******/
@@ -168,11 +158,7 @@ var Chart = function(type, labels, values) {
 
 
 Chart.prototype.save = function () {
-  $.post('/chat/upload/chart',
-    { data: this.data() },
-    function (response) {
-      console.log(response)
-    })
+  $.post('/chat/upload/chart', { data: this.data() })
 }
 
 Chart.prototype.data = function () {
@@ -187,9 +173,7 @@ Chart.prototype.data = function () {
 Chart.prototype.generate = function () {
   if (this.source) {
     this.source.clear()
-    // this.source.destroy()
   }
-  // var chartData = data || this.collectAttrs()
   var context = this.selector.get(0).getContext('2d')
   this.source = new Chart(context)
   switch (this.chart_t) {

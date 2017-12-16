@@ -12,7 +12,7 @@
 <body>
 
 <!-- navbar header -->
-<nav class="nav-header">
+<nav class="ecc-header nav-header">
   <div class="navbar" role="navigation">
     {% block header %}{% endblock header %}
   </div>
@@ -22,8 +22,8 @@
 {% block content %}{% endblock content %}
 
 <!-- after scripts  -->
-{% block script %}
 <script src="/js/bundle.js"></script>
+{% block script %}
 {% endblock script %}
 </body>
 </html>

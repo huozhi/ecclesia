@@ -137,5 +137,4 @@ module.exports = function (server, config) {
     });
 
     if (config.uid) process.setuid(config.uid);
-    // console.log(' -- signal master is running at: http://localhost:' + port);
 };
