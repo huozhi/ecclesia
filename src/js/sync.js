@@ -20,12 +20,9 @@ var MediaTool = {
         var sourceInfo = sourceInfos[i];
         if (sourceInfo.kind === 'audio') {
           audioList.push({id: sourceInfo.id, label: sourceInfo.label || 'microphone-' + i});
-          // console.log(sourceInfo.id, sourceInfo.label || 'm');
         } else if (sourceInfo.kind === 'video') {
           cameraList.push({id: sourceInfo.id, label: sourceInfo.label || 'camera-' + i});
-          // console.log(sourceInfo.id, sourceInfo.label || 'c');
         } else {
-          // console.log('other type media');
         }
         if (audioList.length) {
           mr.audioSource = audioList[0].id;
@@ -69,7 +66,6 @@ var MediaTool = {
       $('.media-check-close').click(function() {
         audioMenu.children().remove();
         cameraMenu.children().remove();
-        // window.location.href = "/chat";
       });
 
       window.constraints = {
