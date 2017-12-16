@@ -3,9 +3,9 @@
     <ol class="carousel-indicators">
       <li data-target="#impress" data-slide-to="0" class="active"></li>
     </ol>
-    <div class="carousel-inner impress-panel text-center center-block" role="listbox">
+    <div class="ecc-slide carousel-inner impress-panel text-center center-block" role="listbox">
       {% for topic in discuss.topics %}
-      <div class="item">
+      <div class="item" data-slide>
         <h1>{{ topic.title }}</h1>
         <div class="text-center center-block slide-content">
           <p>{{ topic.impress }}</p>

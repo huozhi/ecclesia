@@ -10,6 +10,9 @@ const Discuss = require('../proxy/discuss')
 
 exports.index = function (req, res, next) {
   const {user} = req.session
+  if (!user) {
+    return res.redirect('/')
+  }
   Discuss.findByIds(user.discusses)
   .then(results => {
     if (!results || results.length === 0) {
@@ -36,11 +39,11 @@ exports.index = function (req, res, next) {
     })
     .catch(err => {
       logger.error(err.stack)
-      return common.errors[500](res, err.message)
+      return common.errors(res, 500, err)
     })
   })
   .catch(function(err) {
-    return common.errors[500](res, err.message)
+    return common.errors(res, 500, err)
   })
 }
 

@@ -1,25 +1,30 @@
-function FormController() {
-  const $inputs = $('input')
+// Usage:
+// <form class="ecc-form">
+
++function ($) {
   const dangerColor = '#f2dede'
   const warningColor = '#fcf8e3'
-  $('form').submit(function(e) {
+
+  $(document).on('submit', '.ecc-form', function(e) {
     e.preventDefault()
-    var form = $(this)
+    const $form = $(this)
+    const $inputs = $('input', $form)
     $.ajax({
-      type: form.attr('method'),
-      url: form.attr('action'),
-      data: form.serialize(),
+      type: $form.attr('method'),
+      url: $form.attr('action'),
+      data: $form.serialize(),
     })
     .done(data => {
       window.location.href = (data && data.next) || '/'
     })
-    .fail(err => {
+    .fail(res => {
+      const err = res.responseJSON || res.responseText
+      window.alert(err && err.message)
       $inputs.css('background-color', warningColor)
     })
   })
-  $inputs.on('focus', function() {
+
+  $(document).on('focus', '.ecc-form input', function() {
     $(this).css('background-color', '')
   })
-}
-
-module.exports = FormController
+}(jQuery);
