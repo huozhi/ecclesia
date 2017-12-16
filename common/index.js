@@ -16,7 +16,7 @@ exports.successResult = function(data) {
 }
 
 exports.errors = function(res, code, err) {
-  console.error(err.stack)
+  console.error(err && err.stack)
   return res.status(code).send(err || statusCodes[code])
 }
 

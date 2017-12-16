@@ -5,3 +5,19 @@
 .history-records {
   padding-top: 40px;
 }
+
+.history-item {
+  .thumbnail {
+    border-radius: 0;
+  }
+}
+
+.history-item:hover {
+  text-decoration: none;
+
+  .thumbnail {
+    background-color: #fafafa;
+    transform: scale(1.1);
+    transition: transform .2s ease-out;
+  }
+}
