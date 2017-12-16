@@ -50,21 +50,18 @@ var upload = (req, res, next) => {
       chart.labels = data.labels
       chart.values = data.values
       topic.chart.push(chart)
-      console.log(chart)
       // no data send back to client, client use websocket to broadcast
       return res.send(common.successResult())
     }
     else if (type === 'impress') {
       var impress = req.files.impress
       topic.impress.push(impress)
-      console.log(impress.path)
       fs.readFile(impress.path, 'utf-8', function (err, source) {
         // split source into 10 pages, maximum
         if (err) {
           return common.erros[500](res, err)
         }
         var pages = source.split('/\+{6,}/', 10)
-        console.log(pages)
         return res.json({
           pages: pages
         })
