@@ -1,5 +1,10 @@
 'use strict'
 
+const MediaTool = require('./sync')
+const RtcController = require('./chat_webrtc')
+
+const SYNC_INTERVAL = 1000 * 20
+
 /**
  * data structure will used defination
  * Discuss, Chart, Impress
@@ -8,48 +13,62 @@ var $slides = $('#slides')
 var $addSlide = $('#addSlide')
 var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
-var $editBoard = $('.edit-board')
-var $edit = $('.edit')
+var $editBoard = $('#editBoard')
+var $slideEdit = $('#slideEdit')
 
-var $slideTitle = $('#slideTitle')
 var $slideContent = $('#slideContent')
 
+var parseUrl = function(url) {
+  var query = url || location.search.slice(1)
+  var res = {}
+  query.split('&').forEach(function (part) {
+    var item = part.split('=')
+    res[ item[0] ] = item[1]
+  })
+  return res
+}
 
 /******* SLIDES *******/
 var Impress = {
-  slides: [{
-      title: "Welcome to Ecclesia",
-      content: "you could edit your slides here... ",
-    },
+  slides: [
+    '# Welcome to Ecclesia\nyou could edit your slides here... '
   ],
   init: function() {
-    $.fn.carousel.Constructor.prototype.keydown = function(){}
+    $.fn.carousel.Constructor.prototype.keydown = function(){};
 
-    var self = this
-    this.slides.forEach(function(item, idx) {
-      self.append(idx, item)
-    })
+    this.slides.forEach((item, idx) => {
+      this.append(idx, item)
+    });
 
-    $addSlide.click(function() {
-      if ($editBoard.css('display') === 'block')
-        return
-      self.slides.push({
-        title: "# new",
-        content: ''
-      })
-      var last = self.slides.length - 1
-      self.append(last, self.slides[last])
-      self.render(last)
-      $carousel.carousel(last)
+    var query = parseUrl()
+    this.room = query.room
+    this.host = query.host
+    this.self = query.self
+
+    $addSlide.click(() => {
+      if ($editBoard.css('display') !== 'block') {
+        this.slides.push('# new')
+        const lastIndex = this.slides.length - 1
+        this.append(lastIndex, this.slides[lastIndex])
+      }
     })
-    self.renderAll()
+    this.renderAll()
+
+    setInterval(() => this.sync(), SYNC_INTERVAL)
+  },
+  sync: function() {
+    const slides = this.slides
+
+    $.post('/chat', {
+      slides: slides,
+      discussId: this.room,
+    })
   },
   render: function(pageId) {
     var $slide = $('div[data-id=' + pageId + ']')
-    var slideObj = this.slides[pageId]
-    $slide.children('h1').text(slideObj.title)
+    var slide = this.slides[pageId]
     $slide.children('.slide-content').html(
-      marked(slideObj.content)
+      marked(slide)
     )
   },
   renderAll: function() {
@@ -61,7 +80,6 @@ var Impress = {
     })
   },
   append: function(idx, slide) {
-
       // add navigator
       $('<li/>', {
         class: idx === 0 ? 'active' : ''
@@ -77,15 +95,16 @@ var Impress = {
       .attr('data-id', idx)
       .appendTo($slides)
 
-      $('<h1/>')
-      .text(slide.title)
-      .appendTo($slideItem)
-
-      $('<div/>', {
+      $('<div />', {
         class: 'text-center center-block slide-content'
       })
-      .html(marked(slide.content))
+      .html(marked(slide))
       .appendTo($slideItem)
+
+      // marked and navigate to it
+      this.render(idx)
+      this.sync()
+      $carousel.carousel(idx)
   },
   edit: function(pageId) {
     var shown, pageId, $li
@@ -96,16 +115,16 @@ var Impress = {
       $slides.hide()
       $editBoard.show()
       // assign text
-      var slide = Impress.slides[pageId]
-      $slideTitle.val(slide.title)
-      $slideContent.val(slide.content)
+      var slide = this.slides[pageId]
+      $slideContent.val(slide)
     }
     else {
       $slides.show()
       $editBoard.hide()
-      Impress.slides[pageId].title = $slideTitle.val()
-      Impress.slides[pageId].content = $slideContent.val()
-      Impress.render(pageId)
+
+      this.slides[pageId] = $slideContent.val()
+      this.render(pageId)
+      this.sync()
     }
   }
 }
@@ -136,7 +155,7 @@ Discuss.init = function() {
     MediaTool.check()
   })
 
-  $edit.click(Impress.edit)
+  $slideEdit.click(Impress.edit)
 }
 
 Discuss.sync = function () {
@@ -217,6 +236,7 @@ Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
 /******* CHART ********/
 
 function ChartPageController() {
+  RtcController.enableWebRTC()
   Impress.init()
   Discuss.init()
 }

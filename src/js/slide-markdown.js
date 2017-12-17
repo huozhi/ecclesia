@@ -2,13 +2,13 @@
 
 // Usage:
 // <div class="ecc-slide">
-//   <div data-slide> raw markdown here </div>
+//   <div data-markdown-slide> raw markdown here </div>
 // </div>
 
-+function ($) {
-  $(document).on('load', '.ecc-slide [data-slide]', function() {
-    const $elem = $(this)
-    var text = marked($elem.text()).trim()
-    $elem.html(text)
+const marked = require('marked')
+
+;(function() {
+  document.querySelectorAll('[data-markdown-slide]').forEach(function(ele) {
+    ele.innerHTML = marked(ele.innerText.trim())
   })
-}(jQuery);
+})();

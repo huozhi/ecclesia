@@ -1,7 +1,7 @@
 'use strict'
 
 var parseUrl = function(url) {
-  var query = url || location.search
+  var query = url || location.search.slice(1)
   var res = {}
   query.split('&').forEach(function (part) {
     var item = part.split('=')
@@ -19,7 +19,6 @@ var RtcController = {
 
 
 RtcController.enableWebRTC = function() {
-
   var res = parseUrl(location.search.split('?')[1])
   var host = this.host = res['host']
   var room = this.room = res['room']
@@ -120,7 +119,6 @@ RtcController.enableWebRTC = function() {
       volBar.css('height', '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%')
     }
   })
-
 }
 
-RtcController.enableWebRTC()
+module.exports = RtcController

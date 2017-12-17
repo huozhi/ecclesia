@@ -9,6 +9,7 @@ const concat = require('gulp-concat')
 const source = require('vinyl-source-stream')
 const sass = require('gulp-sass')
 const streamQueue = require('streamqueue')
+const babelify = require('babelify')
 
 const destFolder = 'static'
 
@@ -21,20 +22,22 @@ gulp.task('rtc', function() {
 
 gulp.task('js', function() {
   browserify('./src/js/prepare.js')
+    .transform(babelify, {presets: ['env']})
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(`${destFolder}/js`))
 
-  gulp.src([
-    './src/js/**/*.js',
-  ])
+  browserify('./src/js/chat.js')
+    .transform(babelify, {presets: ['env']})
+    .bundle()
+    .pipe(source('chat.js'))
     .pipe(gulp.dest(`${destFolder}/js`))
 })
 
 gulp.task('css', function() {
   gulp.src([
-    'src/css/*.css',
     './node_modules/bootstrap/dist/css/bootstrap.css',
+    'src/css/*.css',
   ])
   .pipe(sass())
   .pipe(concat('style.css'))

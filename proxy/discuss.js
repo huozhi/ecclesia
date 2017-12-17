@@ -28,10 +28,18 @@ Discuss.insertTopic = function (discuss, newTopic, callback) {
 
 Discuss.addParticipant = function (discuss, user) {
   logger.debug('inner addParticipant', discuss, user.account)
-  return Discuss.update(
-    { _id: discuss._id },
-    { $addToSet: { participants: user.account } }
-  ).exec()
+  return Discuss
+    .where({ _id: discuss._id })
+    .update({ $addToSet: { participants: user.account } })
+    .exec()
+}
+
+Discuss.updateImpress = function(discussId, impressList) {
+  logger.debug('update impress', discussId, impressList)
+  return Discuss
+    .where({ _id: discussId })
+    .update({ $set: { impress: impressList } })
+    .exec()
 }
 
 Discuss.create = function (room, host, topics) {
