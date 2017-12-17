@@ -22,13 +22,13 @@ gulp.task('rtc', function() {
 
 gulp.task('js', function() {
   browserify('./src/js/prepare.js')
-    .transform(babelify, {presets: ['env']})
+    .transform(babelify)
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(`${destFolder}/js`))
 
   browserify('./src/js/chat.js')
-    .transform(babelify, {presets: ['env']})
+    .transform(babelify)
     .bundle()
     .pipe(source('chat.js'))
     .pipe(gulp.dest(`${destFolder}/js`))

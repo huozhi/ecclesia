@@ -1,6 +1,7 @@
 'use strict'
 
-const MediaTool = require('./sync')
+const utils = require('./utils')
+const MediaTool = require('./media-tool')
 const RtcController = require('./chat_webrtc')
 
 const SYNC_INTERVAL = 1000 * 20
@@ -15,18 +16,7 @@ var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
 var $editBoard = $('#editBoard')
 var $slideEdit = $('#slideEdit')
-
 var $slideContent = $('#slideContent')
-
-var parseUrl = function(url) {
-  var query = url || location.search.slice(1)
-  var res = {}
-  query.split('&').forEach(function (part) {
-    var item = part.split('=')
-    res[ item[0] ] = item[1]
-  })
-  return res
-}
 
 /******* SLIDES *******/
 var Impress = {
@@ -40,7 +30,7 @@ var Impress = {
       this.append(idx, item)
     });
 
-    var query = parseUrl()
+    var query = utils.parseQuery()
     this.room = query.room
     this.host = query.host
     this.self = query.self
@@ -59,7 +49,7 @@ var Impress = {
   sync: function() {
     const slides = this.slides
 
-    $.post('/chat', {
+    $.post('/chat/sync', {
       slides: slides,
       discussId: this.room,
     })
@@ -157,11 +147,6 @@ Discuss.init = function() {
 
   $slideEdit.click(Impress.edit)
 }
-
-Discuss.sync = function () {
-  $.post('/chat/sync', { info: this.info() })
-}
-
 /******* DISCUSS *******/
 
 

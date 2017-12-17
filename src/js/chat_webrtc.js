@@ -1,14 +1,6 @@
 'use strict'
 
-var parseUrl = function(url) {
-  var query = url || location.search.slice(1)
-  var res = {}
-  query.split('&').forEach(function (part) {
-    var item = part.split('=')
-    res[ item[0] ] = item[1]
-  })
-  return res
-}
+const utils = require('./utils')
 
 var RtcController = {
   host: null,
@@ -19,7 +11,7 @@ var RtcController = {
 
 
 RtcController.enableWebRTC = function() {
-  var res = parseUrl(location.search.split('?')[1])
+  var res = utils.parseQuery(location.search.split('?')[1])
   var host = this.host = res['host']
   var room = this.room = res['room']
   var self = this.self = res['self']
