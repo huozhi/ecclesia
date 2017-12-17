@@ -1,7 +1,5 @@
 'use strict'
 
-var Synchronize = {}
-
 var MediaTool = {
   Ready: function(asrc, vsrc, mready, cready) {
     this.audioSource = asrc   || null,
@@ -80,3 +78,5 @@ var MediaTool = {
     });
   }
 }
+
+module.exports = MediaTool

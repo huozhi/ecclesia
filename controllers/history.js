@@ -32,7 +32,7 @@ exports.index = function (req, res, next) {
             room: discuss.room,
             host: discuss.host,
             date: discuss.date.toISOString(),
-          })
+          }),
         })
       })
       res.render('history/panel', {discusses})

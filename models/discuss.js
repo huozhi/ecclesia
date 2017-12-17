@@ -10,7 +10,7 @@ const Discuss = new Schema({
   date: { type: Date, default: new Date() },
   host: { type: ObjectId, ref: 'User' },
   participants: [ { type: String } ],
-  topics: [ { type: ObjectId, ref: 'Topic' } ]
+  impress: [ { type: String } ],
 },{
   collection: 'discusses'
 });
