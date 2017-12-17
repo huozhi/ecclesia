@@ -44,15 +44,11 @@
            id="slides"
            role="listbox">
       </div>
-      <button class="btn btn-default btn-xs edit" id="edit">
+      <button class="btn btn-default btn-xs edit" id="slideEdit">
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
-      <div class="edit-board container-fluid">
-        <form id="editForm">
-          <div class="form-group">
-            <label for="slideTitle">Slide Title</label>
-            <input type="text" class="form-control" id="slideTitle" placeholder="Slide title here...">
-          </div>
+      <div id="editBoard" class="container-fluid">
+        <form>
           <div class="form-group">
             <label for="slideContent">Slide Title</label>
             <textarea type="text" class="form-control" id="slideContent" placeholder="Slide content here..."></textarea>
@@ -64,7 +60,6 @@
 
   <div class="hidden-modals">
     {% include "chart-modal.html" %}
-    {% include "impress-modal.html" %}
     {% include "check-media.html" %}
   </div>
 </div>
@@ -73,8 +68,5 @@
 {% block script %}
 {% parent %}
 <script src="/js/rtc.js"></script>
-<script src="/js/chat_webrtc.js"></script>
 <script src="/js/chat.js"></script>
-<script src="/js/upload.js"></script>
-<script src="/js/sync.js"></script>
 {% endblock script %}

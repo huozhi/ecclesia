@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs')
+const logger = require('log4js').getLogger()
 const Discuss = require('../proxy').Discuss
 const User = require('../proxy').User
 const Topic = require('../proxy').Topic
@@ -8,9 +9,15 @@ const ChartModel = require('../models').Chart
 const TopicModel = require('../models').Topic
 const common = require('../common')
 
-
+// simply sync impress
 const sync = (req, res, next) => {
-  return res.send(common.successResult())
+  logger.debug('chat.sync', req.body)
+  const {discussId, slides} = req.body
+  Discuss.updateImpress(discussId, slides)
+    .then(
+      () => res.send(common.successResult()),
+      () => res.send(common.errors(res, 500))
+    )
 }
 
 const index = (req, res, next) => {
@@ -52,20 +59,6 @@ var upload = (req, res, next) => {
       topic.chart.push(chart)
       // no data send back to client, client use websocket to broadcast
       return res.send(common.successResult())
-    }
-    else if (type === 'impress') {
-      var impress = req.files.impress
-      topic.impress.push(impress)
-      fs.readFile(impress.path, 'utf-8', function (err, source) {
-        // split source into 10 pages, maximum
-        if (err) {
-          return common.erros[500](res, err)
-        }
-        var pages = source.split('/\+{6,}/', 10)
-        return res.json({
-          pages: pages
-        })
-      })
     }
   })
 }

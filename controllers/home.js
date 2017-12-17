@@ -34,10 +34,12 @@ exports.createRoom = function (req, res, next) {
     req.session.host = host._id
     return User.update({_id: host._id}, {
       $push: { discusses: newDisscuss._id }
-    }).exec()
+    })
+      .exec()
+      .then(() => newDisscuss)
   })
-  .then(function(oks) {
-    const params = getChatParams(room, host._id, host._id)
+  .then(function(discuss) {
+    const params = getChatParams(discuss._id, host._id, host._id)
     logger.debug('create room', `/chat?${params}`)
     return res.send({
       next: `/chat?${params}`,
