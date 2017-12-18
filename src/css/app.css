@@ -73,6 +73,7 @@ input.form-control {
   background-color: #f27426;
   border: 0;
   border-radius: 0;
+  margin: 0;
 
   a {
     color: #eee !important;

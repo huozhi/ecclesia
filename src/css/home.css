@@ -2,22 +2,31 @@
   background-image: url(/img/home_bg.jpg);
 }
 
-.home-menu {
-  width: 980px;
-}
-
-.home-link,
-.home-link:focus,
-.home-link:visited {
-  color: #fff;
-}
-.home-link:hover {
-  color: #ddd;
-}
-
-.user-opers {
+.home-oper {
   display: flex;
   padding: 2em 0;
+}
+
+.home-oper-item {
+  flex: 1 0;
+  text-align: center;
+
+  a,
+  a:focus,
+  a:visited {
+    color: #fff;
+  }
+  &:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, .15);
+    background-color: rgba(255, 255, 255, .15);
+    transform: scale(1.1);
+    transition: all .2s ease-out;
+  }
+}
+
+.home-oper-title {
+  font-size: 30px;
+  padding: 10px 0;
 }
 
 .type-form {
