@@ -10,7 +10,7 @@
     </div>
     <div class="row container history-records">
       {% for record in discusses %}
-      <a href="/history/detail?{{ record.params }}" class="history-item col-sm-6 col-md-4 col-lg-3" role="button">
+      <a href="/history/detail?{{ record.params }}" class="history-item" role="button">
         <div class="thumbnail">
           <div class="caption">
             <h3>{{ record.room }}</h3>

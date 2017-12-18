@@ -1,12 +1,27 @@
 .history-page {
   background-image: url(/img/home_bg.jpg);
+
+  .header {
+    color: #fff;
+  }
+
+  .thumbnail {
+    background-color: rgba(255,255,255,.8);
+  }
 }
 
 .history-records {
+  max-width: 100%;
   padding-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .history-item {
+  display: flex;
+  padding: 0 10px;
+  flex-basis: 25%;
+
   .thumbnail {
     border-radius: 0;
   }

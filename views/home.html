@@ -8,25 +8,25 @@
 {% block content %}
 <div class="page home-page">
   <div class="main">
-    <div class="home-menu center-block">
-      <h1 class="huge-title">Welcome to Ecclesia, {{ user.account }}</h1>
-      <div class="user-opers">
-        <div class="col-md-4 text-center">
-          <a href="#create" class="home-link" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
+    <div class="center-block">
+      <h1 class="huge-title">Hi, {{ user.account }}</h1>
+      <div class="home-oper">
+        <div class="home-oper-item">
+          <a href="#create" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
             <i class="fa fa-bar-chart fa-5x"></i>
-            <h2>Create a meeting</h2>
+            <div class="home-oper-title">Create a meeting</div>
           </a>
         </div>
-        <div class="col-md-4 text-center">
-          <a href="#join" class="home-link" role="tab" data-toggle="tab" aria-controls="join" aria-expanded="false">
+        <div class="home-oper-item">
+          <a href="#join" role="tab" data-toggle="tab" aria-controls="join" aria-expanded="false">
             <i class="fa fa-users fa-5x"></i>
-            <h2>Join a meeting</h2>
+            <div class="home-oper-title">Join a meeting</div>
           </a>
         </div>
-        <div class="col-md-4 text-center">
-          <a href="/history" class="home-link">
+        <div class="home-oper-item">
+          <a href="/history">
             <i class="fa fa-folder-open-o fa-5x"></i>
-            <h2>View history</h2>
+            <div class="home-oper-title">View history</div>
           </a>
         </div>
       </div>
