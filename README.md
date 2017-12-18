@@ -6,7 +6,7 @@ Version 2.0.0
 
 A web meeting system for tiny group. support making dynamic slides with markdown and browsing history. Our aim is to make meeting more convenient and easier.
 
-contributors: @xhh261672 @lusssn @sjhdolores 
+contributors: @huozhi @xhh261672 @lusssn @sjhdolores 
 
 
 ### Development
@@ -14,13 +14,13 @@ contributors: @xhh261672 @lusssn @sjhdolores
 **build**
 
 ```sh
-npm run build
+gulp # you should install global gulp, default watch mode
 ```
 
 **dev**
 
 ```sh
-npm run web  # start the webserver
+npm start # start the webserver
 npm run sock # start the signalmaster (websocket server)
 ```
 
