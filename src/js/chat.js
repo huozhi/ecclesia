@@ -1,5 +1,6 @@
 'use strict'
 
+const marked = require('marked')
 const utils = require('./utils')
 const MediaTool = require('./media-tool')
 const RtcController = require('./chat_webrtc')
@@ -63,12 +64,13 @@ var Impress = {
     )
   },
   renderAll: function() {
-    var $mark = $('.slide-content')
-    $mark.each(function (index, ele) {
-      var $this = $(ele)
-      var text = marked($this.text())
-      $this.html(text)
-    })
+    // const $mark = $('.slide-content')
+    // $mark.each(function (index, ele) {
+    //   var $this = $(ele)
+    //   console.log('ele', ele, $this.text(), marked($this.text()))
+    //   var text = marked($this.text())
+    //   $this.html(text)
+    // })
   },
   append: function(idx, slide) {
       // add navigator
@@ -80,11 +82,13 @@ var Impress = {
       .appendTo($slidesNav)
 
       // add content
-      var $slideItem = $('<div/>', {
+      const $slideItem = $('<div/>', {
         class: idx === 0 ? 'item active' : 'item'
       })
       .attr('data-id', idx)
       .appendTo($slides)
+
+      console.log('marked(slide)', slide, marked(slide))
 
       $('<div />', {
         class: 'text-center center-block slide-content'
@@ -142,8 +146,8 @@ Discuss.info = function () {
 }
 
 Discuss.init = function() {
-  $slideEdit.click(Impress.edit)
-  $mediaOptions.click(MediaTool.check)
+  $slideEdit.click(Impress.edit.bind(Impress))
+  $mediaOptions.click(MediaTool.check.bind(MediaTool))
 }
 /******* DISCUSS *******/
 
