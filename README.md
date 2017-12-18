@@ -4,9 +4,9 @@
 
 Version 2.0.0
 
-A web meeting system for small team discussing. support sketching graphs,
-making dynamic presentation and inserting dynamic charts. Our aim is to
-make meeting more conveniently and easily.
+A web meeting system for tiny group. support making dynamic slides with markdown and browsing history. Our aim is to make meeting more convenient and easier.
+
+contributors: @xhh261672 @lusssn @sjhdolores 
 
 
 ### Development
