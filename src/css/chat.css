@@ -97,11 +97,6 @@ textarea {
   border-radius: 2px;
 }
 
-
-.charts {
-  position: relative;
-  height: 100%;
-}
 .swiper-container {
   position: relative;
   top: 5px;
@@ -127,13 +122,6 @@ textarea {
   vertical-align: middle;
   align-items: middle;
 }
-
-.chart {
-  position: relative;
-  margin: 10px;
-  display: inline;
-}
-
 .impress {
   position: relative;
   height: 100%;
@@ -142,8 +130,6 @@ textarea {
   border-radius: 2px;
   z-index: 2;
 }
-
-
 
 .reveal > .slides > section {
   position: relative;
@@ -154,25 +140,11 @@ textarea {
 .lazy {
   height: 16.666666%;
 }
-.chart-label {
-}
 
 .oper-frame {
   position: relative;
   height: 33.333333%;
 
-}
-
-.single-chart {
-  position: relative;
-  height: 66.6666%;
-  padding: 5px;
-  display: inline-block;
-}
-div.single-chart > button {
-  position: absolute;
-  right: 5px;
-  top: 5px;
 }
 
 .center {
@@ -189,14 +161,12 @@ div.single-chart > button {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 15px;
-  border: 1px solid #bbb;
-  border-radius: 2px;
+  box-shadow: 0 4px 8px #aaa;
 }
 
 .video-source > video {
   height: 100%;
   max-width: 100%;
-
 }
 
 .affix-bar {
@@ -319,5 +289,17 @@ ul.dropdown-menu {
     height: 6px;
     border-top: 2px solid #333;
     border-right: 2px solid #333;
+  }
+}
+
+.chat-oper {
+  background: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+
+  &:hover {
+    color: #fff;
+    transform: scale(1.1);
   }
 }

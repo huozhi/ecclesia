@@ -12,6 +12,4 @@ mongoose.connect(config.db, function (err) {
 })
 
 exports.User = require('./user')
-exports.Topic = require('./topic')
-exports.Chart = require('./chart')
 exports.Discuss = require('./discuss')

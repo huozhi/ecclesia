@@ -1,16 +1,14 @@
 {% extends 'common/base.html' %}
 
 {% block header %}
-  <div class="navbar-header">
-    <a href="/" class="navbar-brand">Ecclesia</a>
-  </div>
+
   <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
       <li class="active">
         <a href="#login" role="tab" data-toggle="tab" aria-controls="login" aria-expanded="true">Login</a>
       </li>
       <li>
-        <a href="#signup" role="tab" data-toggle="tab" aria-controls="signup" aria-expanded="false">SignUp</a>
+        <a href="#signup" role="tab" data-toggle="tab" aria-controls="signup" aria-expanded="false">Signup</a>
       </li>
     </ul>
   </div>
@@ -20,13 +18,13 @@
   <div class="page index-page">
 
     <div class="main index-main">
-      <div class="intro col-md-6">
+      <div class="index-intro col-md-6">
         <h1 class="huge-title">Welcome&nbsp; to Ecclesia</h1>
-        <h3 class="huge-title">
+        <p class="index-intro-subtitle">
           This is an application which simulates a real-time meeting online.<br>
           Several features are provided to help you hold the meeting.<br>
           Enjoy the convenience brought by Ecclesia!
-        </h3>
+        </p>
       </div>
 
       <div class="col-md-4 pull-right tab-content">
@@ -53,7 +51,7 @@
           <div class="text-muted ecc-sign-description">
             <p>Use letters, umerals and characters as your username or password</p>
           </div>
-          <button type="submit" class="btn btn-success btn-block">Sign up</button>
+          <button type="submit" class="btn btn-success btn-block">Signup</button>
         </form>
       </div>
     </div>

@@ -2,14 +2,7 @@
 {% block title %} Ecclesia Home {% endblock title %}
 
 {% block header %}
-<div class="navbar-header" >
-  <a href="/" class="navbar-brand">Ecclesia</a>
-</div>
-<div class="navbar-collapse collapse">
-  <ul class="nav navbar-nav navbar-right">
-    <li><a href="/logout">logout</a></li>
-  </ul>
-</div>
+
 {% endblock header %}
 
 {% block content %}
@@ -37,31 +30,32 @@
           </a>
         </div>
       </div>
+
+      <div class="tab-content">
+        <form id="create" action="/create" method="post" class="type-form ecc-form center-block tab-pane active">
+          <div class="form-group">
+            <input name="room" type="text" class="form-control" placeholder="Room name">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-success" type="submit">Create Room</button>
+          </div>
+        </form>
+
+        <form id="join" action="/join" method="post" class="type-form ecc-form center-block tab-pane">
+          <div class="form-group">
+            <input name="room" type="text" class="form-control" placeholder="Meeting name">
+          </div>
+          <div class="form-group">
+            <input name="host" type="text" class="form-control" placeholder="Meeting Host">
+          </div>
+          <div class="text-center form-group">
+            <button class="btn btn-default" type="submit">Join Room</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 
-
-  <div class="tab-content">
-    <form id="create" action="/create" method="post" class="type-form ecc-form center-block tab-pane active">
-      <div class="form-group">
-        <input name="room" type="text" class="form-control" placeholder="Room name">
-      </div>
-      <div class="text-center form-group">
-        <button class="btn btn-success" type="submit">Create Room</button>
-      </div>
-    </form>
-
-    <form id="join" action="/join" method="post" class="type-form ecc-form center-block tab-pane">
-      <div class="form-group">
-        <input name="room" type="text" class="form-control" placeholder="Meeting name">
-      </div>
-      <div class="form-group">
-        <input name="host" type="text" class="form-control" placeholder="Meeting Host">
-      </div>
-      <div class="text-center form-group">
-        <button class="btn btn-default" type="submit">Join Room</button>
-      </div>
-    </form>
-  </div>
 </div>
 {% endblock content %}

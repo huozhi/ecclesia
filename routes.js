@@ -23,8 +23,5 @@ router.get('/history/detail', history.getDiscussDetail)
 
 router.get('/chat', chat.index)
 router.post('/chat/sync', chat.sync)
-router.post('/chat/upload/:type', chat.upload)
-
-
 
 module.exports = router
