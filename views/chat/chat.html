@@ -1,26 +1,18 @@
 {% extends '../common/base.html' %}
 
 {% block header %}
-  <div class="navbar-header">
-    <a href="/" class="navbar-brand">Ecclesia</a>
-  </div>
-  <div class="navbar-collapse collapse">
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <button id="addSlide" class="btn btn-default navbar-btn" data-target="#add-impress-modal">
-          <span class="glyphicon glyphicon-plus"></span>&nbsp;Slide
-        </button>
-      </li>
+<li>
+  <button id="addSlide" class="btn chat-oper navbar-btn" data-target="#add-impress-modal">
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;Slide
+  </button>
+</li>
 
-      <li>
-        <button id="mediaOpts" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#check-media-modal">
-          <span class="glyphicon glyphicon-wrench"></span>&nbsp;Media
-        </button>
-      </li>
-      <li><a href="/">Home</a></li>
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </div>
+<li>
+  <button id="mediaOpts" class="btn chat-oper navbar-btn" data-toggle="modal" data-target="#check-media-modal">
+    <span class="glyphicon glyphicon-wrench"></span>&nbsp;Media
+  </button>
+</li>
+<li><a href="/">Home</a></li>
 {% endblock header %}
 
 {% block content %}

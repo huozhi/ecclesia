@@ -8,7 +8,7 @@ const SYNC_INTERVAL = 1000 * 20
 
 /**
  * data structure will used defination
- * Discuss, Chart, Impress
+ * Discuss, Impress
  */
 var $slides = $('#slides')
 var $addSlide = $('#addSlide')
@@ -16,6 +16,7 @@ var $carousel = $('#impress')
 var $slidesNav = $('#impress ol')
 var $editBoard = $('#editBoard')
 var $slideEdit = $('#slideEdit')
+var $mediaOptions = $('#mediaOpts')
 var $slideContent = $('#slideContent')
 
 /******* SLIDES *******/
@@ -141,89 +142,15 @@ Discuss.info = function () {
 }
 
 Discuss.init = function() {
-  $('#mediaOpts').click(function() {
-    MediaTool.check()
-  })
-
   $slideEdit.click(Impress.edit)
+  $mediaOptions.click(MediaTool.check)
 }
 /******* DISCUSS *******/
 
-
-
-/******* CHART ********/
-
-var Chart = function(type, labels, values) {
-  this.type = type
-  this.labels = labels
-  this.values = values
-  this.source = null
-}
-
-
-Chart.prototype.save = function () {
-  $.post('/chat/upload/chart', { data: this.data() })
-}
-
-Chart.prototype.data = function () {
-  return {
-    type: this.type,
-    labels: this.labels,
-    values: this.values
-  }
-}
-
-
-Chart.prototype.generate = function () {
-  if (this.source) {
-    this.source.clear()
-  }
-  var context = this.selector.get(0).getContext('2d')
-  this.source = new Chart(context)
-  switch (this.chart_t) {
-    case 'line':
-      this.source.Line(chartData)
-      break
-    case 'bar':
-      this.source.Bar(chartData)
-      break
-    case 'pie':
-      this.source.Pie(chartData)
-      break
-    default:
-      break
-  }
-}
-
-
-Chart.angularChartColors = [
-  {
-    fillColor: 'rgba(220,220,220,0.5)',
-    strokeColor: 'rgba(220,220,220,1)',
-    pointColor: 'rgba(220,220,220,1)',
-  },
-  {
-    fillColor: 'rgba(151,187,205,0.5)',
-    strokeColor: 'rgba(151,187,205,1)',
-    pointColor: 'rgba(151,187,205,1)',
-  },
-  {
-    fillColor: 'rgba(0,0,0,0.5)',
-    strokeColor: 'rgba(0,0,51,1)',
-    pointColor: 'rgba(0,0,102,1)',
-  }
-]
-
-Chart.roundChartColors = ['#F38630','#E0E4CC','#69D2E7','#F7464A',
-  '#E2EAE9','#D4CCC5','#949FB1','#4D5360']
-
-
-/******* CHART ********/
-
-function ChartPageController() {
+function ChatPageController() {
   RtcController.enableWebRTC()
   Impress.init()
   Discuss.init()
 }
 
-window.addEventListener('load', ChartPageController)
+window.addEventListener('load', ChatPageController)

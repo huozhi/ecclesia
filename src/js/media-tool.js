@@ -1,15 +1,15 @@
 'use strict'
 
-var MediaTool = {
-  Ready: function(asrc, vsrc, mready, cready) {
-    this.audioSource = asrc   || null,
-    this.videoSource = vsrc   || null;
-    this.micReady    = mready || false,
-    this.camReady    = cready || false;
-  },
+const Ready = function(asrc, vsrc, mready, cready) {
+  this.audioSource = asrc   || null,
+  this.videoSource = vsrc   || null;
+  this.micReady    = mready || false,
+  this.camReady    = cready || false;
+}
 
+const MediaTool = {
   check: function(callback) {
-    var mr = new MediaTool.Ready(),
+    var mr = new Ready(),
         audioList  = [],
         cameraList = [];
 
@@ -48,7 +48,7 @@ var MediaTool = {
         ele.id + '</p><a class="audio-item" role="menuitem" tabindex="-1">' + ele.label + '</a></li>';
         audioMenu.append(audioChoice);
       });
-      
+
       $('a.audio-item').click(function() {
         mr.audioSource = $(this).prev().text();
         $(this).data('audioSource', $(this).prev().text());

@@ -16,7 +16,8 @@
 }
 
 .user-opers {
-  padding-top: 2em;
+  display: flex;
+  padding: 2em 0;
 }
 
 .type-form {
