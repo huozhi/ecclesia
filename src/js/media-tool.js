@@ -13,12 +13,12 @@ var MediaTool = {
         audioList  = [],
         cameraList = [];
 
-    MediaStreamTrack.getSources(function (sourceInfos) {
-      for (var i = 0; i != sourceInfos.length; ++i) {
+    window.navigator.mediaDevices.enumerateDevices().then((sourceInfos) => {
+      for (let i = 0; i < sourceInfos.length; i++) {
         var sourceInfo = sourceInfos[i];
-        if (sourceInfo.kind === 'audio') {
+        if (sourceInfo.kind === 'audioinput') {
           audioList.push({id: sourceInfo.id, label: sourceInfo.label || 'microphone-' + i});
-        } else if (sourceInfo.kind === 'video') {
+        } else if (sourceInfo.kind === 'videoinput') {
           cameraList.push({id: sourceInfo.id, label: sourceInfo.label || 'camera-' + i});
         } else {
         }
@@ -26,13 +26,13 @@ var MediaTool = {
           mr.audioSource = audioList[0].id;
           $(this).data('audioSource', audioList[0].id);
           mr.micReady = true;
-          $('#select-audio').text(audioList[0].label).append('<span class="caret cert-right"></span>');
+          $('#select-audio').text(audioList[0].label)
         }
         if (cameraList.length) {
           mr.videoSource = cameraList[0].id;
           $(this).data('videoSource', cameraList[0].id);
           mr.camReady = true;
-          $('#select-camera').text(cameraList[0].label).append('<span class="caret cert-right"></span>');
+          $('#select-camera').text(cameraList[0].label)
         }
       }
       var cameraMenu = $('.camera-menu');
@@ -47,18 +47,18 @@ var MediaTool = {
         var audioChoice = '<li role="presentation">' + '<p class="audio-device-id sr-only">' +
         ele.id + '</p><a class="audio-item" role="menuitem" tabindex="-1">' + ele.label + '</a></li>';
         audioMenu.append(audioChoice);
-
       });
+      
       $('a.audio-item').click(function() {
         mr.audioSource = $(this).prev().text();
         $(this).data('audioSource', $(this).prev().text());
-        $('#select-audio').text($(this).text()).append('<span class="caret cert-right"></span>');
+        $('#select-audio').text($(this).text())
       });
 
       $('a.camera-item').click(function() {
         mr.videoSource = $(this).prev().text();
         $(this).data('videoSource', $(this).prev().text());
-        $('#select-camera').text($(this).text()).append('<span class="caret cert-right"></span>');
+        $('#select-camera').text($(this).text())
       });
 
       $('.media-check-close').click(function() {

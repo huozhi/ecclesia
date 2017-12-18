@@ -304,3 +304,20 @@ ul.dropdown-menu {
   justify-content: center;
   height: 100%;
 }
+
+.available-devices {
+  .dropdown-toggle {
+    position: relative;
+  }
+  .dropdown-toggle:after {
+    content: ' ';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%) rotate(135deg);
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
+  }
+}
