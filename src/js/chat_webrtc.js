@@ -69,19 +69,12 @@ RtcController.enableWebRTC = function() {
       var vol = document.createElement('div');
       vol.id = 'volume_' + peer.id;
       vol.className = 'volume_bar';
-      // video.onclick = function () {
-      //     video.style.width = video.videoWidth + 'px';
-      //     video.style.height = video.videoHeight + 'px';
-      // };
+
       d.appendChild(vol);
       remotes.appendChild(d);
     }
   })
 
-
-  // function addVideoContainer(video, peer) {
-  //   var peerCntr = $('<div/>')
-  // }
 
   webrtc.on('videoRemoved', function (video, peer) {
     console.log('videoRemoved')
@@ -91,12 +84,6 @@ RtcController.enableWebRTC = function() {
       remotes.removeChild(leavePeer)
     }
   })
-
-  // webrtc.on('channelMessage', function (peer, label, data) {
-  //   if (data.type == 'volume') {
-  //     showVolume(document.getElementById('volume_' + peer.id), data.volume)
-  //   }
-  // })
 
   webrtc.on('volumeChange', function (volume, threshold) {
     var volBar = $('#localVolBar')
