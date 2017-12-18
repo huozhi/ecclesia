@@ -1,3 +1,11 @@
+.index-intro {
+  color: #fff;
+}
+
+.index-intro-subtitle {
+  font-size: 18px;
+}
+
 .index-page {
   background-image: url(/img/index_bg_2.jpg);
   background-repeat: no-repeat;
@@ -6,5 +14,5 @@
 }
 
 .index-main {
-  min-height: 330px;
+  height: 400px;
 }

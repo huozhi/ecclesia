@@ -14,18 +14,6 @@ Discuss.findByIds = function (ids) {
   return query.sort({date: -1}).lean().exec()
 }
 
-Discuss.findTopics = function (discuss) {
-  this.findById(discuss._id).exec()
-}
-
-Discuss.insertTopic = function (discuss, newTopic, callback) {
-  return Discuss.findByIdAndUpdate(
-    discuss._id,
-    { $push: { topics: newTopic } },
-    { safe: true, upsert: true }
-  ).exec()
-}
-
 Discuss.addParticipant = function (discuss, user) {
   logger.debug('inner addParticipant', discuss, user.account)
   return Discuss

@@ -13,15 +13,6 @@
   "values": [1, 2]
 }
 
-{
-  "title": "topic title",
-  "impress": [
-    "mdstrx", "mdstry", "..."
-  ],
-  "charts": [{
-    "$embeded": "chart"
-  }]
-}
 
 {
   "room": "xxxx",
@@ -32,8 +23,7 @@
   "participants": [{
     "$db_reference": "user(ObjectId)"
   }],
-  "topics": [{
-    "$embeded": "topic"
-  }]
-
+  "impress": [
+    "mdstrx", "mdstry", "..."
+  ],
 }
