@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "web": "nodemon --watch ./views --watch ./controllers ./app.js",
-    "sock": "nodemon --watch socket.js --debug=5859 signalmaster.js",
+    "sock": "nodemon --watch socket.js signalmaster.js",
     "build": "gulp",
     "start": "npm run web",
     "clean": "rm -rf static/*"
@@ -26,7 +26,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.0.1",
-    "socket.io": "0.9.16",
+    "socket.io": "^2.0.4",
     "swig": "^1.4.2",
     "uuid": "^3.1.0"
   },
@@ -39,7 +39,6 @@
     "browserify": "2.22.0",
     "filetransfer": "^2.0.0",
     "gulp": "^3.9.1",
-    "gulp-clean-css": "^2.0.12",
     "gulp-concat": "^2.6.0",
     "gulp-filter": "^4.0.0",
     "gulp-postcss": "^7.0.0",

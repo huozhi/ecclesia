@@ -44,7 +44,6 @@ gulp.task('css', function() {
     require('postcss-nested'),
   ]))
   .pipe(concat('style.css'))
-  .pipe(require('gulp-clean-css')())
   .pipe(gulp.dest(`${destFolder}/css/`))
 })
 

@@ -14,10 +14,6 @@ function safeCb(cb) {
 module.exports = function (server, config) {
     var io = socketIO.listen(server);
 
-    // process.env.NODE_ENV = 'production';
-    io.set('log level', 3);
-
-
     function describeRoom(name) {
         var clients = io.sockets.clients(name);
         var result = {
