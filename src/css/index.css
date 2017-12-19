@@ -7,12 +7,20 @@
 }
 
 .index-page {
-  background-image: url(/img/index_bg_2.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background: #108dc7; /* fallback for old browsers */
+  background: linear-gradient(to right, #108dc7, #ef8e38); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .index-main {
+  display: flex;
   height: 400px;
+}
+
+.index-intro,
+.index-form {
+  flex: 1 0;
+}
+
+.index-form {
+  max-width: 300px;
 }

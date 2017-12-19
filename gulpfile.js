@@ -7,7 +7,7 @@ const filter = require('gulp-filter')
 const rename = require('gulp-rename')
 const concat = require('gulp-concat')
 const source = require('vinyl-source-stream')
-const sass = require('gulp-sass')
+const postcss = require('gulp-postcss')
 const streamQueue = require('streamqueue')
 const babelify = require('babelify')
 
@@ -39,7 +39,10 @@ gulp.task('css', function() {
     './node_modules/bootstrap/dist/css/bootstrap.css',
     'src/css/*.css',
   ])
-  .pipe(sass())
+  .pipe(postcss([
+    require('autoprefixer'),
+    require('postcss-nested'),
+  ]))
   .pipe(concat('style.css'))
   .pipe(require('gulp-clean-css')())
   .pipe(gulp.dest(`${destFolder}/css/`))
