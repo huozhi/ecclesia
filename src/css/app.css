@@ -29,6 +29,7 @@ a:hover {
 .btn-success {
   background-color: #f27426;
 
+  &:active,
   &:hover {
     background-color: #ff7e2e;
   }
@@ -79,6 +80,9 @@ input.form-control {
     color: #eee !important;
   }
 
+  a:active {
+    background-color: #f27426 !important;
+  }
   a:hover {
     background-color: rgba(255, 255, 255, 0.15) !important;
   }

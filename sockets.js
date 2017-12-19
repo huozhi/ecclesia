@@ -1,4 +1,4 @@
-const uuid = require('node-uuid')
+const uuid = require('uuid/v4')
 const crypto = require('crypto')
 const socketIO = require('socket.io')
 const logger = require('log4js').getLogger()
