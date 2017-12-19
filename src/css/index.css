@@ -1,9 +1,11 @@
 .index-intro {
+  flex: 1 0;
   color: #fff;
 }
 
 .index-intro-subtitle {
-  font-size: 18px;
+  font-size: 14px;
+  word-break: break-all;
 }
 
 .index-page {
@@ -12,15 +14,28 @@
 }
 
 .index-main {
+  margin: auto;
   display: flex;
-  height: 400px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 500px;
+  height: 480px;
+  background-color: rgba(255, 255, 255, .3);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, .3);
 }
 
-.index-intro,
 .index-form {
-  flex: 1 0;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 320px;
+
+  .ecc-form {
+    height: 230px;
+  }
 }
 
-.index-form {
-  max-width: 300px;
+.index-copyright {
+  text-align: center;
+  color: #fff;
 }

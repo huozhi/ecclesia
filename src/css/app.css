@@ -67,6 +67,7 @@ input.form-control {
 
 .page {
   display: flex;
+  flex-direction: column;
   min-height: calc(100vh - 50px);
 }
 
@@ -76,16 +77,19 @@ input.form-control {
   border-radius: 0;
   margin: 0;
 
-  a {
-    color: #eee !important;
+  a,
+  .navbar-nav > li > a {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0);
+
+    &:active {
+      background-color: #f27426 !important;
+    }
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+    }
   }
 
-  a:active {
-    background-color: #f27426 !important;
-  }
-  a:hover {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-  }
 }
 
 .ecc-sign-description {
