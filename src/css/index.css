@@ -1,3 +1,5 @@
+.index-page {}
+
 .index-intro {
   flex: 1 0;
   color: #fff;
@@ -8,18 +10,23 @@
   word-break: break-all;
 }
 
-.index-page {
-  background: #108dc7; /* fallback for old browsers */
-  background: linear-gradient(to right, #108dc7, #ef8e38); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
 .index-main {
   margin: auto;
+  width: 980px;
+  max-width: 980px;
+}
+
+.index-dialog {
+  position: relative;
+  z-index: 1;
+  margin: auto;
+  margin-right: 0;
+  padding: 1em 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  width: 500px;
+  width: 420px;
   height: 480px;
   background-color: rgba(255, 255, 255, .3);
   box-shadow: 0 4px 10px rgba(255, 255, 255, .3);
@@ -28,7 +35,6 @@
 .index-form {
   margin: auto;
   margin-bottom: 20px;
-  width: 320px;
 
   .ecc-form {
     height: 230px;
