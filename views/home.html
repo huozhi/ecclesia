@@ -7,9 +7,11 @@
 
 {% block content %}
 <div class="page home-page">
-  <div class="main">
-    <div class="center-block">
-      <h1 class="huge-title">Hi, {{ user.account }}</h1>
+  <div class="home-bg ecc-bg"></div>
+  <div class="home-greet">
+    <span class="huge-title">Hello, {{ user.account }}</span>
+  </div>
+  <div class="home-main">
       <div class="home-oper">
         <div class="home-oper-item">
           <a href="#create" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
@@ -32,30 +34,38 @@
       </div>
 
       <div class="tab-content">
-        <form id="create" action="/create" method="post" class="type-form ecc-form center-block tab-pane active">
+        <form id="create" action="/create" method="post" class="ecc-form tab-pane active">
           <div class="form-group">
             <input name="room" type="text" class="form-control" placeholder="Room name">
           </div>
+          <div class="text-muted ecc-sign-description">
+            <p>
+              Creating a room for a new meeting, then you can invinte your friends to join the room.
+              A meeting's history can be browsed in history views after meeting ends.
+            </p>
+          </div>
           <div class="text-center form-group">
-            <button class="btn btn-success" type="submit">Create Room</button>
+            <button class="btn btn-success btn-block" type="submit">Create Room</button>
           </div>
         </form>
 
-        <form id="join" action="/join" method="post" class="type-form ecc-form center-block tab-pane">
+        <form id="join" action="/join" method="post" class="ecc-form tab-pane">
           <div class="form-group">
             <input name="room" type="text" class="form-control" placeholder="Meeting name">
           </div>
           <div class="form-group">
             <input name="host" type="text" class="form-control" placeholder="Meeting Host">
           </div>
+          <div class="text-muted ecc-sign-description">
+            <p>
+              Fill the form with your meeting info, room id and the host name.
+            </p>
+          </div>
           <div class="text-center form-group">
-            <button class="btn btn-default" type="submit">Join Room</button>
+            <button class="btn btn-success btn-block" type="submit">Join Room</button>
           </div>
         </form>
       </div>
-
-    </div>
   </div>
-
 </div>
 {% endblock content %}

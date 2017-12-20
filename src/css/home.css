@@ -1,10 +1,50 @@
-.home-page {
-  background-image: url(/img/home_bg.jpg);
+.home-greet {
+  position: absolute;
+  top: 60px;
+  width: 980px;
+  margin: auto;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .huge-title {
+    font-size: 45px;
+    box-shadow: 0 0 40px;
+    padding: 30px;
+    border-radius: 10px;
+  }
+}
+
+.home-main {
+  margin: auto;
+  max-width: 980px;
+  width: 980px;
+  display: flex;
+  justify-content: space-between;
+
+  .tab-content {
+    height: 200px;
+    padding-top: 22px;
+  }
+
+  .tab-pane {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .ecc-form {
+    max-width: 340px;
+  }
+
+  .tab-content, .home-oper {
+    flex: 1 0;
+  }
 }
 
 .home-oper {
   display: flex;
-  padding: 2em 0;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 100px;
 }
 
 .home-oper-item {
@@ -26,10 +66,5 @@
 
 .home-oper-title {
   font-size: 30px;
-  padding: 10px 0;
-}
-
-.type-form {
-  margin-top: 20px;
-  max-width: 450px;
+  padding: 20px 0;
 }
