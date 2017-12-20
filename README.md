@@ -35,13 +35,13 @@ is still in develop state.
 
 #### unlogin page
 
-![index](http://huozhi.github.io/img/2015/ecclesia/index.png)
+![index](http://huozhi.github.io/img/2015/ecclesia/index.jpg)
 
 #### home page
 
 create, join a discuss. or view histories.
 
-![home](http://huozhi.github.io/img/2015/ecclesia/home.png)
+![home](http://huozhi.github.io/img/2015/ecclesia/home.jpg)
 
 #### chat page
 
