@@ -1,5 +1,7 @@
 .chat-page {
   padding: 15px 0;
+  flex-direction: row;
+  background-color: rgba(255, 255, 255, 0.85);
 }
 
 .carousel-inner * {
@@ -94,7 +96,6 @@ textarea {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 15px;
-  box-shadow: 0 4px 8px #aaa;
 }
 
 .video-source > video {
