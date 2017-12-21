@@ -64,20 +64,19 @@ exports.joinRoom = function (req, res, next) {
       room: room,
       host: ObjectId(hostId),
     }
-    logger.debug('home.joinRoom', 'Discuss.findByQuery', query)
-    return Discuss.findByQuery(query, {$sort: {date: -1}})
+    return Discuss
+      .findOne(query)
+      .sort({date: -1})
+      .exec()
   })
   .then(function(discuss) {
-    logger.debug('session.user', user.account)
     logger.debug('home.joinRoom Discuss.addParticipant', discuss, user.account)
-    return Discuss.addParticipant(discuss, user)
+    return Discuss.addParticipant(discuss, user).then(() => discuss)
   })
-  .then(function(numAffected) {
-    logger.debug('home.joinRoom, updated', numAffected)
-    req.session.room = room
+  .then(function(discuss) {
+    req.session.room = discuss._id
     req.session.host = hostId
-    const params = getChatParams(room, hostId, user._id)
-    logger.debug('join room', `/chat?${params}`)
+    const params = getChatParams(discuss._id, hostId, user._id)
     return res.send({
       next: `/chat?${params}`,
     })
