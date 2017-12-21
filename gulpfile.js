@@ -11,16 +11,16 @@ const postcss = require('gulp-postcss')
 const streamQueue = require('streamqueue')
 const babelify = require('babelify')
 
-const destFolder = 'static'
+const destFolder = 'dist'
 
 gulp.task('js', function() {
-  browserify('./src/js/prepare.js')
+  browserify('./client/js/prepare.js')
     .transform(babelify)
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(`${destFolder}/js`))
 
-  browserify('./src/js/chat.js')
+  browserify('./client/js/chat.js')
     .transform(babelify)
     .bundle()
     .pipe(source('chat.js'))
@@ -30,7 +30,7 @@ gulp.task('js', function() {
 gulp.task('css', function() {
   gulp.src([
     './node_modules/bootstrap/dist/css/bootstrap.css',
-    'src/css/*.css',
+    './client/css/*.css',
   ])
   .pipe(postcss([
     require('autoprefixer'),
@@ -52,17 +52,17 @@ gulp.task('static', function() {
   .pipe(gulp.dest(`${destFolder}/fonts`))
 
   // favicon
-  gulp.src('./src/favicon.ico')
+  gulp.src('./client/favicon.ico')
   .pipe(gulp.dest(destFolder))
 
   // images
-  gulp.src('./src/img/*')
+  gulp.src('./client/img/*')
   .pipe(gulp.dest(`${destFolder}/img`))
 })
 
 gulp.task('watch', function() {
   gulp.start('build')
-  gulp.watch('./src/**/*', ['build'])
+  gulp.watch('./client/**/*', ['build'])
 })
 
 gulp.task('build', ['css', 'js', 'static'])

@@ -9,9 +9,11 @@ then
 fi
 
 echo "Generating self-signed certificates..."
-mkdir -p ./sslcert
-openssl genrsa -out ./sslcert/key.pem 1024
-openssl req -new -key ./sslcert/key.pem -out ./sslcert/csr.pem
-openssl x509 -req -days 9999 -in ./sslcert/csr.pem -signkey ./sslcert/key.pem -out ./sslcert/cert.pem
-rm ./sslcert/csr.pem
-chmod 600 ./sslcert/key.pem ./sslcert/cert.pem
+mkdir -p ./server/sslcert
+cd ./server/sslcert
+openssl genrsa -out ./key.pem 1024
+openssl req -new -key ./key.pem -out ./csr.pem
+openssl x509 -req -days 9999 -in ./csr.pem -signkey ./key.pem -out ./cert.pem
+rm ./csr.pem
+chmod 600 ./key.pem ./cert.pem
+cd ../..
