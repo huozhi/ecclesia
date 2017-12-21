@@ -6,7 +6,7 @@ Version 2.0.0
 
 A web meeting system for tiny group. support making dynamic slides with markdown and browsing history. Our aim is to make meeting more convenient and easier.
 
-contributors: @huozhi @xhh261672 @lusssn @sjhdolores 
+contributors: @huozhi @xhh261672 @lusssn @sjhdolores
 
 
 ### Development
@@ -43,19 +43,15 @@ create, join a discuss. or view histories.
 
 ![home](http://huozhi.github.io/img/2015/ecclesia/home.jpg)
 
+# history
+
+![edit](http://huozhi.github.io/img/2015/ecclesia/history.jpg)
+
 #### chat page
 
 start chat
 
 ![start-chat](http://huozhi.github.io/img/2015/ecclesia/start-chat.png)
-
-edit a topic
-
-![edit](http://huozhi.github.io/img/2015/ecclesia/edit.png)
-
-preview edition
-
-![preview](http://huozhi.github.io/img/2015/ecclesia/preview.png)
 
 
 ### Powered By
