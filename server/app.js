@@ -15,8 +15,8 @@ const passport = require('passport')
 
 const routes = require('./routes')
 const config = require('./config')
-
 const controllers = require('./controllers')
+
 const app = express()
 
 swig.setDefaults({cache : app.get('env') === 'production'})
@@ -25,8 +25,8 @@ app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
 app.disable('x-powered-by')
 
-app.use(favicon(path.join(__dirname, 'static/favicon.ico')))
-app.use(express.static('static'))
+app.use(favicon(path.join(__dirname, '../dist/favicon.ico')))
+app.use(express.static(path.join(__dirname, '../dist')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
@@ -45,12 +45,12 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-require('./strategy')(passport)
+require('./passport-strategy')(passport)
 
 app.use('/', routes)
 app.use('*', (req, res) => res.sendStatus(404))
 
-var server = https.createServer(config.signal.opts, app)
+const server = https.createServer(config.signal.opts, app)
 server.listen(config.port, config.host, () => {
   console.log(`Https server listen on https://${config.host}:${config.port}`)
 })

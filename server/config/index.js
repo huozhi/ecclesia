@@ -17,16 +17,16 @@ const config = {
   cookieSecret: 'ecclesiadatabase',
 
   upload: {
-    path: path.join(__dirname, 'static/upload/'),
-    url: '/static/upload/'
+    path: path.join(__dirname, '../dist/upload/'),
+    url: '/dist/upload/'
   },
 
   /* signal server config */
   signal: {
     port: 8888,
     opts: {
-      key: fs.readFileSync('sslcert/key.pem').toString(),
-      cert: fs.readFileSync('sslcert/cert.pem').toString(),
+      key: fs.readFileSync(path.join(__dirname, '../sslcert/key.pem')).toString(),
+      cert: fs.readFileSync(path.join(__dirname, '../sslcert/cert.pem')).toString(),
       passphrase: null,
     },
   },
