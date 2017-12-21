@@ -101,7 +101,6 @@ input.form-control {
 .ecc-bg {
   position: absolute;
   top: 0;
-  /*bottom: 0;*/
   min-width: 100vw;
   min-height: 100vh;
   z-index: -1;
