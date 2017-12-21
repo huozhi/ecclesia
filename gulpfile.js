@@ -13,13 +13,6 @@ const babelify = require('babelify')
 
 const destFolder = 'static'
 
-gulp.task('rtc', function() {
-  return browserify(`./src/rtc/simplewebrtc.js`)
-  .bundle({standalone: 'SimpleWebRTC'})
-  .pipe(source('rtc.js'))
-  .pipe(gulp.dest(`${destFolder}/js`))
-})
-
 gulp.task('js', function() {
   browserify('./src/js/prepare.js')
     .transform(babelify)
@@ -68,10 +61,9 @@ gulp.task('static', function() {
 })
 
 gulp.task('watch', function() {
-  gulp.start('base')
-  gulp.watch('./src/**/*', ['base'])
+  gulp.start('build')
+  gulp.watch('./src/**/*', ['build'])
 })
 
-gulp.task('base', ['css', 'js', 'static'])
-gulp.task('build', ['rtc', 'css', 'js', 'static'])
+gulp.task('build', ['css', 'js', 'static'])
 gulp.task('default', ['watch'])
