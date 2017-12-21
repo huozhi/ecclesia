@@ -1,7 +1,6 @@
 'use strict'
 
 const querystring = require('querystring')
-const Eventproxy = require('eventproxy')
 const mongoose = require('mongoose')
 const logger = require('log4js').getLogger()
 const common = require('../common')
