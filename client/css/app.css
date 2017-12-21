@@ -99,9 +99,8 @@ input.form-control {
 }
 
 .ecc-bg {
-  position: fixed;
+  position: absolute;
   top: 0;
-  bottom: 0;
   min-width: 100vw;
   min-height: 100vh;
   z-index: -1;
@@ -125,7 +124,7 @@ input.form-control {
     top: 0;
     right: 50%;
     bottom: 0;
-    z-index: 0;
+    z-index: -1;
     background-color: #ef8e38bd;
   }
 }
