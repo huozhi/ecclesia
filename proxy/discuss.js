@@ -15,7 +15,6 @@ Discuss.findByIds = function (ids) {
 }
 
 Discuss.addParticipant = function (discuss, user) {
-  logger.debug('inner addParticipant', discuss, user.account)
   return Discuss
     .where({ _id: discuss._id })
     .update({ $addToSet: { participants: user.account } })
