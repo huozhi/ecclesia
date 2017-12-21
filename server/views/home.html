@@ -12,26 +12,26 @@
     <span class="huge-title">Hello, {{ user.account }}</span>
   </div>
   <div class="home-main">
-      <div class="home-oper">
-        <div class="home-oper-item">
+      <ul class="home-oper">
+        <li class="home-oper-item active">
           <a href="#create" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
             <i class="fa fa-bar-chart fa-5x"></i>
             <div class="home-oper-title">Create a meeting</div>
           </a>
-        </div>
-        <div class="home-oper-item">
+        </li>
+        <li class="home-oper-item">
           <a href="#join" role="tab" data-toggle="tab" aria-controls="join" aria-expanded="false">
             <i class="fa fa-users fa-5x"></i>
             <div class="home-oper-title">Join a meeting</div>
           </a>
-        </div>
-        <div class="home-oper-item">
+        </li>
+        <li class="home-oper-item">
           <a href="/history">
             <i class="fa fa-folder-open-o fa-5x"></i>
             <div class="home-oper-title">View history</div>
           </a>
-        </div>
-      </div>
+        </li>
+      </ul>
 
       <div class="tab-content">
         <form id="create" action="/create" method="post" class="ecc-form tab-pane active">
