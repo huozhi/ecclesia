@@ -1,5 +1,6 @@
 'use strict'
 
+const SimpleWebRTC = require('simplewebrtc')
 const utils = require('./utils')
 
 var RtcController = {
@@ -23,7 +24,7 @@ RtcController.enableWebRTC = function() {
   var rtcUrl = window.location.protocol + '//' + window.location.hostname + ':' + port
   webrtc = new SimpleWebRTC({
     url: rtcUrl,
-    socketio: { 'force new connection':true },
+    socketio: { 'force new connection': true },
     localVideoEl: 'localVideo',
     remoteVideosEl: '',
     autoRequestMedia: true,

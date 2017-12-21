@@ -15,14 +15,14 @@ module.exports = function (server, config) {
     var io = socketIO.listen(server);
 
     function describeRoom(name) {
-        var clients = io.sockets.clients(name);
+        var adapter = io.nsps['/'].adapter;
+        var clients = adapter.rooms[name] || {};
         var result = {
             clients: {}
         };
-        clients.forEach(function (client) {
-            result.clients[client.id] = client.resources;
+        Object.keys(clients).forEach(function (id) {
+            result.clients[id] = adapter.nsp.connected[id].resources;
         });
-        logger.debug('clients', result.clients);
         return result;
     }
 
@@ -96,7 +96,8 @@ module.exports = function (server, config) {
                 name = uuid();
             }
             // check if exists
-            if (io.sockets.clients(name).length) {
+            var room = io.nsps['/'].adapter.rooms[name];
+            if (room && room.length) {
                 safeCb(cb)('taken');
             } else {
                 join(name);

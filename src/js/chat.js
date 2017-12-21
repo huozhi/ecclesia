@@ -27,15 +27,14 @@ var Impress = {
   ],
   init: function() {
     $.fn.carousel.Constructor.prototype.keydown = function(){};
+    const query = utils.parseQuery()
+    this.room = query.room
+    this.host = query.host
+    this.self = query.self
 
     this.slides.forEach((item, idx) => {
       this.append(idx, item)
     });
-
-    var query = utils.parseQuery()
-    this.room = query.room
-    this.host = query.host
-    this.self = query.self
 
     $addSlide.click(() => {
       if ($editBoard.css('display') !== 'block') {
@@ -44,15 +43,12 @@ var Impress = {
         this.append(lastIndex, this.slides[lastIndex])
       }
     })
-    this.renderAll()
 
     setInterval(() => this.sync(), SYNC_INTERVAL)
   },
   sync: function() {
-    const slides = this.slides
-
     $.post('/chat/sync', {
-      slides: slides,
+      slides: this.slides,
       discussId: this.room,
     })
   },
@@ -62,15 +58,6 @@ var Impress = {
     $slide.children('.slide-content').html(
       marked(slide)
     )
-  },
-  renderAll: function() {
-    // const $mark = $('.slide-content')
-    // $mark.each(function (index, ele) {
-    //   var $this = $(ele)
-    //   console.log('ele', ele, $this.text(), marked($this.text()))
-    //   var text = marked($this.text())
-    //   $this.html(text)
-    // })
   },
   append: function(idx, slide) {
       // add navigator
