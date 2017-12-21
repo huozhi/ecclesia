@@ -3,8 +3,8 @@
 {% block title %} Ecclesia History {% endblock title %}
 
 {% block content %}
-<div class="page history-page">
-  <div class="main">
+<div class="page history-page ecc-bg">
+  <div class="history-panel-main">
     <div class="header text-center">
       <h1>Meeting History Records</h1>
     </div>
@@ -14,11 +14,11 @@
         <div class="thumbnail">
           <div class="caption">
             <h3>{{ record.room }}</h3>
-            <p>host: {{ record.host.toString() }}</p>
-            <p>date: {{ record.date.toISOString() }}</p>
-            <p>participants: {% for user in record.participants %}
+            <p class="history-item-field"><span class="history-item-label">host</span> {{ record.host.toString() }}</p>
+            <p class="history-item-field"><span class="history-item-label">members</span> {% for user in record.participants %}
               <span>{{ user }}{% if !loop.last %},&nbsp;</span>{% endif %} {% endfor %}
             </p>
+            <p class="history-item-field"><span class="history-item-label">date</span> {{ record.date.toDateString() }}</p>
           </div>
         </div>
       </a>

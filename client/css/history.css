@@ -4,7 +4,7 @@
   }
 
   .thumbnail {
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255,255,255,.9);
   }
 }
 
@@ -15,14 +15,38 @@
   flex-wrap: wrap;
 }
 
+.history-panel-main {
+  margin: 50px auto 30px;
+}
+
 .history-item {
   display: flex;
   padding: 0 10px;
   flex-basis: 25%;
 
   .thumbnail {
-    border-radius: 0;
+    box-shadow: 0 0 10px rgba(255,255,255,.3);
+    border: none;
+    border-radius: 10px;
+    width: 100%;
   }
+
+  .caption p {
+    margin: 0;
+  }
+
+  .caption h3 {
+    margin: 8px auto;
+  }
+}
+
+.history-item-label {
+  color: #888;
+  font-size: 15px;
+}
+
+.history-item-field {
+  font-weight: 500;
 }
 
 .history-item:hover {
