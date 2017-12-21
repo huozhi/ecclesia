@@ -7,7 +7,6 @@ const ObjectId = mongoose.Types.ObjectId
 const Discuss = require('../proxy').Discuss
 const User = require('../proxy').User
 const UserModel = require('../models').User
-const Eventproxy = require('eventproxy')
 const common = require('../common')
 
 const getChatParams = function(room, hostId, userId) {
