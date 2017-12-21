@@ -19,6 +19,7 @@ const config = require('./config')
 const controllers = require('./controllers')
 const app = express()
 
+swig.setDefaults({cache : app.get('env') === 'production'})
 app.set('views', path.join(__dirname, 'views'))
 app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
