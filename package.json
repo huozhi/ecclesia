@@ -19,7 +19,7 @@
     "jquery": "^3.2.1",
     "log4js": "^0.6.27",
     "marked": "^0.3.7",
-    "mongoose": "^4.11.0",
+    "mongoose": "^4.13.7",
     "morgan": "~1.2.3",
     "multer": "^0.1.8",
     "passport": "^0.3.2",
