@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "web": "nodemon --watch ./views --watch ./controllers ./server/app.js",
-    "sock": "nodemon --watch socket.js signalmaster.js",
+    "sock": "nodemon server/signalmaster/index.js",
     "build": "gulp",
     "start": "npm run web",
     "clean": "rm -rf dist/*"
@@ -41,7 +41,7 @@
     "gulp-filter": "^4.0.0",
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.2",
-    "nodemon": "^1.9.1",
+    "nodemon": "^1.14.1",
     "postcss-nested": "^3.0.0",
     "vinyl-source-stream": "^1.1.0"
   },

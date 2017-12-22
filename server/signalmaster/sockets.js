@@ -3,28 +3,8 @@ const crypto = require('crypto')
 const socketIO = require('socket.io')
 const logger = require('log4js').getLogger()
 
-function safeCb(cb) {
-    if (typeof cb === 'function') {
-        return cb;
-    } else {
-        return function () {};
-    }
-}
-
 module.exports = function (server, config) {
     var io = socketIO.listen(server);
-
-    function describeRoom(name) {
-        var adapter = io.nsps['/'].adapter;
-        var clients = adapter.rooms[name] || {};
-        var result = {
-            clients: {}
-        };
-        Object.keys(clients).forEach(function (id) {
-            result.clients[id] = adapter.nsp.connected[id].resources;
-        });
-        return result;
-    }
 
     io.sockets.on('connection', function (client) {
         client.resources = {
@@ -71,6 +51,12 @@ module.exports = function (server, config) {
         function join(name, cb) {
             // sanity check
             if (typeof name !== 'string') return;
+            // check if maximum number of clients reached
+            if (config.rooms && config.rooms.maxClients > 0 &&
+                clientsInRoom(name) >= config.rooms.maxClients) {
+                safeCb(cb)('full');
+                return;
+            }
             // leave any existing rooms
             removeFeed();
             safeCb(cb)(null, describeRoom(name));
@@ -131,7 +117,30 @@ module.exports = function (server, config) {
             });
         });
         client.emit('turnservers', credentials);
-    });
+    })
 
-    if (config.uid) process.setuid(config.uid);
+    function describeRoom(name) {
+        var adapter = io.nsps['/'].adapter;
+        var clients = adapter.rooms[name] || {};
+        var result = {
+            clients: {}
+        };
+        Object.keys(clients.sockets || []).forEach(function (id) {
+            result.clients[id] = (adapter.nsp.connected[id] || {}).resources;
+        });
+        return result;
+    }
+
+    function clientsInRoom(name) {
+        return io.sockets.clients(name).length;
+    }
+
 };
+
+function safeCb(cb) {
+    if (typeof cb === 'function') {
+        return cb;
+    } else {
+        return function () {};
+    }
+}
