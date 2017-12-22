@@ -8,7 +8,6 @@ const rename = require('gulp-rename')
 const concat = require('gulp-concat')
 const source = require('vinyl-source-stream')
 const postcss = require('gulp-postcss')
-const streamQueue = require('streamqueue')
 const babelify = require('babelify')
 
 const destFolder = 'dist'
@@ -50,10 +49,6 @@ gulp.task('static', function() {
   ]))
   .pipe(rename({dirname: ''}))
   .pipe(gulp.dest(`${destFolder}/fonts`))
-
-  // favicon
-  gulp.src('./client/favicon.ico')
-  .pipe(gulp.dest(destFolder))
 
   // images
   gulp.src('./client/img/*')

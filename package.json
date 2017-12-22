@@ -7,7 +7,7 @@
     "sock": "nodemon --watch socket.js signalmaster.js",
     "build": "gulp",
     "start": "npm run web",
-    "clean": "rm -rf static/*"
+    "clean": "rm -rf dist/*"
   },
   "dependencies": {
     "body-parser": "~1.6.6",
@@ -19,7 +19,7 @@
     "jquery": "^3.2.1",
     "log4js": "^0.6.27",
     "marked": "^0.3.7",
-    "mongoose": "^4.1.0",
+    "mongoose": "^4.11.0",
     "morgan": "~1.2.3",
     "multer": "^0.1.8",
     "passport": "^0.3.2",
@@ -31,30 +31,21 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "attachmediastream": "1.0.1",
     "autoprefixer": "^7.2.3",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babelify": "^8.0.0",
     "browserify": "2.22.0",
-    "filetransfer": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-filter": "^4.0.0",
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.2",
-    "localmedia": "^1.0.2",
-    "mockconsole": "0.0.1",
     "nodemon": "^1.9.1",
     "postcss-nested": "^3.0.0",
-    "rtcpeerconnection": "^3.0.6",
-    "socket.io-client": "0.9.16",
-    "streamqueue": "^1.1.1",
-    "vinyl-source-stream": "^1.1.0",
-    "webrtcsupport": "^1.0.0",
-    "wildemitter": "1.x"
+    "vinyl-source-stream": "^1.1.0"
   },
   "engines": {
-    "node": ">= 4.0.0 < 5.0.0"
+    "node": ">= 4.0.0"
   }
 }
