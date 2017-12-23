@@ -3,7 +3,6 @@
 const fs = require('fs')
 const gulp = require('gulp')
 const browserify = require('browserify')
-const filter = require('gulp-filter')
 const rename = require('gulp-rename')
 const concat = require('gulp-concat')
 const source = require('vinyl-source-stream')
@@ -41,12 +40,8 @@ gulp.task('css', function() {
 
 gulp.task('static', function() {
   gulp.src([
-    './node_modules/bootstrap/**/fonts/*',
     './node_modules/font-awesome/fonts/*',
   ])
-  .pipe(filter([
-    '**/*.eot', '**/*.woff', '**/*.woff2', '**/*.svg', '**/*.tt'
-  ]))
   .pipe(rename({dirname: ''}))
   .pipe(gulp.dest(`${destFolder}/fonts`))
 
