@@ -58,3 +58,13 @@
     transition: transform .2s ease-out;
   }
 }
+
+.history-present {
+  margin: auto;
+  width: 980px;
+  max-width: 980px;
+
+  .carousel-control {
+    background-image: none;
+  }
+}
