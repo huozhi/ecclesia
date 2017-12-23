@@ -1,8 +1,8 @@
-<div class="details-container">
-  <div id="impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
+<div class="history-present">
+  <div id="history-impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators">
       {% for content in discuss.impress %}
-      <li data-target="#impress" data-slide-to="{{ loop.index - 1 }}" {% if loop.first %} class="active" {% endif %}></li>
+      <li data-target="#history-impress" data-slide-to="{{ loop.index - 1 }}" {% if loop.first %} class="active" {% endif %}></li>
       {% endfor %}
     </ol>
     <div class="ecc-slide carousel-inner impress-panel text-center center-block" role="listbox">
@@ -16,7 +16,13 @@
       <button class="btn btn-default btn-xs edit">
         <span class="glyphicon glyphicon-pencil"></span>
       </button>
-      <div class="cover-board"></div>
     </div>
+    <a class="left carousel-control" href="#history-impress" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a>
+    <a class="right carousel-control" href="#history-impress" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </a>
   </div>
+
 </div>

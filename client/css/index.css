@@ -1,4 +1,6 @@
-.index-page {}
+.index-page {
+  padding-top: 50px;
+}
 
 .index-intro {
   flex: 1 0;

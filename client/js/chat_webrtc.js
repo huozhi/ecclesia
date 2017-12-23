@@ -60,7 +60,6 @@ RtcController.enableWebRTC = function() {
 
 
   webrtc.on('videoAdded', function (video, peer) {
-    console.log('video added', peer)
     var remotes = document.getElementById('remotes')
     if (remotes) {
       var d = document.createElement('div');
@@ -78,25 +77,10 @@ RtcController.enableWebRTC = function() {
 
 
   webrtc.on('videoRemoved', function (video, peer) {
-    console.log('videoRemoved')
     var remotes = document.getElementById('remotes')
     var leavePeer = document.getElementById('container_' + webrtc.getDomId(peer))
     if (remotes && leavePeer) {
       remotes.removeChild(leavePeer)
-    }
-  })
-
-  webrtc.on('volumeChange', function (volume, threshold) {
-    var volBar = $('#localVolBar')
-    if (volBar == []) return
-    if (volume < -45) { // vary between -45 and -20
-      volBar.css('height', '0px')
-    }
-    else if (volume > -20) {
-      volBar.css('height', '100%')
-    }
-    else {
-      volBar.css('height', '' + Math.floor((volume + 100) * 100 / 25 - 220) + '%')
     }
   })
 }
