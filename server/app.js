@@ -25,7 +25,7 @@ app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
 app.disable('x-powered-by')
 
-app.use(favicon(path.join(__dirname, '../client/favicon.ico')))
+app.use(favicon(path.join(__dirname, '../client/favicon.png')))
 app.use(express.static(path.join(__dirname, '../dist')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))

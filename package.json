@@ -38,7 +38,6 @@
     "browserify": "2.22.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
-    "gulp-filter": "^4.0.0",
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "nodemon": "^1.14.1",
