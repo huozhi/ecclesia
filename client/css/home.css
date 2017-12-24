@@ -11,9 +11,9 @@
   transform: translateX(-50%);
 
   .huge-title {
-    font-size: 45px;
+    font-size: 40px;
     box-shadow: 0 0 40px;
-    padding: 30px;
+    padding: 8px 16px;
     border-radius: 10px;
   }
 }
@@ -25,9 +25,10 @@
   display: flex;
   justify-content: space-between;
 
-  .tab-content {
-    height: 200px;
+  .home-form {
+    margin: auto;
     padding-top: 22px;
+    height: 200px;
   }
 
   .tab-pane {
@@ -39,7 +40,7 @@
     max-width: 340px;
   }
 
-  .tab-content, .home-oper {
+  .home-form, .home-oper {
     flex: 1 0;
   }
 }
@@ -54,6 +55,8 @@
 }
 
 .home-oper-item {
+  width: 240px;
+  padding: 16px 10px;
   flex: 1 0;
   text-align: center;
 
@@ -81,5 +84,5 @@
 
 .home-oper-title {
   font-size: 30px;
-  padding: 10px 16px;
+  padding: 10px 16px 0;
 }

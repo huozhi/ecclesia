@@ -1,29 +1,34 @@
-{% extends '../common/base.html' %}
+{% extends '../common/skeleton.html' %}
 
 {% block header %}
-<li>
-  <button id="addSlide" class="btn chat-oper navbar-btn" data-target="#add-impress-modal">
-    <span class="glyphicon glyphicon-plus"></span>&nbsp;Slide
-  </button>
-</li>
 
-<li>
-  <button id="mediaOpts" class="btn chat-oper navbar-btn" data-toggle="modal" data-target="#check-media-modal">
-    <span class="glyphicon glyphicon-wrench"></span>&nbsp;Media
-  </button>
-</li>
-<li><a href="/">Home</a></li>
 {% endblock header %}
 
 {% block content %}
-<div class="page chat-page">
+<div class="chat-page">
+  <div class="chat-main">
   <div class="chat-videos">
-    <div id="localVideo" class="video-source">
+    <ul class="chat-top-bar">
+      <li>
+        <span id="addSlide" class="btn chat-oper navbar-btn" data-target="#add-impress-modal" >
+          <span class="fa fa-file-powerpoint-o"></span>
+        </span>
+      </li>
+      <li>
+        <span id="mediaOpts" class="btn chat-oper navbar-btn" data-toggle="modal" data-target="#check-media-modal">
+          <span class="fa fa-gear"></span>
+        </span>
+      </li>
+      <li>
+        <a href="/" class="btn chat-oper navbar-btn chat-oper-phone"><span class="fa fa-phone"></span></a>
+      </li>
+    </ul>
+
+    <div id="localVideo" class="chat-local-video">
       <div id="localVolBar" class="vol-bar"></div>
     </div>
 
-    <div id="remotes"></div>
-
+    <div id="remotes" class="chat-remote-video"></div>
   </div>
 
   <div class="impress-screen">
@@ -46,7 +51,7 @@
       </div>
     </div>
   </div>
-
+  </div>
   {% include "check-media.html" %}
 </div>
 {% endblock content %}

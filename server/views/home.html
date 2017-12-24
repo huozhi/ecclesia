@@ -16,13 +16,13 @@
         <li class="home-oper-item active">
           <a href="#create" role="tab" data-toggle="tab" aria-controls="create" aria-expanded="true">
             <i class="fa fa-bar-chart fa-5x"></i>
-            <div class="home-oper-title">Create a meeting</div>
+            <div class="home-oper-title">Create Room</div>
           </a>
         </li>
         <li class="home-oper-item">
           <a href="#join" role="tab" data-toggle="tab" aria-controls="join" aria-expanded="false">
             <i class="fa fa-users fa-5x"></i>
-            <div class="home-oper-title">Join a meeting</div>
+            <div class="home-oper-title">Join Room</div>
           </a>
         </li>
         <li class="home-oper-item">
@@ -33,7 +33,7 @@
         </li>
       </ul>
 
-      <div class="tab-content">
+      <div class="home-form tab-content">
         <form id="create" action="/create" method="post" class="ecc-form tab-pane active">
           <div class="form-group">
             <input name="room" type="text" class="form-control" placeholder="Room name">
@@ -51,10 +51,10 @@
 
         <form id="join" action="/join" method="post" class="ecc-form tab-pane">
           <div class="form-group">
-            <input name="room" type="text" class="form-control" placeholder="Meeting name">
+            <input name="room" type="text" class="form-control" placeholder="Room name">
           </div>
           <div class="form-group">
-            <input name="host" type="text" class="form-control" placeholder="Meeting Host">
+            <input name="host" type="text" class="form-control" placeholder="Room Host">
           </div>
           <div class="text-muted ecc-sign-description">
             <p>
