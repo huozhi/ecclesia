@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<head>
-<title>{% block title %}Welcome{% endblock %} - Ecclesia</title>
-{% block style %}
-<link href="/css/style.css" rel="stylesheet"/>
-{% endblock %}
-</head>
-<body>
+{% extends './skeleton.html' %}
+
+{% block nav %}
 <nav class="ecc-header nav-header">
   <div class="navbar" role="navigation">
     <div class="navbar-header">
@@ -17,17 +8,11 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        {% block header %}{% endblock %}
+        {% block header %}{% endblock header %}
         {% if user %}<li><a href="/logout">Logout</a></li>{% endif %}
       </ul>
     </div>
   </div>
 </nav>
+{% endblock %}
 {% block content %}{% endblock %}
-
-<!-- after scripts  -->
-<script src="/js/bundle.js"></script>
-{% block script %}
-{% endblock script %}
-</body>
-</html>

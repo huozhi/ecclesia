@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+<title>{% block title %}Welcome{% endblock %} - Ecclesia</title>
+{% block style %}
+<link href="/css/style.css" rel="stylesheet"/>
+{% endblock %}
+</head>
+<body>
+{% block nav %}{% endblock %}
+{% block content %}{% endblock %}
+
+<!-- after scripts  -->
+<script src="/js/bundle.js"></script>
+{% block script %}
+{% endblock script %}
+</body>
+</html>

@@ -1,5 +1,5 @@
 <div class="history-present">
-  <div id="history-impress" class="carousel slide screen" data-ride="carousel" data-interval="false">
+  <div id="history-impress" class="carousel history-impress" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators">
       {% for content in discuss.impress %}
       <li data-target="#history-impress" data-slide-to="{{ loop.index - 1 }}" {% if loop.first %} class="active" {% endif %}></li>
@@ -13,9 +13,6 @@
         </div>
       </div>
       {% endfor %}
-      <button class="btn btn-default btn-xs edit">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
     </div>
     <a class="left carousel-control" href="#history-impress" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>

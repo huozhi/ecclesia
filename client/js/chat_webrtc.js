@@ -57,8 +57,6 @@ RtcController.enableWebRTC = function() {
     }
   })
 
-
-
   webrtc.on('videoAdded', function (video, peer) {
     var remotes = document.getElementById('remotes')
     if (remotes) {
