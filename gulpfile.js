@@ -27,6 +27,7 @@ gulp.task('js', function() {
 
 gulp.task('css', function() {
   gulp.src([
+    './node_modules/font-awesome/css/font-awesome.css',
     './node_modules/bootstrap/dist/css/bootstrap.css',
     './client/css/*.css',
   ])

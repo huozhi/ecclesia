@@ -1,4 +1,5 @@
 .history-page {
+  height: calc(100vh - 50px);
   .header {
     color: #fff;
   }
@@ -16,7 +17,8 @@
 }
 
 .history-panel-main {
-  margin: 50px auto 30px;
+  max-width: 980px;
+  margin: 100px auto 30px;
 }
 
 .history-item {
@@ -59,12 +61,34 @@
   }
 }
 
+
 .history-present {
   margin: auto;
-  width: 980px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 980px;
 
   .carousel-control {
     background-image: none;
+    background-color: rgba(0, 0, 0, .1);
   }
+
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #a4c2d0;
+    z-index: -1;
+  }
+}
+
+.history-impress {
+  background: #fff;
+  display: flex;
+  height: 600px;
+  width: 100%;
 }
