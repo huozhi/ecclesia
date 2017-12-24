@@ -43,15 +43,13 @@ create, join a discuss. or view histories.
 
 ![home](http://huozhi.github.io/img/2015/ecclesia/home.jpg)
 
-# history
+### history
 
 ![edit](http://huozhi.github.io/img/2015/ecclesia/history.jpg)
 
 #### chat page
 
-start chat
-
-![start-chat](http://huozhi.github.io/img/2015/ecclesia/start-chat.png)
+![chat](http://huozhi.github.io/img/2015/ecclesia/chat.jpg)
 
 
 ### Powered By

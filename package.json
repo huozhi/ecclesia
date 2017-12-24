@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "web": "nodemon --watch ./views --watch ./controllers ./server/app.js",
-    "sock": "nodemon server/signalmaster/index.js",
+    "sock": "nodemon --watch ./server/sockets/signalmaster server/signalmaster/index.js",
     "build": "gulp",
     "start": "npm run web",
     "clean": "rm -rf dist/*"
