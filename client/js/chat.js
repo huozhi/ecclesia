@@ -6,6 +6,7 @@ const MediaTool = require('./media-tool')
 const RtcController = require('./chat_webrtc')
 
 const SYNC_INTERVAL = 1000 * 20
+const DEFAULT_SLIDE_CONTENT = '# Welcome to Ecclesia\nedit your slides here... '
 
 /**
  * data structure will used defination
@@ -23,7 +24,7 @@ var $slideContent = $('#slideContent')
 /******* SLIDES *******/
 var Impress = {
   slides: [
-    '# Welcome to Ecclesia\nyou could edit your slides here... '
+    DEFAULT_SLIDE_CONTENT
   ],
   init: function() {
     $.fn.carousel.Constructor.prototype.keydown = function(){};
@@ -44,20 +45,18 @@ var Impress = {
       }
     })
 
-    setInterval(() => this.sync(), SYNC_INTERVAL)
+    this._syncInterval = setInterval(() => this.sync(), SYNC_INTERVAL)
   },
   sync: function() {
     $.post('/chat/sync', {
       slides: this.slides,
       discussId: this.room,
-    })
+    }).fail(() => clearInterval(this._syncInterval))
   },
   render: function(pageId) {
-    var $slide = $('div[data-id=' + pageId + ']')
-    var slide = this.slides[pageId]
-    $slide.children('.slide-content').html(
-      marked(slide)
-    )
+    const $slide = $('div[data-id=' + pageId + ']')
+    const slide = this.slides[pageId]
+    $slide.children('.slide-content').html(marked(slide))
   },
   append: function(idx, slide) {
       // add navigator
@@ -75,8 +74,6 @@ var Impress = {
       .attr('data-id', idx)
       .appendTo($slides)
 
-      console.log('marked(slide)', slide, marked(slide))
-
       $('<div />', {
         class: 'text-center center-block slide-content'
       })
@@ -89,15 +86,14 @@ var Impress = {
       $carousel.carousel(idx)
   },
   edit: function(pageId) {
-    var shown, pageId, $li
-    shown = $editBoard.css('display')
-    $li = $slidesNav.children().filter('.active')
-    pageId = $li.data('slide-to')
+    const shown = $editBoard.css('display')
+    const $li = $slidesNav.children().filter('.active')
+    const pageId = $li.data('slide-to')
     if (shown === 'none') {
       $slides.hide()
       $editBoard.show()
       // assign text
-      var slide = this.slides[pageId]
+      const slide = this.slides[pageId]
       $slideContent.val(slide)
     }
     else {
