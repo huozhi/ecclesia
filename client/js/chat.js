@@ -53,7 +53,6 @@ var Impress = {
     }).fail(() => clearInterval(this._syncInterval))
   },
   render: function(pageId) {
-    console.log('slide', pageId, '[data-id=' + pageId + ']')
     const slide = this.slides[pageId]
     const $slide = $('[data-id=' + pageId + ']')
     $slide.children('.slide-content').html(marked(slide))
