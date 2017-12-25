@@ -21,7 +21,6 @@ var $slideEdit = $('#slideEdit')
 var $mediaOptions = $('#mediaOpts')
 var $slideContent = $('#slideContent')
 
-/******* SLIDES *******/
 var Impress = {
   slides: [
     DEFAULT_SLIDE_CONTENT
@@ -54,8 +53,9 @@ var Impress = {
     }).fail(() => clearInterval(this._syncInterval))
   },
   render: function(pageId) {
-    const $slide = $('div[data-id=' + pageId + ']')
+    console.log('slide', pageId, '[data-id=' + pageId + ']')
     const slide = this.slides[pageId]
+    const $slide = $('[data-id=' + pageId + ']')
     $slide.children('.slide-content').html(marked(slide))
   },
   append: function(idx, slide) {
@@ -85,7 +85,7 @@ var Impress = {
       this.sync()
       $carousel.carousel(idx)
   },
-  edit: function(pageId) {
+  edit: function() {
     const shown = $editBoard.css('display')
     const $li = $slidesNav.children().filter('.active')
     const pageId = $li.data('slide-to')
@@ -107,11 +107,6 @@ var Impress = {
   }
 }
 
-/******* SLIDES *******/
-
-
-/******* DISCUSS *******/
-
 var Discuss = function(room, host, date, participants, topics) {
   this.room = room
   this.host = host
@@ -132,7 +127,6 @@ Discuss.init = function() {
   $slideEdit.click(Impress.edit.bind(Impress))
   $mediaOptions.click(MediaTool.check.bind(MediaTool))
 }
-/******* DISCUSS *******/
 
 function ChatPageController() {
   RtcController.enableWebRTC()
