@@ -84,10 +84,6 @@
   display: none;
 }
 
-textarea {
-  max-width: 100%;
-}
-
 .board {
   position: relative;
   height: 100%;
@@ -235,5 +231,17 @@ textarea {
   &.chat-oper-phone {
     color: #dc2f2f;
     transform: rotate(135deg);
+  }
+}
+
+.slide-edit {
+  height: 100%;
+  textarea {
+    outline: 0;
+    margin: 20px;
+    padding: 10px;
+    width: calc(100% - 40px);
+    height: inherit;
+    resize: none;
   }
 }
