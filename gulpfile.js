@@ -12,16 +12,10 @@ const babelify = require('babelify')
 const destFolder = 'dist'
 
 gulp.task('js', function() {
-  browserify('./client/js/prepare.js')
+  browserify('./client/js/index.js')
     .transform(babelify)
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest(`${destFolder}/js`))
-
-  browserify('./client/js/chat.js')
-    .transform(babelify)
-    .bundle()
-    .pipe(source('chat.js'))
     .pipe(gulp.dest(`${destFolder}/js`))
 })
 

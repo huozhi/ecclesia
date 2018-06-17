@@ -3,7 +3,7 @@
 const SimpleWebRTC = require('simplewebrtc')
 const utils = require('./utils')
 
-var RtcController = {
+const ChatRTCService = {
   host: null,
   room: null,
   webrtc: null,
@@ -11,7 +11,7 @@ var RtcController = {
 }
 
 
-RtcController.enableWebRTC = function() {
+ChatRTCService.enableWebRTC = function() {
   var res = utils.parseQuery(location.search.split('?')[1])
   var host = this.host = res['host']
   var room = this.room = res['room']
@@ -73,7 +73,6 @@ RtcController.enableWebRTC = function() {
     }
   })
 
-
   webrtc.on('videoRemoved', function (video, peer) {
     var remotes = document.getElementById('remotes')
     var leavePeer = document.getElementById('container_' + webrtc.getDomId(peer))
@@ -83,4 +82,4 @@ RtcController.enableWebRTC = function() {
   })
 }
 
-module.exports = RtcController
+module.exports = ChatRTCService
