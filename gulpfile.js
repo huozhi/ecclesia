@@ -28,7 +28,7 @@ gulp.task('js', function() {
 gulp.task('css', function() {
   gulp.src([
     './node_modules/font-awesome/css/font-awesome.css',
-    // './node_modules/bootstrap/dist/css/bootstrap.css',
+    './node_modules/bootstrap/dist/css/bootstrap.css',
     './client/css/*.css',
   ])
   .pipe(postcss([
@@ -41,7 +41,6 @@ gulp.task('css', function() {
 
 gulp.task('static', function() {
   gulp.src([
-    './node_modules/bootstrap/dist/fonts/*',
     './node_modules/font-awesome/fonts/*',
   ])
   .pipe(rename({dirname: ''}))
