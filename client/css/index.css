@@ -1,49 +1,9 @@
-.index-page {
-  padding-top: 50px;
-}
-
-.index-intro {
-  flex: 1 0;
-  color: #fff;
-}
-
-.index-intro-subtitle {
-  font-size: 14px;
-  word-break: break-all;
-}
-
-.index-main {
-  margin: auto;
-  width: 980px;
-  max-width: 980px;
-}
-
-.index-dialog {
-  position: relative;
-  z-index: 1;
-  margin: auto;
-  margin-right: 0;
-  padding: 1em 2em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  width: 420px;
-  height: 480px;
-  background-color: rgba(255, 255, 255, .3);
-  box-shadow: 0 4px 10px rgba(255, 255, 255, .3);
-}
-
-.index-form {
-  margin: auto;
-  margin-bottom: 20px;
-
-  .ecc-form {
-    height: 230px;
-  }
-}
-
-.index-copyright {
-  text-align: center;
-  color: #fff;
-}
+@import 'bootstrap/dist/css/bootstrap.css';
+@import './app.css';
+@import './theme.css';
+@import './highlight.css';
+@import './landing.css';
+@import './chat.css';
+@import './detail.css';
+@import './home.css';
+@import './history.css';
