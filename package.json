@@ -42,10 +42,8 @@
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "nodemon": "^1.14.1",
+    "postcss-import": "^11.1.0",
     "postcss-nested": "^3.0.0",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "engines": {
-    "node": ">= 4.0.0"
   }
 }

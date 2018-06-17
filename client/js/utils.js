@@ -8,4 +8,12 @@ const parseQuery = function(url) {
   return res
 }
 
+const removeChildren = (foo) => {
+  while (foo.firstChild) {
+    foo.firstChild.remove()
+  }
+}
+
+
 exports.parseQuery = parseQuery
+exports.removeChildren = removeChildren

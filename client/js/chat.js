@@ -122,9 +122,40 @@ Discuss.info = function () {
   }
 }
 
+const renderMediaReady = () => {
+  MediaTool.check().then(mediaready => {
+    createOptionList(mediaready, 'video')
+    createOptionList(mediaready, 'audio')
+  })
+
+  function createOptionList(mediaready, type) {
+    const options = mediaready[type + 'List'].map(camera => {
+      const opt = document.createElement('input')
+      opt.setAttribute('type', 'radio')
+      opt.setAttribute('value', camera.id)
+      opt.checked = camera.id === mediaready[type + 'Source']
+      const label = document.createElement('label')
+      label.textContent = camera.label
+      label.style.marginLeft = '10px'
+      
+      return [opt, label]
+    })
+    
+    const menu = document.querySelector('.' + type + '-menu')
+    utils.removeChildren(menu)
+
+    options.forEach(pair => {
+      const li = document.createElement('li')
+      li.appendChild(pair[0])
+      li.appendChild(pair[1])
+      menu.appendChild(li)
+    })
+  }
+}
+
 Discuss.init = function() {
   $slideEdit.click(Impress.edit.bind(Impress))
-  $mediaOptions.click(MediaTool.check.bind(MediaTool))
+  $mediaOptions.click(renderMediaReady)
 }
 
 function initChatPage() {
