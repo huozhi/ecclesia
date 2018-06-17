@@ -74,7 +74,7 @@ const MediaTool = {
           optional: [{sourceId: $(this).data('videoSource')}]
         }
       };
-      if (callback) return callback(window.constraints);
+      if (typeof callback === 'function') return callback(window.constraints);
     });
   }
 }
