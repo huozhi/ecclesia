@@ -1,13 +1,13 @@
 {% extends './skeleton.html' %}
 
 {% block nav %}
-<nav class="ecc-header nav-header">
-  <div class="navbar" role="navigation">
+<nav class="ecc-header">
+  <div class="ecc-navbar" role="navigation">
     <div class="navbar-header">
       <a href="/" class="navbar-brand">Ecclesia</a>
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
+    <div class="ecc-navbar-collapse">
+      <ul class="ecc-nav ecc-navbar-nav">
         {% block header %}{% endblock header %}
         {% if user %}<li><a href="/logout">Logout</a></li>{% endif %}
       </ul>

@@ -46,9 +46,7 @@
 }
 
 .screen {
-  position: relative;
   display: flex;
-  width: 100%;
   height: 100%;
   background-color: #fff;
   color: #444;
@@ -209,6 +207,8 @@
 }
 
 .chat-oper {
+  padding: 0;
+  line-height: 48px;
   width: 48px;
   height: 48px;
   margin: auto;

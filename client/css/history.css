@@ -1,5 +1,5 @@
 .history-page {
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - 50px);
   .header {
     color: #fff;
   }
@@ -72,6 +72,9 @@
   .carousel-control {
     background-image: none;
     background-color: rgba(0, 0, 0, .1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &::after {
