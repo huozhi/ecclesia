@@ -3,7 +3,7 @@
 const marked = require('marked')
 const utils = require('./utils')
 const MediaTool = require('./media-tool')
-const RtcController = require('./chat_webrtc')
+const ChatRTCService = require('./chat_webrtc')
 
 const SYNC_INTERVAL = 1000 * 20
 const DEFAULT_SLIDE_CONTENT = '# Welcome to Ecclesia\nedit your slides here... '
@@ -127,10 +127,10 @@ Discuss.init = function() {
   $mediaOptions.click(MediaTool.check.bind(MediaTool))
 }
 
-function ChatPageController() {
-  RtcController.enableWebRTC()
+function initChatPage() {
+  ChatRTCService.enableWebRTC()
   Impress.init()
   Discuss.init()
 }
 
-window.addEventListener('load', ChatPageController)
+module.exports = initChatPage
