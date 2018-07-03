@@ -6,10 +6,8 @@ const utils = require('./utils')
 const ChatRTCService = {
   host: null,
   room: null,
-  webrtc: null,
   constraints: null,
 }
-
 
 ChatRTCService.enableWebRTC = function() {
   var res = utils.parseQuery(location.search.split('?')[1])
@@ -18,11 +16,9 @@ ChatRTCService.enableWebRTC = function() {
   var self = this.self = res['self']
   var discuss = null
 
-  var webrtc = this.webrtc
-
   var port = 8888
   var rtcUrl = window.location.protocol + '//' + window.location.hostname + ':' + port
-  webrtc = new SimpleWebRTC({
+  var webrtc = new SimpleWebRTC({
     url: rtcUrl,
     socketio: { 'force new connection': true },
     localVideoEl: 'localVideo',
@@ -33,7 +29,6 @@ ChatRTCService.enableWebRTC = function() {
     autoAdjustMic: false,
     autoRemoveVideos: true,
   })
-
 
   webrtc.on('readyToCall', function() {
     if (room) {
