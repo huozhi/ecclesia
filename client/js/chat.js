@@ -3,7 +3,7 @@
 const marked = require('marked')
 const utils = require('./utils')
 const MediaTool = require('./media-tool')
-const ChatRTCService = require('./chat_webrtc')
+const ChatRTCService = require('./rtc-service')
 
 const SYNC_INTERVAL = 1000 * 20
 const DEFAULT_SLIDE_CONTENT = '# Welcome to Ecclesia\nedit your slides here... '

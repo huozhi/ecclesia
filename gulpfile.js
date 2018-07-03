@@ -21,7 +21,7 @@ gulp.task('js', function() {
 
 gulp.task('css', function() {
   gulp.src([
-    // './node_modules/bootstrap/dist/css/bootstrap.css',
+    './node_modules/bootstrap/dist/css/bootstrap.css',
     './client/css/index.css',
   ])
   .pipe(postcss([
@@ -30,11 +30,6 @@ gulp.task('css', function() {
     require('postcss-nested'),
   ]))
   .pipe(concat('style.css'))
-  .pipe(gulp.dest(`${destFolder}/css/`))
-})
-
-gulp.task('bt', function() {
-  gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css')
   .pipe(gulp.dest(`${destFolder}/css/`))
 })
 
