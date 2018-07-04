@@ -7,8 +7,10 @@
 
 const marked = require('marked')
 
-;(function() {
+function markdown() {
   document.querySelectorAll('[data-markdown-slide]').forEach(function(ele) {
     ele.innerHTML = marked(ele.textContent.trim())
   })
-})();
+}
+
+module.exports = markdown

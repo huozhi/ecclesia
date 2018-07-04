@@ -1,7 +1,9 @@
 // Usage:
 // <form class="ecc-form">
 
-+function ($) {
+const $ = require('jquery')
+
+function form() {
   const dangerColor = '#f2dede'
   const warningColor = '#fcf8e3'
 
@@ -27,4 +29,6 @@
   $(document).on('focus', '.ecc-form input', function() {
     $(this).css('background-color', '')
   })
-}(jQuery);
+}
+
+module.exports = form
