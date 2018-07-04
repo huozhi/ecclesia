@@ -1,10 +1,14 @@
 .history-page {
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
+  height: 100%;
+
   .header {
     color: #fff;
   }
 
   .thumbnail {
+    padding: 10px 10px;
+    color: #444;
     background-color: rgba(255,255,255,.9);
   }
 }
@@ -23,7 +27,7 @@
 
 .history-item {
   display: flex;
-  padding: 0 10px;
+  padding: 10px;
   flex-basis: 25%;
 
   .thumbnail {

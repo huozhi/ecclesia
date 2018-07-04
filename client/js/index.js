@@ -1,7 +1,6 @@
 window.$ = window.jQuery = require('jquery')
-require('bootstrap')
-// require('./tab')()
-// require('./modal')()
+require('./tab')()
+require('./modal')()
 require('./form')()
 require('./slide-markdown')()
 

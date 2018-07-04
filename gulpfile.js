@@ -21,7 +21,6 @@ gulp.task('js', function() {
 
 gulp.task('css', function() {
   gulp.src([
-    './node_modules/bootstrap/dist/css/bootstrap.css',
     './client/css/index.css',
   ])
   .pipe(postcss([
