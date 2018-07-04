@@ -1,25 +1,7 @@
 <div class="history-present">
   <div id="history-impress" class="carousel history-impress" data-ride="carousel" data-interval="false">
-    <ol class="carousel-indicators">
-      {% for content in discuss.impress %}
-      <li data-target="#history-impress" data-slide-to="{{ loop.index - 1 }}" {% if loop.first %} class="active" {% endif %}></li>
-      {% endfor %}
-    </ol>
-    <div class="ecc-slide carousel-inner impress-panel text-center center-block" role="listbox">
-      {% for content in discuss.impress %}
-      <div class="item{% if loop.first %} active {% endif %}">
-        <div class="text-center center-block slide-content" data-markdown-slide>
-          {{ content }}
-        </div>
-      </div>
-      {% endfor %}
+    <div class="ecc-slide carousel-inner impress-panel text-center center-block" role="listbox" data-markdown-slide>
+      {{ discuss.impress }}
     </div>
-    <a class="left carousel-control" href="#history-impress" role="button" data-slide="prev">
-      <span class="fa fa-angle-left" aria-hidden="true"></span>
-    </a>
-    <a class="right carousel-control" href="#history-impress" role="button" data-slide="next">
-      <span class="fa fa-angle-right" aria-hidden="true"></span>
-    </a>
   </div>
-
 </div>

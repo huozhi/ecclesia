@@ -9,6 +9,6 @@ const marked = require('marked')
 
 ;(function() {
   document.querySelectorAll('[data-markdown-slide]').forEach(function(ele) {
-    ele.innerHTML = marked(ele.innerText.trim())
+    ele.innerHTML = marked(ele.textContent.trim())
   })
 })();
