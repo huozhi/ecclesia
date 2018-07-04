@@ -21,11 +21,11 @@ Discuss.addParticipant = function (discuss, user) {
     .exec()
 }
 
-Discuss.updateImpress = function(discussId, impressList) {
-  logger.debug('update impress', discussId, impressList)
+Discuss.updateImpress = function(discussId, impress) {
+  logger.debug('update impress', discussId, impress)
   return Discuss
     .where({ _id: discussId })
-    .update({ $set: { impress: impressList } })
+    .update({ $set: { impress: impress } })
     .exec()
 }
 
