@@ -36,6 +36,12 @@ a:hover {
   cursor: pointer;
 }
 
+.modal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
 .dropdown-menu,
 .modal-content,
 button.btn,
