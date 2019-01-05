@@ -33,23 +33,10 @@ is still in develop state.
 
 ### Screenshots
 
-#### unlogin page
-
-![index](http://huozhi.github.io/img/2015/ecclesia/index.jpg)
-
-#### home page
-
-create, join a discuss. or view histories.
-
-![home](http://huozhi.github.io/img/2015/ecclesia/home.jpg)
-
-### history
-
-![edit](http://huozhi.github.io/img/2015/ecclesia/history.jpg)
-
-#### chat page
-
-![chat](http://huozhi.github.io/img/2015/ecclesia/chat.jpg)
+![chat](https://user-images.githubusercontent.com/4800338/50723960-4d004600-1120-11e9-9aab-ad144ca3d989.jpg)
+![history](https://user-images.githubusercontent.com/4800338/50723961-4d98dc80-1120-11e9-9694-bedffe161597.jpg)
+![home](https://user-images.githubusercontent.com/4800338/50723962-4eca0980-1120-11e9-8088-e748300fe8df.jpg)
+![index](https://user-images.githubusercontent.com/4800338/50723963-4f62a000-1120-11e9-8bbf-13d98b8ab208.jpg)
 
 
 ### Powered By
